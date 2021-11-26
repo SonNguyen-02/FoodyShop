@@ -29,5 +29,5 @@ public class App extends Application {
         //}
         launch(args);
     }
-//    hello cac chau nha
+//    hello cac chau nha ba la ba Tan ve loc
 }
