@@ -39,4 +39,5 @@ public class App extends Application {
 //>>>>>>> origin/master
     
 //   henho
+//    xin chao cac ban
 }
