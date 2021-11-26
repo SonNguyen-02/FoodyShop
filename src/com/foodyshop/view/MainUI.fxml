@@ -25,7 +25,7 @@
         <RowConstraints maxHeight="1.7976931348623157E308" minHeight="600.0" prefHeight="800.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <GridPane fx:id="navBar" prefHeight="600.0" prefWidth="326.0" style="-fx-border-color: transparent #fff transparent transparent;">
+        <GridPane fx:id="navBar" alignment="CENTER" prefHeight="800.0" prefWidth="262.0" style="-fx-border-color: transparent #fff transparent transparent;" GridPane.halignment="CENTER" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="260.0" prefWidth="260.0" />
             </columnConstraints>
@@ -42,7 +42,7 @@
             <RowConstraints maxHeight="351.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="351.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="330.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="330.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;">
