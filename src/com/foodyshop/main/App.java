@@ -27,7 +27,9 @@ public class App extends Application {
         // for (){
         // print(123)
         //}
+        //11111
         launch(args);
     }
 //    hello cac chau nha
+    //hiiii
 }
