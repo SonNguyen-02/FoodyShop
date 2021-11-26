@@ -30,6 +30,7 @@ public class App extends Application {
         //ểtgdfgdf
         //11111
 //        123125123
+//một con vịt
         launch(args);
     }
 //<<<<<<< HEAD
