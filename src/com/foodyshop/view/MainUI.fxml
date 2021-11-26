@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: linear-gradient(#4568DC, #B06AB3);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.MainController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="260.0" minWidth="10.0" prefWidth="260.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="920.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="600.0" prefHeight="800.0" vgrow="SOMETIMES" />
+    </rowConstraints>
+    <children>
+        <GridPane fx:id="navBar" prefHeight="600.0" prefWidth="326.0" style="-fx-border-color: transparent #fff transparent transparent;">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="260.0" prefWidth="260.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="150.0" minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="330.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="330.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="351.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="351.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="351.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="351.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="351.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="351.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="351.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="351.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="330.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="330.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;">
+               <children>
+                  <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../public/image/main_layout/icons8-shop-100.png" />
+                     </image>
+                     <effect>
+                        <Lighting diffuseConstant="1.57" specularConstant="2.0" specularExponent="0.0" surfaceScale="4.53">
+                           <bumpInput>
+                              <Shadow blurType="ONE_PASS_BOX" height="1.0" radius="0.0" width="0.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Shadow>
+                           </bumpInput>
+                           <light>
+                              <Light.Distant azimuth="91.03" elevation="360.0">
+                                 <color>
+                                    <Color red="0.8026315569877625" green="0.43104287981987" blue="0.6601892709732056" />
+                                 </color>
+                              </Light.Distant>
+                           </light>
+                        </Lighting>
+                     </effect>
+                  </ImageView>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent; -fx-background-color: linear-gradient(#4568DC, #B06AB3);" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../public/image/main_layout/icons8-dashboard-100.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="24.0" right="24.0" />
+                     </HBox.margin>
+                     <effect>
+                        <Lighting diffuseConstant="1.23" specularConstant="1.6" specularExponent="0.0" surfaceScale="5.1">
+                           <bumpInput>
+                              <Shadow blurType="ONE_PASS_BOX" height="1.0" radius="0.0" width="0.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Shadow>
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                  </ImageView>
+                  <Label text="Dashboard" textFill="WHITE">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="2">
+               <children>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../public/image/main_layout/icons8-order-100.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="24.0" right="24.0" />
+                     </HBox.margin>
+                     <effect>
+                        <Lighting diffuseConstant="1.23" specularConstant="1.6" specularExponent="0.0" surfaceScale="5.1">
+                           <bumpInput>
+                              <Shadow blurType="ONE_PASS_BOX" height="1.0" radius="0.0" width="0.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Shadow>
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                  </ImageView>
+                  <Label text="Order" textFill="WHITE">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="3">
+               <children>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../public/image/main_layout/icons8-feedback-100.png" />
+                     </image>
+                     <effect>
+                        <Lighting diffuseConstant="1.23" specularConstant="1.6" specularExponent="0.0" surfaceScale="5.1">
+                           <bumpInput>
+                              <Shadow blurType="ONE_PASS_BOX" height="0.0" radius="0.0" width="0.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Shadow>
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                     <HBox.margin>
+                        <Insets left="24.0" right="24.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label text="Feedback" textFill="WHITE">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="4">
+               <children>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../public/image/main_layout/icons8-user-100.png" />
+                     </image>
+                     <effect>
+                        <Lighting diffuseConstant="1.23" specularConstant="1.6" specularExponent="0.0" surfaceScale="5.1">
+                           <bumpInput>
+                              <Shadow blurType="ONE_PASS_BOX" height="0.0" radius="0.0" width="0.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Shadow>
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                     <HBox.margin>
+                        <Insets left="24.0" right="24.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label text="Customer" textFill="WHITE">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="5">
+               <children>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../public/image/main_layout/icons8-sales-100.png" />
+                     </image>
+                     <effect>
+                        <Lighting diffuseConstant="1.23" specularConstant="1.6" specularExponent="0.0" surfaceScale="5.1">
+                           <bumpInput>
+                              <Shadow blurType="ONE_PASS_BOX" height="0.0" radius="0.0" width="0.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Shadow>
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                     <HBox.margin>
+                        <Insets left="24.0" right="24.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label text="Sale" textFill="WHITE">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="6">
+               <children>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../public/image/main_layout/icons8-product-100.png" />
+                     </image>
+                     <effect>
+                        <Lighting diffuseConstant="1.23" specularConstant="1.6" specularExponent="0.0" surfaceScale="5.1">
+                           <bumpInput>
+                              <Shadow blurType="ONE_PASS_BOX" height="0.0" radius="0.0" width="0.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Shadow>
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                     <HBox.margin>
+                        <Insets left="24.0" right="24.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label text="Product" textFill="WHITE">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="7">
+               <children>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../public/image/main_layout/icons8-category-100.png" />
+                     </image>
+                     <effect>
+                        <Lighting diffuseConstant="1.23" specularConstant="1.6" specularExponent="0.0" surfaceScale="5.1">
+                           <bumpInput>
+                              <Shadow blurType="ONE_PASS_BOX" height="0.0" radius="0.0" width="0.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Shadow>
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                     <HBox.margin>
+                        <Insets left="24.0" right="24.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label text="Category" textFill="WHITE">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="8">
+               <children>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../public/image/main_layout/icons8-topic-100.png" />
+                     </image>
+                     <effect>
+                        <Lighting diffuseConstant="1.23" specularConstant="1.6" specularExponent="0.0" surfaceScale="5.1">
+                           <bumpInput>
+                              <Shadow blurType="ONE_PASS_BOX" height="0.0" radius="0.0" width="0.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Shadow>
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                     <HBox.margin>
+                        <Insets left="24.0" right="24.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label text="Parent Category" textFill="WHITE">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="9">
+               <children>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../public/image/main_layout/icons8-revenue-100.png" />
+                     </image>
+                     <effect>
+                        <Lighting diffuseConstant="1.23" specularConstant="1.6" specularExponent="0.0" surfaceScale="5.1">
+                           <bumpInput>
+                              <Shadow blurType="ONE_PASS_BOX" height="0.0" radius="0.0" width="0.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Shadow>
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                     <HBox.margin>
+                        <Insets left="24.0" right="24.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label text="Revenue" textFill="WHITE">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="10">
+               <children>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../public/image/main_layout/icons8-staff-100.png" />
+                     </image>
+                     <effect>
+                        <Lighting diffuseConstant="1.23" specularConstant="1.6" specularExponent="0.0" surfaceScale="5.1">
+                           <bumpInput>
+                              <Shadow blurType="ONE_PASS_BOX" height="0.0" radius="0.0" width="0.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Shadow>
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                     <HBox.margin>
+                        <Insets left="24.0" right="24.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label text="Staff" textFill="WHITE">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="11">
+               <children>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../public/image/icons8-edit-account-32.png" />
+                     </image>
+                     <effect>
+                        <Lighting diffuseConstant="1.23" specularConstant="1.6" specularExponent="0.0" surfaceScale="5.1">
+                           <bumpInput>
+                              <Shadow blurType="ONE_PASS_BOX" height="0.0" radius="0.0" width="0.0">
+                                 <color>
+                                    <Color red="1.0" green="1.0" blue="1.0" />
+                                 </color>
+                              </Shadow>
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                     <HBox.margin>
+                        <Insets left="24.0" right="24.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label text="Tài khoản" textFill="WHITE">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+            </children>
+        </GridPane>
+      <BorderPane fx:id="rightLayout" prefHeight="200.0" prefWidth="937.0" GridPane.columnIndex="1" />
+    </children>
+</GridPane>

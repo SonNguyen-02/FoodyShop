@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -22,10 +23,21 @@ public class Navigator {
     private static final String ROOT_FOLDER = "/com/foodyshop/view/";
 
     private static final String LOGIN_UI = ROOT_FOLDER + "LoginUI.fxml";
+    private static final String MAIN_UI = ROOT_FOLDER + "MainUI.fxml";
+
+    private static final String DASHBOARD_UI = ROOT_FOLDER + "DashboardUI.fxml";
 
     // Khai báo di chuyển giữa các màn hình
     public void goToLoginUI() {
         redirectTo("Product Manager", LOGIN_UI);
+    }
+
+    public void goToMainLayout(String name) {
+        redirectTo(name, MAIN_UI);
+    }
+
+    public void loadDashboard(BorderPane borderPane) {
+        borderPane.setCenter(getParent(DASHBOARD_UI));
     }
 
     // </editor-fold> 
@@ -36,7 +48,6 @@ public class Navigator {
         if (instance == null) {
             instance = new Navigator();
         }
-
         return instance;
     }
 
@@ -71,7 +82,7 @@ public class Navigator {
         }
     }
 
-    public Parent getParent(String URL) {
+    private Parent getParent(String URL) {
         try {
             fxLoader = new FXMLLoader(getClass().getResource(URL));
             return fxLoader.load();

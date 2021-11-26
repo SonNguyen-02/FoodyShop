@@ -17,32 +17,13 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Navigator.getInstance().setPrimaryStage(primaryStage);
-        Navigator.getInstance().goToLoginUI();
+        Navigator.getInstance().goToMainLayout("Admin");
     }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // for (){
-        // print(123) abcd
-        //} 123456
-        //ểtgdfgdf
-        //11111
-//        123125123wer
-//sdf
-        if(true){
-            System.out.println("123");
-        }
-//một con vịt
         launch(args);
     }
-//<<<<<<< HEAD
-////    hello cac chau nha ba la ba Tan ve loc
-////    hello cac chau nha
-//    //hiiii
-//>>>>>>> origin/master
-    
-//   henho
-//    xin chao cac ban1231123xin cho
 }
