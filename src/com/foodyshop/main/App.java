@@ -27,7 +27,14 @@ public class App extends Application {
         // for (){
         // print(123)
         //}
+        //11111
+//        123125123
         launch(args);
     }
-//    hello cac chau nha ba la ba Tan ve loc
+//<<<<<<< HEAD
+////    hello cac chau nha ba la ba Tan ve loc
+//=======
+////    hello cac chau nha
+//    //hiiii
+//>>>>>>> origin/master
 }
