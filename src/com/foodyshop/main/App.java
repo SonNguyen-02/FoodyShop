@@ -41,5 +41,5 @@ public class App extends Application {
 //>>>>>>> origin/master
     
 //   henho
-//    xin chao cac ban1231123
+//    xin chao cac ban1231123xin cho
 }
