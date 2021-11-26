@@ -25,8 +25,9 @@ public class App extends Application {
      */
     public static void main(String[] args) {
         // for (){
-        // print(123)
-        //}
+        // print(123) abcd
+        //} 123456
+        //ểtgdfgdf
         //11111
 //        123125123
         launch(args);
