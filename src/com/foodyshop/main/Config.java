@@ -17,4 +17,5 @@ public class Config {
     public static final String DATABASE = "adf2_supper_market";
     
     public static final String IMAGE_FOLDER = "src/com/public/img/";
+//    public static final String IMAGE_FOLDER = "src/com/public/img/";
 }
