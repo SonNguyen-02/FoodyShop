@@ -30,12 +30,14 @@ public class App extends Application {
         //ểtgdfgdf
         //11111
 //        123125123
+        if(true){
+            System.out.println("123");
+        }
 //một con vịt
         launch(args);
     }
 //<<<<<<< HEAD
 ////    hello cac chau nha ba la ba Tan ve loc
-//=======
 ////    hello cac chau nha
 //    //hiiii
 //>>>>>>> origin/master
