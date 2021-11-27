@@ -1,5 +1,6 @@
 package com.foodyshop.main;
 
+import com.foodyshop.controller.TestDemoController;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,41 +26,43 @@ public class Navigator {
     private static final String LOGIN_UI = ROOT_FOLDER + "LoginUI.fxml";
     private static final String MAIN_UI = ROOT_FOLDER + "MainUI.fxml";
 
+    private static final String DEMO_UI = ROOT_FOLDER + "TestDemo.fxml";
+
+    public void goToDemoUI() {
+        redirectTo("Demo", DEMO_UI);
+        TestDemoController demoController = fxLoader.getController();
+        demoController.initStage(primaryStage);
+    }
     // PAGE
     private static final String DASHBOARD_PAGE = ROOT_FOLDER + "DashboardPage.fxml";
     private static final String ORDER_PAGE = ROOT_FOLDER + "OrderPage.fxml";
 
-    
     // FORM
-        private static final String ADD_ORDER_FORM = ROOT_FOLDER + "AddOrderForm.fxml";
+    private static final String ADD_ORDER_FORM = ROOT_FOLDER + "AddOrderForm.fxml";
 
-    
     // Khai báo di chuyển giữa các màn hình
     public void goToLoginUI() {
-        redirectTo("Product Manager", LOGIN_UI);
+        redirectTo("Login", LOGIN_UI);
     }
 
-    public void goToMainLayout(String name) {
-        redirectTo(name, MAIN_UI);
+    public void goToMainLayout() {
+        redirectTo("Admin", MAIN_UI);
     }
 
     // Load Page
     public void loadDashboard(BorderPane borderPane) {
         borderPane.setCenter(getParent(DASHBOARD_PAGE));
     }
-    
+
     public void loadOrder(BorderPane borderPane) {
         borderPane.setCenter(getParent(ORDER_PAGE));
     }
-    
 
-    
     // Show Modal
-    public void showAddOrder(){
+    public void showAddOrder() {
         showModal("Add Order", ADD_ORDER_FORM);
     }
-    
-    
+
     // </editor-fold> 
     private Navigator() {
     }
