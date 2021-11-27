@@ -14,8 +14,7 @@ public class Config {
     public static final String HOSTNAME = "localhost";
     public static final String USERNAME = "root";
     public static final String PASSWORD = "";
-    public static final String DATABASE = "adf2_supper_market";
+    public static final String DATABASE = "foody_shop";
     
     public static final String IMAGE_FOLDER = "src/com/public/img/";
-//    public staticsdfs finalsdfsdsdff String IMAGE_FOLDER = "src/com/public/img/";
 }

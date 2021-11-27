@@ -5,6 +5,7 @@
  */
 package com.foodyshop.main;
 
+import com.foodyshop.database.DBConnection;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

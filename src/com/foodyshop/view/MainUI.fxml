@@ -19,7 +19,7 @@
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: linear-gradient(#4568DC, #B06AB3);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.MainController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="260.0" minWidth="10.0" prefWidth="260.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="920.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="400.0" prefWidth="920.0" />
     </columnConstraints>
     <rowConstraints>
         <RowConstraints maxHeight="1.7976931348623157E308" minHeight="600.0" prefHeight="800.0" vgrow="SOMETIMES" />
@@ -72,7 +72,7 @@
                   </ImageView>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent; -fx-background-color: linear-gradient(#4568DC, #B06AB3);" GridPane.rowIndex="1">
+            <HBox fx:id="dashboardPage" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent; -fx-background-color: linear-gradient(#4568DC, #B06AB3);" GridPane.rowIndex="1">
                <children>
                   <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -106,7 +106,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="2">
+            <HBox fx:id="orderPage" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="2">
                <children>
                   <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -140,7 +140,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="3">
+            <HBox fx:id="feedbackPage" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="3">
                <children>
                   <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -174,7 +174,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="4">
+            <HBox fx:id="customerPage" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="4">
                <children>
                   <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -208,7 +208,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="5">
+            <HBox fx:id="salePage" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="5">
                <children>
                   <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -242,7 +242,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="6">
+            <HBox fx:id="productPage" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="6">
                <children>
                   <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -276,7 +276,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="7">
+            <HBox fx:id="categoryPage" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="7">
                <children>
                   <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -310,7 +310,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="8">
+            <HBox fx:id="topicPage" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="8">
                <children>
                   <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -344,7 +344,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="9">
+            <HBox fx:id="revenuePage" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="9">
                <children>
                   <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -378,7 +378,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="10">
+            <HBox fx:id="staffPage" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="10">
                <children>
                   <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -412,11 +412,11 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="11">
+            <HBox fx:id="accountSettingPage" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: transparent transparent #fff transparent;;" GridPane.rowIndex="11">
                <children>
                   <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../public/image/icons8-edit-account-32.png" />
+                        <Image url="@../../../public/image/main_layout/icons8-user-setting-100.png" />
                      </image>
                      <effect>
                         <Lighting diffuseConstant="1.23" specularConstant="1.6" specularExponent="0.0" surfaceScale="5.1">

@@ -34,6 +34,9 @@ public class MainController implements Initializable {
     @FXML
     private GridPane navBar;
 
+    @FXML
+    private HBox dashboardPage, orderPage, feedbackPage, customerPage, salePage, productPage, categoryPage, topicPage, revenuePage, staffPage, accountSettingPage;
+
     private HBox currentPage;
 
     @Override
@@ -43,8 +46,8 @@ public class MainController implements Initializable {
         // init currentPage item
         currentPage = (HBox) navBar.getChildren().get(1);
         currentPage.setCursor(Cursor.DEFAULT);
-//        deleteRow(navBar, 9);
-//        deleteRow(navBar, 9);
+        deleteRow(navBar, 9);
+        deleteRow(navBar, 9);
         navBar.getChildren().forEach(node -> {
             if (node != navBar.getChildren().get(0)) {
                 HBox item = ((HBox) node);
@@ -74,6 +77,7 @@ public class MainController implements Initializable {
                 });
             }
         });
+        initClickNavItem();
     }
 
     private void deleteRow(GridPane grid, final int row) {
@@ -105,6 +109,16 @@ public class MainController implements Initializable {
     private void inactivateNavItem(HBox item) {
         item.setStyle("-fx-background-color: transparent; -fx-border-color: transparent transparent #fff transparent");
         item.setOpacity(NAV_DEF_OPACITY);
+    }
+
+    private void initClickNavItem() {
+        dashboardPage.setOnMouseClicked(e -> {
+            Navigator.getInstance().loadDashboard(rightLayout);
+        });
+        orderPage.setOnMouseClicked(e -> {
+            Navigator.getInstance().loadOrder(rightLayout);
+        });
+        
     }
 
 }

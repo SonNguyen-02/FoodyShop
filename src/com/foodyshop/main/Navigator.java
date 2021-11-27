@@ -25,8 +25,15 @@ public class Navigator {
     private static final String LOGIN_UI = ROOT_FOLDER + "LoginUI.fxml";
     private static final String MAIN_UI = ROOT_FOLDER + "MainUI.fxml";
 
-    private static final String DASHBOARD_UI = ROOT_FOLDER + "DashboardUI.fxml";
+    // PAGE
+    private static final String DASHBOARD_PAGE = ROOT_FOLDER + "DashboardPage.fxml";
+    private static final String ORDER_PAGE = ROOT_FOLDER + "OrderPage.fxml";
 
+    
+    // FORM
+        private static final String ADD_ORDER_FORM = ROOT_FOLDER + "AddOrderForm.fxml";
+
+    
     // Khai báo di chuyển giữa các màn hình
     public void goToLoginUI() {
         redirectTo("Product Manager", LOGIN_UI);
@@ -36,10 +43,23 @@ public class Navigator {
         redirectTo(name, MAIN_UI);
     }
 
+    // Load Page
     public void loadDashboard(BorderPane borderPane) {
-        borderPane.setCenter(getParent(DASHBOARD_UI));
+        borderPane.setCenter(getParent(DASHBOARD_PAGE));
     }
+    
+    public void loadOrder(BorderPane borderPane) {
+        borderPane.setCenter(getParent(ORDER_PAGE));
+    }
+    
 
+    
+    // Show Modal
+    public void showAddOrder(){
+        showModal("Add Order", ADD_ORDER_FORM);
+    }
+    
+    
     // </editor-fold> 
     private Navigator() {
     }
