@@ -22,6 +22,7 @@ public class LoginController implements Initializable {
      * @param url
      * @param rb
      */
+    //login
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
