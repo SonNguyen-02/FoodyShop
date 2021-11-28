@@ -82,7 +82,7 @@ public class MainController implements Initializable {
 
     private void deleteRow(GridPane grid, final int row) {
         Set<Node> deleteNodes = new HashSet<>();
-        for (Node child : grid.getChildren()) {
+        grid.getChildren().forEach((child) -> {
             // get index from child
             Integer rowIndex = GridPane.getRowIndex(child);
 
@@ -96,7 +96,7 @@ public class MainController implements Initializable {
                 // collect matching rows for deletion
                 deleteNodes.add(child);
             }
-        }
+        });
         // remove nodes from row
         grid.getChildren().removeAll(deleteNodes);
     }
@@ -117,8 +117,7 @@ public class MainController implements Initializable {
         });
         orderPage.setOnMouseClicked(e -> {
             Navigator.getInstance().loadOrder(rightLayout);
-        });
-        
+        });   
     }
 
 }
