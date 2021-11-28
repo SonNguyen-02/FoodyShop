@@ -36,7 +36,7 @@ public class StaffHelper {
                 .getCompiledInsert(true);
         
         System.out.println(sql);
-        
+            
         int lastId = DBConnection.execInsert(sql);
         if(lastId > 0){
             System.out.println("Update success");

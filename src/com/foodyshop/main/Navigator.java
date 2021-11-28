@@ -127,5 +127,5 @@ public class Navigator {
     public void setModalStage(Stage modalStage) {
         this.modalStage = modalStage;
     }
-
+    
 }
