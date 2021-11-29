@@ -18,7 +18,8 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Navigator.getInstance().setPrimaryStage(primaryStage);
-        Navigator.getInstance().goToMainLayout();
+        //Navigator.getInstance().goToMainLayout();
+        Navigator.getInstance().goToLoginUI();
 //        Navigator.getInstance().goToDemoUI();
     
     }
