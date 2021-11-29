@@ -6,9 +6,18 @@
 package com.foodyshop.controller;
 
 import com.foodyshop.helper.StaffHelper;
+import com.foodyshop.main.Navigator;
+import com.foodyshop.model.StaffModel;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
@@ -25,11 +34,36 @@ public class LoginController implements Initializable {
     //login
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-//        StaffHelper.getAll();
-//loginnn
+
     }    
     
+     @FXML
+    private PasswordField passPassword;
+
+    @FXML
+    private Button btnSignin;
+
+    @FXML
+    private TextField txtEmail;
+
+      @FXML
+    void onClickSignIn(ActionEvent event) throws SQLException {
+        Navigator.getInstance().goToMainLayout();
+//        StaffModel staff = StaffHelper.getStaffByEmail(txtEmail.getText());
+//        if(staff==null){
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setContentText("Account not exit!");
+//            alert.show();
+//        }else{
+//            if(staff.getPassword().equals(passPassword.getText())){
+//                Navigator.getInstance().goToMainLayout();
+//            }else{
+//                 Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setContentText("Password is incorected!");
+//            alert.show();
+//            }
+//        }
+    }
 //      @FXML
 //    void onclickConfirm(ActionEvent event) {
 //        if (FormHelper.IsEmptyField(txtCode, lbCode, "Please enter the product code")

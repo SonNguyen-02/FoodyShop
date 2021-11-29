@@ -90,6 +90,7 @@ public class Navigator {
         }
     }
 
+  
     public void showModal(String title, String URL) {
         try {
             modalStage = new Stage();
