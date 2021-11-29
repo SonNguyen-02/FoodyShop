@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="tblOrder_detail" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.Order_DetailController">
+   <children>
+      <TableView layoutX="132.0" layoutY="94.0" prefHeight="369.0" prefWidth="540.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0">
+        <columns>
+          <TableColumn prefWidth="57.222259521484375" text="STT" />
+          <TableColumn prefWidth="179.888916015625" text="Product" />
+            <TableColumn prefWidth="149.44442749023438" text="Number" />
+            <TableColumn prefWidth="139.0" text="Price" />
+            <TableColumn prefWidth="107.0" text="Discount" />
+        </columns>
+      </TableView>
+      <Label alignment="CENTER" layoutX="94.0" layoutY="36.0" prefHeight="53.0" prefWidth="224.0" text="Order Code :" textAlignment="CENTER" textFill="#bf3737" AnchorPane.leftAnchor="90.0">
+         <font>
+            <Font name="Playball" size="36.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="295.0" layoutY="36.0" prefHeight="53.0" prefWidth="340.0" text="211123BD44A889" textAlignment="CENTER" textFill="#0b0606" AnchorPane.rightAnchor="68.0" AnchorPane.topAnchor="38.0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

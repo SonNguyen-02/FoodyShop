@@ -26,15 +26,12 @@ public class OrderHelper {
 
     public static ObservableList<OrderModel> getAllOrder() {
         ObservableList<OrderModel> listOrder = FXCollections.observableArrayList();
-        String sql = db.select().from("fs_order").orderByDESC("id").getCompiledSelect(true);
-        
+        String sql = db.select().from("fs_order").orderByDESC("id").getCompiledSelect(true);       
         ResultSet rs = DBConnection.execSelect(sql);
-        System.out.println(rs);
         try {
             while (rs.next()) {
                 OrderModel order = new OrderModel();
                 order.setId(rs.getInt("id"));
-                System.out.println(rs.getInt("id"));
                 order.setOrder_code(rs.getString("order_code"));
                 order.setName(rs.getString("name"));
                 order.setAddress(rs.getString("address"));
@@ -42,6 +39,7 @@ public class OrderHelper {
                 order.setNote(rs.getString("note"));
                 order.setShip_price(rs.getInt("ship_price"));
                 order.setTotal_money(rs.getInt("total_money"));
+                order.setCreated(rs.getString("created"));
                 order.setStatus(rs.getInt("status"));
                 listOrder.add(order);
             }

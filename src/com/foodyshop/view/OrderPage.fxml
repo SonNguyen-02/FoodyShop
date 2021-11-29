@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -12,32 +13,44 @@
          <font>
             <Font size="16.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
          
       </Button>
       <Button layoutX="547.0" layoutY="607.0" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #f54020; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Delete" textFill="WHITE">
          <font>
             <Font size="16.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
          
       </Button>
-      <Button fx:id="btnAdd" layoutX="287.0" layoutY="607.0" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #3499fb; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Add" textFill="WHITE">
+      <Button fx:id="btnAdd" layoutX="287.0" layoutY="607.0" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #3499fb; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); -fx-cursor: hand;" text="Add" textFill="WHITE">
          <font>
             <Font size="16.0" />
          </font>
          
       </Button>
-      <TableView fx:id="tblOrder" layoutX="-2.0" layoutY="19.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="579.0" prefWidth="920.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0">
+      <TableView fx:id="tblOrder" layoutX="-2.0" layoutY="19.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="579.0" prefWidth="920.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
         <columns>
           <TableColumn fx:id="tcId" prefWidth="59.0" text="ID" />
-          <TableColumn fx:id="tcOrder_code" prefWidth="111.33331298828125" text="Order_code" />
-            <TableColumn fx:id="tcName" prefWidth="135.3333740234375" text="Name" />
-            <TableColumn fx:id="tcAddress" prefWidth="151.0" text="Address" />
-            <TableColumn fx:id="tcPhone" prefWidth="99.0" text="Phone" />
-            <TableColumn fx:id="tcNote" prefWidth="101.0" text="Note" />
-            <TableColumn fx:id="tcShip_price" prefWidth="107.0" text="Ship_price" />
-            <TableColumn fx:id="tcTotal_money" prefWidth="90.6666259765625" text="Total_money" />
-            <TableColumn fx:id="tcStatus" prefWidth="71.3333740234375" text="Status" />
+          <TableColumn fx:id="tcOrder_code" prefWidth="120.11112976074219" text="Order_code" />
+            <TableColumn fx:id="tcName" prefWidth="87.88887023925781" text="Name" />
+            <TableColumn fx:id="tcAddress" prefWidth="103.44442749023438" text="Address" />
+            <TableColumn fx:id="tcPhone" prefWidth="88.111083984375" text="Phone" />
+            <TableColumn fx:id="tcNote" prefWidth="104.111083984375" text="Note" />
+            <TableColumn fx:id="tcShip_price" prefWidth="88.77777099609375" text="Ship_price" />
+            <TableColumn fx:id="tcTotal_money" prefWidth="93.111083984375" text="Total_money" />
+            <TableColumn fx:id="tcCreated" prefWidth="92.7777099609375" text="Created" />
+            <TableColumn fx:id="tcStatus" minWidth="0.0" prefWidth="59.0" style="-fx-alignment: CENTER;" text="Status" />
         </columns>
       </TableView>
+      <Button fx:id="btnOrder_detail" layoutX="759.0" layoutY="605.0" minHeight="36.0" minWidth="140.0" mnemonicParsing="false" style="-fx-background-color: #FF6633; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); -fx-cursor: hand;" text="Order Detail" textFill="#f6f6f6">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

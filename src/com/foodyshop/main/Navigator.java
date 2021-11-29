@@ -25,7 +25,6 @@ public class Navigator {
 
     private static final String LOGIN_UI = ROOT_FOLDER + "LoginUI.fxml";
     private static final String MAIN_UI = ROOT_FOLDER + "MainUI.fxml";
-
     private static final String DEMO_UI = ROOT_FOLDER + "TestDemo.fxml";
 
     public void goToDemoUI() {
@@ -36,6 +35,7 @@ public class Navigator {
     // PAGE
     private static final String DASHBOARD_PAGE = ROOT_FOLDER + "DashboardPage.fxml";
     private static final String ORDER_PAGE = ROOT_FOLDER + "OrderPage.fxml";
+    private static final String ORDER_DETAIL = ROOT_FOLDER + "Order_DetailPage.fxml";
 
     // FORM
     private static final String ADD_ORDER_FORM = ROOT_FOLDER + "AddOrderForm.fxml";
@@ -48,7 +48,9 @@ public class Navigator {
     public void goToMainLayout() {
         redirectTo("Admin", MAIN_UI);
     }
-
+    public  void goToOrder(){
+        redirectTo("Order", ORDER_PAGE);
+    }
     // Load Page
     public void loadDashboard(BorderPane borderPane) {
         borderPane.setCenter(getParent(DASHBOARD_PAGE));
@@ -62,7 +64,9 @@ public class Navigator {
     public void showAddOrder() {
         showModal("Add Order", ADD_ORDER_FORM);
     }
-
+    public void showOrder_Detail() {
+        showModal("Order Detail", ORDER_DETAIL);
+    }
     // </editor-fold> 
     private Navigator() {
     }
@@ -130,5 +134,5 @@ public class Navigator {
     public void setModalStage(Stage modalStage) {
         this.modalStage = modalStage;
     }
-    
+
 }

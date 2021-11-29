@@ -28,9 +28,10 @@ import javafx.scene.control.TableView;
  * @author N.C.Son
  */
 public class OrderController implements Initializable {
+
     @FXML
     private TableView<OrderModel> tblOrder;
-    
+
     @FXML
     private TableColumn<OrderModel, Integer> tcId;
 
@@ -54,25 +55,34 @@ public class OrderController implements Initializable {
 
     @FXML
     private TableColumn<OrderModel, Integer> tcTotal_money;
-
+    
+    @FXML
+    private TableColumn<OrderModel, String> tcCreated;
+    
     @FXML
     private TableColumn<OrderModel, Integer> tcStatus;
-    
+
     @FXML
-    Button btnAdd;
-    
+    private Button btnAdd;
+     
+    @FXML
+    private Button btnOrder_detail;
+
     ObservableList<OrderModel> listOrder = FXCollections.observableArrayList();
+
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
+
         btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddOrder());
-        
+        btnOrder_detail.setOnMouseClicked(e -> Navigator.getInstance().showOrder_Detail());
+
         tcId.setCellValueFactory(cellValue -> cellValue.getValue().getIdProperty());
         tcOrder_code.setCellValueFactory(cellValue -> cellValue.getValue().getOrder_codeProperty());
         tcName.setCellValueFactory(cellValue -> cellValue.getValue().getNameProperty());
@@ -81,9 +91,10 @@ public class OrderController implements Initializable {
         tcNote.setCellValueFactory(cellValue -> cellValue.getValue().getNoteProperty());
         tcShip_price.setCellValueFactory(cellValue -> cellValue.getValue().getShip_priceProperty());
         tcTotal_money.setCellValueFactory(cellValue -> cellValue.getValue().getTotal_moneyProperty());
+        tcCreated.setCellValueFactory(cellValue -> cellValue.getValue().getCreatedProperty());
         tcStatus.setCellValueFactory(cellValue -> cellValue.getValue().getStatusProperty());
-        
+
         listOrder = OrderHelper.getAllOrder();
         tblOrder.setItems(listOrder);
-    }      
+    }
 }
