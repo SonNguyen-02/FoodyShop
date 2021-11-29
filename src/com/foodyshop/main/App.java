@@ -20,7 +20,7 @@ public class App extends Application {
         Navigator.getInstance().setPrimaryStage(primaryStage);
 
         //Navigator.getInstance().goToMainLayout();
-       Navigator.getInstance().goToLoginUI();
+        Navigator.getInstance().goToLoginUI();
 //        Navigator.getInstance().goToDemoUI();
 //    Navigator.getInstance().goToFeedback();
 

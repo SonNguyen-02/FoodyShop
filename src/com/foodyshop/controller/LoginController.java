@@ -89,6 +89,7 @@ public class LoginController implements Initializable {
 
         }
 }
+
 //      @FXML
 //    void onclickConfirm(ActionEvent event) {
 //        if (FormHelper.IsEmptyField(txtCode, lbCode, "Please enter the product code")

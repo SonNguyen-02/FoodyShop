@@ -45,7 +45,7 @@ public class StaffHelper {
             return staff;
         }
     }
-    
+
     private static DBQuery db = DBQueryBuilder.newDBQuery();
 
     public static ObservableList<ProductModel> getAll() {
