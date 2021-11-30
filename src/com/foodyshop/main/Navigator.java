@@ -36,9 +36,12 @@ public class Navigator {
     private static final String DASHBOARD_PAGE = ROOT_FOLDER + "DashboardPage.fxml";
     private static final String ORDER_PAGE = ROOT_FOLDER + "OrderPage.fxml";
     private static final String ORDER_DETAIL = ROOT_FOLDER + "Order_DetailPage.fxml";
+    private static final String CATEGORY_PAGE = ROOT_FOLDER + "CategoryPage.fxml";
+    private static final String TOPIC_PAGE = ROOT_FOLDER + "TopicPage.fxml";
 
     // FORM
     private static final String ADD_ORDER_FORM = ROOT_FOLDER + "AddOrderForm.fxml";
+    private static final String ADD_CATEGORY_FORM = ROOT_FOLDER + "AddCategoryForm.fxml";
 
     // Khai báo di chuyển giữa các màn hình
     public void goToLoginUI() {
@@ -48,9 +51,11 @@ public class Navigator {
     public void goToMainLayout() {
         redirectTo("Admin", MAIN_UI);
     }
-    public  void goToOrder(){
+
+    public void goToOrder() {
         redirectTo("Order", ORDER_PAGE);
     }
+
     // Load Page
     public void loadDashboard(BorderPane borderPane) {
         borderPane.setCenter(getParent(DASHBOARD_PAGE));
@@ -60,13 +65,27 @@ public class Navigator {
         borderPane.setCenter(getParent(ORDER_PAGE));
     }
 
+    public void loadCategory(BorderPane borderPane) {
+        borderPane.setCenter(getParent(CATEGORY_PAGE));
+    }
+
+    public void loadTopic(BorderPane borderPane) {
+        borderPane.setCenter(getParent(TOPIC_PAGE));
+    }
+
     // Show Modal
     public void showAddOrder() {
         showModal("Add Order", ADD_ORDER_FORM);
     }
+
     public void showOrder_Detail() {
         showModal("Order Detail", ORDER_DETAIL);
     }
+
+    public void showAddCategory() {
+        showModal("Category Order", ADD_CATEGORY_FORM);
+    }
+
     // </editor-fold> 
     private Navigator() {
     }

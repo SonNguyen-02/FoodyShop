@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.AddCategoryController">
+    <children>
+        <GridPane layoutX="60.0" layoutY="60.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="291.0" minWidth="10.0" prefWidth="236.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="420.0" minWidth="10.0" prefWidth="364.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="61.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="80.0" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <TextField fx:id="txtID" promptText="Enter ID" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                    <GridPane.margin>
+                        <Insets right="50.0" />
+                    </GridPane.margin>
+                </TextField>
+                <TextField fx:id="txtName" promptText="EnterName" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                    <GridPane.margin>
+                        <Insets right="50.0" />
+                    </GridPane.margin>
+                </TextField>
+                <TextField fx:id="txtStatus" promptText="Enter Status" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                    <GridPane.margin>
+                        <Insets right="50.0" />
+                    </GridPane.margin>
+                </TextField>
+                <Label prefHeight="27.0" prefWidth="196.0" text="ID:" GridPane.rowIndex="1">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                    <GridPane.margin>
+                        <Insets left="50.0" />
+                    </GridPane.margin>
+                </Label>
+                <Label prefHeight="27.0" prefWidth="192.0" text="Status:" GridPane.rowIndex="4">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                    <GridPane.margin>
+                        <Insets left="50.0" />
+                    </GridPane.margin>
+                </Label>
+                <Label prefHeight="27.0" prefWidth="192.0" text="Name:" GridPane.rowIndex="3">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                    <GridPane.margin>
+                        <Insets left="50.0" />
+                    </GridPane.margin>
+                </Label>
+                <Label prefHeight="27.0" prefWidth="192.0" text="Topic :" GridPane.rowIndex="2">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                    <GridPane.margin>
+                        <Insets left="50.0" />
+                    </GridPane.margin>
+                </Label>
+                <Label alignment="CENTER" prefHeight="48.0" prefWidth="600.0" text="Add Category" textAlignment="CENTER" textFill="#bf3737" GridPane.columnSpan="2">
+                    <font>
+                        <Font name="Playball" size="36.0" />
+                    </font>
+                </Label>
+                <HBox alignment="CENTER" prefHeight="66.0" prefWidth="600.0" GridPane.columnSpan="2" GridPane.rowIndex="5">
+                    <children>
+                        <Button fx:id="btnSave" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #3499fb; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Save" textFill="WHITE">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                            <HBox.margin>
+                                <Insets right="32.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="btnCancel" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #f54020; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Cancel" textFill="WHITE">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                            <HBox.margin>
+                                <Insets left="32.0" />
+                            </HBox.margin>
+                        </Button>
+                    </children>
+                    <GridPane.margin>
+                        <Insets />
+                    </GridPane.margin>
+                </HBox>
+                <Label fx:id="labCode" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                    <GridPane.margin>
+                        <Insets top="58.0" />
+                    </GridPane.margin>
+                </Label>
+                <Label fx:id="labName" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                    <GridPane.margin>
+                        <Insets top="58.0" />
+                    </GridPane.margin>
+                </Label>
+                <Label fx:id="labAuthor" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                    <GridPane.margin>
+                        <Insets top="58.0" />
+                    </GridPane.margin>
+                </Label>
+                <Label fx:id="labPublishYear" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                    <GridPane.margin>
+                        <Insets top="58.0" />
+                    </GridPane.margin>
+                </Label>
+                <ComboBox fx:id="cbTopic" prefHeight="37.0" prefWidth="314.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            </children>
+        </GridPane>
+    </children>
+</AnchorPane>

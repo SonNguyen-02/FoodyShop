@@ -18,8 +18,8 @@ public class Config {
     public static final String DATABASE = "foody_shop";
     
     // for api
-//    public static final String BASE_URL = "https://foodyshop.000webhostapp.com/FoodyShop/";
-    public static final String BASE_URL = "http://localhost/FoodyShop/";
+    public static final String BASE_URL = "https://foodyshop.000webhostapp.com/FoodyShop/";
+//    public static final String BASE_URL = "http://localhost/FoodyShop/";
     public static final String BASE_API = BASE_URL + "api/";
     private static final String IMG_FOLDER = "public/images/upload/";
     public static final String IMG_FOOD_DIR = BASE_URL + IMG_FOLDER + "foods/";

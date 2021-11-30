@@ -111,13 +111,20 @@ public class MainController implements Initializable {
         item.setOpacity(NAV_DEF_OPACITY);
     }
 
+      
     private void initClickNavItem() {
         dashboardPage.setOnMouseClicked(e -> {
             Navigator.getInstance().loadDashboard(rightLayout);
         });
         orderPage.setOnMouseClicked(e -> {
             Navigator.getInstance().loadOrder(rightLayout);
-        });   
+        }); 
+        categoryPage.setOnMouseClicked(e ->{
+            Navigator.getInstance().loadCategory(rightLayout);
+        });
+        topicPage.setOnMouseClicked(e ->{
+            Navigator.getInstance().loadTopic(rightLayout);
+        });
     }
 
 }
