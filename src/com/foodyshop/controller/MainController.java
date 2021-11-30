@@ -46,8 +46,8 @@ public class MainController implements Initializable {
         // init currentPage item
         currentPage = (HBox) navBar.getChildren().get(1);
         currentPage.setCursor(Cursor.DEFAULT);
-        deleteRow(navBar, 9);
-        deleteRow(navBar, 9);
+//        deleteRow(navBar, 9);
+//        deleteRow(navBar, 9);
         navBar.getChildren().forEach(node -> {
             if (node != navBar.getChildren().get(0)) {
                 HBox item = ((HBox) node);
