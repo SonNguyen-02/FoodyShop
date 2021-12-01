@@ -58,7 +58,7 @@ public class CategoryController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddCategory());
+        
         tcID.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tblCategory.getItems().indexOf(cellData.getValue()) + 1) + ""));
         tcTopicID.setCellValueFactory(cellValue -> cellValue.getValue().getTopic_idProperty());
         tcName.setCellValueFactory(cellValue -> cellValue.getValue().getNameProperty());
@@ -70,9 +70,9 @@ public class CategoryController implements Initializable {
             Logger.getLogger(CategoryController.class.getName()).log(Level.SEVERE, null, ex);
         }
         tblCategory.setItems(listCategory);
-
+        btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddCategory());
         btnDelete.setOnMouseClicked(this::onClickDelete);
-
+        btnEdit.setOnMouseClicked(e -> Navigator.getInstance().showEditCategory());
     }
 
     private void onClickDelete(MouseEvent e) {

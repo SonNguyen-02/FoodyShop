@@ -7,11 +7,9 @@ package com.foodyshop.controller;
 
 import com.foodyshop.helper.TopicHelper;
 import com.foodyshop.main.Navigator;
-import com.foodyshop.model.CategoryModel;
 import com.foodyshop.model.TopicModel;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,7 +19,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javax.swing.JOptionPane;
+
 
 
 
@@ -79,10 +77,13 @@ public class AddCategoryController implements Initializable{
                 alert.setHeaderText("add error");
                 alert.show();
             }
-            ObservableList<CategoryModel> listCategory = FXCollections.observableArrayList();
+           txtName.getText();
+           cbTopic.getValue();
+          
+        }
             
        
-    }
+    
     
     private void onClickCancel(MouseEvent e){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

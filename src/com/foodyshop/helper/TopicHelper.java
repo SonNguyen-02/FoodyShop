@@ -10,8 +10,11 @@ import com.foodyshop.database.DBQuery;
 import com.foodyshop.database.DBQueryBuilder;
 import com.foodyshop.model.CategoryModel;
 import com.foodyshop.model.TopicModel;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -44,6 +47,18 @@ public class TopicHelper {
         }
         return listTopic;
     }
-
+    public static boolean delete(TopicModel topic) {
+        try {
+            String sql = "delete from fs_topic where id = ?";
+            PreparedStatement stm = DBConnection.getConnection().prepareStatement(sql);
+            stm.setInt(1, topic.getId());
+            if(stm.executeUpdate() > 0){
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
  
 }

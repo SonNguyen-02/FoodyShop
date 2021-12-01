@@ -9,6 +9,7 @@ import com.foodyshop.database.DBConnection;
 import com.foodyshop.database.DBQuery;
 import com.foodyshop.database.DBQueryBuilder;
 import com.foodyshop.model.CategoryModel;
+import com.foodyshop.model.TopicModel;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -46,7 +47,25 @@ public class CategoryHelper {
         }
         return listCategory;
     }
+    
+     public static boolean isTopicHasLinkToCategorys(TopicModel topic) {
 
+        try {
+            String sql = "SELECT * FROM `fs_category` WHERE topic_id = ? LIMIT 1";
+            PreparedStatement stm = DBConnection.getConnection().prepareStatement(sql);
+
+            stm.setInt(1, topic.getId());
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TopicModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+
+    }
+     
     public static boolean delete(CategoryModel category) {
         try {
             String sql = "delete from fs_category where id = ?";
@@ -60,4 +79,7 @@ public class CategoryHelper {
         }
         return false;
     }
+
+    
+    
 }

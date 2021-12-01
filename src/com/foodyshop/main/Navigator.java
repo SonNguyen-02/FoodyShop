@@ -42,6 +42,7 @@ public class Navigator {
     // FORM
     private static final String ADD_ORDER_FORM = ROOT_FOLDER + "AddOrderForm.fxml";
     private static final String ADD_CATEGORY_FORM = ROOT_FOLDER + "AddCategoryForm.fxml";
+    private static final String EDIT_CATEGORY_FORM = ROOT_FOLDER + "EditCategoryForm.fxml";
 
     // Khai báo di chuyển giữa các màn hình
     public void goToLoginUI() {
@@ -83,9 +84,12 @@ public class Navigator {
     }
 
     public void showAddCategory() {
-        showModal("Category Order", ADD_CATEGORY_FORM);
+        showModal("Category ", ADD_CATEGORY_FORM);
     }
-
+    
+     public void showEditCategory() {
+        showModal("Edit Category ", EDIT_CATEGORY_FORM);
+    }
     // </editor-fold> 
     private Navigator() {
     }
