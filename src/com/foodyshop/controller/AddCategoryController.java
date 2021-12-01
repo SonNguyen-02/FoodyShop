@@ -7,9 +7,11 @@ package com.foodyshop.controller;
 
 import com.foodyshop.helper.TopicHelper;
 import com.foodyshop.main.Navigator;
+import com.foodyshop.model.CategoryModel;
 import com.foodyshop.model.TopicModel;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,7 +19,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javax.swing.JOptionPane;
+
 
 
 
@@ -32,6 +37,10 @@ public class AddCategoryController implements Initializable{
     
     @FXML
     private Button btnSave, btnCancel;
+    
+    
+    @FXML
+    private TextField txtName;
     
     @FXML
     private ComboBox<TopicModel> cbTopic;
@@ -56,15 +65,23 @@ public class AddCategoryController implements Initializable{
 
     private void onClickSave(MouseEvent e) {
         
-        int topicId = cbTopic.getValue().getId();
-        
-        if (true) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Success");
-            alert.setHeaderText("Đã thêm order");
-            alert.show();
-            Navigator.getInstance().getModalStage().close();
-        }
+        //int topicId = cbTopic.getValue().getId();
+            StringBuilder errors = new StringBuilder();
+            if(txtName.getText().equals("")) {
+               errors.append("Name must be entered");              
+            }
+            if(cbTopic.getSelectionModel().equals("")){
+                errors.append("topic must be entered");
+            }   
+            if(errors.length()>0){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("ERROR");
+                alert.setHeaderText("add error");
+                alert.show();
+            }
+            ObservableList<CategoryModel> listCategory = FXCollections.observableArrayList();
+            
+       
     }
     
     private void onClickCancel(MouseEvent e){
