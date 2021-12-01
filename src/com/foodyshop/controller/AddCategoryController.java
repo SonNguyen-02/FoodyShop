@@ -5,9 +5,11 @@
  */
 package com.foodyshop.controller;
 
+import com.foodyshop.helper.CategoryHelper;
 import com.foodyshop.helper.TopicHelper;
 import com.foodyshop.main.Navigator;
 import com.foodyshop.model.TopicModel;
+import com.foodyshop.model.CategoryModel;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
