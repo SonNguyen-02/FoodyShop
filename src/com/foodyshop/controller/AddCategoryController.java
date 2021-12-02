@@ -22,28 +22,23 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
-
-
-
-
-
 /**
  *
  * @author X PC
  */
-public class AddCategoryController implements Initializable{
-    
+public class AddCategoryController implements Initializable {
+
     private ObservableList<TopicModel> topicList;
-    
+
     @FXML
     private Button btnSave, btnCancel;
-    
-    
+
     @FXML
     private TextField txtName;
-    
+
     @FXML
     private ComboBox<TopicModel> cbTopic;
+
     /**
      * Initializes the controller class.
      *
@@ -56,47 +51,40 @@ public class AddCategoryController implements Initializable{
         btnSave.setOnMouseClicked(this::onClickSave);
         btnCancel.setOnMouseClicked(this::onClickCancel);
         topicList = TopicHelper.getAllTopic();
-        if(topicList != null && !topicList.isEmpty()){
+        if (topicList != null && !topicList.isEmpty()) {
             cbTopic.setItems(topicList);
             cbTopic.setValue(topicList.get(0));
         }
-        
+
     }
 
     private void onClickSave(MouseEvent e) {
-        
+
         //int topicId = cbTopic.getValue().getId();
-            StringBuilder errors = new StringBuilder();
-            if(txtName.getText().equals("")) {
-               errors.append("Name must be entered");              
-            }
-            if(cbTopic.getSelectionModel().equals("")){
-                errors.append("topic must be entered");
-            }   
-            if(errors.length()>0){
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("ERROR");
-                alert.setHeaderText("add error");
-                alert.show();
-            }
-           txtName.getText();
-           cbTopic.getValue();
-          
+        if (txtName.getText().equals("")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Name must be entered");
+            alert.show();
+            return;
         }
-            
-       
-    
-    
-    private void onClickCancel(MouseEvent e){
+      
+        txtName.getText();
+        int topicId = cbTopic.getValue().getId();
+        System.out.println("onclickSave: "+topicId);
+
+    }
+
+    private void onClickCancel(MouseEvent e) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Close");
         alert.setHeaderText("Do you want close?");
         alert.showAndWait().ifPresent(btnType -> {
-            if(btnType == ButtonType.OK){
+            if (btnType == ButtonType.OK) {
                 Navigator.getInstance().getModalStage().close();
             }
         });
-        
-    }  
-    
+
+    }
+
 }
