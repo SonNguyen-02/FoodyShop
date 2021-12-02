@@ -1,6 +1,9 @@
 package com.foodyshop.main;
 
+import com.foodyshop.controller.EditOrderController;
+import com.foodyshop.controller.Order_DetailController;
 import com.foodyshop.controller.TestDemoController;
+import com.foodyshop.model.OrderModel;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,6 +46,7 @@ public class Navigator {
     private static final String ADD_ORDER_FORM = ROOT_FOLDER + "AddOrderForm.fxml";
     private static final String ADD_CATEGORY_FORM = ROOT_FOLDER + "AddCategoryForm.fxml";
     private static final String EDIT_CATEGORY_FORM = ROOT_FOLDER + "EditCategoryForm.fxml";
+     private static final String EDIT_ORDER_FORM = ROOT_FOLDER + "EditOrderForm.fxml";
 
     // Khai báo di chuyển giữa các màn hình
     public void goToLoginUI() {
@@ -79,8 +83,10 @@ public class Navigator {
         showModal("Add Order", ADD_ORDER_FORM);
     }
 
-    public void showOrder_Detail() {
+    public void showOrder_Detail(OrderModel order) {
         showModal("Order Detail", ORDER_DETAIL);
+        Order_DetailController controller = fxLoader.getController();
+        controller.initOrderModel(order);
     }
 
     public void showAddCategory() {
@@ -89,6 +95,11 @@ public class Navigator {
     
      public void showEditCategory() {
         showModal("Edit Category ", EDIT_CATEGORY_FORM);
+    }
+     public void showEditOrder(OrderModel order) {
+        showModal("Edit Order", EDIT_ORDER_FORM);
+        EditOrderController controller = fxLoader.getController();
+        controller.initOrderModel(order);
     }
     // </editor-fold> 
     private Navigator() {
