@@ -72,7 +72,8 @@ public class CategoryController implements Initializable {
         tblCategory.setItems(listCategory);
         btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddCategory());
         btnDelete.setOnMouseClicked(this::onClickDelete);
-        btnEdit.setOnMouseClicked(e -> Navigator.getInstance().showEditCategory());
+        btnEdit.setOnMouseClicked(this::onClickEdit);
+            
     }
 
     private void onClickDelete(MouseEvent e) {
@@ -109,6 +110,17 @@ public class CategoryController implements Initializable {
 
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Please choose category");
+            alert.show();
+        }
+    }
+    private void onClickEdit(MouseEvent e){
+        CategoryModel category = tblCategory.getSelectionModel().getSelectedItem();
+        if(category !=null){
+            Navigator.getInstance().showEditCategory();
+        }else{
+             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
             alert.setHeaderText("Please choose category");
             alert.show();

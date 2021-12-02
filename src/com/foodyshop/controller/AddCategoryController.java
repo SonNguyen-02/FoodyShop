@@ -5,12 +5,14 @@
  */
 package com.foodyshop.controller;
 
+import com.foodyshop.helper.CategoryHelper;
 import com.foodyshop.helper.TopicHelper;
 import com.foodyshop.main.Navigator;
 import com.foodyshop.model.TopicModel;
-import java.awt.TextField;
+import com.foodyshop.model.CategoryModel;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,17 +20,16 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 /**
- * FXML Controller class
  *
- * @author N.C.Son
+ * @author X PC
  */
 public class AddCategoryController implements Initializable {
 
     private ObservableList<TopicModel> topicList;
-
     @FXML
     private Button btnSave, btnCancel;
 
@@ -58,19 +59,21 @@ public class AddCategoryController implements Initializable {
     }
 
     private void onClickSave(MouseEvent e) {
-
-        //int topicId = cbTopic.getValue().getId();
+        
         if (txtName.getText().equals("")) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
             alert.setHeaderText("Name must be entered");
             alert.show();
             return;
+        }else{
+            
+            int topicId = cbTopic.getValue().getId();
         }
       
-        txtName.getText();
-        int topicId = cbTopic.getValue().getId();
-        System.out.println("onclickSave: "+topicId);
+        
+        
+        
 
     }
 

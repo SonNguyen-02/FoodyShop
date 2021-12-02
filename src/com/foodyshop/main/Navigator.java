@@ -1,8 +1,10 @@
 package com.foodyshop.main;
 
+import com.foodyshop.controller.EditCategoryController;
 import com.foodyshop.controller.EditOrderController;
 import com.foodyshop.controller.Order_DetailController;
 import com.foodyshop.controller.TestDemoController;
+import com.foodyshop.model.CategoryModel;
 import com.foodyshop.model.OrderModel;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -95,6 +97,7 @@ public class Navigator {
     
      public void showEditCategory() {
         showModal("Edit Category ", EDIT_CATEGORY_FORM);
+
     }
      public void showEditOrder(OrderModel order) {
         showModal("Edit Order", EDIT_ORDER_FORM);
@@ -168,5 +171,7 @@ public class Navigator {
     public void setModalStage(Stage modalStage) {
         this.modalStage = modalStage;
     }
+
+   
 
 }

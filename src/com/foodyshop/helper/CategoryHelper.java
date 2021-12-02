@@ -79,23 +79,18 @@ public class CategoryHelper {
         }
         return false;
     }
+   public static boolean insertCategory(String name,int topic_id) throws SQLException {
+        String query = "INSERT INTO `fs_category`(`name`, `topic_id`) VALUES (?,?)";
+        try ( PreparedStatement preStm = DBConnection.getConnection().prepareStatement(query);) {
+           preStm.setString(1, name);
+           preStm.setInt(2, topic_id);           
+           if (preStm.executeUpdate() > 0) {
 
-//    public static boolean insertCategory(String name,int topic_id) throws SQLException {
-//        String query = "INSERT INTO `fs_category`( `name`, `topic_id`) VALUES (?,?)";
-//        try ( PreparedStatement preStm = DBConnection.getConnection().prepareStatement(query);) {
-//            preStm.setString(1, name);
-//            preStm.setInt(2, topic_id);
-//            if (preStm.executeUpdate() > 0) {
-//                ResultSet rs = preStm.getGeneratedKeys();
-//                if (rs.next()) {
-//                    int id = rs.getInt(1);
-//                }
-//
-//                return true;
-//            }
-//        }
-//
-//        return false;
-//    }
-//    
+               return true;
+            }
+        }
+
+        return false;
+    }
+   
 }
