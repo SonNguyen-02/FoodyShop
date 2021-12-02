@@ -55,6 +55,8 @@ public class CategoryController implements Initializable {
     private Button btnDelete;
 
     ObservableList<CategoryModel> listCategory = FXCollections.observableArrayList();
+    
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -64,13 +66,14 @@ public class CategoryController implements Initializable {
         tcName.setCellValueFactory(cellValue -> cellValue.getValue().getNameProperty());
         tcCreated.setCellValueFactory(cellValue -> cellValue.getValue().getCreatedProperty());
         tcStatus.setCellValueFactory(cellValue -> cellValue.getValue().getStatusProperty());
-        try {
-            listCategory = CategoryHelper.getAllCategory();
-        } catch (SQLException ex) {
-            Logger.getLogger(CategoryController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        listCategory = CategoryHelper.getAllCategory();
         tblCategory.setItems(listCategory);
-        btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddCategory());
+        btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddCategory(new AddCategoryController.IOnAddSuccess() {
+            @Override
+            public void onAddSuccess(CategoryModel categoryModel) {
+                listCategory.add(0, categoryModel);
+            }
+        }));
         btnDelete.setOnMouseClicked(this::onClickDelete);
         btnEdit.setOnMouseClicked(this::onClickEdit);
             
@@ -119,6 +122,9 @@ public class CategoryController implements Initializable {
         CategoryModel category = tblCategory.getSelectionModel().getSelectedItem();
         if(category !=null){
             Navigator.getInstance().showEditCategory();
+//            String id = tblCategory.getSelectionModel(getSelectedItem,0);
+            
+            
         }else{
              Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");

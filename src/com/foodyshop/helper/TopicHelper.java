@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
 
 /**
  *
@@ -60,5 +61,36 @@ public class TopicHelper {
         }
         return false;
     }
+     public static TopicModel insertTopic(String name, int id, String img) {
+
+        String sql = db.insert("fs_topic")
+                .set("id", String.valueOf(id))
+                .set("name", name).getCompiledInsert(true);
+                
+
+        int lastId = DBConnection.execInsert(sql);
+        if (lastId > 0) {
+            try {
+                sql = db.select().from("fs_topic").where("id", String.valueOf(lastId)).getCompiledSelect(true);
+                ResultSet rs = DBConnection.execSelect(sql);
+                if (rs.next()) {
+                    TopicModel topic = new TopicModel();
+                    topic.setId(lastId);
+                    topic.setName(name);
+                    topic.setStatus(0);
+                    topic.getImg();
+                    topic.setCreated(rs.getString("created"));
+                    return topic;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(CategoryHelper.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                DBConnection.close();
+            }
+        }
+        return null;
+    }
+
+
  
 }

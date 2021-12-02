@@ -85,5 +85,7 @@ public class CategoryModel {
     public void setStatus(Integer status) {
         this.status.setValue(status);
     }
+    
+
 
 }

@@ -39,6 +39,17 @@ public class AddCategoryController implements Initializable {
     @FXML
     private ComboBox<TopicModel> cbTopic;
 
+    private IOnAddSuccess mIOnAddSuccess;
+
+    public interface IOnAddSuccess {
+
+        void onAddSuccess(CategoryModel categoryModel);
+    }
+
+    public void initCallback(IOnAddSuccess mIOnAddSuccess) {
+        this.mIOnAddSuccess = mIOnAddSuccess;
+    }
+
     /**
      * Initializes the controller class.
      *
@@ -54,27 +65,35 @@ public class AddCategoryController implements Initializable {
         if (topicList != null && !topicList.isEmpty()) {
             cbTopic.setItems(topicList);
             cbTopic.setValue(topicList.get(0));
+            
         }
 
     }
 
     private void onClickSave(MouseEvent e) {
-        
         if (txtName.getText().equals("")) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
             alert.setHeaderText("Name must be entered");
             alert.show();
             return;
-        }else{
+        } else {
             
-            int topicId = cbTopic.getValue().getId();
+            CategoryModel categoryModel = CategoryHelper.insertCategory(txtName.getText(), cbTopic.getValue().getId());
+            if (categoryModel != null) {
+                mIOnAddSuccess.onAddSuccess(categoryModel);
+                Navigator.getInstance().getModalStage().close();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("SUCCESS");
+                alert.setHeaderText("Insert success");
+                alert.show();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("ERROR");
+                alert.setHeaderText("Insert false!");
+                alert.show();
+            }
         }
-      
-        
-        
-        
-
     }
 
     private void onClickCancel(MouseEvent e) {

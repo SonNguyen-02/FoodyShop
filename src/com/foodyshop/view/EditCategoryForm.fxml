@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -124,16 +123,7 @@
                   <ComboBox fx:id="cbTopic" prefHeight="42.0" prefWidth="312.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <children>
-                        <RadioButton fx:id="rad1" mnemonicParsing="false" text="1">
-                           <HBox.margin>
-                              <Insets right="30.0" />
-                           </HBox.margin>
-                        </RadioButton>
-                        <RadioButton fx:id="rad0" mnemonicParsing="false" prefHeight="21.0" prefWidth="43.0" text="0">
-                           <HBox.margin>
-                              <Insets right="30.0" />
-                           </HBox.margin>
-                        </RadioButton>
+                        <ComboBox fx:id="cbStatus" prefHeight="42.0" prefWidth="87.0" />
                      </children>
                   </HBox>
                </children>

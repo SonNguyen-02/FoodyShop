@@ -1,5 +1,10 @@
 package com.foodyshop.main;
 
+import com.foodyshop.controller.AddCategoryController;
+import com.foodyshop.controller.AddCategoryController.IOnAddSuccess;
+import com.foodyshop.controller.AddTopicController;
+import com.foodyshop.controller.AddTopicController.ISOK;
+
 import com.foodyshop.controller.EditCategoryController;
 import com.foodyshop.controller.EditOrderController;
 import com.foodyshop.controller.Order_DetailController;
@@ -48,8 +53,8 @@ public class Navigator {
     private static final String ADD_ORDER_FORM = ROOT_FOLDER + "AddOrderForm.fxml";
     private static final String ADD_CATEGORY_FORM = ROOT_FOLDER + "AddCategoryForm.fxml";
     private static final String EDIT_CATEGORY_FORM = ROOT_FOLDER + "EditCategoryForm.fxml";
-     private static final String EDIT_ORDER_FORM = ROOT_FOLDER + "EditOrderForm.fxml";
-
+    private static final String EDIT_ORDER_FORM = ROOT_FOLDER + "EditOrderForm.fxml";
+    private static final String ADD_TOPIC_FORM = ROOT_FOLDER + "AddTopicForm.fxml";
     // Khai báo di chuyển giữa các màn hình
     public void goToLoginUI() {
         redirectTo("Login", LOGIN_UI);
@@ -91,18 +96,26 @@ public class Navigator {
         controller.initOrderModel(order);
     }
 
-    public void showAddCategory() {
+    public void showAddCategory(IOnAddSuccess mIOnAddSuccess) {
         showModal("Category ", ADD_CATEGORY_FORM);
+        AddCategoryController controller = fxLoader.getController();
+        controller.initCallback(mIOnAddSuccess);
     }
     
      public void showEditCategory() {
         showModal("Edit Category ", EDIT_CATEGORY_FORM);
 
     }
-     public void showEditOrder(OrderModel order) {
+    public void showEditOrder(OrderModel order) {
         showModal("Edit Order", EDIT_ORDER_FORM);
         EditOrderController controller = fxLoader.getController();
         controller.initOrderModel(order);
+    }
+     public void showAddTopic(ISOK mISOK) {
+        showModal("Topic ", ADD_TOPIC_FORM);
+        AddTopicController controller = fxLoader.getController();
+        controller.initTopic(mISOK);
+
     }
     // </editor-fold> 
     private Navigator() {
