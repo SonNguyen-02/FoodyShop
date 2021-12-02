@@ -7,6 +7,8 @@ package com.foodyshop.model;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 /**
  *
@@ -15,81 +17,92 @@ import javafx.beans.property.SimpleObjectProperty;
 public class Order_DetailModel {
 
     ObjectProperty<Integer> id;
-    ObjectProperty<Integer> product_id;
+    StringProperty order_code;
+    StringProperty product_name;
     ObjectProperty<Integer> number;
     ObjectProperty<Integer> price;
     ObjectProperty<Integer> discount;
 
     public Order_DetailModel() {
         this.id = new SimpleObjectProperty<>();
-        this.product_id = new SimpleObjectProperty<>();
+        this.order_code = new SimpleStringProperty();
+        this.product_name = new SimpleStringProperty();
         this.number = new SimpleObjectProperty<>();
         this.price = new SimpleObjectProperty<>();
         this.discount = new SimpleObjectProperty<>();
     }
 
-    public ObjectProperty<Integer> getIdProperty() {
-        return id;
-    }
-
-    public ObjectProperty<Integer> getProduct_idProperty() {
-        return product_id;
-    }
-
-    public ObjectProperty<Integer> getNumberProperty() {
-        return number;
-    }
-
-    public ObjectProperty<Integer> getDiscountProperty() {
-        return discount;
-    }
-
-    public ObjectProperty<Integer> getPriceProperty() {
-        return price;
-    }
-
-    
-    
     public Integer getId() {
         return id.getValue();
     }
 
-    public Integer getProduct_id() {
-        return product_id.getValue();
+    public String getOrder_code() {
+        return order_code.getValue();
     }
 
+    public String getProduct_name() {
+        return product_name.getValue();
+    }
+    
     public Integer getNumber() {
         return number.getValue();
     }
-
-    public Integer getDiscount() {
-        return discount.getValue();
-    }
-
+    
     public Integer getPrice() {
         return price.getValue();
     }
+    
+    public Integer getDiscount() {
+        return discount.getValue();
+    }
+    
+//
+    public ObjectProperty<Integer> getIdProperty() {
+        return id;
+    }
 
- 
-       
+    public StringProperty getOrder_codeProperty() {
+        return order_code;
+    }
+    
+    public StringProperty getProduct_nameProperty() {
+        return product_name;
+    }
+    
+    public ObjectProperty<Integer> getNumberProperty() {
+        return number;
+    }
+    
+    public ObjectProperty<Integer> getPriceProperty() {
+        return price;
+    }
+    
+    public ObjectProperty<Integer> getDiscountProperty() {
+        return discount;
+    }
+//
+    
     public void setId(Integer id) {
         this.id.setValue(id);
     }
 
-    public void setProduct_id(Integer product_id) {
-        this.product_id.setValue(product_id);
+    public void setOrder_code(String order_code) {
+        this.order_code.setValue(order_code);
     }
-
+    
+    public void setProduct_name(String product_name) {
+        this.product_name.setValue(product_name);
+    }
+    
     public void setNumber(Integer number) {
         this.number.setValue(number);
     }
-
+    
     public void setPrice(Integer price) {
         this.price.setValue(price);
     }
-
+    
     public void setDiscount(Integer discount) {
         this.discount.setValue(discount);
     }
-
 }
