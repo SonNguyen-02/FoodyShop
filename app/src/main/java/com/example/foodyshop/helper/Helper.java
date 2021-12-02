@@ -3,7 +3,9 @@ package com.example.foodyshop.helper;
 import static android.content.Context.MODE_PRIVATE;
 
 import static com.example.foodyshop.config.Const.KEY_TOKEN_LOGIN;
+import static com.example.foodyshop.config.Const.KEY_USER_CART;
 import static com.example.foodyshop.config.Const.KEY_USER_OBJ;
+import static com.example.foodyshop.config.Const.KEY_USER_PREFERENCES;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,8 +19,19 @@ import androidx.annotation.NonNull;
 
 import com.example.foodyshop.config.Const;
 import com.example.foodyshop.model.CustomerModel;
+import com.example.foodyshop.model.OrderDetailModel;
 import com.example.foodyshop.service.APIService;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -42,13 +55,95 @@ public class Helper {
     }
 
     @NonNull
-    public static String getTokenLogin(@NonNull SharedPreferences sharedPreferences){
-        return sharedPreferences.getString(Const.KEY_TOKEN_LOGIN, "").trim();
+    public static String convertListOrderDetailToJson(List<OrderDetailModel> listOrderDetail) {
+        Gson gson = new Gson();
+        JsonArray jsonArray = gson.toJsonTree(listOrderDetail).getAsJsonArray();
+        return jsonArray.toString();
     }
 
-    public static boolean isLogin(@NonNull SharedPreferences sharedPreferences) {
-        String token = getTokenLogin(sharedPreferences);
-        Log.e("ddd", "isLogin: Token: " + token );
+    @NonNull
+    public static List<OrderDetailModel> convertJsonToListOrderDetail(String strJson) {
+        List<OrderDetailModel> list = new ArrayList<>();
+        try {
+            JSONArray jsonArray = new JSONArray(strJson);
+            JSONObject jsonObject;
+            OrderDetailModel orderDetail;
+            Gson gson = new Gson();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                jsonObject = jsonArray.getJSONObject(i);
+                orderDetail = gson.fromJson(jsonObject.toString(), OrderDetailModel.class);
+                list.add(orderDetail);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public static void addOrderDetailToCart(Context context, OrderDetailModel mOrderDetail) {
+        SharedPreferences sharedPreferences = getSharedPreferences(context);
+        String listOrderDetailJson = sharedPreferences.getString(KEY_USER_CART, "");
+        List<OrderDetailModel> listOrderDetail;
+        if (!listOrderDetailJson.isEmpty()) {
+            listOrderDetail = convertJsonToListOrderDetail(listOrderDetailJson);
+            boolean isExists = false;
+            for (OrderDetailModel ord : listOrderDetail) {
+                if (mOrderDetail.getId() == ord.getId()) {
+                    ord.setNumber(ord.getNumber() + mOrderDetail.getNumber());
+                    isExists = true;
+                    break;
+                }
+            }
+            if (!isExists) {
+                listOrderDetail.add(mOrderDetail);
+            }
+        } else {
+            listOrderDetail = new ArrayList<>(Collections.singletonList(mOrderDetail));
+        }
+        saveCart(sharedPreferences, listOrderDetail);
+    }
+
+    public static void removeOrderDetailFromCart(Context context, OrderDetailModel mOrderDetail) {
+        SharedPreferences sharedPreferences = getSharedPreferences(context);
+        String listOrderDetailJson = sharedPreferences.getString(KEY_USER_CART, "");
+        if (!listOrderDetailJson.isEmpty()) {
+            List<OrderDetailModel> listOrderDetail = convertJsonToListOrderDetail(listOrderDetailJson);
+            OrderDetailModel tmpOrd = null;
+            for (OrderDetailModel ord : listOrderDetail) {
+                if (mOrderDetail.getId() == ord.getId()) {
+                    tmpOrd = ord;
+                    break;
+                }
+            }
+            if (tmpOrd != null) {
+                listOrderDetail.remove(tmpOrd);
+            }
+            saveCart(sharedPreferences, listOrderDetail);
+        }
+    }
+
+    public static void saveCart(Context context, List<OrderDetailModel> listOrderDetail) {
+        saveCart(getSharedPreferences(context), listOrderDetail);
+    }
+
+    private static void saveCart(@NonNull SharedPreferences sharedPreferences, List<OrderDetailModel> listOrderDetail) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(KEY_USER_CART, convertListOrderDetailToJson(listOrderDetail));
+        editor.apply();
+    }
+
+    public static SharedPreferences getSharedPreferences(@NonNull Context context) {
+        return context.getSharedPreferences(KEY_USER_PREFERENCES, MODE_PRIVATE);
+    }
+
+    @NonNull
+    public static String getTokenLogin(Context context) {
+        return getSharedPreferences(context).getString(Const.KEY_TOKEN_LOGIN, "").trim();
+    }
+
+    public static boolean isLogin(Context context) {
+        String token = getTokenLogin(context);
+        Log.e("ddd", "isLogin: Token: " + token);
         if (!token.isEmpty()) {
             Jws<Claims> jws = JWT.decodeToken(token);
             return jws != null;
@@ -56,12 +151,12 @@ public class Helper {
         return false;
     }
 
-    public static void saveUserInfo(@NonNull SharedPreferences sharedPreferences, String token){
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+    public static void saveUserInfo(Context context, String token) {
+        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
         APIService.getService().getUserInfo(token).enqueue(new Callback<CustomerModel>() {
             @Override
             public void onResponse(@NonNull Call<CustomerModel> call, @NonNull Response<CustomerModel> response) {
-                if(response.isSuccessful() && response.body() != null){
+                if (response.isSuccessful() && response.body() != null) {
                     Gson gson = new Gson();
                     String customerJson = gson.toJson(response.body());
                     editor.putString(KEY_USER_OBJ, customerJson);
@@ -75,16 +170,17 @@ public class Helper {
         });
     }
 
-    public static CustomerModel getUserInfo(@NonNull SharedPreferences sharedPreferences){
-        String customerJson = sharedPreferences.getString(KEY_USER_OBJ, "");
+    public static CustomerModel getUserInfo(Context context) {
+        String customerJson = getSharedPreferences(context).getString(KEY_USER_OBJ, "");
         Gson gson = new Gson();
         return gson.fromJson(customerJson, CustomerModel.class);
     }
 
-    public static void logOut(@NonNull SharedPreferences sharedPreferences){
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+    public static void logOut(Context context) {
+        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
         editor.remove(KEY_TOKEN_LOGIN);
         editor.remove(KEY_USER_OBJ);
         editor.apply();
     }
+
 }

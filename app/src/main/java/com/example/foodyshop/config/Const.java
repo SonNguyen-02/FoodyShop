@@ -7,7 +7,9 @@ public class Const {
 
     public static final String KEY_USER_PREFERENCES = "key_user_preferences";
     public static final String KEY_USER_OBJ = "key_user_obj";
+    public static final String KEY_USER_CART = "key_user_cart";
     public static final String KEY_TOKEN_LOGIN = "key_token_login";
+    public static final String KEY_CALLBACK = "key_callback";
 
     public static final String KEY_TOPIC = "key_topic";
     public static final String KEY_CATEGORY = "key_category";
@@ -37,6 +39,7 @@ public class Const {
     public static final String KEY_CONTENT = "content";
 
     public static final String KEY_CURRENT_PAGE = "current_page";
+    public static final String KEY_OFFSET = "offset";
     public static final String KEY_IS_SALE = "is_sale";
 
 

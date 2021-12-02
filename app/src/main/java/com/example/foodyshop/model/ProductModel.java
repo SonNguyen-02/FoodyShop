@@ -14,6 +14,9 @@ public class ProductModel implements Serializable {
     @SerializedName("category_id")
     @Expose
     private int categoryId;
+    @SerializedName("sale_id")
+    @Expose
+    private Integer saleId;
     @SerializedName("name")
     @Expose
     private String name;
@@ -25,7 +28,7 @@ public class ProductModel implements Serializable {
     private int price;
     @SerializedName("discount")
     @Expose
-    private int discount;
+    private Integer discount;
     @SerializedName("img")
     @Expose
     private String img;
@@ -52,6 +55,14 @@ public class ProductModel implements Serializable {
         this.categoryId = categoryId;
     }
 
+    public Integer getSaleId() {
+        return saleId;
+    }
+
+    public void setSaleId(Integer saleId) {
+        this.saleId = saleId;
+    }
+
     public String getName() {
         return name;
     }
@@ -76,11 +87,11 @@ public class ProductModel implements Serializable {
         this.price = price;
     }
 
-    public int getDiscount() {
+    public Integer getDiscount() {
         return discount;
     }
 
-    public void setDiscount(int discount) {
+    public void setDiscount(Integer discount) {
         this.discount = discount;
     }
 
@@ -108,8 +119,12 @@ public class ProductModel implements Serializable {
         this.status = status;
     }
 
-    public int getPriceSale(){
-        return (int) (price - price * discount / 100);
+    public int getPriceSale() {
+        if (discount == null) {
+            return price;
+        } else {
+            return (int) (price - price * discount / 100);
+        }
     }
 
 }

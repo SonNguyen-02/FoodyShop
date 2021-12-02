@@ -4,10 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.8dp"
-        android:background="@color/colorTextSecond" />
+    <include layout="@layout/divider" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -72,7 +69,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8sp"
                     android:background="@drawable/custom_bg_feedback_item_btn"
-                    android:padding="4dp"
+                    android:paddingStart="8dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="4dp"
                     android:text="@string/delete"
                     android:textColor="@color/md_red_600"
                     android:visibility="gone" />

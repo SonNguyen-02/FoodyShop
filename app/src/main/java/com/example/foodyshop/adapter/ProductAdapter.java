@@ -97,7 +97,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.imgProduct.setImageResource(R.drawable.test_product_icon);
         holder.tvName.setText(product.getName());
         holder.tvPriceSale.setText(format.format(product.getPriceSale()));
-        if (product.getDiscount() > 0) {
+        if (product.getDiscount() != null) {
             holder.tvDiscount.setText(product.getDiscount() + "%");
             holder.tvPrice.setText(format.format(product.getPrice()));
             holder.tvPrice.setPaintFlags(holder.tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);

@@ -27,7 +27,7 @@ public class LoadingDialog {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         View view = LayoutInflater.from(activity).inflate(R.layout.dialog_loading, null);
         if(message != null && !message.trim().isEmpty()){
-            TextView tvMessLoad = view.findViewById(R.id.tv_mess_loading);
+            TextView tvMessLoad = view.findViewById(R.id.tv_message);
             tvMessLoad.setText(message);
         }
         builder.setView(view);

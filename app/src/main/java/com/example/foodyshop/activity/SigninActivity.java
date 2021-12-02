@@ -133,9 +133,9 @@ public class SigninActivity extends AppCompatActivity {
                     Respond res = response.body();
                     if (res.isSuccess()) {
                         // lưu token mới khi đăng nhập thành công
-                        SharedPreferences sharedPreferences = getSharedPreferences(Const.KEY_USER_PREFERENCES, MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        Helper.saveUserInfo(sharedPreferences, res.getMsg());
+
+                        SharedPreferences.Editor editor = Helper.getSharedPreferences(getApplicationContext()).edit();
+                        Helper.saveUserInfo(getApplicationContext(), res.getMsg());
                         editor.putString(Const.KEY_TOKEN_LOGIN, res.getMsg());
                         editor.apply();
 

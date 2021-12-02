@@ -1,7 +1,6 @@
 package com.example.foodyshop.activity;
 
 import static com.example.foodyshop.config.Const.KEY_TOPIC;
-import static com.example.foodyshop.config.Const.KEY_USER_PREFERENCES;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,10 +10,8 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,15 +21,9 @@ import android.widget.TextView;
 import com.example.foodyshop.R;
 import com.example.foodyshop.adapter.HomeViewPagerAdapter;
 import com.example.foodyshop.adapter.TopicAdapter;
-import com.example.foodyshop.dialog.NoticeToast;
-import com.example.foodyshop.fragment.AccountFragment;
-import com.example.foodyshop.fragment.HomeFragment;
 import com.example.foodyshop.fragment.TopicFragment;
-import com.example.foodyshop.fragment.NotificationFragment;
-import com.example.foodyshop.fragment.OrderFragment;
 import com.example.foodyshop.fragment.SearchFragment;
 import com.example.foodyshop.helper.Helper;
-import com.example.foodyshop.model.CustomerModel;
 import com.example.foodyshop.model.TopicModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -59,9 +50,8 @@ public class MainActivity extends AppCompatActivity implements TopicAdapter.IOnc
         setContentView(R.layout.activity_main);
 
         // init account if login
-        SharedPreferences sharedPreferences = getSharedPreferences(KEY_USER_PREFERENCES, MODE_PRIVATE);
-        if(Helper.isLogin(sharedPreferences)){
-            Helper.currentAccount = Helper.getUserInfo(sharedPreferences);
+        if (Helper.isLogin(getApplicationContext())) {
+            Helper.currentAccount = Helper.getUserInfo(getApplicationContext());
         }
 
         initUi();

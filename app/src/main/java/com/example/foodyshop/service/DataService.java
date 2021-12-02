@@ -88,7 +88,7 @@ public interface DataService {
     @POST("get_feedback_in_product")
     Call<List<FeedbackModel>> getAllFeedbackInProduct(@Field(Const.KEY_TOKEN) String token,
                                                       @Field(Const.KEY_PRODUCT_ID) int productId,
-                                                      @Field(Const.KEY_CURRENT_PAGE) int currentPage);
+                                                      @Field(Const.KEY_OFFSET) int offset);
 
     //    =========== Order =============
     @FormUrlEncoded

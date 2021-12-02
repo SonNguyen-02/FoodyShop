@@ -2,6 +2,7 @@ package com.example.foodyshop.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +55,6 @@ public class FeedbackAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         void onClickEditFeedback(FeedbackModel feedback);
 
         void onClickDeleteFeedback(FeedbackModel feedback);
-
     }
 
     public void setTotalFeedback(int totalFeedback) {
@@ -79,8 +79,9 @@ public class FeedbackAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public void removeFeedback(FeedbackModel feedback) {
         if (mListFeedback.contains(feedback)) {
+            totalFeedback--;
             int pos = mListFeedback.indexOf(feedback);
-            mListFeedback.remove(feedback);
+            mListFeedback.remove(pos);
             notifyItemRemoved(pos);
         }
     }
@@ -89,8 +90,20 @@ public class FeedbackAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (mListFeedback == null) {
             mListFeedback = new ArrayList<>();
         }
+        totalFeedback++;
         mListFeedback.add(0, feedback);
         notifyItemInserted(0);
+    }
+
+    public int getSize() {
+        if (mListFeedback != null) {
+            if (isLoadingAdd) {
+                return mListFeedback.size() - 1;
+            } else {
+                return mListFeedback.size();
+            }
+        }
+        return 0;
     }
 
     @Override
@@ -136,6 +149,9 @@ public class FeedbackAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 viewHolder.tvDelete.setVisibility(View.VISIBLE);
                 viewHolder.tvEdit.setOnClickListener(v -> mIOnClickCallback.onClickEditFeedback(feedback));
                 viewHolder.tvDelete.setOnClickListener(v -> mIOnClickCallback.onClickDeleteFeedback(feedback));
+            } else {
+                viewHolder.tvEdit.setVisibility(View.GONE);
+                viewHolder.tvDelete.setVisibility(View.GONE);
             }
         } else {
             LoadingViewHolder viewHolder = (LoadingViewHolder) holder;

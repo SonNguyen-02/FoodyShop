@@ -4,19 +4,19 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="50dp">
+    android:padding="32dp">
 
     <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="36dp"
+        android:layout_height="36dp" />
 
     <TextView
-        android:id="@+id/tv_mess_loading"
+        android:id="@+id/tv_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:text="Loading ..."
         android:textColor="@color/colorTextSecond"
-        android:textSize="16sp" />
+        android:textSize="15sp" />
 
 </LinearLayout>
