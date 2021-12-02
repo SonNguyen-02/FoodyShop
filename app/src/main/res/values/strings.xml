@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name">Foody Shop</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_sale">Giảm giá</string>
+    <string name="menu_order">Đơn hàng</string>
+    <string name="menu_notification">Thông báo</string>
+    <string name="menu_account">Tài khoản</string>
+    <string name="title_topic">Danh mục sản phẩm</string>
+    <string name="filter">Lọc</string>
+    <string name="on_sale">Đang giảm giá</string>
+
+    <!--    <string name="price_vnd"><strike>160.000<u>đ</u></strike></string>-->
+
+    <string name="hint_fullname">Full name</string>
+    <string name="hint_password">Password</string>
+    <string name="button_sign_in">Sign in</string>
+    <string name="button_sign_up">Sign up</string>
+    <string name="button_change_password">Change password</string>
+    <string name="button_next">Next</string>
+    <string name="button_verify">Verify</string>
+    <string name="button_send_otp">Send OTP</string>
+    <string name="text_forgot_password">Forgot password?</string>
+    <string name="text_signin_message">Hello, sign in to your account</string>
+    <string name="text_signin_signup">Don\'t have an account? <b>Sign up</b></string>
+    <string name="text_signup_terms">By signing up, you agree to our <b>terms and conditions</b></string>
+    <string name="text_signup_message">Hello, let\'s set up your account</string>
+
+    <string name="text_forgot_password_title">Forgot password? No worries</string>
+    <string name="text_forgot_password_message">We will send you a OTP to reset your password</string>
+
+    <string name="hint_email">Email</string>
+    <string name="hint_phone">Phone</string>
+    <string name="hint_confirm_password">Confirm Password</string>
+
+    <string name="product_detail">Chi tiết sản phẩm</string>
+    <string name="product_name">Ba rọi heo khay 500g</string>
+    <string name="product_price_sale">đ169.000</string>
+    <string name="product_price">đ320.000</string>
+    <string name="product_discount">33%</string>
+    <string name="decrease">GIẢM</string>
+    <string name="introduce_product">Giới thiệu sản phẩm</string>
+    <string name="description_product">Ba rọi heo của thương hiệu CP đạt các tiêu chuẩn về an toàn thực phẩm, đảm bảo chất lượng, độ tươi ngon. Thịt heo mềm, vân nạc, mỡ rõ ràng nên rất phù hợp làm nguyên liệu để nấu thịt kho hột vịt, thịt nướng BBQ.</string>
+    <string name="feedback_product">Đánh giá sản phẩm</string>
+    <string name="total_feedback">({0} đánh giá)</string>
+    <string name="no_have_feedback">(Chưa có đánh giá)</string>
+    <string name="add_feedback">Thêm đánh giá</string>
+    <string name="feedback">Đánh giá:</string>
+    <string name="hind_feedback">Mời anh/chị đánh giá về sản phẩm</string>
+    <string name="add_to_cart">Thêm giỏ hàng</string>
+    <string name="buy_now">Mua ngay</string>
+    <string name="send_feedback">Gửi</string>
+    <string name="cancel_feedback">Hủy</string>
+    <string name="see_more_feedback">Xem thêm {0} đánh giá</string>
+
+    <string name="add_feed_success">Thêm đánh giá thành công</string>
+
+    <string name="edit">Chỉnh sửa</string>
+    <string name="delete">Xóa</string>
+    <string name="confirm">Xác nhận</string>
+
+    <string name="change_password_success">Đổi mật khẩu thành công!</string>
+    <string name="ok">OK</string>
+</resources>

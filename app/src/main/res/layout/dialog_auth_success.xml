@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingTop="20dp">
+
+    <ImageView
+        android:id="@+id/img_icon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/resetpw_success" />
+
+    <TextView
+        android:id="@+id/tv_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="@string/change_password_success"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/btn_ok"
+        style="@style/ButtonSigninSignup"
+        android:layout_width="100dp"
+        android:layout_height="32dp"
+        android:textSize="11sp"
+        android:layout_marginBottom="24dp"
+        android:text="@string/ok" />
+</LinearLayout>

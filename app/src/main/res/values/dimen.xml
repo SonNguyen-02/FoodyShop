@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="space_view">8dp</dimen>
+
+    <!-- topic-->
+    <dimen name="item_topic_height">50dp</dimen>
+
+    <!-- category  -->
+    <dimen name="item_category_height">50dp</dimen>
+    <dimen name="item_category_width">88dp</dimen>
+
+    <!-- product  -->
+    <dimen name="item_product_width">150dp</dimen>
+    <dimen name="inp_mar_top">16dp</dimen>
+
+</resources>

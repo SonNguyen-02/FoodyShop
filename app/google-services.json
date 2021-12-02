@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "982818785280",
+    "project_id": "foodyshop-ba37e",
+    "storage_bucket": "foodyshop-ba37e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:982818785280:android:f65695493353253119b0e5",
+        "android_client_info": {
+          "package_name": "com.example.foodyshop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "982818785280-rnmh3oh83mruot3o5f7efebv1o63gb2p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.foodyshop",
+            "certificate_hash": "cb7b3dbd057538ded7c7a015eb1ef00f84381f51"
+          }
+        },
+        {
+          "client_id": "982818785280-taup7e923a71slh9u6sunk043su8816r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJfOH_Aq00DtChHs8yjFs5S8IrChc9Ijo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "982818785280-taup7e923a71slh9u6sunk043su8816r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

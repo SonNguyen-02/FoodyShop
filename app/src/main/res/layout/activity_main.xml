@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fl_main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:contentInsetEnd="0dp"
+                app:contentInsetStart="0dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/space_view">
+
+                    <ImageView
+                        android:id="@+id/img_menu_category"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/ripple_circle_effect"
+                        android:padding="@dimen/space_view"
+                        android:src="@drawable/ic_menu_song_line"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tv_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/space_view"
+                        android:layout_marginEnd="@dimen/space_view"
+                        android:layout_toStartOf="@id/img_search"
+                        android:layout_toEndOf="@id/img_menu_category"
+                        android:text="@string/app_name"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:visibility="gone" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_search"
+                        android:layout_width="match_parent"
+                        android:layout_height="36dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/space_view"
+                        android:layout_marginEnd="@dimen/space_view"
+                        android:layout_toStartOf="@id/img_cart"
+                        android:layout_toEndOf="@id/img_menu_category"
+                        android:background="@drawable/custom_edt_search_home"
+                        android:visibility="visible">
+
+                        <ImageView
+                            android:id="@+id/img_search_ic"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:background="@color/white"
+                            android:padding="5dp"
+                            android:src="@drawable/ic_search"
+                            app:tint="@android:color/darker_gray" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@id/img_search_ic"
+                            android:gravity="center"
+                            android:text="Search"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="16sp" />
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:id="@+id/img_search"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="@dimen/space_view"
+                        android:layout_toStartOf="@id/img_cart"
+                        android:padding="@dimen/space_view"
+                        android:src="@drawable/ic_search"
+                        android:visibility="gone"
+                        app:tint="@color/white" />
+
+                    <ImageView
+                        android:id="@+id/img_cart"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/ripple_circle_effect"
+                        android:padding="4dp"
+                        android:src="@drawable/ic_cart"
+                        app:tint="@color/white" />
+                </RelativeLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/view_pager2_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/menu_nav"
+            android:layout_below="@id/app_bar_layout" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/menu_nav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            app:itemIconTint="@color/custom_color_menu_main"
+            app:itemTextColor="@color/custom_color_menu_main"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/menu_home" />
+    </RelativeLayout>
+
+</FrameLayout>
