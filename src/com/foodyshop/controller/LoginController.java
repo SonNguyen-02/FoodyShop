@@ -7,12 +7,14 @@ package com.foodyshop.controller;
 
 import com.foodyshop.helper.StaffHelper;
 import com.foodyshop.main.Navigator;
+import com.foodyshop.model.StaffModel;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -26,6 +28,7 @@ public class LoginController implements Initializable {
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
@@ -33,9 +36,9 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-    }    
-    
-     @FXML
+    }
+
+    @FXML
     private PasswordField passPassword;
 
     @FXML
@@ -44,25 +47,48 @@ public class LoginController implements Initializable {
     @FXML
     private TextField txtEmail;
 
-      @FXML
+    @FXML
     void onClickSignIn(ActionEvent event) throws SQLException {
-        Navigator.getInstance().goToMainLayout();
-        //..
-//        StaffModel staff = StaffHelper.getStaffByEmail(txtEmail.getText());
-//        if(staff==null){
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setContentText("Account not exit!");
-//            alert.show();
-//        }else{
-//            if(staff.getPassword().equals(passPassword.getText())){
-//                Navigator.getInstance().goToMainLayout();
-//            }else{
-//                 Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setContentText("Password is incorected!");
-//            alert.show();
-//            }
-//        }
-    }
+        // Navigator.getInstance().goToMainLayout();
+
+        StaffModel staff = StaffHelper.getStaffByEmail(txtEmail.getText());
+
+        String username = txtEmail.getText();
+        String regexUsername = "[a-zA-z0-9_\\.]{3,20}@[a-zA-Z0-9_\\.]{3,10}\\.[a-zA-Z0-9_\\.]{2,5}";
+        String password = passPassword.getText();
+        String regexPassword = "^[A-Z]{1}.*[a-zA-Z0-9].+{8,}$";
+
+        if (username.matches(regexUsername)) {
+            if (password.matches(regexPassword)) {
+                if (staff == null) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Account not exited!");
+                    alert.show();
+                } else {
+                    if (staff.getPassword().equals(passPassword.getText())) {
+                        Navigator.getInstance().goToMainLayout();
+                        
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setContentText("Password is incorected!");
+                        alert.show();
+                    }
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("error password");
+                alert.setContentText("password invalid");
+                alert.show();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("error email");
+            alert.setContentText("email invalid");
+            alert.show();
+        }
+
+        }
+}
 //      @FXML
 //    void onclickConfirm(ActionEvent event) {
 //        if (FormHelper.IsEmptyField(txtCode, lbCode, "Please enter the product code")
@@ -146,5 +172,3 @@ public class LoginController implements Initializable {
 //        }
 //        stage.close();
 //    }
-
-}

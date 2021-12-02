@@ -78,6 +78,11 @@ public class Navigator {
         return instance;
     }
 
+    
+    public void goToFeedback(){
+        redirectTo("FeedBack", "FeedbackUI.fxml");
+    }
+    
     public void redirectTo(String title, String URL) {
         try {
             fxLoader = new FXMLLoader(getClass().getResource(URL));
@@ -134,6 +139,10 @@ public class Navigator {
 
     public void setModalStage(Stage modalStage) {
         this.modalStage = modalStage;
+    }
+
+    public void goToFeedback(BorderPane rightLayout) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
