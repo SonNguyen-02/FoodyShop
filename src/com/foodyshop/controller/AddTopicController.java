@@ -7,12 +7,21 @@ package com.foodyshop.controller;
 
 import com.foodyshop.helper.FormHelper;
 import com.foodyshop.helper.TopicHelper;
+import com.foodyshop.main.Const;
+import static com.foodyshop.main.Const.PLACEHOLDER_IMG_PATH;
 import com.foodyshop.main.Navigator;
+import com.foodyshop.main.UploadImageToApi;
 import com.foodyshop.model.CategoryModel;
+import com.foodyshop.model.Respond;
 import com.foodyshop.model.TopicModel;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -33,27 +42,12 @@ import javafx.stage.Stage;
  */
 public class AddTopicController implements Initializable {
 
-    private ISOK mISOK;
     private Stage stage;
 
-    
+    private File imgTopicFile;
 
-    public interface ISOK {
-
-        void OK(TopicModel topicModel);
-    }
-
-    public void initTopic(ISOK mISOK) {
-        this.mISOK = mISOK;
-    }
-    private File fileChoose;
     @FXML
-    private TextField txtName;
-    
-    @FXML
-    private TextField txtID;
-    @FXML
-    private ImageView img;
+    private Button btnCancel;
 
     @FXML
     private Button btnChooseFile;
@@ -62,73 +56,124 @@ public class AddTopicController implements Initializable {
     private Button btnSave;
 
     @FXML
-    private Button btnCancel;
+    private ImageView imgTopic;
 
     @FXML
-    private Label lbChooseFile;
+    private TextField txtName;
+    
+    private IOnInsertTopicSuccess mIOnInsertTopicSuccess;
 
+    public interface IOnInsertTopicSuccess {
+
+        void callback(TopicModel topic);
+    }
+
+    public void initData(Stage stage, IOnInsertTopicSuccess mIOnInsertTopicSuccess) {
+        this.stage = stage;
+        this.mIOnInsertTopicSuccess = mIOnInsertTopicSuccess;
+    }
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-       btnSave.setOnMouseClicked(this::onClickSave);
-       btnCancel.setOnMouseClicked(this::onClickCancel);
-       btnChooseFile.setOnMouseClicked(this::onClickChooseFile);
-    }    
-    private void onClickSave(MouseEvent e) {
-        if ( txtID.getText().equals("") && txtName.getText().equals("")) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("ERROR");
-            alert.setHeaderText("Name and id must be entered");
-            alert.show();
-            return;}           
-//        } else {           
-//            TopicModel topicModel = TopicHelper.insertTopic(txtName.getText(),img.getImage(), txtID.getText());
-//            if (topicModel != null) {
-//                mISOK.OK(topicModel);
-//                Navigator.getInstance().getModalStage().close();
-//                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//                alert.setTitle("SUCCESS");
-//                alert.setHeaderText("Insert success");
-//                alert.show();
-//            } else {
-//                Alert alert = new Alert(Alert.AlertType.ERROR);
-//                alert.setTitle("ERROR");
-//                alert.setHeaderText("Insert false!");
-//                alert.show();
-//            }
-//        }
+    public void initialize(URL location, ResourceBundle resources) {
+        setDefaultImg(btnChooseFile, imgTopic);
+        btnSave.setOnMouseClicked(this::onClickSave);
+        btnCancel.setOnMouseClicked(this::onClickCancel);
+        btnChooseFile.setOnMouseClicked(this::onClickChooseFile);
     }
-    
-    private void onClickCancel(MouseEvent e){
+
+    private void onClickChooseFile(MouseEvent e) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose image to upload");
+        File fileChoose = fileChooser.showOpenDialog(stage);
+        imgTopicFile = fileChoose;
+        if (fileChoose != null) {
+            btnChooseFile.setText(fileChoose.getName());
+            if (isImage(fileChoose.getName())) {
+                imgTopic.setImage(new Image("file:" + fileChoose.getPath()));
+                System.out.println(fileChoose.getPath());
+            } else {
+                setDefaultImg(btnChooseFile, imgTopic);
+                System.out.println("File isn't image!");
+            }
+        } else {
+            setDefaultImg(btnChooseFile, imgTopic);
+        }
+    }
+
+    private void onClickSave(MouseEvent e) {
+        String name = txtName.getText().trim();
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        if (name.isEmpty()) {
+            txtName.requestFocus();
+            alert.setHeaderText("Please enter topic name");
+            alert.show();
+            return;
+        }
+        if (imgTopicFile == null) {
+            alert.setHeaderText("Please choose a file img");
+            alert.show();
+            return;
+        }
+        if (!isImage(imgTopicFile.getName())) {
+            setDefaultImg(btnChooseFile, imgTopic);
+            alert.setHeaderText("File isn't image!");
+            alert.show();
+            return;
+        }
+
+        try {
+            if (isImage(imgTopicFile.getName())) {
+                // call API
+                Respond respond = UploadImageToApi.uploadImageToApi(imgTopicFile, Const.TYPE_TOPIC);
+                if (respond.isSuccess()) {
+                    TopicModel topic = new TopicModel();
+                    topic.setName(name);
+                    topic.setImg(respond.getMsg());
+                    // Insert to database
+                    topic = TopicHelper.insertTopic(topic);
+                    if (topic == null) {
+                        Alert alerts = new Alert(Alert.AlertType.ERROR);
+                        alerts.setTitle("Error");
+                        alerts.setHeaderText("Add false");
+                        alerts.show();
+                    } else {
+                        stage.close();
+                        Alert alerts = new Alert(Alert.AlertType.INFORMATION);
+                        alerts.setTitle("Success");
+                        alerts.setHeaderText("Add success!");
+                        alerts.show();
+                        mIOnInsertTopicSuccess.callback(topic);
+                    }
+                } else {
+                    Alert alerts = new Alert(Alert.AlertType.ERROR);
+                    alerts.setTitle("Error");
+                    alerts.setHeaderText("Add false");
+                    alerts.show();
+                }
+            } else {
+                Alert alerts = new Alert(Alert.AlertType.ERROR);
+                alerts.setTitle("Error");
+                alerts.setHeaderText("File isn't image!");
+                alerts.show();
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(TestDemoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private void onClickCancel(MouseEvent e) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Close");
         alert.setHeaderText("Do you want close?");
         alert.showAndWait().ifPresent(btnType -> {
-            if(btnType == ButtonType.OK){
+            if (btnType == ButtonType.OK) {
                 Navigator.getInstance().getModalStage().close();
             }
         });
-        
     }
-    private void onClickChooseFile(MouseEvent e) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose image to upload");
-        fileChoose = fileChooser.showOpenDialog(stage);
-        if (fileChoose != null) {
-            btnChooseFile.setText(fileChoose.getName());
-            if (isImage(fileChoose.getName())) {
-                img.setImage(new Image("file:" + fileChoose.getPath()));
-                FormHelper.resetErr(btnChooseFile, lbChooseFile);
-            } else {
-                img.setImage(null);
-                lbChooseFile.setText("The file is not an image");
-            }
-        } else {
-            img.setImage(null);
-            btnChooseFile.setText("Choose File");
-            FormHelper.resetErr(btnChooseFile, lbChooseFile);
-        }
-    }
+
     private boolean isImage(String name) {
         int index = name.lastIndexOf(".");
         if (!name.endsWith(".") && index != -1) {
@@ -142,4 +187,10 @@ public class AddTopicController implements Initializable {
         }
         return false;
     }
+
+    private void setDefaultImg(Button btnChoose, ImageView imgView) {
+        btnChoose.setText("Choose files");
+        imgView.setImage(new Image("file:" + PLACEHOLDER_IMG_PATH));
+    }
+
 }

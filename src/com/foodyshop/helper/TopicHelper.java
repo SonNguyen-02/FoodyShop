@@ -27,7 +27,7 @@ public class TopicHelper {
 
     private static DBQuery db = DBQueryBuilder.newDBQuery();
 
-    public static ObservableList<TopicModel> getAllTopic(){
+    public static ObservableList<TopicModel> getAllTopic() {
         ObservableList<TopicModel> listTopic = FXCollections.observableArrayList();
         String sql = db.select().from("fs_topic").orderByDESC("id").getCompiledSelect(true);
         ResultSet rs = DBConnection.execSelect(sql);
@@ -48,12 +48,13 @@ public class TopicHelper {
         }
         return listTopic;
     }
+
     public static boolean delete(TopicModel topic) {
         try {
             String sql = "delete from fs_topic where id = ?";
             PreparedStatement stm = DBConnection.getConnection().prepareStatement(sql);
             stm.setInt(1, topic.getId());
-            if(stm.executeUpdate() > 0){
+            if (stm.executeUpdate() > 0) {
                 return true;
             }
         } catch (SQLException ex) {
@@ -61,12 +62,12 @@ public class TopicHelper {
         }
         return false;
     }
-     public static TopicModel insertTopic( int id,String name, String img) {
 
+    public static TopicModel insertTopic(TopicModel topic) {
         String sql = db.insert("fs_topic")
-                .set("id", String.valueOf(id))
-                .set("name", name).getCompiledInsert(true);
-                
+                .set("name", topic.getName())
+                .set("img", topic.getImg())
+                .getCompiledInsert(true);
 
         int lastId = DBConnection.execInsert(sql);
         if (lastId > 0) {
@@ -74,12 +75,9 @@ public class TopicHelper {
                 sql = db.select().from("fs_topic").where("id", String.valueOf(lastId)).getCompiledSelect(true);
                 ResultSet rs = DBConnection.execSelect(sql);
                 if (rs.next()) {
-                    TopicModel topic = new TopicModel();
                     topic.setId(lastId);
-                    topic.setName(name);
-                    topic.setStatus(0);
-                    topic.getImg();
                     topic.setCreated(rs.getString("created"));
+                    topic.setStatus(0);
                     return topic;
                 }
             } catch (SQLException ex) {
@@ -90,7 +88,6 @@ public class TopicHelper {
         }
         return null;
     }
+    
 
-
- 
 }

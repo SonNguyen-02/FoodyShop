@@ -9,6 +9,7 @@ import com.foodyshop.helper.FormHelper;
 import com.foodyshop.main.Config;
 import com.foodyshop.main.Const;
 import com.foodyshop.main.UploadImageToApi;
+import com.foodyshop.model.Respond;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,6 +28,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -63,7 +65,7 @@ public class TestDemoController implements Initializable {
         System.out.println(imgRespond);
         String imgSource = "https://tse4.mm.bing.net/th?id=OIP.wX0A09xQ0T-5ZkJYg__SywHaJ4&pid=Api&P=0&w=150&h=200";
         imgRespond.setImage(new Image(imgSource, true));
-        
+
         btnChooseFile.setOnMouseClicked(this::onClickChooseFile);
         btnCall.setOnMouseClicked(this::onClickCallApi);
     }
@@ -87,10 +89,18 @@ public class TestDemoController implements Initializable {
             FormHelper.resetErr(btnChooseFile, lbChooseFile);
         }
     }
-    
-    private void onClickCallApi(MouseEvent e){
+
+    private void onClickCallApi(MouseEvent e) {
         try {
-            UploadImageToApi.uploadImageToApi(fileChoose, Const.TYPE_FOOD, "211127c9b4ec1f19109d20c2ff239f38.jpg");
+            if (isImage(fileChoose.getName())) {
+                Respond respond = UploadImageToApi.uploadImageToApi(fileChoose, Const.TYPE_FOOD, "abc.def");
+                System.out.println(respond);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("File isn't image!");
+                alert.show();
+            }
         } catch (IOException ex) {
             Logger.getLogger(TestDemoController.class.getName()).log(Level.SEVERE, null, ex);
         }

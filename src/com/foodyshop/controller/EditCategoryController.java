@@ -12,6 +12,7 @@ import com.foodyshop.model.CategoryModel;
 import com.foodyshop.model.TopicModel;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,7 +32,9 @@ import javafx.scene.input.MouseEvent;
  */
 public class EditCategoryController implements Initializable {
     private ObservableList<TopicModel> topicList;
-    private ObservableList<CategoryModel> statusList;
+    
+    private CategoryModel category;
+    
     @FXML
     private TextField txtName;
 
@@ -45,27 +48,39 @@ public class EditCategoryController implements Initializable {
     private ComboBox<TopicModel> cbTopic;
 
     @FXML
-    private ComboBox<CategoryModel> cbStatus;
+    private ComboBox<String> cbStatus;
 
+    // nhận hàng từ bảng Category
+    public void setData(CategoryModel category){
+        this.category = category;
+        
+        txtName.setText(category.getName());
+
+        topicList = TopicHelper.getAllTopic();
+        if (topicList != null && !topicList.isEmpty()) {
+            cbTopic.setItems(topicList);
+//            cbTopic.setValue(topicList.get(0));
+            for (TopicModel topic : topicList) {
+                if(topic.getId() == category.getTopic_id()){
+                    cbTopic.setValue(topic);
+                    break;
+                }
+            }
+        }
+        // set mac dinh val cho checkbox
+        cbStatus.setItems(FXCollections.observableArrayList(CategoryModel.SHOW, CategoryModel.HIDDEN));
+        cbStatus.setValue(category.getStatusVal().get());
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         btnSave.setOnMouseClicked(this::onClickSave);
         btnCancel.setOnMouseClicked(this::onClickCancel);
-        topicList = TopicHelper.getAllTopic();
-        if (topicList != null && !topicList.isEmpty()) {
-            cbTopic.setItems(topicList);
-            cbTopic.setValue(topicList.get(0));
-        }
-       statusList = CategoryHelper.getAllCategory();
-        if (statusList != null && !statusList.isEmpty()) {
-            cbStatus.setItems(statusList);
-            cbStatus.setValue(statusList.get(0));
-        
-        } 
     }  
     private void onClickSave(MouseEvent e) {
         
-        
+        System.out.println(cbStatus.getValue());
+        category.setStatusVal(cbStatus.getValue());
     }
     
     private void onClickCancel(MouseEvent e){

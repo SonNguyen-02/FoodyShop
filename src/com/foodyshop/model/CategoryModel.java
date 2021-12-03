@@ -11,12 +11,16 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class CategoryModel {
+    
+    public static final String HIDDEN = "Hidden";
+    public static final String SHOW = "Show";
 
-    ObjectProperty<Integer> id;
-    ObjectProperty<Integer> topic_id;
-    StringProperty name;
-    StringProperty created;
-    ObjectProperty<Integer> status;
+    private ObjectProperty<Integer> id;
+    private ObjectProperty<Integer> topic_id;
+    private StringProperty name;
+    private StringProperty created;
+    private ObjectProperty<Integer> status;
+    private StringProperty statusVal;
 
     public CategoryModel() {
         this.id = new SimpleObjectProperty<>();
@@ -24,6 +28,7 @@ public class CategoryModel {
         this.name = new SimpleStringProperty();
         this.created = new SimpleStringProperty();
         this.status = new SimpleObjectProperty<>();
+        statusVal = new SimpleStringProperty();
     }
 
     public Integer getId() {
@@ -65,6 +70,19 @@ public class CategoryModel {
     public ObjectProperty<Integer> getStatusProperty() {
         return status;
     }
+    
+    public void setStatusVal(String status){
+        this.statusVal.set(status);
+        if(status.equals(SHOW)){
+            this.status.set(0);
+        }else{
+            this.status.set(1);
+        }
+    }
+    
+    public StringProperty getStatusVal(){
+        return statusVal;
+    }
 
     public void setId(Integer id) {
         this.id.setValue(id);
@@ -84,6 +102,11 @@ public class CategoryModel {
 
     public void setStatus(Integer status) {
         this.status.setValue(status);
+        if(status == 0){
+            this.statusVal.setValue(SHOW);
+        }else{
+            this.statusVal.setValue(HIDDEN);
+        }
     }
     
 

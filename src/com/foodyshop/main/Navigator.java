@@ -3,7 +3,7 @@ package com.foodyshop.main;
 import com.foodyshop.controller.AddCategoryController;
 import com.foodyshop.controller.AddCategoryController.IOnAddSuccess;
 import com.foodyshop.controller.AddTopicController;
-import com.foodyshop.controller.AddTopicController.ISOK;
+import com.foodyshop.controller.AddTopicController.IOnInsertTopicSuccess;
 
 import com.foodyshop.controller.EditCategoryController;
 import com.foodyshop.controller.Order_DetailController;
@@ -100,15 +100,16 @@ public class Navigator {
         controller.initCallback(mIOnAddSuccess);
     }
 
-    public void showEditCategory() {
+    public void showEditCategory(CategoryModel category) {
         showModal("Edit Category ", EDIT_CATEGORY_FORM);
-
+        EditCategoryController controller = fxLoader.getController();
+        controller.setData(category);
     }
 
-    public void showAddTopic(ISOK mISOK) {
+    public void showAddTopic(IOnInsertTopicSuccess mIOnInsertTopicSuccess) {
         showModal("Topic ", ADD_TOPIC_FORM);
         AddTopicController controller = fxLoader.getController();
-        controller.initTopic(mISOK);
+        controller.initData(modalStage, mIOnInsertTopicSuccess);
 
     }
 
