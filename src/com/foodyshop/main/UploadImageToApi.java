@@ -8,6 +8,8 @@ package com.foodyshop.main;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.foodyshop.controller.MainController;
+import com.foodyshop.model.Respond;
+import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -32,7 +34,7 @@ public class UploadImageToApi {
 
     private static final String PRIVATE_KEY = "Rm9PZHlTaG9QX3NlY3JldEtleVl5KiMxMjA0JV4mNDUxODgxIyEhMjI0NWRzZEREIzJFZGVk";
 
-    public static String uploadImageToApi(File file, String type, String lastImgName) throws IOException {
+    public static Respond uploadImageToApi(File file, String type, String lastImgName) throws IOException {
 
         URL url = new URL(Config.BASE_API + "upload_image");
 
@@ -67,11 +69,11 @@ public class UploadImageToApi {
         for (int c; (c = in.read()) >= 0;) {
             sb.append((char) c);
         }
-        System.out.println(sb.toString());
-        return sb.toString();
+        Gson gson = new Gson();
+        return gson.fromJson(sb.toString(), Respond.class);
     }
 
-    public static String uploadImageToApi(File file, String type) throws IOException {
+    public static Respond uploadImageToApi(File file, String type) throws IOException {
         return uploadImageToApi(file, type, null);
     }
 

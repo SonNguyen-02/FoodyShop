@@ -40,7 +40,7 @@ public class CategoryController implements Initializable {
     private TableColumn<CategoryModel, String> tcName;
 
     @FXML
-    private TableColumn<CategoryModel, Integer> tcStatus;
+    private TableColumn<CategoryModel, String> tcStatus;
 
     @FXML
     private TableColumn<CategoryModel, String> tcCreated;
@@ -60,12 +60,11 @@ public class CategoryController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
         tcID.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tblCategory.getItems().indexOf(cellData.getValue()) + 1) + ""));
         tcTopicID.setCellValueFactory(cellValue -> cellValue.getValue().getTopic_idProperty());
         tcName.setCellValueFactory(cellValue -> cellValue.getValue().getNameProperty());
         tcCreated.setCellValueFactory(cellValue -> cellValue.getValue().getCreatedProperty());
-        tcStatus.setCellValueFactory(cellValue -> cellValue.getValue().getStatusProperty());
+        tcStatus.setCellValueFactory(cellValue -> cellValue.getValue().getStatusVal());
         listCategory = CategoryHelper.getAllCategory();
         tblCategory.setItems(listCategory);
         btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddCategory(new AddCategoryController.IOnAddSuccess() {
@@ -121,12 +120,9 @@ public class CategoryController implements Initializable {
     private void onClickEdit(MouseEvent e){
         CategoryModel category = tblCategory.getSelectionModel().getSelectedItem();
         if(category !=null){
-            Navigator.getInstance().showEditCategory();
-//            String id = tblCategory.getSelectionModel(getSelectedItem,0);
-            
-            
+            Navigator.getInstance().showEditCategory(category);
         }else{
-             Alert alert = new Alert(Alert.AlertType.ERROR);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
             alert.setHeaderText("Please choose category");
             alert.show();
