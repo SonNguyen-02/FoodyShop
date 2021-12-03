@@ -12,7 +12,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.AddTopicController">
    <children>
-      <HBox alignment="CENTER" layoutY="121.0" prefHeight="87.0" prefWidth="716.0" AnchorPane.topAnchor="121.0">
+      <HBox alignment="CENTER" layoutY="85.0" prefHeight="87.0" prefWidth="716.0" AnchorPane.topAnchor="85.0">
          <children>
             <Label alignment="CENTER_RIGHT" prefHeight="29.0" prefWidth="202.0" text="Name :">
                <font>
@@ -71,14 +71,5 @@
             <Font name="Playball" size="36.0" />
          </font>
       </Label>
-      <Label alignment="CENTER_RIGHT" layoutX="96.0" layoutY="75.0" prefHeight="29.0" prefWidth="202.0" text="ID:">
-         <font>
-            <Font name="System Bold" size="35.0" />
-         </font>
-         <padding>
-            <Insets right="70.0" />
-         </padding>
-      </Label>
-      <TextField fx:id="txtID" layoutX="298.0" layoutY="85.0" prefHeight="36.0" prefWidth="319.0" promptText="enter ID" />
    </children>
 </AnchorPane>
