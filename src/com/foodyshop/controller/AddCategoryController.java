@@ -64,8 +64,7 @@ public class AddCategoryController implements Initializable {
         topicList = TopicHelper.getAllTopic();
         if (topicList != null && !topicList.isEmpty()) {
             cbTopic.setItems(topicList);
-            cbTopic.setValue(topicList.get(0));
-            
+            cbTopic.setValue(topicList.get(0));          
         }
 
     }
@@ -77,8 +76,8 @@ public class AddCategoryController implements Initializable {
             alert.setHeaderText("Name must be entered");
             alert.show();
             return;
-        } else {
             
+        } else {            
             CategoryModel categoryModel = CategoryHelper.insertCategory(txtName.getText(), cbTopic.getValue().getId());
             if (categoryModel != null) {
                 mIOnAddSuccess.onAddSuccess(categoryModel);

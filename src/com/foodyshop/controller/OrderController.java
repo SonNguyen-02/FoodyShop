@@ -70,10 +70,10 @@ public class OrderController implements Initializable {
     private Button btnAdd;
 
     @FXML
-    private Button btnEdit;
+    private Button btnEditStatus;
 
     @FXML
-    private Button btnDelete;
+    private Button btnEditPrice;
 
     @FXML
     private Button btnOrder_detail;
@@ -89,7 +89,7 @@ public class OrderController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddOrder());
+
         btnOrder_detail.setOnMouseClicked(e -> {
             OrderModel order = tblOrder.getSelectionModel().getSelectedItem();
             if (order != null) {
@@ -101,46 +101,28 @@ public class OrderController implements Initializable {
                 alert.show();
             }
         });
-        btnEdit.setOnMouseClicked(e -> {
-            OrderModel order = tblOrder.getSelectionModel().getSelectedItem();
-            if (order != null) {
-                Navigator.getInstance().showEditOrder(order);
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("You Must choose!!!");
-                alert.show();
-            }
-        });
-        btnDelete.setOnMouseClicked(e -> {
-            OrderModel order = tblOrder.getSelectionModel().getSelectedItem();
-            if (order != null) {
-                if(order.getStatus() < 0){
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Delete");
-                    alert.setHeaderText("Are you sure?");
-
-                    Optional<ButtonType> option = alert.showAndWait();
-
-                    if (option.get() == ButtonType.OK) {
-                        listOrder.remove(order);
-                        OrderHelper.deleteOrder(order.getId());
-                    } else if (option.get() == ButtonType.CANCEL) {
-                        Navigator.getInstance().getModalStage().close();
-                    }
-                }else{
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setHeaderText("You must choose a order has status > 0!");
-                    alert.setTitle("Error");
-                    alert.showAndWait();
-                }
-            }else{
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText("You must choose!");
-                alert.setTitle("Error");
-                alert.showAndWait();
-            }
-        });
+//        btnEditStatus.setOnMouseClicked(e -> {
+//            OrderModel order = tblOrder.getSelectionModel().getSelectedItem();
+//            if (order != null) {
+//                Navigator.getInstance().showEditOrder(order);
+//            } else {
+//                Alert alert = new Alert(Alert.AlertType.ERROR);
+//                alert.setTitle("Error");
+//                alert.setHeaderText("You Must choose!!!");
+//                alert.show();
+//            }
+//        });
+//        btnEditPrice.setOnMouseClicked(e -> {
+//            OrderModel order = tblOrder.getSelectionModel().getSelectedItem();
+//            if (order != null) {
+//                Navigator.getInstance().showEditOrder(order);
+//            } else {
+//                Alert alert = new Alert(Alert.AlertType.ERROR);
+//                alert.setTitle("Error");
+//                alert.setHeaderText("You Must choose!!!");
+//                alert.show();
+//            }
+//        });
 
         tcId.setCellValueFactory(cellValue -> cellValue.getValue().getIdProperty());
         tcOrder_code.setCellValueFactory(cellValue -> cellValue.getValue().getOrderCodeProperty());
@@ -156,27 +138,4 @@ public class OrderController implements Initializable {
         listOrder = OrderHelper.getAllOrder();
         tblOrder.setItems(listOrder);
     }
-
-//    OrderModel order = tblOrder.getSelectionModel().getSelectedItem();
-//    private void onclickDelete(MouseEvent e){
-//        if(order.getStatus()< 0 && order!=null){
-//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-//            alert.setTitle("Delete Account");
-//            alert.setHeaderText("Are you sure want to move this account");
-//
-//            Optional<ButtonType> option = alert.showAndWait();
-//
-//            if (option.get() == ButtonType.OK) {
-//                listOrder.remove(order);
-//                OrderHelper.deleteOrder(order.getId());
-//            } else if (option.get() == ButtonType.CANCEL) {
-//                Navigator.getInstance().getModalStage().close();
-//            }
-//        } else {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setHeaderText("You must choose a order !");
-//            alert.setTitle("Error");
-//            alert.showAndWait();
-//        }
-//    }
 }

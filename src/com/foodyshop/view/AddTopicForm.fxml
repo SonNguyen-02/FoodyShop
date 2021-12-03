@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="700.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="com.foodyshop.controller.AddTopicController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.AddTopicController">
    <children>
       <HBox alignment="CENTER" layoutY="121.0" prefHeight="87.0" prefWidth="716.0" AnchorPane.topAnchor="121.0">
          <children>
@@ -23,10 +22,10 @@
                   <Insets right="70.0" />
                </padding>
             </Label>
-            <TextField fx:id="txtName" prefHeight="36.0" prefWidth="319.0">
-               <padding>
-                  <Insets left="70.0" />
-               </padding>
+            <TextField fx:id="txtName" prefHeight="44.0" prefWidth="321.0" promptText="EnterName">
+               <font>
+                  <Font size="16.0" />
+               </font>
             </TextField>
          </children>
       </HBox>
@@ -72,10 +71,14 @@
             <Font name="Playball" size="36.0" />
          </font>
       </Label>
-      <Label layoutX="122.0" layoutY="75.0" prefHeight="51.0" prefWidth="109.0" text="ID">
+      <Label alignment="CENTER_RIGHT" layoutX="96.0" layoutY="75.0" prefHeight="29.0" prefWidth="202.0" text="ID:">
          <font>
-            <Font size="35.0" />
+            <Font name="System Bold" size="35.0" />
          </font>
+         <padding>
+            <Insets right="70.0" />
+         </padding>
       </Label>
+      <TextField fx:id="txtID" layoutX="298.0" layoutY="85.0" prefHeight="36.0" prefWidth="319.0" promptText="enter ID" />
    </children>
 </AnchorPane>

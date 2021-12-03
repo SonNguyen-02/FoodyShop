@@ -61,7 +61,7 @@ public class TopicHelper {
         }
         return false;
     }
-     public static TopicModel insertTopic(String name, int id, String img) {
+     public static TopicModel insertTopic( int id,String name, String img) {
 
         String sql = db.insert("fs_topic")
                 .set("id", String.valueOf(id))

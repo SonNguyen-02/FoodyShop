@@ -75,7 +75,7 @@ public class AddTopicController implements Initializable {
        btnChooseFile.setOnMouseClicked(this::onClickChooseFile);
     }    
     private void onClickSave(MouseEvent e) {
-        if (txtName.getText().equals("") && txtID.getText().equals("")) {
+        if ( txtID.getText().equals("") && txtName.getText().equals("")) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
             alert.setHeaderText("Name and id must be entered");
