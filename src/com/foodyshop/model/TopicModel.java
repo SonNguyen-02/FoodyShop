@@ -20,18 +20,22 @@ import javafx.scene.image.ImageView;
  */
 public class TopicModel {
 
-    int id;
-    StringProperty name;
-    String img;
+    public static final String SHOW = "Show";
+    public static final String HIDDEN = "Hidden";
+    
+    private int id;
+    private StringProperty name;
+    private String img;
+    private int status;
 
-    ObservableValue<ImageView> imgView;
-    StringProperty created;
-    ObjectProperty<Integer> status;
+    private ObservableValue<ImageView> imgView;
+    private StringProperty created;
+    private StringProperty statusVal;
 
     public TopicModel() {
         this.name = new SimpleStringProperty();
         this.created = new SimpleStringProperty();
-        this.status = new SimpleObjectProperty<>();
+        this.statusVal = new SimpleStringProperty();
     }
 
     public int getIdProperty() {
@@ -50,7 +54,7 @@ public class TopicModel {
         return created;
     }
 
-    public ObjectProperty<Integer> getStatusProperty() {
+    public int getStatus() {
         return status;
     }
 
@@ -70,10 +74,10 @@ public class TopicModel {
         return created.getValue();
     }
 
-    public Integer getStatus() {
-        return status.getValue();
+    public StringProperty getStatusVal() {
+        return statusVal;
     }
-
+    
     public void setId(Integer id) {
         this.id = id;
     }
@@ -92,9 +96,23 @@ public class TopicModel {
     public void setCreated(String created) {
         this.created.setValue(created);
     }
+    
+    public void setStatus(String statusVal){
+        this.statusVal.set(statusVal);
+        if(statusVal.equals(SHOW)){
+            this.status = 0;
+        }else{
+            this.status = 1;
+        }
+    }
 
     public void setStatus(Integer status) {
-        this.status.setValue(status);
+        this.status = status;
+        if(status == 0){
+            this.statusVal.set(SHOW);
+        }else{
+            this.statusVal.set(HIDDEN);
+        }
     }
 
     public ObservableValue<ImageView> getImgView() {

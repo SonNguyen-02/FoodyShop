@@ -89,5 +89,20 @@ public class TopicHelper {
         return null;
     }
     
+    public static boolean updateTopic(TopicModel topicModel){
+        String sql = db.update("fs_topic")
+                .set("name", topicModel.getName())
+                .set("img", topicModel.getImg())
+                .set("status", String.valueOf(topicModel.getStatus()))
+                .where("id", String.valueOf(topicModel.getId()))
+                .getCompiledUpdate(true);
+        
+        int result = DBConnection.execUpdate(sql);
+        if(result > 0){
+            return true;
+        }
+        return false;
+    }
+    
 
 }
