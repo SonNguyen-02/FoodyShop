@@ -48,6 +48,7 @@ public class Navigator {
     private static final String ORDER_DETAIL = ROOT_FOLDER + "Order_DetailPage.fxml";
     private static final String CATEGORY_PAGE = ROOT_FOLDER + "CategoryPage.fxml";
     private static final String TOPIC_PAGE = ROOT_FOLDER + "TopicPage.fxml";
+      private static final String FEEDBACK_PAGE= ROOT_FOLDER + "FeedbackUI.fxml";
 
     // FORM
     private static final String ADD_ORDER_FORM = ROOT_FOLDER + "AddOrderForm.fxml";
@@ -73,8 +74,12 @@ public class Navigator {
         borderPane.setCenter(getParent(DASHBOARD_PAGE));
     }
 
+    
     public void loadOrder(BorderPane borderPane) {
         borderPane.setCenter(getParent(ORDER_PAGE));
+    }
+     public void loadFeedback(BorderPane borderPane) {
+        borderPane.setCenter(getParent(FEEDBACK_PAGE));
     }
 
     public void loadCategory(BorderPane borderPane) {
@@ -128,6 +133,9 @@ public class Navigator {
         return instance;
     }
 
+    
+  
+    
     public void redirectTo(String title, String URL) {
         try {
             fxLoader = new FXMLLoader(getClass().getResource(URL));
@@ -144,6 +152,7 @@ public class Navigator {
         }
     }
 
+  
     public void showModal(String title, String URL) {
         try {
             modalStage = new Stage();
@@ -185,6 +194,5 @@ public class Navigator {
         this.modalStage = modalStage;
     }
 
-   
 
 }
