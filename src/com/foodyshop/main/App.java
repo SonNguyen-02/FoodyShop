@@ -21,7 +21,6 @@ public class App extends Application {
 
         Navigator.getInstance().goToMainLayout();
 //        Navigator.getInstance().goToDemoUI();
-//    Navigator.getInstance().goToFeedback();
 
     }
 

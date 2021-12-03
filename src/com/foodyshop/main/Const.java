@@ -5,6 +5,8 @@
  */
 package com.foodyshop.main;
 
+import java.nio.file.Paths;
+
 /**
  *
  * @author N.C.Son
@@ -19,4 +21,6 @@ public class Const {
     public static final String TYPE_FOOD = "type_food";
     public static final String TYPE_TOPIC = "type_topic";
     public static final String TYPE_SALE = "type_sale";
+    
+    public static final String PLACEHOLDER_IMG_PATH = Paths.get(".").toAbsolutePath().getParent().toString() + "\\src\\public\\image\\main_layout\\placeholder_img.jpg";;
 }

@@ -63,7 +63,7 @@ public class TopicController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         tcId.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tblTopic.getItems().indexOf(cellData.getValue()) + 1) + ""));
         tcName.setCellValueFactory(cellValue -> cellValue.getValue().getNameProperty());
         tcImg.setCellValueFactory(cellValue -> cellValue.getValue().getImgView());
@@ -74,10 +74,13 @@ public class TopicController implements Initializable {
 
         tblTopic.setItems(listTopic);
         btnDelete.setOnMouseClicked(this::onClickDelete);
-        btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddTopic((TopicModel topicModel) -> {
-            listTopic.add(0, topicModel);
+        btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddTopic(new AddTopicController.IOnInsertTopicSuccess() {
+            @Override
+            public void callback(TopicModel topic) {
+                listTopic.add(0, topic);
+            }
         }));
-        
+
     }
 
     private void onClickDelete(MouseEvent e) {
