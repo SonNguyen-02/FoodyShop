@@ -119,7 +119,7 @@ public class MainController implements Initializable {
             Navigator.getInstance().loadOrder(rightLayout);
         });   
         feedbackPage.setOnMouseClicked(e ->{
-           Navigator.getInstance().goToFeedback(rightLayout);
+           Navigator.getInstance().loadFeedback(rightLayout);
         });
     }
 

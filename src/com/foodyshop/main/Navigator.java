@@ -36,6 +36,7 @@ public class Navigator {
     private static final String DASHBOARD_PAGE = ROOT_FOLDER + "DashboardPage.fxml";
     private static final String ORDER_PAGE = ROOT_FOLDER + "OrderPage.fxml";
     private static final String ORDER_DETAIL = ROOT_FOLDER + "Order_DetailPage.fxml";
+      private static final String FEEDBACK_PAGE= ROOT_FOLDER + "FeedbackUI.fxml";
 
     // FORM
     private static final String ADD_ORDER_FORM = ROOT_FOLDER + "AddOrderForm.fxml";
@@ -56,8 +57,12 @@ public class Navigator {
         borderPane.setCenter(getParent(DASHBOARD_PAGE));
     }
 
+    
     public void loadOrder(BorderPane borderPane) {
         borderPane.setCenter(getParent(ORDER_PAGE));
+    }
+     public void loadFeedback(BorderPane borderPane) {
+        borderPane.setCenter(getParent(FEEDBACK_PAGE));
     }
 
     // Show Modal
@@ -79,9 +84,7 @@ public class Navigator {
     }
 
     
-    public void goToFeedback(){
-        redirectTo("FeedBack", "FeedbackUI.fxml");
-    }
+  
     
     public void redirectTo(String title, String URL) {
         try {
@@ -141,8 +144,6 @@ public class Navigator {
         this.modalStage = modalStage;
     }
 
-    public void goToFeedback(BorderPane rightLayout) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+ 
 
 }
