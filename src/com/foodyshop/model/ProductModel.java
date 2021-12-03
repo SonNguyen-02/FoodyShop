@@ -5,10 +5,17 @@
  */
 package com.foodyshop.model;
 
+import com.foodyshop.database.DBConnection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author N.C.Son
  */
 public class ProductModel {
-    
+
 }

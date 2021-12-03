@@ -31,6 +31,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.ImageViewBuilder;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -59,6 +60,10 @@ public class TestDemoController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        System.out.println(imgRespond);
+        String imgSource = "https://tse4.mm.bing.net/th?id=OIP.wX0A09xQ0T-5ZkJYg__SywHaJ4&pid=Api&P=0&w=150&h=200";
+        imgRespond.setImage(new Image(imgSource, true));
+        
         btnChooseFile.setOnMouseClicked(this::onClickChooseFile);
         btnCall.setOnMouseClicked(this::onClickCallApi);
     }

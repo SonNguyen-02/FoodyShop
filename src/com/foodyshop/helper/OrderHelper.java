@@ -26,19 +26,19 @@ public class OrderHelper {
 
     public static ObservableList<OrderModel> getAllOrder() {
         ObservableList<OrderModel> listOrder = FXCollections.observableArrayList();
-        String sql = db.select().from("fs_order").orderByDESC("id").getCompiledSelect(true);       
+        String sql = db.select().from("fs_order").orderByASC("id").getCompiledSelect(true);       
         ResultSet rs = DBConnection.execSelect(sql);
         try {
             while (rs.next()) {
                 OrderModel order = new OrderModel();
                 order.setId(rs.getInt("id"));
-                order.setOrder_code(rs.getString("order_code"));
+                order.setOrderCode(rs.getString("order_code"));
                 order.setName(rs.getString("name"));
                 order.setAddress(rs.getString("address"));
                 order.setPhone(rs.getString("phone"));
                 order.setNote(rs.getString("note"));
-                order.setShip_price(rs.getInt("ship_price"));
-                order.setTotal_money(rs.getInt("total_money"));
+                order.setShipPrice(rs.getInt("ship_price"));
+                order.setTotalMoney(rs.getInt("total_money"));
                 order.setCreated(rs.getString("created"));
                 order.setStatus(rs.getInt("status"));
                 listOrder.add(order);
@@ -50,4 +50,26 @@ public class OrderHelper {
         }
         return listOrder;
     }
+    public static boolean deleteOrder ( int id )
+    {
+        OrderModel order = new OrderModel();
+        String sql = "DELETE FROM `fs_order` WHERE `id` = ?";
+        try(
+            Connection cnn = DBConnection.getConnection();
+            PreparedStatement stm = cnn.prepareStatement(sql);      
+        ) 
+        {
+            stm.setInt(1, order.getId());
+            
+            int resultUpdate = stm.executeUpdate();
+            if(resultUpdate > 0)
+            {
+                return true;
+            }
+            
+        } catch (Exception e) {
+        }
+        return false;
+    }
+    
 }

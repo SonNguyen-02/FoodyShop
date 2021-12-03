@@ -34,7 +34,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnChooseFile" layoutX="120.0" layoutY="226.0" maxWidth="100.0" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" prefHeight="28.0" text="Choose File">
+      <Button fx:id="btnChooseFile" layoutX="121.0" layoutY="226.0" maxWidth="100.0" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" prefHeight="28.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Choose File">
          <font>
             <Font size="14.0" />
          </font>
@@ -49,7 +49,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="btnCall" layoutX="380.0" layoutY="223.0" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #3499fb; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Call Api" textFill="WHITE">
+      <Button fx:id="btnCall" layoutX="380.0" layoutY="226.0" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #3499fb; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Call Api" textFill="WHITE">
          <font>
             <Font size="16.0" />
          </font>
@@ -57,10 +57,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <ImageView fx:id="imgRespond" fitHeight="193.0" fitWidth="168.0" layoutX="346.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../public/image/main_layout/test-img.png" />
-         </image>
-      </ImageView>
+      <ImageView fx:id="imgRespond" fitHeight="168.0" fitWidth="168.0" layoutX="346.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>

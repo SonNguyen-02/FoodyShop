@@ -46,8 +46,8 @@ public class MainController implements Initializable {
         // init currentPage item
         currentPage = (HBox) navBar.getChildren().get(1);
         currentPage.setCursor(Cursor.DEFAULT);
-        deleteRow(navBar, 9);
-        deleteRow(navBar, 9);
+//        deleteRow(navBar, 9);
+//        deleteRow(navBar, 9);
         navBar.getChildren().forEach(node -> {
             if (node != navBar.getChildren().get(0)) {
                 HBox item = ((HBox) node);
@@ -111,15 +111,25 @@ public class MainController implements Initializable {
         item.setOpacity(NAV_DEF_OPACITY);
     }
 
+      
     private void initClickNavItem() {
         dashboardPage.setOnMouseClicked(e -> {
             Navigator.getInstance().loadDashboard(rightLayout);
         });
         orderPage.setOnMouseClicked(e -> {
             Navigator.getInstance().loadOrder(rightLayout);
+
         });   
         feedbackPage.setOnMouseClicked(e ->{
            Navigator.getInstance().loadFeedback(rightLayout);
+
+        }); 
+        categoryPage.setOnMouseClicked(e ->{
+            Navigator.getInstance().loadCategory(rightLayout);
+        });
+        topicPage.setOnMouseClicked(e ->{
+            Navigator.getInstance().loadTopic(rightLayout);
+
         });
     }
 

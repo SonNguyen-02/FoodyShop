@@ -18,45 +18,44 @@ import javafx.beans.property.StringProperty;
 public class OrderModel {
 
     ObjectProperty<Integer> id;
-    StringProperty order_code;
-    ObjectProperty<Integer> customer_id;
+    StringProperty orderCode;
+    ObjectProperty<Integer> customerId;
     StringProperty name;
     StringProperty address;
     StringProperty phone;
     StringProperty note;
     StringProperty created;
     StringProperty updated;
-    ObjectProperty<Integer> ship_price;
-    ObjectProperty<Integer> total_money;
+    ObjectProperty<Integer> shipPrice;
+    ObjectProperty<Integer> totalMoney;
     ObjectProperty<Integer> status;
 
     public OrderModel() {
         this.id = new SimpleObjectProperty<>();
-        this.order_code = new SimpleStringProperty();
-        this.customer_id = new SimpleObjectProperty<>();
+        this.orderCode = new SimpleStringProperty();
+        this.customerId = new SimpleObjectProperty<>();
         this.name = new SimpleStringProperty();
         this.address = new SimpleStringProperty();
         this.phone = new SimpleStringProperty();
         this.note = new SimpleStringProperty();
         this.created = new SimpleStringProperty();
         this.updated = new SimpleStringProperty();
-        this.ship_price = new SimpleObjectProperty<>();
-        this.total_money = new SimpleObjectProperty<>();
+        this.shipPrice = new SimpleObjectProperty<>();
+        this.totalMoney = new SimpleObjectProperty<>();
         this.status = new SimpleObjectProperty<>();
     }
- 
-    
+
     //Getter    
     public Integer getId() {
         return id.getValue();
     }
 
-    public String getOrder_code() {
-        return order_code.getValue();
+    public String getOrderCode() {
+        return orderCode.getValue();
     }
 
-    public Integer getCustomer_id() {
-        return customer_id.getValue();
+    public Integer getCustomerId() {
+        return customerId.getValue();
     }
 
     public String getName() {
@@ -71,12 +70,12 @@ public class OrderModel {
         return status.getValue();
     }
 
-    public Integer getTotal_money() {
-        return total_money.getValue();
+    public Integer getTotalMoney() {
+        return totalMoney.getValue();
     }
 
-    public Integer getShip_price() {
-        return ship_price.getValue();
+    public Integer getShipPrice() {
+        return shipPrice.getValue();
     }
 
     public String getUpdated() {
@@ -94,20 +93,18 @@ public class OrderModel {
     public String getPhone() {
         return phone.getValue();
     }
-    
-    
-    
+
     //Getter Property    
-     public ObjectProperty<Integer> getIdProperty() {
+    public ObjectProperty<Integer> getIdProperty() {
         return id;
     }
 
-    public StringProperty getOrder_codeProperty() {
-        return order_code;
+    public StringProperty getOrderCodeProperty() {
+        return orderCode;
     }
 
-    public ObjectProperty<Integer> getCustomer_idProperty() {
-        return customer_id;
+    public ObjectProperty<Integer> getCustomerIdProperty() {
+        return customerId;
     }
 
     public StringProperty getNameProperty() {
@@ -122,12 +119,12 @@ public class OrderModel {
         return status;
     }
 
-    public ObjectProperty<Integer> getTotal_moneyProperty() {
-        return total_money;
+    public ObjectProperty<Integer> getTotalMoneyProperty() {
+        return totalMoney;
     }
 
-    public ObjectProperty<Integer> getShip_priceProperty() {
-        return ship_price;
+    public ObjectProperty<Integer> getShipPriceProperty() {
+        return shipPrice;
     }
 
     public StringProperty getUpdatedProperty() {
@@ -145,19 +142,18 @@ public class OrderModel {
     public StringProperty getPhoneProperty() {
         return phone;
     }
-    
-    
+
     //Setter
     public void setId(Integer id) {
         this.id.setValue(id);
     }
 
-    public void setOrder_code(String order_code) {
-        this.order_code.setValue(order_code);
+    public void setOrderCode(String order_code) {
+        this.orderCode.setValue(order_code);
     }
 
-    public void setCustomer_id(Integer customer_id) {
-        this.customer_id.setValue(customer_id);
+    public void setCustomerId(Integer customer_id) {
+        this.customerId.setValue(customer_id);
     }
 
     public void setName(String name) {
@@ -184,12 +180,12 @@ public class OrderModel {
         this.updated.setValue(updated);
     }
 
-    public void setShip_price(Integer ship_price) {
-        this.ship_price.setValue(ship_price);
+    public void setShipPrice(Integer ship_price) {
+        this.shipPrice.setValue(ship_price);
     }
 
-    public void setTotal_money(Integer total_money) {
-        this.total_money.setValue(total_money);
+    public void setTotalMoney(Integer total_money) {
+        this.totalMoney.setValue(total_money);
     }
 
     public void setStatus(Integer status) {
