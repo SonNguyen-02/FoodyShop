@@ -50,7 +50,6 @@ public class Navigator {
     private static final String FEEDBACK_PAGE = ROOT_FOLDER + "FeedbackUI.fxml";
 
     // FORM
-    private static final String ADD_ORDER_FORM = ROOT_FOLDER + "AddOrderForm.fxml";
     private static final String ADD_CATEGORY_FORM = ROOT_FOLDER + "AddCategoryForm.fxml";
     private static final String EDIT_CATEGORY_FORM = ROOT_FOLDER + "EditCategoryForm.fxml";
     private static final String ADD_TOPIC_FORM = ROOT_FOLDER + "AddTopicForm.fxml";
@@ -88,10 +87,7 @@ public class Navigator {
     }
 
     // Show Modal
-    public void showAddOrder() {
-        showModal("Add Order", ADD_ORDER_FORM);
-    }
-
+ 
     public void showOrder_Detail(OrderModel order) {
         showModal("Order Detail", ORDER_DETAIL);
         Order_DetailController controller = fxLoader.getController();

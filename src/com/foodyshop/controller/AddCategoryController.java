@@ -76,8 +76,8 @@ public class AddCategoryController implements Initializable {
             alert.setHeaderText("Name must be entered");
             alert.show();
             return;
-        } else {
             
+        } else {            
             CategoryModel categoryModel = CategoryHelper.insertCategory(txtName.getText(), cbTopic.getValue().getId());
             if (categoryModel != null) {
                 mIOnAddSuccess.onAddSuccess(categoryModel);

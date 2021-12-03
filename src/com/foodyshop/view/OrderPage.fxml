@@ -11,7 +11,12 @@
    <children>
       <AnchorPane id="AnchorPane" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" prefWidth="920.0">
          <children>
-            <Button fx:id="btnEditPrice" layoutX="481.0" layoutY="608.0" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #ed982d; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Edit Ship price" textFill="WHITE" AnchorPane.leftAnchor="437.0" AnchorPane.topAnchor="618.0">
+            <Button fx:id="btnOrder_detail" layoutX="759.0" layoutY="605.0" minHeight="36.0" minWidth="140.0" mnemonicParsing="false" style="-fx-background-color: #FF6633; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); -fx-cursor: hand;" text="Order Detail" textFill="#f6f6f6" AnchorPane.topAnchor="668.0">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnEditPrice" layoutX="481.0" layoutY="608.0" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #ed982d; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Edit Ship price" textFill="WHITE" AnchorPane.leftAnchor="437.0" AnchorPane.topAnchor="668.0">
                <font>
                   <Font size="16.0" />
                </font>
@@ -19,12 +24,12 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="btnEditStatus" layoutX="287.0" layoutY="607.0" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #3499fb; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); -fx-cursor: hand;" text="Edit Status" textFill="WHITE" AnchorPane.rightAnchor="523.0" AnchorPane.topAnchor="618.0">
+            <Button fx:id="btnEditStatus" layoutX="287.0" layoutY="607.0" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #3499fb; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); -fx-cursor: hand;" text="Edit Status" textFill="WHITE" AnchorPane.rightAnchor="523.0" AnchorPane.topAnchor="668.0">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <TableView fx:id="tblOrder" layoutX="-2.0" layoutY="19.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="579.0" prefWidth="920.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0">
+            <TableView fx:id="tblOrder" layoutX="-2.0" layoutY="19.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="579.0" prefWidth="920.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="63.0">
                <columns>
                   <TableColumn fx:id="tcId" prefWidth="59.0" text="ID" />
                   <TableColumn fx:id="tcOrder_code" prefWidth="120.11112976074219" text="Order_code" />
@@ -34,15 +39,10 @@
                   <TableColumn fx:id="tcNote" prefWidth="104.111083984375" text="Note" />
                   <TableColumn fx:id="tcShip_price" prefWidth="88.77777099609375" text="Ship_price" />
                   <TableColumn fx:id="tcTotal_money" prefWidth="93.111083984375" text="Total_money" />
-                  <TableColumn fx:id="tcCreated" prefWidth="92.7777099609375" text="Created" />
-                  <TableColumn fx:id="tcStatus" minWidth="0.0" prefWidth="67.0" style="-fx-alignment: CENTER;" text="Status" />
+                  <TableColumn fx:id="tcCreated" prefWidth="71.666748046875" text="Created" />
+                  <TableColumn fx:id="tcStatus" minWidth="0.0" prefWidth="66.0" style="-fx-alignment: CENTER;" text="Status" />
                </columns>
             </TableView>
-            <Button fx:id="btnOrder_detail" layoutX="759.0" layoutY="605.0" minHeight="36.0" minWidth="140.0" mnemonicParsing="false" style="-fx-background-color: #FF6633; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); -fx-cursor: hand;" text="Order Detail" textFill="#f6f6f6" AnchorPane.topAnchor="618.0">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-            </Button>
          </children>
       </AnchorPane>
    </children>

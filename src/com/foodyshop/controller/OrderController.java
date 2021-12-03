@@ -89,7 +89,7 @@ public class OrderController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddOrder());
+
         btnOrder_detail.setOnMouseClicked(e -> {
             OrderModel order = tblOrder.getSelectionModel().getSelectedItem();
             if (order != null) {
