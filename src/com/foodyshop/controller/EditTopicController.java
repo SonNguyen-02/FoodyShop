@@ -7,6 +7,7 @@ package com.foodyshop.controller;
 
 import com.foodyshop.helper.FormHelper;
 import com.foodyshop.helper.TopicHelper;
+import static com.foodyshop.main.Config.IMG_TOPIC_DIR;
 import com.foodyshop.main.Const;
 import static com.foodyshop.main.Const.PLACEHOLDER_IMG_PATH;
 import com.foodyshop.main.Navigator;
@@ -22,11 +23,13 @@ import java.nio.file.Paths;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -40,7 +43,7 @@ import javafx.stage.Stage;
  *
  * @author X PC
  */
-public class AddTopicController implements Initializable {
+public class EditTopicController implements Initializable {
 
     private Stage stage;
 
@@ -60,17 +63,29 @@ public class AddTopicController implements Initializable {
 
     @FXML
     private TextField txtName;
+
+    @FXML
+    private ComboBox<String> cbStatus;
+
+    private TopicModel mTopicModel;
     
-    private IOnInsertTopicSuccess mIOnInsertTopicSuccess;
-
-    public interface IOnInsertTopicSuccess {
-
-        void callback(TopicModel topic);
+    private IOnUpdateSuccess mIOnUpdateSuccess;
+    
+    public interface IOnUpdateSuccess{
+        void callback();
     }
 
-    public void initData(Stage stage, IOnInsertTopicSuccess mIOnInsertTopicSuccess) {
+    public void initData(Stage stage, TopicModel topic, IOnUpdateSuccess mIOnUpdateSuccess) {
         this.stage = stage;
-        this.mIOnInsertTopicSuccess = mIOnInsertTopicSuccess;
+        mTopicModel = topic;
+        txtName.setText(topic.getName());
+
+        Image image = new Image(IMG_TOPIC_DIR + topic.getImg(), 300, 300, false, true);
+        imgTopic.setImage(image);
+        cbStatus.setItems(FXCollections.observableArrayList(TopicModel.SHOW, TopicModel.HIDDEN));
+        cbStatus.setValue(topic.getStatusVal().get());
+        
+        this.mIOnUpdateSuccess = mIOnUpdateSuccess;
     }
 
     @Override
@@ -110,47 +125,46 @@ public class AddTopicController implements Initializable {
             alert.show();
             return;
         }
-        if (imgTopicFile == null) {
-            alert.setHeaderText("Please choose a file img");
-            alert.show();
-            return;
-        }
-        if (!isImage(imgTopicFile.getName())) {
-            setDefaultImg(btnChooseFile, imgTopic);
-            alert.setHeaderText("File isn't image!");
-            alert.show();
-            return;
+        if (imgTopicFile != null) {
+            if (!isImage(imgTopicFile.getName())) {
+                setDefaultImg(btnChooseFile, imgTopic);
+                alert.setHeaderText("File isn't image!");
+                alert.show();
+                return;
+            }
         }
 
         try {
+            mTopicModel.setName(name);
+            mTopicModel.setStatus(cbStatus.getValue());
+            if (imgTopicFile != null) {
                 // call API
-                Respond respond = UploadImageToApi.uploadImageToApi(imgTopicFile, Const.TYPE_TOPIC);
+                Respond respond = UploadImageToApi.uploadImageToApi(imgTopicFile, Const.TYPE_TOPIC, mTopicModel.getImg());
                 if (respond.isSuccess()) {
-                    TopicModel topic = new TopicModel();
-                    topic.setName(name);
-                    topic.setImg(respond.getMsg());
-                    // Insert to database
-                    topic = TopicHelper.insertTopic(topic);
-                    if (topic == null) {
-                        Alert alerts = new Alert(Alert.AlertType.ERROR);
-                        alerts.setTitle("Error");
-                        alerts.setHeaderText("Add false");
-                        alerts.show();
-                    } else {
-                        stage.close();
-                        Alert alerts = new Alert(Alert.AlertType.INFORMATION);
-                        alerts.setTitle("Success");
-                        alerts.setHeaderText("Add success!");
-                        alerts.show();
-                        mIOnInsertTopicSuccess.callback(topic);
-                    }
+                    mTopicModel.setImg(respond.getMsg());
+                    // Update to database
                 } else {
                     Alert alerts = new Alert(Alert.AlertType.ERROR);
                     alerts.setTitle("Error");
                     alerts.setHeaderText("Add false");
                     alerts.show();
+                    return;
                 }
-           
+            }
+            boolean resutl = TopicHelper.updateTopic(mTopicModel);
+            if (resutl) {
+                stage.close();
+                Alert alerts = new Alert(Alert.AlertType.INFORMATION);
+                alerts.setTitle("Success");
+                alerts.setHeaderText("Edit success!");
+                alerts.show();
+                mIOnUpdateSuccess.callback();
+            } else {
+                Alert alerts = new Alert(Alert.AlertType.ERROR);
+                alerts.setTitle("Error");
+                alerts.setHeaderText("Edit false");
+                alerts.show();
+            }
         } catch (IOException ex) {
             Logger.getLogger(TestDemoController.class.getName()).log(Level.SEVERE, null, ex);
         }

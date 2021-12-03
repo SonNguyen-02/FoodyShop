@@ -6,10 +6,13 @@ import com.foodyshop.controller.AddTopicController;
 import com.foodyshop.controller.AddTopicController.IOnInsertTopicSuccess;
 
 import com.foodyshop.controller.EditCategoryController;
+import com.foodyshop.controller.EditTopicController;
+import com.foodyshop.controller.EditTopicController.IOnUpdateSuccess;
 import com.foodyshop.controller.Order_DetailController;
 import com.foodyshop.controller.TestDemoController;
 import com.foodyshop.model.CategoryModel;
 import com.foodyshop.model.OrderModel;
+import com.foodyshop.model.TopicModel;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,6 +56,7 @@ public class Navigator {
     private static final String ADD_CATEGORY_FORM = ROOT_FOLDER + "AddCategoryForm.fxml";
     private static final String EDIT_CATEGORY_FORM = ROOT_FOLDER + "EditCategoryForm.fxml";
     private static final String ADD_TOPIC_FORM = ROOT_FOLDER + "AddTopicForm.fxml";
+    private static final String EDIT_TOPIC_FORM = ROOT_FOLDER + "EditTopicForm.fxml";
 
     // Khai báo di chuyển giữa các màn hình
     public void goToLoginUI() {
@@ -110,7 +114,12 @@ public class Navigator {
         showModal("Topic ", ADD_TOPIC_FORM);
         AddTopicController controller = fxLoader.getController();
         controller.initData(modalStage, mIOnInsertTopicSuccess);
-
+    }
+    
+    public void showEditTopic(TopicModel topic, IOnUpdateSuccess mIOnUpdateSuccess) {
+        showModal("Topic ", EDIT_TOPIC_FORM);
+        EditTopicController controller = fxLoader.getController();
+        controller.initData(modalStage, topic, mIOnUpdateSuccess);
     }
 
     // </editor-fold> 

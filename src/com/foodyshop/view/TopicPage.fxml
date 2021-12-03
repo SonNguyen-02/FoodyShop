@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<FlowPane alignment="CENTER" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.TopicController">
+<FlowPane alignment="CENTER" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.TopicController">
    <children>
       <TableView fx:id="tblTopic" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="585.0" prefWidth="866.0">
         <columns>
@@ -20,7 +20,7 @@
             <TableColumn fx:id="tcStatus" prefWidth="100.0" text="status" />
         </columns>
       </TableView>
-      <HBox alignment="CENTER" prefHeight="64.0" prefWidth="920.0">
+      <HBox alignment="CENTER" prefHeight="64.0" prefWidth="920.0" spacing="32.0">
          <children>
             <Button fx:id="btnAdd" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #3499fb; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Add" textFill="WHITE">
                <font>
@@ -38,7 +38,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                <HBox.margin>
-                  <Insets left="32.0" right="32.0" />
+                  <Insets />
                </HBox.margin>
             </Button>
             <Button fx:id="btnDelete" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #f54020; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Delete" textFill="WHITE">

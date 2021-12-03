@@ -48,7 +48,7 @@ public class TopicController implements Initializable {
     private TableColumn<TopicModel, String> tcCreated;
 
     @FXML
-    private TableColumn<TopicModel, Integer> tcStatus;
+    private TableColumn<TopicModel, String> tcStatus;
 
     @FXML
     private Button btnAdd;
@@ -68,8 +68,8 @@ public class TopicController implements Initializable {
         tcName.setCellValueFactory(cellValue -> cellValue.getValue().getNameProperty());
         tcImg.setCellValueFactory(cellValue -> cellValue.getValue().getImgView());
         tcCreated.setCellValueFactory(cellValue -> cellValue.getValue().getCreatedProperty());
-        tcStatus.setCellValueFactory(cellValue -> cellValue.getValue().getStatusProperty());
-
+        tcStatus.setCellValueFactory(cellValue -> cellValue.getValue().getStatusVal());
+        
         listTopic = TopicHelper.getAllTopic();
 
         tblTopic.setItems(listTopic);
@@ -80,11 +80,28 @@ public class TopicController implements Initializable {
                 listTopic.add(0, topic);
             }
         }));
-
+        
+        btnEdit.setOnMouseClicked(this::onClickEdit);
     }
 
+    private void onClickEdit(MouseEvent e){
+        TopicModel topic = tblTopic.getSelectionModel().getSelectedItem();
+        if(topic != null){
+            Navigator.getInstance().showEditTopic(topic, new EditTopicController.IOnUpdateSuccess() {
+                @Override
+                public void callback() {
+                    tblTopic.refresh();
+                }
+            });
+        }else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Please choose topic");
+            alert.show();
+        }
+    }
+    
     private void onClickDelete(MouseEvent e) {
-
         TopicModel topic = tblTopic.getSelectionModel().getSelectedItem();
         if (topic != null) {
             Alert alerts = new Alert(Alert.AlertType.CONFIRMATION);
@@ -118,7 +135,7 @@ public class TopicController implements Initializable {
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
-            alert.setHeaderText("Please choose category");
+            alert.setHeaderText("Please choose topic");
             alert.show();
         }
     }
