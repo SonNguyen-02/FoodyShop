@@ -56,7 +56,7 @@ public class EditCategoryController implements Initializable {
             cbTopic.setItems(topicList);
             cbTopic.setValue(topicList.get(0));
         }
-        statusList = CategoryHelper.getAllCategory();
+       statusList = CategoryHelper.getAllCategory();
         if (statusList != null && !statusList.isEmpty()) {
             cbStatus.setItems(statusList);
             cbStatus.setValue(statusList.get(0));
