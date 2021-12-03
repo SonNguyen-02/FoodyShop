@@ -17,6 +17,7 @@ public class Const {
     public static final String KEY_TYPE = "type";
     public static final String KEY_BASE64_IMAGE = "base64_image";
     public static final String KEY_LAST_IMG_NAME = "last_img_name";
+    public static final String KEY_IMG_NAME = "img_name";
     
     public static final String TYPE_FOOD = "type_food";
     public static final String TYPE_TOPIC = "type_topic";

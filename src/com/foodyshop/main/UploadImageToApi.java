@@ -45,6 +45,50 @@ public class UploadImageToApi {
         if (lastImgName != null) {
             params.put(Const.KEY_LAST_IMG_NAME, lastImgName);
         }
+        String result = call(url, params);
+        Gson gson = new Gson();
+        return gson.fromJson(result, Respond.class);
+    }
+
+    public static Respond uploadImageToApi(File file, String type) throws IOException {
+        return uploadImageToApi(file, type, null);
+    }
+
+    public static Respond removeImageFromApi(String type, String imgName) throws IOException {
+
+        URL url = new URL(Config.BASE_API + "remove_image");
+
+        Map<String, Object> params = new LinkedHashMap<>();
+        params.put(Const.KEY_TOKEN, createToken());
+        params.put(Const.KEY_TYPE, type);
+        params.put(Const.KEY_IMG_NAME, imgName);
+
+        String result = call(url, params);
+        Gson gson = new Gson();
+        return gson.fromJson(result, Respond.class);
+    }
+
+    public static String createToken() {
+        try {
+            String jwt = JWT.create()
+                    .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 1000))
+                    .withIssuedAt(new Date())
+                    .sign(Algorithm.HMAC256(Base64.getDecoder().decode(PRIVATE_KEY)));
+            return jwt;
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    private static String encodeFileToBase64Binary(File file) throws IOException {
+        FileInputStream fileInputStreamReader = new FileInputStream(file);
+        byte[] bytes = new byte[(int) file.length()];
+        fileInputStreamReader.read(bytes);
+        return new String(org.apache.commons.codec.binary.Base64.encodeBase64(bytes), "UTF-8");
+    }
+
+    private static String call(URL url, Map<String, Object> params) throws IOException {
         StringBuilder postData = new StringBuilder();
 
         for (Map.Entry<String, Object> param : params.entrySet()) {
@@ -62,39 +106,12 @@ public class UploadImageToApi {
         conn.setRequestProperty("User-Agent", "Mozilla/5.0");
         conn.setDoOutput(true);
         conn.getOutputStream().write(postDataByte);
-
         Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
 
         StringBuilder sb = new StringBuilder();
         for (int c; (c = in.read()) >= 0;) {
             sb.append((char) c);
         }
-        Gson gson = new Gson();
-        return gson.fromJson(sb.toString(), Respond.class);
+        return sb.toString();
     }
-
-    public static Respond uploadImageToApi(File file, String type) throws IOException {
-        return uploadImageToApi(file, type, null);
-    }
-
-    public static String createToken() {
-        try {
-            String jwt = JWT.create()
-                    .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 1000))
-                    .withIssuedAt(new Date())
-                    .sign(Algorithm.HMAC256(Base64.getDecoder().decode(PRIVATE_KEY)));
-            return jwt;
-        } catch (IllegalArgumentException ex) {
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-
-    private static String encodeFileToBase64Binary(File file) throws IOException  {
-        FileInputStream fileInputStreamReader = new FileInputStream(file);
-        byte[] bytes = new byte[(int) file.length()];
-        fileInputStreamReader.read(bytes);
-        return new String(org.apache.commons.codec.binary.Base64.encodeBase64(bytes), "UTF-8");
-    }
-
 }

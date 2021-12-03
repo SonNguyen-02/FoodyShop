@@ -3,53 +3,31 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.TestDemoController">
+<AnchorPane id="AnchorPane" prefHeight="570.0" prefWidth="796.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.TestDemoController">
    <children>
-      <Button layoutX="250.0" layoutY="307.0" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #ed982d; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Edit" textFill="WHITE">
-         <font>
-            <Font size="16.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button layoutX="380.0" layoutY="307.0" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #f54020; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Delete" textFill="WHITE">
-         <font>
-            <Font size="16.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button layoutX="120.0" layoutY="307.0" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #3499fb; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Add" textFill="WHITE">
-         <font>
-            <Font size="16.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="btnChooseFile" layoutX="121.0" layoutY="226.0" maxWidth="100.0" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" prefHeight="28.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Choose File">
+      <Button fx:id="btnChooseFile" layoutX="278.0" layoutY="295.0" maxWidth="100.0" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" prefHeight="28.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Choose File">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <ImageView fx:id="imgDemo" fitHeight="193.0" fitWidth="168.0" layoutX="86.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgDemo" fitHeight="193.0" fitWidth="168.0" layoutX="243.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../public/image/main_layout/test-img.png" />
          </image>
       </ImageView>
-      <Label fx:id="lbChooseFile" layoutX="103.0" layoutY="262.0" prefHeight="30.0" prefWidth="135.0" textFill="#ff0808">
+      <Label fx:id="lbChooseFile" layoutX="260.0" layoutY="331.0" prefHeight="30.0" prefWidth="135.0" textFill="#ff0808">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="btnCall" layoutX="380.0" layoutY="226.0" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #3499fb; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Call Api" textFill="WHITE">
+      <Button fx:id="btnCallInsert" layoutX="527.0" layoutY="295.0" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #3499fb; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Call API Insert" textFill="WHITE">
          <font>
             <Font size="16.0" />
          </font>
@@ -57,6 +35,55 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <ImageView fx:id="imgRespond" fitHeight="168.0" fitWidth="168.0" layoutX="346.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgRespond" fitHeight="168.0" fitWidth="168.0" layoutX="503.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../public/image/main_layout/placeholder_img.jpg" />
+         </image></ImageView>
+      <TextField fx:id="txtFileName" layoutX="241.0" layoutY="373.0" prefHeight="48.0" prefWidth="433.0" promptText="Image name to delete">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </TextField>
+      <Button fx:id="btnCallDelete" layoutX="545.0" layoutY="433.0" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #3499fb; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Call API Delete" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <VBox alignment="CENTER" layoutX="60.0" layoutY="169.0" prefHeight="200.0" prefWidth="100.0" spacing="32.0">
+         <children>
+            <Button minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #ed982d; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Edit" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #f54020; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Delete" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #3499fb; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Add" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </VBox>
+      <Label fx:id="lbResult" layoutX="243.0" layoutY="482.0" prefHeight="48.0" prefWidth="433.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

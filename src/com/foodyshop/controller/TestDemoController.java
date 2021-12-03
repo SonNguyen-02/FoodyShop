@@ -6,23 +6,12 @@
 package com.foodyshop.controller;
 
 import com.foodyshop.helper.FormHelper;
-import com.foodyshop.main.Config;
 import com.foodyshop.main.Const;
 import com.foodyshop.main.UploadImageToApi;
 import com.foodyshop.model.Respond;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,13 +20,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.ImageViewBuilder;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.apache.commons.codec.binary.Base64;
 
 /**
  *
@@ -46,9 +34,11 @@ import org.apache.commons.codec.binary.Base64;
 public class TestDemoController implements Initializable {
 
     @FXML
-    private Button btnChooseFile, btnCall;
+    private Button btnChooseFile, btnCallInsert, btnCallDelete;
     @FXML
-    private Label lbChooseFile;
+    private TextField txtFileName;
+    @FXML
+    private Label lbChooseFile, lbResult;
     @FXML
     private ImageView imgDemo, imgRespond;
 
@@ -67,7 +57,8 @@ public class TestDemoController implements Initializable {
         imgRespond.setImage(new Image(imgSource, true));
 
         btnChooseFile.setOnMouseClicked(this::onClickChooseFile);
-        btnCall.setOnMouseClicked(this::onClickCallApi);
+        btnCallInsert.setOnMouseClicked(this::onClickCallApiInsert);
+        btnCallDelete.setOnMouseClicked(this::onClickCallApiDelete);
     }
 
     private void onClickChooseFile(MouseEvent e) {
@@ -90,15 +81,33 @@ public class TestDemoController implements Initializable {
         }
     }
 
-    private void onClickCallApi(MouseEvent e) {
+    private void onClickCallApiInsert(MouseEvent e) {
         try {
-            if (isImage(fileChoose.getName())) {
-                Respond respond = UploadImageToApi.uploadImageToApi(fileChoose, Const.TYPE_FOOD, "abc.def");
+            if (fileChoose != null && isImage(fileChoose.getName())) {
+                Respond respond = UploadImageToApi.uploadImageToApi(fileChoose, Const.TYPE_TOPIC, "abc.def");
                 System.out.println(respond);
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("File isn't image!");
+                alert.show();
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(TestDemoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void onClickCallApiDelete(MouseEvent e) {
+        try {
+            String imgName = txtFileName.getText().trim();
+            if (!imgName.isEmpty()) {
+                Respond respond = UploadImageToApi.removeImageFromApi(Const.TYPE_TOPIC, imgName);
+                lbResult.setText(respond.getMsg());
+            } else {
+                txtFileName.requestFocus();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Enter file name!");
                 alert.show();
             }
         } catch (IOException ex) {
