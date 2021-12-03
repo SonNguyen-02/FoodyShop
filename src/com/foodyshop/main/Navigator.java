@@ -6,7 +6,6 @@ import com.foodyshop.controller.AddTopicController;
 import com.foodyshop.controller.AddTopicController.ISOK;
 
 import com.foodyshop.controller.EditCategoryController;
-import com.foodyshop.controller.EditOrderController;
 import com.foodyshop.controller.Order_DetailController;
 import com.foodyshop.controller.TestDemoController;
 import com.foodyshop.model.CategoryModel;
@@ -48,14 +47,14 @@ public class Navigator {
     private static final String ORDER_DETAIL = ROOT_FOLDER + "Order_DetailPage.fxml";
     private static final String CATEGORY_PAGE = ROOT_FOLDER + "CategoryPage.fxml";
     private static final String TOPIC_PAGE = ROOT_FOLDER + "TopicPage.fxml";
-      private static final String FEEDBACK_PAGE= ROOT_FOLDER + "FeedbackUI.fxml";
+    private static final String FEEDBACK_PAGE = ROOT_FOLDER + "FeedbackUI.fxml";
 
     // FORM
     private static final String ADD_ORDER_FORM = ROOT_FOLDER + "AddOrderForm.fxml";
     private static final String ADD_CATEGORY_FORM = ROOT_FOLDER + "AddCategoryForm.fxml";
     private static final String EDIT_CATEGORY_FORM = ROOT_FOLDER + "EditCategoryForm.fxml";
-    private static final String EDIT_ORDER_FORM = ROOT_FOLDER + "EditOrderForm.fxml";
     private static final String ADD_TOPIC_FORM = ROOT_FOLDER + "AddTopicForm.fxml";
+
     // Khai báo di chuyển giữa các màn hình
     public void goToLoginUI() {
         redirectTo("Login", LOGIN_UI);
@@ -65,20 +64,18 @@ public class Navigator {
         redirectTo("Admin", MAIN_UI);
     }
 
-    public void goToOrder() {
-        redirectTo("Order", ORDER_PAGE);
-    }
+
 
     // Load Page
     public void loadDashboard(BorderPane borderPane) {
         borderPane.setCenter(getParent(DASHBOARD_PAGE));
     }
 
-    
     public void loadOrder(BorderPane borderPane) {
         borderPane.setCenter(getParent(ORDER_PAGE));
     }
-     public void loadFeedback(BorderPane borderPane) {
+
+    public void loadFeedback(BorderPane borderPane) {
         borderPane.setCenter(getParent(FEEDBACK_PAGE));
     }
 
@@ -106,22 +103,19 @@ public class Navigator {
         AddCategoryController controller = fxLoader.getController();
         controller.initCallback(mIOnAddSuccess);
     }
-    
-     public void showEditCategory() {
+
+    public void showEditCategory() {
         showModal("Edit Category ", EDIT_CATEGORY_FORM);
 
     }
-    public void showEditOrder(OrderModel order) {
-        showModal("Edit Order", EDIT_ORDER_FORM);
-        EditOrderController controller = fxLoader.getController();
-        controller.initOrderModel(order);
-    }
-     public void showAddTopic(ISOK mISOK) {
+
+    public void showAddTopic(ISOK mISOK) {
         showModal("Topic ", ADD_TOPIC_FORM);
         AddTopicController controller = fxLoader.getController();
         controller.initTopic(mISOK);
 
     }
+
     // </editor-fold> 
     private Navigator() {
     }
@@ -133,9 +127,6 @@ public class Navigator {
         return instance;
     }
 
-    
-  
-    
     public void redirectTo(String title, String URL) {
         try {
             fxLoader = new FXMLLoader(getClass().getResource(URL));
@@ -152,7 +143,6 @@ public class Navigator {
         }
     }
 
-  
     public void showModal(String title, String URL) {
         try {
             modalStage = new Stage();
@@ -193,6 +183,5 @@ public class Navigator {
     public void setModalStage(Stage modalStage) {
         this.modalStage = modalStage;
     }
-
 
 }
