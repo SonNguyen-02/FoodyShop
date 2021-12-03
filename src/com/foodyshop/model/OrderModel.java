@@ -191,5 +191,4 @@ public class OrderModel {
     public void setStatus(Integer status) {
         this.status.setValue(status);
     }
-
 }

@@ -64,8 +64,7 @@ public class AddCategoryController implements Initializable {
         topicList = TopicHelper.getAllTopic();
         if (topicList != null && !topicList.isEmpty()) {
             cbTopic.setItems(topicList);
-            cbTopic.setValue(topicList.get(0));
-            
+            cbTopic.setValue(topicList.get(0));          
         }
 
     }

@@ -5,6 +5,7 @@
  */
 package com.foodyshop.controller;
 
+import com.foodyshop.helper.OrderHelper;
 import com.foodyshop.helper.Order_DetailHelper;
 import com.foodyshop.main.Navigator;
 import com.foodyshop.model.OrderModel;
@@ -31,9 +32,6 @@ public class EditOrderController implements Initializable {
     private OrderModel mOrder;
     
     @FXML
-    private GridPane EditOrderForm;
-
-    @FXML
     private Label lbOrder_Code;
 
     @FXML
@@ -59,14 +57,15 @@ public class EditOrderController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         btnCancel.setOnMouseClicked(this::onClickCancel);
-        
+        btnSave.setOnMouseClicked(this::onClickSave);
     }
-
+    public OrderModel order;
     private void onClickSave(MouseEvent e) {
+//        boolean result = OrderHelper.updateOrder(cbStatus.getValue(), txtPrice.getText(), order.getId());
         if (true) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success");
-            alert.setHeaderText("Đã thêm order");
+            alert.setHeaderText("Edit Success!");
             alert.show();
             Navigator.getInstance().getModalStage().close();
         }
@@ -81,6 +80,5 @@ public class EditOrderController implements Initializable {
                 Navigator.getInstance().getModalStage().close();
             }
         });
-
     }
 }
