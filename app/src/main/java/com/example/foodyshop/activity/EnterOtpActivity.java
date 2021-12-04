@@ -19,7 +19,13 @@ import android.widget.Toast;
 
 import com.example.foodyshop.R;
 import com.example.foodyshop.config.Const;
+import com.example.foodyshop.dialog.AuthSuccessDialog;
+import com.example.foodyshop.dialog.LoadingDialog;
+import com.example.foodyshop.dialog.ToastCustom;
 import com.example.foodyshop.helper.Helper;
+import com.example.foodyshop.helper.JWT;
+import com.example.foodyshop.model.Respond;
+import com.example.foodyshop.service.APIService;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -28,9 +34,19 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 
+import java.text.MessageFormat;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class EnterOtpActivity extends AppCompatActivity {
+
+    public static final int ACTION_FORGOT_PASSWORD = 0;
+    public static final int ACTION_SIGN_UP = 1;
 
     private TextView tvPhone, tvResendOtp;
     private EditText edtCode1, edtCode2, edtCode3, edtCode4, edtCode5, edtCode6;
@@ -39,13 +55,13 @@ public class EnterOtpActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
-    private int mTypeChangePassword;
+    private int mAction;
 
     private String mToken;
-    private String mFullname;
-
-    private String mPhoneCode;
+    private String mFullName;
     private String mPhoneNumber;
+    private String mPassword;
+
     private String mVerificationId;
 
     private PhoneAuthProvider.ForceResendingToken mForceResendingToken;
@@ -59,7 +75,6 @@ public class EnterOtpActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         getDataIntent();
         setUpOTPInputs();
-        tvPhone.setText(mPhoneNumber.replace(mPhoneCode, "(" + mPhoneCode + ") "));
         initSendOtp();
         btnVerify.setOnClickListener(v -> verifyCode());
         btnResendOtp.setOnClickListener(v -> resendOtp());
@@ -68,26 +83,30 @@ public class EnterOtpActivity extends AppCompatActivity {
     private void getDataIntent() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            mTypeChangePassword = bundle.getInt(Const.KEY_TYPE_CHANGE_PASSWORD);
-            mPhoneCode = bundle.getString(Const.KEY_PHONE_CODE);
-            mPhoneNumber = bundle.getString(Const.KEY_PHONE_NUMBER);
+            mAction = bundle.getInt(Const.KEY_ACTION);
+
+            String mPhoneCode = bundle.getString(Const.KEY_PHONE_CODE);
+            mPhoneNumber = bundle.getString(Const.KEY_PHONE);
             mVerificationId = bundle.getString(Const.KEY_VERIFICATION_ID);
-            if (mTypeChangePassword == EnterPasswordActivity.TYPE_FORGOT_PASSWORD) {
+            if (mAction == ACTION_SIGN_UP) {
+                mFullName = bundle.getString(Const.KEY_NAME);
+                mPassword = bundle.getString(Const.KEY_PASSWORD);
+            }
+            if (mAction == ACTION_FORGOT_PASSWORD) {
                 mToken = bundle.getString(Const.KEY_TOKEN);
             }
-            if (mTypeChangePassword == EnterPasswordActivity.TYPE_SIGN_UP) {
-                mFullname = bundle.getString(Const.KEY_FULL_NAME);
-            }
+            tvPhone.setText(mPhoneNumber.replace(mPhoneCode, "(" + mPhoneCode + ") "));
         }
     }
 
-    private void initToolbar(){
+    private void initToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Enter OTP");
         toolbar.setNavigationOnClickListener(view -> {
             onBackPressed();
         });
     }
+
     private void initUI() {
         tvPhone = findViewById(R.id.tv_phone);
         tvResendOtp = findViewById(R.id.tv_resend_otp);
@@ -111,6 +130,7 @@ public class EnterOtpActivity extends AppCompatActivity {
                 edt.addTextChangedListener(new GenericTextWatcher(listEdt[i + 1]));
             }
             if (i - 1 >= 0) {
+                Log.e("ddd", "setUpOTPInputs: " + edt.toString() + " i: " + i);
                 edt.setOnKeyListener(new GenericKeyEvent(edt, listEdt[i - 1]));
             }
             i++;
@@ -131,7 +151,7 @@ public class EnterOtpActivity extends AppCompatActivity {
                     btnResendOtp.setVisibility(View.VISIBLE);
                     return;
                 }
-                tvResendOtp.setText("Resend OTP (" + timer-- + "s)");
+                tvResendOtp.setText(MessageFormat.format("Resend OTP ({0}s)", timer--));
                 handler.postDelayed(this, 1000);
             }
         });
@@ -156,6 +176,8 @@ public class EnterOtpActivity extends AppCompatActivity {
         public boolean onKey(View view, int i, @NonNull KeyEvent keyEvent) {
             int action = keyEvent.getAction();
             int code = keyEvent.getKeyCode();
+            Log.e("ddd", "onKey: view " + view);
+            Log.e("ddd", "onKey: Action " + action + " code: " + code);
             if (action == KeyEvent.ACTION_DOWN && code == KeyEvent.KEYCODE_DEL) {
                 if (currentView.getText().toString().trim().isEmpty()) {
                     prevView.setText("");
@@ -183,6 +205,7 @@ public class EnterOtpActivity extends AppCompatActivity {
 
         @Override
         public void onTextChanged(@NonNull CharSequence charSequence, int i, int i1, int i2) {
+            Log.e("ddd", "onTextChanged: " + charSequence);
             if (!charSequence.toString().trim().isEmpty()) {
                 nextView.requestFocus();
             }
@@ -201,7 +224,7 @@ public class EnterOtpActivity extends AppCompatActivity {
                 || isEmpty(edtCode4)
                 || isEmpty(edtCode5)
                 || isEmpty(edtCode6)) {
-            Toast.makeText(this, "Vui lòng nhập mã hợp lệ", Toast.LENGTH_SHORT).show();
+            ToastCustom.notice(this, "Vui lòng nhập mã hợp lệ", false, 1500).show();
             return;
         }
 
@@ -261,7 +284,7 @@ public class EnterOtpActivity extends AppCompatActivity {
 
                         FirebaseUser user = task.getResult().getUser();
                         // Update UI
-                        goToEnterPasswordActivity();
+                        onVerifySuccess();
                     } else {
                         // Sign in failed, display a message and update the UI
                         Log.e("ddd", "signInWithCredential:failure", task.getException());
@@ -274,21 +297,62 @@ public class EnterOtpActivity extends AppCompatActivity {
     }
 
 
-    private void goToEnterPasswordActivity() {
-        Intent intent = new Intent(this, EnterPasswordActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putInt(Const.KEY_TYPE_CHANGE_PASSWORD, mTypeChangePassword);
-        if(mTypeChangePassword == EnterPasswordActivity.TYPE_FORGOT_PASSWORD){
+    private void onVerifySuccess() {
+        if (mAction == ACTION_FORGOT_PASSWORD) {
+            Intent intent = new Intent(this, EnterPasswordActivity.class);
+            Bundle bundle = new Bundle();
             bundle.putString(Const.KEY_TOKEN, mToken);
+            intent.putExtras(bundle);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         }
-        if(mTypeChangePassword == EnterPasswordActivity.TYPE_SIGN_UP){
-            bundle.putString(Const.KEY_FULL_NAME, mFullname);
-            bundle.putString(Const.KEY_PHONE_NUMBER, mPhoneNumber);
+        if (mAction == ACTION_SIGN_UP) {
+            signUp();
         }
+    }
 
-        intent.putExtras(bundle);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+
+    private void signUp() {
+        LoadingDialog dialog = new LoadingDialog(this, "Đang tải ...");
+        dialog.show();
+        Map<String, Object> payloadMap = new HashMap<>();
+        payloadMap.put(Const.KEY_NAME, mFullName);
+        payloadMap.put(Const.KEY_PHONE, mPhoneNumber);
+        payloadMap.put(Const.KEY_PASSWORD, mPassword);
+        String token = JWT.createToken(payloadMap, System.currentTimeMillis() + 60 * 1000);
+        APIService.getService().register(token).enqueue(new Callback<Respond>() {
+            @Override
+            public void onResponse(@NonNull Call<Respond> call, @NonNull Response<Respond> response) {
+                dialog.dismiss();
+                if (response.isSuccessful() && response.body() != null) {
+                    Respond res = response.body();
+                    if (res.isSuccess()) {
+                        String mess = "Đăng kí tài khoản thành công!";
+                        showDialogSuccess(R.drawable.register_success, mess);
+                    } else {
+                        ToastCustom.notice(getApplicationContext(), res.getMsg(), false, 1500).show();
+                    }
+                } else {
+                    Log.e("ddd", "onResponse: sever error");
+                    ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", false, 1500).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Respond> call, @NonNull Throwable t) {
+                dialog.dismiss();
+                ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", false, 1500).show();
+            }
+        });
+    }
+
+    private void showDialogSuccess(int imgRes, String mess) {
+        AuthSuccessDialog successDialog = new AuthSuccessDialog(this, imgRes, mess, () -> {
+            Intent intent = new Intent(getApplicationContext(), SigninActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        });
+        successDialog.show();
     }
 
 }

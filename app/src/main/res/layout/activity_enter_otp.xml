@@ -36,7 +36,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:orientation="vertical"
-                android:paddingBottom="85dp">
+                android:paddingBottom="85dp"
+                tools:ignore="UselessParent">
 
                 <ImageView
                     android:id="@+id/image"
@@ -46,14 +47,15 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginBottom="8dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/ic_send" />
+                    android:src="@drawable/ic_send"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="8dp"
-                    android:text="OTP Verification"
+                    android:text="@string/otp_verification"
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -230,7 +232,7 @@
                             android:layout_height="45dp"
                             android:layout_gravity="center"
                             android:background="@android:color/transparent"
-                            android:imeOptions="actionNext"
+                            android:imeOptions="actionDone"
                             android:importantForAutofill="no"
                             android:inputType="number"
                             android:maxLength="1"

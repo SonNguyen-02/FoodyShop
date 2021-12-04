@@ -1,7 +1,10 @@
 package com.example.foodyshop.activity;
 
+import static com.example.foodyshop.activity.EnterOtpActivity.ACTION_FORGOT_PASSWORD;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -17,6 +20,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.foodyshop.R;
 import com.example.foodyshop.config.Const;
+import com.example.foodyshop.dialog.ToastCustom;
 import com.example.foodyshop.helper.Helper;
 import com.example.foodyshop.helper.JWT;
 import com.example.foodyshop.dialog.LoadingDialog;
@@ -93,7 +97,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         });
 
         btnSendOtp.setOnClickListener(v -> checkPhoneUser());
-
     }
 
     private void initToolbar(){
@@ -112,11 +115,21 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     }
 
     private void checkPhoneUser() {
+        btnSendOtp.setEnabled(false);
+        new Handler().postDelayed(() -> {
+            btnSendOtp.setEnabled(true);
+        }, 1500);
         // validate
+        if (edtPhone.getText().toString().trim().isEmpty()) {
+            edtPhone.requestFocus();
+            Helper.showKeyboard(getApplicationContext());
+            ToastCustom.notice(getApplicationContext(), "Vui lòng nhập số điện thoại", false, 1500).show();
+            return;
+        }
         if (!isValidPhone) {
             edtPhone.requestFocus();
             Helper.showKeyboard(getApplicationContext());
-            Toast.makeText(this, "Số điện thoại không đúng định dạng", Toast.LENGTH_SHORT).show();
+            ToastCustom.notice(getApplicationContext(), "Số điện thoại không đúng định dạng", false, 1500).show();
             return;
         }
         Helper.hideKeyboard(getApplicationContext(), edtPhone);
@@ -131,26 +144,29 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         String tokenSend = JWT.createToken(payloadMap, System.currentTimeMillis() + 60 * 1000);
         APIService.getService().forgotPassword(tokenSend).enqueue(new Callback<Respond>() {
             @Override
-            public void onResponse(Call<Respond> call, Response<Respond> response) {
+            public void onResponse(@NonNull Call<Respond> call, @NonNull Response<Respond> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Respond res = response.body();
                     if (res.isSuccess()) {
                         // verify phone
                         token = res.getMsg();
+                        dialog.setMessage("Đang gửi OPT ...");
                         verifyPhoneNumber(ccp.getFullNumberWithPlus());
                     } else {
                         dialog.dismiss();
-                        Toast.makeText(ForgotPasswordActivity.this, res.getMsg(), Toast.LENGTH_SHORT).show();
+                        ToastCustom.notice(ForgotPasswordActivity.this, res.getMsg(), false, 1500).show();
                     }
                 } else {
                     dialog.dismiss();
+                    ToastCustom.notice(getApplicationContext(), "Có lỗi sảy ra. Vui lòng thử lại!", false, 1500).show();
                     Log.e("ddd", "onResponse: sever error");
                 }
             }
 
             @Override
-            public void onFailure(Call<Respond> call, Throwable t) {
+            public void onFailure(@NonNull Call<Respond> call, @NonNull Throwable t) {
                 dialog.dismiss();
+                ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", false, 1500).show();
                 Log.e("ddd", "onFailure: sever error");
             }
         });
@@ -180,8 +196,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
                             @Override
                             public void onCodeSent(@NonNull String verificationId, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-                                super.onCodeSent(verificationId, forceResendingToken);
                                 dialog.dismiss();
+                                super.onCodeSent(verificationId, forceResendingToken);
                                 goToEnterOtpActivity(phoneNumber, verificationId);
                             }
                         })
@@ -213,10 +229,10 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     private void goToEnterOtpActivity(String phoneNumber, String verificationId) {
         Intent intent = new Intent(this, EnterOtpActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putInt(Const.KEY_TYPE_CHANGE_PASSWORD, EnterPasswordActivity.TYPE_FORGOT_PASSWORD);
+        bundle.putInt(Const.KEY_ACTION, ACTION_FORGOT_PASSWORD);
         bundle.putString(Const.KEY_TOKEN, token);
         bundle.putString(Const.KEY_PHONE_CODE, ccp.getSelectedCountryCodeWithPlus());
-        bundle.putString(Const.KEY_PHONE_NUMBER, phoneNumber);
+        bundle.putString(Const.KEY_PHONE, phoneNumber);
         bundle.putString(Const.KEY_VERIFICATION_ID, verificationId);
         intent.putExtras(bundle);
         startActivity(intent);
@@ -225,7 +241,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     private void goToEnterPasswordActivity() {
         Intent intent = new Intent(this, EnterPasswordActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putInt(Const.KEY_TYPE_CHANGE_PASSWORD, EnterPasswordActivity.TYPE_FORGOT_PASSWORD);
+        bundle.putInt(Const.KEY_ACTION, ACTION_FORGOT_PASSWORD);
         bundle.putString(Const.KEY_TOKEN, token);
         intent.putExtras(bundle);
         startActivity(intent);

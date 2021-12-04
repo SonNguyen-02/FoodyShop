@@ -18,6 +18,7 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 
 import com.example.foodyshop.config.Const;
+import com.example.foodyshop.dialog.ToastCustom;
 import com.example.foodyshop.model.CustomerModel;
 import com.example.foodyshop.model.OrderDetailModel;
 import com.example.foodyshop.service.APIService;
@@ -157,6 +158,7 @@ public class Helper {
             @Override
             public void onResponse(@NonNull Call<CustomerModel> call, @NonNull Response<CustomerModel> response) {
                 if (response.isSuccessful() && response.body() != null) {
+                    currentAccount = response.body();
                     Gson gson = new Gson();
                     String customerJson = gson.toJson(response.body());
                     editor.putString(KEY_USER_OBJ, customerJson);
@@ -177,10 +179,34 @@ public class Helper {
     }
 
     public static void logOut(Context context) {
+        currentAccount = null;
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
         editor.remove(KEY_TOKEN_LOGIN);
         editor.remove(KEY_USER_OBJ);
         editor.apply();
     }
 
+    public static boolean isInvalidPassword(Context context, @NonNull EditText edtPassword, boolean isConfirmPass) {
+        String password = edtPassword.getText().toString().trim();
+        if (password.isEmpty()) {
+            edtPassword.requestFocus();
+            if (isConfirmPass) {
+                ToastCustom.notice(context, "Vui lòng nhập lại mật khẩu", false, 1500).show();
+            } else {
+                ToastCustom.notice(context, "Vui lòng nhập mật khẩu", false, 1500).show();
+            }
+            return true;
+        }
+        if (password.length() < 8) {
+            edtPassword.requestFocus();
+            ToastCustom.notice(context, "Mật khẩu tối thiểu 8 kí tự", false, 1500).show();
+            return true;
+        }
+        if (!password.matches(Const.PASSWORD_REGEX)) {
+            edtPassword.requestFocus();
+            ToastCustom.notice(context, "Mật khẩu cần có ít nhất 1 chữ và 1 số", false, 1500).show();
+            return true;
+        }
+        return false;
+    }
 }

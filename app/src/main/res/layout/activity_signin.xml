@@ -21,14 +21,16 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="16dp"
+            tools:ignore="UselessParent">
 
             <ImageView
                 android:layout_width="300dp"
                 android:layout_height="160dp"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/logo_login" />
+                app:srcCompat="@drawable/logo_login"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -134,7 +136,8 @@
                             android:imeOptions="actionDone"
                             android:inputType="textPassword"
                             android:minWidth="328dp"
-                            android:minHeight="50dp" />
+                            android:minHeight="50dp"
+                            tools:ignore="Autofill" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </androidx.cardview.widget.CardView>
 

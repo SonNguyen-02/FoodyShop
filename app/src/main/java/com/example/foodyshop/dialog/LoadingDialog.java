@@ -11,8 +11,10 @@ import com.example.foodyshop.R;
 public class LoadingDialog {
 
     private final Activity activity;
+    private final View view;
     private AlertDialog dialog;
-    private final String message;
+    private String message;
+    private TextView tvMessLoad;
 
     public LoadingDialog(Activity activity) {
         this(activity, null);
@@ -21,13 +23,21 @@ public class LoadingDialog {
     public LoadingDialog(Activity activity, String message) {
         this.activity = activity;
         this.message = message;
+        view = LayoutInflater.from(activity).inflate(R.layout.dialog_loading, null);
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+        if (tvMessLoad == null) {
+            tvMessLoad = view.findViewById(R.id.tv_message);
+        }
+        tvMessLoad.setText(message);
     }
 
     public void show() {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        View view = LayoutInflater.from(activity).inflate(R.layout.dialog_loading, null);
-        if(message != null && !message.trim().isEmpty()){
-            TextView tvMessLoad = view.findViewById(R.id.tv_message);
+        if (message != null && !message.trim().isEmpty()) {
+            tvMessLoad = view.findViewById(R.id.tv_message);
             tvMessLoad.setText(message);
         }
         builder.setView(view);

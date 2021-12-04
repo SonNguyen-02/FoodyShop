@@ -12,6 +12,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements TopicAdapter.IOnc
         // init account if login
         if (Helper.isLogin(getApplicationContext())) {
             Helper.currentAccount = Helper.getUserInfo(getApplicationContext());
+            Log.e("ddd", "onCreate: " + Helper.currentAccount);
         }
 
         initUi();
@@ -96,6 +98,9 @@ public class MainActivity extends AppCompatActivity implements TopicAdapter.IOnc
             Intent intent = new Intent(getApplicationContext(), CartActivity.class);
             startActivity(intent);
         });
+
+        Intent intent = new Intent(this, EnterOtpActivity.class);
+        startActivity(intent);
 
     }
 

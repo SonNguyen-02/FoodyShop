@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.foodyshop.R;
 import com.example.foodyshop.config.Const;
+import com.example.foodyshop.dialog.ToastCustom;
 import com.example.foodyshop.helper.Helper;
 import com.example.foodyshop.helper.JWT;
 import com.example.foodyshop.dialog.LoadingDialog;
@@ -96,22 +98,23 @@ public class SigninActivity extends AppCompatActivity {
     }
 
     private void login() {
+        btnSignin.setEnabled(false);
+        new Handler().postDelayed(() -> {
+            btnSignin.setEnabled(true);
+        }, 1500);
         if (edtPhone.getText().toString().trim().isEmpty()) {
             edtPhone.requestFocus();
             Helper.showKeyboard(getApplicationContext());
-            Toast.makeText(this, "Vui lòng nhập số điện thoại", Toast.LENGTH_SHORT).show();
+            ToastCustom.notice(this, "Vui lòng nhập số điện thoại", false, 1500).show();
             return;
         }
         if (!isValidPhone) {
             edtPhone.requestFocus();
             Helper.showKeyboard(getApplicationContext());
-            Toast.makeText(this, "Vui lòng nhập đúng số điện thoại", Toast.LENGTH_SHORT).show();
+            ToastCustom.notice(this, "Vui lòng nhập đúng số điện thoại", false, 1500).show();
             return;
         }
-        if (edtPassword.getText().toString().trim().isEmpty()) {
-            edtPassword.requestFocus();
-            Helper.showKeyboard(getApplicationContext());
-            Toast.makeText(this, "Vui lòng nhập mật khẩu", Toast.LENGTH_SHORT).show();
+        if (Helper.isInvalidPassword(getApplicationContext(), edtPassword, false)) {
             return;
         }
         final LoadingDialog dialog = new LoadingDialog(this);
@@ -144,19 +147,20 @@ public class SigninActivity extends AppCompatActivity {
                         startActivity(intent);
                     } else {
                         // Show lỗi khi đăng nhập false
-                        Toast.makeText(getApplicationContext(), res.getMsg(), Toast.LENGTH_SHORT).show();
+                        ToastCustom.notice(getApplicationContext(), res.getMsg(), false, 2000).show();
                         Log.e("ddd", "onResponse: " + res.getMsg());
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "Có lỗi. Vui lòng thử lại sau!", Toast.LENGTH_SHORT).show();
+                    ToastCustom.notice(getApplicationContext(), "Có lỗi. Vui lòng thử lại sau!", false, 1500).show();
                     Log.e("ddd", "onResponse: " + "server error");
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<Respond> call, @NonNull Throwable t) {
-                Log.e("ddd", "onFailure: ");
                 dialog.dismiss();
+                ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", false, 1500).show();
+                Log.e("ddd", "onFailure: ");
             }
         });
 

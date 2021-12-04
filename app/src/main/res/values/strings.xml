@@ -10,8 +10,6 @@
     <string name="filter">Lọc</string>
     <string name="on_sale">Đang giảm giá</string>
 
-    <!--    <string name="price_vnd"><strike>160.000<u>đ</u></strike></string>-->
-
     <string name="hint_fullname">Full name</string>
     <string name="hint_password">Password</string>
     <string name="button_sign_in">Sign in</string>
@@ -61,4 +59,8 @@
 
     <string name="change_password_success">Đổi mật khẩu thành công!</string>
     <string name="ok">OK</string>
+
+    <string name="otp_verification">OTP Verification</string>
+    <string name="enter_your_new_password">Enter password to complete</string>
+    <string name="pass_description">A password has minimum eight characters, at least one letter and one number.</string>
 </resources>

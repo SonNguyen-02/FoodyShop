@@ -22,7 +22,7 @@ public class FeedbackDialog {
     private Button btnCancel;
     private final IOnClickSend mIOnClickSend;
 
-    private FeedbackModel mFeedback;
+    private final FeedbackModel mFeedback;
 
     public FeedbackDialog(Activity activity) {
         this(activity, null);

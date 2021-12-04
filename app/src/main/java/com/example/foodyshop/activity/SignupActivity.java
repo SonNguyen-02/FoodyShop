@@ -1,7 +1,10 @@
 package com.example.foodyshop.activity;
 
+import static com.example.foodyshop.activity.EnterOtpActivity.ACTION_SIGN_UP;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -9,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +19,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.foodyshop.R;
 import com.example.foodyshop.config.Const;
+import com.example.foodyshop.dialog.AuthSuccessDialog;
+import com.example.foodyshop.dialog.ToastCustom;
 import com.example.foodyshop.helper.Helper;
 import com.example.foodyshop.helper.JWT;
 import com.example.foodyshop.dialog.LoadingDialog;
@@ -42,14 +46,17 @@ import retrofit2.Response;
 
 public class SignupActivity extends AppCompatActivity {
 
-
     private CountryCodePicker ccp;
-    private EditText edtFullName, edtPhone;
+    private EditText edtFullName, edtPhone, edtPassword, edtConfPassword;
+
     private ImageView imgCheck;
-    private Button btnNext;
+    private Button btnSignup;
     private boolean isValidPhone;
 
-    private String fullName;
+    private String mFullName;
+    private String mPhoneNumber;
+    private String mPassword;
+
     private FirebaseAuth mAuth;
     private LoadingDialog dialog;
 
@@ -94,10 +101,10 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
-        btnNext.setOnClickListener(this::onClickBtnNext);
+        btnSignup.setOnClickListener(this::onClickSignUp);
     }
 
-    private void initToolbar(){
+    private void initToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Sign up");
         toolbar.setNavigationOnClickListener(view -> {
@@ -110,59 +117,92 @@ public class SignupActivity extends AppCompatActivity {
         edtFullName = findViewById(R.id.edt_fullname);
         edtPhone = findViewById(R.id.edt_phone);
         imgCheck = findViewById(R.id.img_check);
-        btnNext = findViewById(R.id.button_next);
+        edtPassword = findViewById(R.id.edt_password);
+        edtConfPassword = findViewById(R.id.edt_confirm_password);
+        btnSignup = findViewById(R.id.btn_signup);
     }
 
-    private void onClickBtnNext(View v){
-        fullName = edtFullName.getText().toString().trim();
+    private void onClickSignUp(View v) {
+        btnSignup.setEnabled(false);
+        new Handler().postDelayed(() -> {
+            btnSignup.setEnabled(true);
+        }, 1500);
+        String fullName = edtFullName.getText().toString().trim();
+        String password = edtPassword.getText().toString().trim();
+        String confPassword = edtConfPassword.getText().toString().trim();
 
-        if(fullName.isEmpty()){
+        // validate full name
+        if (fullName.isEmpty()) {
             edtFullName.requestFocus();
             Helper.showKeyboard(getApplicationContext());
-            Toast.makeText(this, "Please enter your name!", Toast.LENGTH_SHORT).show();
+            ToastCustom.notice(getApplicationContext(), "Vui lòng nhập tên của bạn!", false, 1500).show();
             return;
         }
-        if(!isValidPhone){
+        // validate sdt
+        if (edtPhone.getText().toString().trim().isEmpty()) {
             edtPhone.requestFocus();
             Helper.showKeyboard(getApplicationContext());
-            Toast.makeText(this, "Số điện thoại không đúng định dạng", Toast.LENGTH_SHORT).show();
+            ToastCustom.notice(getApplicationContext(), "Vui lòng nhập số điện thoại", false, 1500).show();
+            return;
+        }
+        if (!isValidPhone) {
+            edtPhone.requestFocus();
+            Helper.showKeyboard(getApplicationContext());
+            ToastCustom.notice(getApplicationContext(), "Số điện thoại không đúng định dạng", false, 1500).show();
             return;
         }
 
+        // validate password
+        if (Helper.isInvalidPassword(getApplicationContext(), edtPassword, false)) {
+            return;
+        }
+        if (Helper.isInvalidPassword(getApplicationContext(), edtConfPassword, true)) {
+            return;
+        }
+        if (!password.equals(confPassword)) {
+            edtConfPassword.requestFocus();
+            edtConfPassword.selectAll();
+            ToastCustom.notice(this, "Mật khẩu không giống", false, 1500).show();
+            return;
+        }
+
+        mFullName = fullName;
+        mPhoneNumber = ccp.getFullNumberWithPlus();
+        mPassword = password;
         // prepare call api
         dialog = new LoadingDialog(this, "Đang kiểm tra ...");
         dialog.show();
 
         Map<String, Object> payloadMap = new HashMap<>();
-        payloadMap.put(Const.KEY_PHONE, ccp.getFullNumberWithPlus());
+        payloadMap.put(Const.KEY_PHONE, mPhoneNumber);
 
         String token = JWT.createToken(payloadMap, System.currentTimeMillis() + 60 * 1000);
         APIService.getService().checkAccountExists(token).enqueue(new Callback<Respond>() {
             @Override
-            public void onResponse(Call<Respond> call, Response<Respond> response) {
-                if (response.isSuccessful() && response.body() != null){
+            public void onResponse(@NonNull Call<Respond> call, @NonNull Response<Respond> response) {
+                if (response.isSuccessful() && response.body() != null) {
                     Respond res = response.body();
-                    if(res.isSuccess()){
-                        verifyPhoneNumber(ccp.getFullNumberWithPlus());
-                    }else{
+                    if (res.isSuccess()) {
+                        dialog.setMessage("Đang gửi OPT ...");
+                        verifyPhoneNumber(mPhoneNumber);
+                    } else {
                         dialog.dismiss();
-                        Toast.makeText(getApplicationContext(), res.getMsg(), Toast.LENGTH_SHORT).show();
+                        ToastCustom.notice(getApplicationContext(), res.getMsg(), false, 1500).show();
                     }
-                }else{
+                } else {
                     dialog.dismiss();
+                    ToastCustom.notice(getApplicationContext(), "Có lỗi sảy ra. Vui lòng thử lại!", false, 1500).show();
                     Log.e("ddd", "onResponse: sever error");
                 }
             }
 
             @Override
-            public void onFailure(Call<Respond> call, Throwable t) {
+            public void onFailure(@NonNull Call<Respond> call, @NonNull Throwable t) {
                 dialog.dismiss();
+                ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", false, 1500).show();
             }
         });
-
-
     }
-
 
     private void verifyPhoneNumber(String phoneNumber) {
         PhoneAuthOptions options =
@@ -182,13 +222,13 @@ public class SignupActivity extends AppCompatActivity {
                             @Override
                             public void onVerificationFailed(@NonNull FirebaseException e) {
                                 dialog.dismiss();
-                                Toast.makeText(SignupActivity.this, "Verification False", Toast.LENGTH_SHORT).show();
+                                ToastCustom.notice(SignupActivity.this, "Verification False", false, 1500).show();
                             }
 
                             @Override
                             public void onCodeSent(@NonNull String verificationId, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-                                super.onCodeSent(verificationId, forceResendingToken);
                                 dialog.dismiss();
+                                super.onCodeSent(verificationId, forceResendingToken);
                                 goToEnterOtpActivity(phoneNumber, verificationId);
                             }
                         })
@@ -205,13 +245,13 @@ public class SignupActivity extends AppCompatActivity {
 
                         FirebaseUser user = task.getResult().getUser();
                         // Update UI
-                        goToEnterPasswordActivity();
+                        signUp();
                     } else {
                         // Sign in failed, display a message and update the UI
                         Log.e("ddd", "signInWithCredential:failure", task.getException());
                         if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                             // The verification code entered was invalid
-                            Toast.makeText(this, "The verification code entered was invalid.", Toast.LENGTH_SHORT).show();
+                            ToastCustom.notice(this, "The verification code entered was invalid.", false, 1500).show();
                         }
                     }
                 });
@@ -220,22 +260,56 @@ public class SignupActivity extends AppCompatActivity {
     private void goToEnterOtpActivity(String phoneNumber, String verificationId) {
         Intent intent = new Intent(this, EnterOtpActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putInt(Const.KEY_TYPE_CHANGE_PASSWORD, EnterPasswordActivity.TYPE_SIGN_UP);
-        bundle.putString(Const.KEY_FULL_NAME, fullName);
+        bundle.putInt(Const.KEY_ACTION, ACTION_SIGN_UP);
+        bundle.putString(Const.KEY_NAME, mFullName);
         bundle.putString(Const.KEY_PHONE_CODE, ccp.getSelectedCountryCodeWithPlus());
-        bundle.putString(Const.KEY_PHONE_NUMBER, phoneNumber);
+        bundle.putString(Const.KEY_PHONE, phoneNumber);
+        bundle.putString(Const.KEY_PASSWORD, mPassword);
         bundle.putString(Const.KEY_VERIFICATION_ID, verificationId);
         intent.putExtras(bundle);
         startActivity(intent);
     }
 
-    private void goToEnterPasswordActivity() {
-        Intent intent = new Intent(this, EnterPasswordActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putInt(Const.KEY_TYPE_CHANGE_PASSWORD, EnterPasswordActivity.TYPE_SIGN_UP);
-        bundle.putString(Const.KEY_FULL_NAME, fullName);
-        intent.putExtras(bundle);
-        startActivity(intent);
+    private void signUp() {
+        LoadingDialog dialog = new LoadingDialog(this, "Đang tải ...");
+        dialog.show();
+        Map<String, Object> payloadMap = new HashMap<>();
+        payloadMap.put(Const.KEY_NAME, mFullName);
+        payloadMap.put(Const.KEY_PHONE, mPhoneNumber);
+        payloadMap.put(Const.KEY_PASSWORD, mPassword);
+        String token = JWT.createToken(payloadMap, System.currentTimeMillis() + 60 * 1000);
+        APIService.getService().register(token).enqueue(new Callback<Respond>() {
+            @Override
+            public void onResponse(@NonNull Call<Respond> call, @NonNull Response<Respond> response) {
+                dialog.dismiss();
+                if (response.isSuccessful() && response.body() != null) {
+                    Respond res = response.body();
+                    if (res.isSuccess()) {
+                        String mess = "Đăng kí tài khoản thành công!";
+                        showDialogSuccess(R.drawable.register_success, mess);
+                    } else {
+                        ToastCustom.notice(getApplicationContext(), res.getMsg(), false, 1500).show();
+                    }
+                } else {
+                    Log.e("ddd", "onResponse: sever error");
+                    ToastCustom.notice(getApplicationContext(), "Có lỗi sảy ra. Vui lòng thử lại!", false, 1500).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Respond> call, @NonNull Throwable t) {
+                dialog.dismiss();
+                ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", false, 1500).show();
+            }
+        });
     }
 
+    private void showDialogSuccess(int imgRes, String mess) {
+        AuthSuccessDialog successDialog = new AuthSuccessDialog(this, imgRes, mess, () -> {
+            Intent intent = new Intent(getApplicationContext(), SigninActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        });
+        successDialog.show();
+    }
 }
