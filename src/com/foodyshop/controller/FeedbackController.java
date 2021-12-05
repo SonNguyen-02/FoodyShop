@@ -9,15 +9,16 @@ import com.foodyshop.helper.DBFeedbackHelper;
 import com.foodyshop.model.FeedbackModel;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
@@ -46,9 +47,6 @@ public class FeedbackController implements Initializable {
     private TableColumn<FeedbackModel, String> tcStatus;
 
     @FXML
-    private Button btnDelete;
-
-    @FXML
     private Button btnShow;
 
     @FXML
@@ -61,13 +59,12 @@ public class FeedbackController implements Initializable {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         listFeedback = FXCollections.observableArrayList();
         tvFeedback.setItems(listFeedback);
-        tcID.setCellValueFactory(cellData->cellData.getValue().getIDproperty());
-        tcCustomerID.setCellValueFactory(cellData->cellData.getValue().getCustomerIDProperty());
-        tcProductID.setCellValueFactory(cellData->cellData.getValue().getProductIDProperty());
-        tcContent.setCellValueFactory(cellData->cellData.getValue().getContentProperty());
-        tcStatus.setCellValueFactory(cellData->cellData.getValue().getStatusProperty());
-        
-        
+        tcID.setCellValueFactory(cellData -> cellData.getValue().getIDproperty());
+        tcCustomerID.setCellValueFactory(cellData -> cellData.getValue().getCustomerIDProperty());
+        tcProductID.setCellValueFactory(cellData -> cellData.getValue().getProductIDProperty());
+        tcContent.setCellValueFactory(cellData -> cellData.getValue().getContentProperty());
+        tcStatus.setCellValueFactory(cellData -> cellData.getValue().getStatusProperty());
+
         try {
             listFeedback.addAll(DBFeedbackHelper.showAllFeedback());
         } catch (SQLException ex) {
@@ -76,18 +73,51 @@ public class FeedbackController implements Initializable {
     }
 
     @FXML
-    void onClickDelete(ActionEvent event) {
-
-    }
-
-    @FXML
     void onClickHidden(ActionEvent event) {
+        FeedbackModel fbmodel = tvFeedback.getSelectionModel().getSelectedItem();
+        if (fbmodel == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("No selected data");
+            alert.setContentText("Select a feedback before do this action!");
+            alert.show();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("confirm");
+            alert.setContentText("Are you sure to hidden this feedback?");
 
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                System.out.println("Click Ok");
+                fbmodel.setStatus("hidden");
+            } else {
+                System.out.println("Click Cancel");
+            }
+
+        }
     }
 
     @FXML
     void onClickShow(ActionEvent event) {
+        FeedbackModel fbmodel = tvFeedback.getSelectionModel().getSelectedItem();
+        if (fbmodel == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("No selected data");
+            alert.setContentText("Select a feedback before do this action!");
+            alert.show();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("confirm");
+            alert.setContentText("Are you sure to show this feedback?");
 
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                System.out.println("Click Ok");
+                fbmodel.setStatus("show");
+            } else {
+                System.out.println("Click Cancel");
+            }
+
+        }
     }
 
 }

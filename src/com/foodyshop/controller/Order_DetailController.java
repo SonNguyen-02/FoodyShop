@@ -8,6 +8,7 @@ package com.foodyshop.controller;
 import com.foodyshop.helper.Order_DetailHelper;
 import com.foodyshop.model.OrderModel;
 import com.foodyshop.model.Order_DetailModel;
+import com.foodyshop.model.ProductModel;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -30,9 +31,8 @@ public class Order_DetailController implements Initializable {
     private OrderModel mOrder;
     
     
-    
     @FXML
-    private Label lbOrder_Code;
+    private Label lbOrder_Code,lbTotalPrice,lbTotalProduct;
 
     @FXML
     private TableView<Order_DetailModel> tblOrder_detail;
@@ -60,6 +60,7 @@ public class Order_DetailController implements Initializable {
     public void initOrderModel(OrderModel order){
         this.mOrder = order;
         order.getOrderCode();
+        lbTotalPrice.setText(order.getTotalMoney().toString());
         lbOrder_Code.setText(order.getOrderCode().toString());
         listOrder_Detail = Order_DetailHelper.getAllOrder_Detail(order);
         tblOrder_detail.setItems(listOrder_Detail);

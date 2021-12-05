@@ -5,13 +5,19 @@
  */
 package com.foodyshop.controller;
 
+import com.foodyshop.helper.CustomerHelper;
 import com.foodyshop.main.Navigator;
+import com.foodyshop.model.CustomerModel;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.ImageView;
 
 /**
  * FXML Controller class
@@ -21,31 +27,36 @@ import javafx.scene.control.TableView;
 public class CustomerController implements Initializable {
 
     @FXML
-    private TableView<?> tblCustomer;
+    private TableView<CustomerModel> tblCustomer;
 
     @FXML
-    private TableColumn<?, ?> ctStt;
+    private TableColumn<CustomerModel, Integer> ctStt;
 
     @FXML
-    private TableColumn<?, ?> ctPhone;
+    private TableColumn<CustomerModel, String> ctPhone;
 
     @FXML
-    private TableColumn<?, ?> ctName;
+    private TableColumn<CustomerModel, String> ctName;
 
     @FXML
-    private TableColumn<?, ?> ctGender;
+    private TableColumn<CustomerModel, Integer> ctGender;
 
     @FXML
-    private TableColumn<?, ?> ctDatebirth;
+    private TableColumn<CustomerModel, String> ctDatebirth;
 
     @FXML
-    private TableColumn<?, ?> ctAddress;
+    private TableColumn<CustomerModel, String> ctAddress;
 
     @FXML
-    private TableColumn<?, ?> ctImage;
+    private TableColumn<CustomerModel, String> ctCreated;
 
     @FXML
-    private TableColumn<?, ?> ctStatus;
+    private TableColumn<CustomerModel, ImageView> ctImage;
+
+    @FXML
+    private TableColumn<CustomerModel, Integer> ctStatus;
+
+    ObservableList<CustomerModel> listCustomer = FXCollections.observableArrayList();
 
     /**
      * Initializes the controller class.
@@ -53,5 +64,17 @@ public class CustomerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        ctStt.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tblCustomer.getItems().indexOf(cellData.getValue()) + 1) + ""));
+        ctPhone.setCellValueFactory(cellValue -> cellValue.getValue().getPhoneProperty());
+        ctName.setCellValueFactory(cellValue -> cellValue.getValue().getNameProperty());
+        ctGender.setCellValueFactory(cellValue -> cellValue.getValue().getGenderProperty()); 
+        ctDatebirth.setCellValueFactory(cellValue -> cellValue.getValue().getDatebirthProperty());
+        ctAddress.setCellValueFactory(cellValue -> cellValue.getValue().getAddressProperty()); 
+        ctImage.setCellValueFactory(cellValue -> cellValue.getValue().getImgView());
+        ctCreated.setCellValueFactory(cellValue -> cellValue.getValue().getCreatedProperty());
+        ctStatus.setCellValueFactory(cellValue -> cellValue.getValue().getStatusProperty());
+
+        listCustomer = CustomerHelper.getAllCustomer();
+        tblCustomer.setItems(listCustomer);
     }
 }

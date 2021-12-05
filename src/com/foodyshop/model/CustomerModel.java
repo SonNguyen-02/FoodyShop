@@ -6,6 +6,7 @@
 package com.foodyshop.model;
 
 import static com.foodyshop.main.Config.IMG_TOPIC_DIR;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -22,14 +23,14 @@ public class CustomerModel {
     public static final String UNLOCK = "Unlock";
     
     private int id;
-    private String phone;
+    private StringProperty phone;
     private String password;
-    private String address;
-    private int gender;
-    private String datebirth;
+    private StringProperty address;
+    private ObjectProperty<Integer> gender;
+    private StringProperty datebirth;
     private StringProperty name;
     private String img;
-    private int status;
+    private ObjectProperty<Integer> status;
 
     private ObservableValue<ImageView> imgView;
     private StringProperty created;
@@ -37,8 +38,14 @@ public class CustomerModel {
 
     public CustomerModel() {
         this.name = new SimpleStringProperty();
+        this.phone = new SimpleStringProperty();
+        this.address = new SimpleStringProperty();
+        this.gender = new SimpleObjectProperty<>();
+        this.datebirth = new SimpleStringProperty();
+        this.name = new SimpleStringProperty();
         this.created = new SimpleStringProperty();
         this.statusVal = new SimpleStringProperty();
+        this.status = new SimpleObjectProperty<>();
     }
 
     public int getId() {
@@ -50,11 +57,15 @@ public class CustomerModel {
     }
 
     public String getPhone() {
-        return phone;
+        return phone.getValue();
     }
 
+    public StringProperty getPhoneProperty() {
+        return phone;
+    }
+    
     public void setPhone(String phone) {
-        this.phone = phone;
+        this.phone.setValue(phone);
     }
 
     public String getPassword() {
@@ -66,35 +77,49 @@ public class CustomerModel {
     }
 
     public String getAddress() {
-        return address;
+        return address.getValue();
     }
 
+    public StringProperty getAddressProperty() {
+        return address;
+    }
+    
     public void setAddress(String address) {
-        this.address = address;
+        this.address.setValue(address);
     }
 
     public int getGender() {
+        return gender.getValue();
+    }
+    
+    public ObjectProperty<Integer> getGenderProperty() {
         return gender;
     }
-
-    public void setGender(int gender) {
-        this.gender = gender;
+    
+    public void setGender(Integer gender) {
+        this.gender.setValue(gender);
     }
 
     public String getDatebirth() {
+        return datebirth.getValue();
+    }
+    
+    public StringProperty getDatebirthProperty() {
         return datebirth;
     }
-
+    
     public void setDatebirth(String datebirth) {
-        this.datebirth = datebirth;
+        this.datebirth.setValue(datebirth);
     }
 
-    public StringProperty getName() {
+    public StringProperty getNameProperty() {
         return name;
     }
-
-    public void setName(StringProperty name) {
-        this.name = name;
+    public  String getname(){
+        return name.getValue();
+    }
+    public void setName(String name) {
+        this.name.setValue(name);
     }
 
     public String getImg() {
@@ -108,10 +133,14 @@ public class CustomerModel {
         this.imgView = new SimpleObjectProperty<>(new ImageView(image));
     }
 
-    public int getStatus() {
+    public Integer getStatus() {
+        return status.getValue();
+    }
+     
+    public ObjectProperty<Integer> getStatusProperty() {
         return status;
     }
-
+    
     public ObservableValue<ImageView> getImgView() {
         return imgView;
     }
@@ -120,33 +149,40 @@ public class CustomerModel {
         this.imgView = imgView;
     }
 
-    public StringProperty getCreated() {
+    public StringProperty getCreatedProperty() {
         return created;
     }
 
-    public void setCreated(StringProperty created) {
-        this.created = created;
+    public String getCreated() {
+        return created.getValue();
+    }
+    
+    public void setCreated(String created) {
+        this.created.setValue(created);
     }
 
     public StringProperty getStatusVal() {
         return statusVal;
     }
 
-    public void setStatusVal(String statusVal){
-        this.statusVal.set(statusVal);
-        if(statusVal.equals(LOCK)){
-            this.status = 0;
-        }else{
-            this.status = 1;
-        }
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-        if(status == 0){
-            this.statusVal.set(LOCK);
-        }else{
-            this.statusVal.set(UNLOCK);
-        }
+//    public void setStatus(String statusVal){
+//        this.statusVal.set(statusVal);
+//        if(statusVal.equals(LOCK)){
+//            this.status = 0;
+//        }else{
+//            this.status = 1;
+//        }
+//    }
+//
+//    public void setStatus(Integer status) {
+//        this.status = status;
+//        if(status == 0){
+//            this.statusVal.set(LOCK);
+//        }else{
+//            this.statusVal.set(UNLOCK);
+//        }
+//    }
+     public void setStatus(Integer status) {
+        this.status.setValue(status);
     }
 }

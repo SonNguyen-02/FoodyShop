@@ -37,10 +37,11 @@ public class StaffHelper {
                 String usernameDb = rs.getString("username");
                 String passwordDb = rs.getString("password");
                 String nameDb = rs.getString("name");
-                int typeDb = rs.getInt("type");
-                int statusDb = rs.getInt("status");
+                String typeDb = rs.getString("type");
+                String statusDb = rs.getString("status");
 
-                staff = new StaffModel(idDb, usernameDb, passwordDb, nameDb, typeDb, statusDb);
+//                staff = new StaffModel(idDb, usernameDb, passwordDb, nameDb, typeDb, statusDb);
+                staff = new StaffModel(idDb, username, passwordDb, nameDb, nameDb, nameDb, typeDb, statusDb);
             }
             return staff;
         }
