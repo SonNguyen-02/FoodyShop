@@ -29,6 +29,8 @@ public class Order_DetailController implements Initializable {
     
     private OrderModel mOrder;
     
+    
+    
     @FXML
     private Label lbOrder_Code;
 
@@ -61,6 +63,7 @@ public class Order_DetailController implements Initializable {
         lbOrder_Code.setText(order.getOrderCode().toString());
         listOrder_Detail = Order_DetailHelper.getAllOrder_Detail(order);
         tblOrder_detail.setItems(listOrder_Detail);
+        
     }
     
     @Override

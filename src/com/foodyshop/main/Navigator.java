@@ -47,10 +47,11 @@ public class Navigator {
     // PAGE
     private static final String DASHBOARD_PAGE = ROOT_FOLDER + "DashboardPage.fxml";
     private static final String ORDER_PAGE = ROOT_FOLDER + "OrderPage.fxml";
+    private static final String FEEDBACK_PAGE = ROOT_FOLDER + "FeedbackUI.fxml";
+    private static final String CUSTOMER_PAGE = ROOT_FOLDER + "CustomerPage.fxml";
     private static final String ORDER_DETAIL = ROOT_FOLDER + "Order_DetailPage.fxml";
     private static final String CATEGORY_PAGE = ROOT_FOLDER + "CategoryPage.fxml";
-    private static final String TOPIC_PAGE = ROOT_FOLDER + "TopicPage.fxml";
-    private static final String FEEDBACK_PAGE = ROOT_FOLDER + "FeedbackUI.fxml";
+    private static final String TOPIC_PAGE = ROOT_FOLDER + "TopicPage.fxml";   
 
     // FORM
     private static final String ADD_CATEGORY_FORM = ROOT_FOLDER + "AddCategoryForm.fxml";
@@ -81,7 +82,11 @@ public class Navigator {
     public void loadFeedback(BorderPane borderPane) {
         borderPane.setCenter(getParent(FEEDBACK_PAGE));
     }
-
+    
+     public void loadCustomer(BorderPane borderPane) {
+        borderPane.setCenter(getParent(CUSTOMER_PAGE));
+    }
+    
     public void loadCategory(BorderPane borderPane) {
         borderPane.setCenter(getParent(CATEGORY_PAGE));
     }
@@ -89,7 +94,8 @@ public class Navigator {
     public void loadTopic(BorderPane borderPane) {
         borderPane.setCenter(getParent(TOPIC_PAGE));
     }
-
+    
+   
     // Show Modal
  
     public void showOrder_Detail(OrderModel order) {
