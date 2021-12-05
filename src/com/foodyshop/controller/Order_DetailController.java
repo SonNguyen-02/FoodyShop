@@ -6,6 +6,7 @@
 package com.foodyshop.controller;
 
 import com.foodyshop.helper.Order_DetailHelper;
+import com.foodyshop.model.CustomerModel;
 import com.foodyshop.model.OrderModel;
 import com.foodyshop.model.Order_DetailModel;
 import com.foodyshop.model.ProductModel;
@@ -29,10 +30,10 @@ import javafx.scene.shape.Rectangle;
 public class Order_DetailController implements Initializable {
     
     private OrderModel mOrder;
-    
+
     
     @FXML
-    private Label lbOrder_Code,lbTotalPrice,lbTotalProduct;
+    private Label lbOrder_Code,lbTotalPrice,lbTotalProduct,lbName,lbPhone,lbAddress,lbFeedback,lbNote;
 
     @FXML
     private TableView<Order_DetailModel> tblOrder_detail;
