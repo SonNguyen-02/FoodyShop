@@ -14,17 +14,21 @@ public class StaffModel {
     String username;
     String password;
     String name;
-    int type;
-    int status;
+    String created;
+    String updated;
+    String type;
+    String status;
 
     public StaffModel() {
     }
 
-    public StaffModel(int id, String username, String password, String name, int type, int status) {
+    public StaffModel(int id, String username, String password, String name, String created, String updated, String type, String status) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.name = name;
+        this.created = created;
+        this.updated = updated;
         this.type = type;
         this.status = status;
     }
@@ -61,20 +65,37 @@ public class StaffModel {
         this.name = name;
     }
 
-    public int getType() {
+    public String getCreated() {
+        return created;
+    }
+
+    public void setCreated(String created) {
+        this.created = created;
+    }
+
+    public String getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(String updated) {
+        this.updated = updated;
+    }
+
+    public String getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
-    
+
+   
 }

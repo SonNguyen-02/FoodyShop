@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.CustomerController">
+   <children>
+      <Label layoutX="387.0" layoutY="353.0">
+         <font>
+            <Font size="96.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tblCustomer" layoutX="166.0" layoutY="4.0" prefHeight="600.0" prefWidth="888.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="16.0">
+        <columns>
+          <TableColumn fx:id="ctStt" prefWidth="51.0" text="STT" />
+          <TableColumn fx:id="ctPhone" prefWidth="121.111083984375" text="Phone" />
+            <TableColumn fx:id="ctName" prefWidth="132.33331298828125" text="Name" />
+            <TableColumn fx:id="ctAddress" minWidth="0.0" prefWidth="78.22225952148438" text="Address" />
+            <TableColumn fx:id="ctGender" prefWidth="113.6666259765625" text="Gender" />
+            <TableColumn fx:id="ctDatebirth" prefWidth="76.3333740234375" text="Datebirth" />
+            <TableColumn fx:id="ctCreated" prefWidth="116.3333740234375" text="Created" />
+            <TableColumn fx:id="ctImage" prefWidth="148.6666259765625" text="Image" />
+            <TableColumn fx:id="ctStatus" minWidth="0.0" prefWidth="48.6666259765625" text="Status" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

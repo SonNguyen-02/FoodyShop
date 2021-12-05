@@ -28,6 +28,9 @@ public class FeedbackModel {
     StringProperty contentProperty;
     StringProperty statusProperty;
 
+    public static final String STATUS_SHOW = "show";
+    public static final String STATUS_HIDDEN = "hidden";
+
     public FeedbackModel() {
     }
 
@@ -43,6 +46,12 @@ public class FeedbackModel {
         productIDProperty = new SimpleStringProperty(productID);
         contentProperty = new SimpleStringProperty(content);
         statusProperty = new SimpleStringProperty(status);
+
+        if (this.status==status) {
+            this.statusProperty = new SimpleStringProperty("show");
+        }else{
+            this.statusProperty = new SimpleStringProperty("hidden");
+        }
     }
 
     public ObjectProperty<Integer> getIDproperty() {
@@ -65,10 +74,6 @@ public class FeedbackModel {
         return statusProperty;
     }
 
-    
-    
-    
-    
     public int getID() {
         return ID;
     }
