@@ -13,21 +13,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author DELL
  */
 public class DBFeedbackHelper {
-    public static List<FeedbackModel> showAllFeedback() throws SQLException{
+
+    public static List<FeedbackModel> showAllFeedback() {
         List<FeedbackModel> listFb = new ArrayList<>();
-        String query = "SELECT * FROM `fs_feedback`";
-        try(
-                Connection cnn = DBConnection.getConnection();
-                PreparedStatement stm = cnn.prepareStatement(query);
-                ){
-            ResultSet rs = stm.executeQuery();
-            while(rs.next()){
+        try {
+            String query = "SELECT * FROM `fs_feedback`";
+            ResultSet rs = DBConnection.execSelect(query);
+            while (rs.next()) {
                 int idDB = rs.getInt("id");
                 String customerIDDB = rs.getString("customer_id");
                 String productIDDB = rs.getString("product_id");
@@ -37,6 +37,10 @@ public class DBFeedbackHelper {
                 FeedbackModel fb = new FeedbackModel(idDB, customerIDDB, productIDDB, contentDB, statusDB);
                 listFb.add(fb);
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBFeedbackHelper.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            DBConnection.close();
         }
         return listFb;
     }
