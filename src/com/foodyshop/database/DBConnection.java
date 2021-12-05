@@ -35,7 +35,7 @@ public class DBConnection {
             return;
         }
         try {
-            String url = "jdbc:mysql://" + HOSTNAME + "/" + DATABASE;
+            String url = "jdbc:mysql://" + HOSTNAME + "/" + DATABASE + "?useUnicode=yes&characterEncoding=utf8";
             connectionInstance = DriverManager.getConnection(url, USERNAME, PASSWORD);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -75,7 +75,7 @@ public class DBConnection {
             Statement stmt = connectionInstance.createStatement();
             stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
             ResultSet rs = stmt.getGeneratedKeys();
-            if(rs.next()){
+            if (rs.next()) {
                 return rs.getInt(1);
             }
         } catch (SQLException ex) {
