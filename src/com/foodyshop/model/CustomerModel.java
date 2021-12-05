@@ -19,19 +19,23 @@ import javafx.scene.image.ImageView;
  * @author APlaptop
  */
 public class CustomerModel {
+
     public static final String LOCK = "Lock";
     public static final String UNLOCK = "Unlock";
-    
+    public static final String MALE = "Male";
+    public static final String FEMALE = "Female";
+    public static final String ORTHER = "Orther";
+
     private int id;
     private StringProperty phone;
     private String password;
     private StringProperty address;
     private ObjectProperty<Integer> gender;
+    private StringProperty genderVal;
     private StringProperty datebirth;
     private StringProperty name;
     private String img;
     private ObjectProperty<Integer> status;
-
     private ObservableValue<ImageView> imgView;
     private StringProperty created;
     private StringProperty statusVal;
@@ -44,8 +48,9 @@ public class CustomerModel {
         this.datebirth = new SimpleStringProperty();
         this.name = new SimpleStringProperty();
         this.created = new SimpleStringProperty();
-        this.statusVal = new SimpleStringProperty();
         this.status = new SimpleObjectProperty<>();
+        statusVal = new SimpleStringProperty();
+        genderVal = new SimpleStringProperty();
     }
 
     public int getId() {
@@ -63,7 +68,7 @@ public class CustomerModel {
     public StringProperty getPhoneProperty() {
         return phone;
     }
-    
+
     public void setPhone(String phone) {
         this.phone.setValue(phone);
     }
@@ -83,7 +88,7 @@ public class CustomerModel {
     public StringProperty getAddressProperty() {
         return address;
     }
-    
+
     public void setAddress(String address) {
         this.address.setValue(address);
     }
@@ -91,23 +96,19 @@ public class CustomerModel {
     public int getGender() {
         return gender.getValue();
     }
-    
+
     public ObjectProperty<Integer> getGenderProperty() {
         return gender;
-    }
-    
-    public void setGender(Integer gender) {
-        this.gender.setValue(gender);
     }
 
     public String getDatebirth() {
         return datebirth.getValue();
     }
-    
+
     public StringProperty getDatebirthProperty() {
         return datebirth;
     }
-    
+
     public void setDatebirth(String datebirth) {
         this.datebirth.setValue(datebirth);
     }
@@ -115,9 +116,11 @@ public class CustomerModel {
     public StringProperty getNameProperty() {
         return name;
     }
-    public  String getname(){
+
+    public String getname() {
         return name.getValue();
     }
+
     public void setName(String name) {
         this.name.setValue(name);
     }
@@ -133,14 +136,6 @@ public class CustomerModel {
         this.imgView = new SimpleObjectProperty<>(new ImageView(image));
     }
 
-    public Integer getStatus() {
-        return status.getValue();
-    }
-     
-    public ObjectProperty<Integer> getStatusProperty() {
-        return status;
-    }
-    
     public ObservableValue<ImageView> getImgView() {
         return imgView;
     }
@@ -156,33 +151,45 @@ public class CustomerModel {
     public String getCreated() {
         return created.getValue();
     }
-    
+
     public void setCreated(String created) {
         this.created.setValue(created);
     }
 
+    public Integer getStatus() {
+        return status.getValue();
+    }
+  
+    public ObjectProperty<Integer> getStatusProperty() {
+        return status;
+    }
+    
     public StringProperty getStatusVal() {
         return statusVal;
     }
 
-//    public void setStatus(String statusVal){
-//        this.statusVal.set(statusVal);
-//        if(statusVal.equals(LOCK)){
-//            this.status = 0;
-//        }else{
-//            this.status = 1;
-//        }
-//    }
-//
-//    public void setStatus(Integer status) {
-//        this.status = status;
-//        if(status == 0){
-//            this.statusVal.set(LOCK);
-//        }else{
-//            this.statusVal.set(UNLOCK);
-//        }
-//    }
-     public void setStatus(Integer status) {
+    public StringProperty getGenderVal() {
+        return genderVal;
+    }
+    
+     public void setGender(Integer gender) {
+        this.gender.setValue(gender);
+        if (gender == 0) {
+            this.genderVal.setValue(MALE);
+        }else if(gender == 1){
+            this.genderVal.setValue(FEMALE);
+        }
+        else {
+            this.genderVal.setValue(ORTHER);
+        }
+    }
+    
+    public void setStatus(Integer status) {
         this.status.setValue(status);
+        if (status == 1) {
+            this.statusVal.setValue(LOCK);
+        } else {
+            this.statusVal.setValue(UNLOCK);
+        }
     }
 }

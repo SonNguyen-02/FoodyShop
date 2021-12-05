@@ -31,7 +31,6 @@ public class CustomerHelper {
                 CustomerModel customer = new CustomerModel();
                 customer.setId(rs.getInt("id"));
                 customer.setPhone(rs.getString("phone"));
-                System.out.println(rs.getString("phone"));
                 customer.setName(rs.getString("name"));
                 customer.setGender(rs.getInt("gender"));
                 customer.setDatebirth(rs.getString("datebirth"));

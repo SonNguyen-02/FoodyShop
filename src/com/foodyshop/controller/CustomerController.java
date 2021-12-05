@@ -39,7 +39,7 @@ public class CustomerController implements Initializable {
     private TableColumn<CustomerModel, String> ctName;
 
     @FXML
-    private TableColumn<CustomerModel, Integer> ctGender;
+    private TableColumn<CustomerModel, String> ctGender;
 
     @FXML
     private TableColumn<CustomerModel, String> ctDatebirth;
@@ -54,12 +54,14 @@ public class CustomerController implements Initializable {
     private TableColumn<CustomerModel, ImageView> ctImage;
 
     @FXML
-    private TableColumn<CustomerModel, Integer> ctStatus;
+    private TableColumn<CustomerModel, String> ctStatus;
 
     ObservableList<CustomerModel> listCustomer = FXCollections.observableArrayList();
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -67,12 +69,12 @@ public class CustomerController implements Initializable {
         ctStt.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tblCustomer.getItems().indexOf(cellData.getValue()) + 1) + ""));
         ctPhone.setCellValueFactory(cellValue -> cellValue.getValue().getPhoneProperty());
         ctName.setCellValueFactory(cellValue -> cellValue.getValue().getNameProperty());
-        ctGender.setCellValueFactory(cellValue -> cellValue.getValue().getGenderProperty()); 
+        ctGender.setCellValueFactory(cellValue -> cellValue.getValue().getGenderVal()); 
         ctDatebirth.setCellValueFactory(cellValue -> cellValue.getValue().getDatebirthProperty());
         ctAddress.setCellValueFactory(cellValue -> cellValue.getValue().getAddressProperty()); 
         ctImage.setCellValueFactory(cellValue -> cellValue.getValue().getImgView());
         ctCreated.setCellValueFactory(cellValue -> cellValue.getValue().getCreatedProperty());
-        ctStatus.setCellValueFactory(cellValue -> cellValue.getValue().getStatusProperty());
+        ctStatus.setCellValueFactory(cellValue -> cellValue.getValue().getStatusVal());
 
         listCustomer = CustomerHelper.getAllCustomer();
         tblCustomer.setItems(listCustomer);
