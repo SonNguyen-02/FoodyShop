@@ -5,6 +5,7 @@
  */
 package com.foodyshop.helper;
 
+import com.foodyshop.database.DBConnection;
 import com.foodyshop.model.FeedbackModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,7 +23,7 @@ public class DBFeedbackHelper {
         List<FeedbackModel> listFb = new ArrayList<>();
         String query = "SELECT * FROM `fs_feedback`";
         try(
-                Connection cnn = DBHelper.getConnection();
+                Connection cnn = DBConnection.getConnection();
                 PreparedStatement stm = cnn.prepareStatement(query);
                 ){
             ResultSet rs = stm.executeQuery();

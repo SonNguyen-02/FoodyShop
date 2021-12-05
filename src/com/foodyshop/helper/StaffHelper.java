@@ -28,7 +28,7 @@ public class StaffHelper {
         StaffModel staff = null;
         String query = "SELECT * FROM fs_staff WHERE username=?";
         try (
-                Connection cnn = DBHelper.getConnection();
+                Connection cnn = DBConnection.getConnection();
                 PreparedStatement stm = cnn.prepareStatement(query);) {
             stm.setString(1, username);
             ResultSet rs = stm.executeQuery();
