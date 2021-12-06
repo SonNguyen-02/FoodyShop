@@ -18,6 +18,7 @@ import com.example.foodyshop.R;
 import com.example.foodyshop.activity.MainActivity;
 import com.example.foodyshop.model.ProductModel;
 
+import java.text.MessageFormat;
 import java.text.NumberFormat;
 import java.util.Currency;
 import java.util.List;
@@ -72,7 +73,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         return new ProductViewHolder(view);
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         ProductModel product = mListProduct.get(position);
@@ -98,7 +98,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.tvName.setText(product.getName());
         holder.tvPriceSale.setText(format.format(product.getPriceSale()));
         if (product.getDiscount() != null) {
-            holder.tvDiscount.setText(product.getDiscount() + "%");
+            holder.tvDiscount.setText(MessageFormat.format(context.getResources().getString(R.string.discount), product.getDiscount()));
             holder.tvPrice.setText(format.format(product.getPrice()));
             holder.tvPrice.setPaintFlags(holder.tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         } else {

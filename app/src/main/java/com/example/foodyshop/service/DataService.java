@@ -80,6 +80,11 @@ public interface DataService {
                                                      @Field(Const.KEY_IS_SALE) boolean isSale);
 
     @FormUrlEncoded
+    @POST("get_detail_product")
+    Call<ProductModel> getDetailProduct(@Field(Const.KEY_TOKEN) String token,
+                                        @Field(Const.KEY_PRODUCT_ID) int productId);
+
+    @FormUrlEncoded
     @POST("get_total_feedback_in_product")
     Call<String> getTotalFeedbackFeedbackInProduct(@Field(Const.KEY_TOKEN) String token,
                                                    @Field(Const.KEY_PRODUCT_ID) int productId);
@@ -99,13 +104,13 @@ public interface DataService {
     @FormUrlEncoded
     @POST("edit_feedback")
     Call<Respond> editFeedback(@Field(Const.KEY_TOKEN) String token,
-                                     @Field(Const.KEY_FEEDBACK_ID) int feedbackId,
-                                     @Field(Const.KEY_CONTENT) String content);
+                               @Field(Const.KEY_FEEDBACK_ID) int feedbackId,
+                               @Field(Const.KEY_CONTENT) String content);
 
     @FormUrlEncoded
     @POST("delete_feedback")
     Call<Respond> deleteFeedback(@Field(Const.KEY_TOKEN) String token,
-                                       @Field(Const.KEY_FEEDBACK_ID) int feedbackId);
+                                 @Field(Const.KEY_FEEDBACK_ID) int feedbackId);
 
 
 }

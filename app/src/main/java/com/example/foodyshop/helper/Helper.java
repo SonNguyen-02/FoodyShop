@@ -6,6 +6,7 @@ import static com.example.foodyshop.config.Const.KEY_TOKEN_LOGIN;
 import static com.example.foodyshop.config.Const.KEY_USER_CART;
 import static com.example.foodyshop.config.Const.KEY_USER_OBJ;
 import static com.example.foodyshop.config.Const.KEY_USER_PREFERENCES;
+import static com.example.foodyshop.config.Const.TOAST_DEFAULT;
 
 import android.app.Activity;
 import android.content.Context;
@@ -43,7 +44,15 @@ import retrofit2.Response;
 
 public class Helper {
 
-    public static CustomerModel currentAccount;
+    private static CustomerModel currentAccount;
+
+    public static void setCurrentAccount(CustomerModel currentAccount) {
+        Helper.currentAccount = currentAccount;
+    }
+
+    public static CustomerModel getCurrentAccount() {
+        return currentAccount;
+    }
 
     public static void showKeyboard(@NonNull Context context) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -81,37 +90,36 @@ public class Helper {
         return list;
     }
 
-    public static void addOrderDetailToCart(Context context, OrderDetailModel mOrderDetail) {
-        SharedPreferences sharedPreferences = getSharedPreferences(context);
-        String listOrderDetailJson = sharedPreferences.getString(KEY_USER_CART, "");
-        List<OrderDetailModel> listOrderDetail;
-        if (!listOrderDetailJson.isEmpty()) {
-            listOrderDetail = convertJsonToListOrderDetail(listOrderDetailJson);
+    public static void addOrChangeAmountOrderDetail(Context context, OrderDetailModel mOrderDetail, boolean isAdd) {
+        List<OrderDetailModel> listOrderDetail = getAllOrderDetailCart(context);
+        if (!listOrderDetail.isEmpty()) {
             boolean isExists = false;
             for (OrderDetailModel ord : listOrderDetail) {
-                if (mOrderDetail.getId() == ord.getId()) {
-                    ord.setNumber(ord.getNumber() + mOrderDetail.getNumber());
+                if (mOrderDetail.getProductId() == ord.getProductId()) {
+                    if (isAdd) {
+                        ord.setNumber(ord.getNumber() + mOrderDetail.getNumber());
+                    } else {
+                        ord.setNumber(mOrderDetail.getNumber());
+                    }
                     isExists = true;
                     break;
                 }
             }
-            if (!isExists) {
+            if (!isExists && isAdd) {
                 listOrderDetail.add(mOrderDetail);
             }
         } else {
             listOrderDetail = new ArrayList<>(Collections.singletonList(mOrderDetail));
         }
-        saveCart(sharedPreferences, listOrderDetail);
+        saveCart(context, listOrderDetail);
     }
 
     public static void removeOrderDetailFromCart(Context context, OrderDetailModel mOrderDetail) {
-        SharedPreferences sharedPreferences = getSharedPreferences(context);
-        String listOrderDetailJson = sharedPreferences.getString(KEY_USER_CART, "");
-        if (!listOrderDetailJson.isEmpty()) {
-            List<OrderDetailModel> listOrderDetail = convertJsonToListOrderDetail(listOrderDetailJson);
+        List<OrderDetailModel> listOrderDetail = getAllOrderDetailCart(context);
+        if (!listOrderDetail.isEmpty()) {
             OrderDetailModel tmpOrd = null;
             for (OrderDetailModel ord : listOrderDetail) {
-                if (mOrderDetail.getId() == ord.getId()) {
+                if (mOrderDetail.getProductId() == ord.getProductId()) {
                     tmpOrd = ord;
                     break;
                 }
@@ -119,8 +127,21 @@ public class Helper {
             if (tmpOrd != null) {
                 listOrderDetail.remove(tmpOrd);
             }
-            saveCart(sharedPreferences, listOrderDetail);
+            saveCart(context, listOrderDetail);
         }
+    }
+
+    public static void clearCart(Context context) {
+        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.remove(KEY_USER_CART);
+        editor.apply();
+    }
+
+    @NonNull
+    public static List<OrderDetailModel> getAllOrderDetailCart(Context context) {
+        SharedPreferences sharedPreferences = getSharedPreferences(context);
+        String listOrderDetailJson = sharedPreferences.getString(KEY_USER_CART, "");
+        return convertJsonToListOrderDetail(listOrderDetailJson);
     }
 
     public static void saveCart(Context context, List<OrderDetailModel> listOrderDetail) {
@@ -191,20 +212,20 @@ public class Helper {
         if (password.isEmpty()) {
             edtPassword.requestFocus();
             if (isConfirmPass) {
-                ToastCustom.notice(context, "Vui lòng nhập lại mật khẩu", false, 1500).show();
+                ToastCustom.notice(context, "Vui lòng nhập lại mật khẩu", ToastCustom.WARNING, TOAST_DEFAULT).show();
             } else {
-                ToastCustom.notice(context, "Vui lòng nhập mật khẩu", false, 1500).show();
+                ToastCustom.notice(context, "Vui lòng nhập mật khẩu", ToastCustom.WARNING, TOAST_DEFAULT).show();
             }
             return true;
         }
         if (password.length() < 8) {
             edtPassword.requestFocus();
-            ToastCustom.notice(context, "Mật khẩu tối thiểu 8 kí tự", false, 1500).show();
+            ToastCustom.notice(context, "Mật khẩu tối thiểu 8 kí tự", ToastCustom.WARNING, TOAST_DEFAULT).show();
             return true;
         }
         if (!password.matches(Const.PASSWORD_REGEX)) {
             edtPassword.requestFocus();
-            ToastCustom.notice(context, "Mật khẩu cần có ít nhất 1 chữ và 1 số", false, 1500).show();
+            ToastCustom.notice(context, "Mật khẩu cần có ít nhất 1 chữ và 1 số", ToastCustom.WARNING, TOAST_DEFAULT).show();
             return true;
         }
         return false;

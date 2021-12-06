@@ -43,8 +43,8 @@ public class AccountFragment extends Fragment {
     }
 
     private void initLogin() {
-        if (Helper.currentAccount != null) {
-            String s = "Hello " + Helper.currentAccount.getName();
+        if (Helper.getCurrentAccount() != null) {
+            String s = "Hello " + Helper.getCurrentAccount().getName();
             tvCustomerName.setText(s);
             btnSignIn.setVisibility(View.GONE);
             btnSignOut.setVisibility(View.VISIBLE);

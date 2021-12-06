@@ -1,5 +1,7 @@
 package com.example.foodyshop.activity;
 
+import static com.example.foodyshop.config.Const.TOAST_DEFAULT;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -50,7 +52,7 @@ public class EnterOtpActivity extends AppCompatActivity {
 
     private TextView tvPhone, tvResendOtp;
     private EditText edtCode1, edtCode2, edtCode3, edtCode4, edtCode5, edtCode6;
-    private View currentFocus;
+    private EditText currentFocus;
     private Button btnResendOtp, btnVerify;
 
     private FirebaseAuth mAuth;
@@ -126,12 +128,13 @@ public class EnterOtpActivity extends AppCompatActivity {
         int i = 0;
         for (EditText edt : listEdt) {
             edt.setOnFocusChangeListener(this::onFocusChange);
-            if (i + 1 != listEdt.length) {
-                edt.addTextChangedListener(new GenericTextWatcher(listEdt[i + 1]));
+            if (i == 0) {
+                edt.addTextChangedListener(new GenericTextWatcher(null, edt));
+            } else {
+                edt.addTextChangedListener(new GenericTextWatcher(listEdt[i - 1], edt));
             }
-            if (i - 1 >= 0) {
-                Log.e("ddd", "setUpOTPInputs: " + edt.toString() + " i: " + i);
-                edt.setOnKeyListener(new GenericKeyEvent(edt, listEdt[i - 1]));
+            if (i != listEdt.length - 1) {
+                edt.setOnKeyListener(new GenericKeyEvent(listEdt[i + 1]));
             }
             i++;
         }
@@ -159,32 +162,33 @@ public class EnterOtpActivity extends AppCompatActivity {
 
     private void onFocusChange(View view, boolean b) {
         if (b) {
-            currentFocus = view;
+            currentFocus = (EditText) view;
         }
     }
 
     static class GenericKeyEvent implements View.OnKeyListener {
 
-        private final EditText currentView, prevView;
+        private final EditText nextView;
 
-        public GenericKeyEvent(EditText currentView, EditText prevView) {
-            this.currentView = currentView;
-            this.prevView = prevView;
+        public GenericKeyEvent(EditText nextView) {
+            this.nextView = nextView;
         }
 
         @Override
         public boolean onKey(View view, int i, @NonNull KeyEvent keyEvent) {
+            EditText currentView = (EditText) view;
             int action = keyEvent.getAction();
             int code = keyEvent.getKeyCode();
-            Log.e("ddd", "onKey: view " + view);
             Log.e("ddd", "onKey: Action " + action + " code: " + code);
-            if (action == KeyEvent.ACTION_DOWN && code == KeyEvent.KEYCODE_DEL) {
+            if (action == KeyEvent.ACTION_DOWN && code >= KeyEvent.KEYCODE_0 && code <= KeyEvent.KEYCODE_9) {
                 if (currentView.getText().toString().trim().isEmpty()) {
-                    prevView.setText("");
-                    prevView.requestFocus();
+                    currentView.setText(String.valueOf(code - 7));
                 } else {
-                    currentView.setText("");
+                    if (nextView.getText().toString().trim().isEmpty()) {
+                        nextView.setText(String.valueOf(code - 7));
+                    }
                 }
+                nextView.requestFocus(nextView.getText().length());
                 return true;
             }
             return false;
@@ -193,21 +197,36 @@ public class EnterOtpActivity extends AppCompatActivity {
 
     static class GenericTextWatcher implements TextWatcher {
 
-        private final EditText nextView;
+        private boolean isDelete;
+        private final EditText prevView;
+        private final EditText currentView;
 
-        public GenericTextWatcher(EditText nextView) {
-            this.nextView = nextView;
+        public GenericTextWatcher(EditText prevView, EditText currentView) {
+            this.prevView = prevView;
+            this.currentView = currentView;
         }
 
         @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        public void beforeTextChanged(@NonNull CharSequence charSequence, int i, int i1, int i2) {
         }
 
         @Override
         public void onTextChanged(@NonNull CharSequence charSequence, int i, int i1, int i2) {
-            Log.e("ddd", "onTextChanged: " + charSequence);
-            if (!charSequence.toString().trim().isEmpty()) {
-                nextView.requestFocus();
+            String s = charSequence.toString();
+            Log.e("ddd", "onTextChanged: " + s);
+            if (!s.isEmpty()) {
+                new Handler().postDelayed(() -> {
+                    if (!s.matches("\\d")) {
+                        isDelete = true;
+                        currentView.setText("");
+                    }
+                }, 100);
+            } else {
+                if (!isDelete && prevView != null) {
+                    prevView.requestFocus(prevView.getText().length());
+                } else {
+                    isDelete = false;
+                }
             }
         }
 
@@ -224,7 +243,7 @@ public class EnterOtpActivity extends AppCompatActivity {
                 || isEmpty(edtCode4)
                 || isEmpty(edtCode5)
                 || isEmpty(edtCode6)) {
-            ToastCustom.notice(this, "Vui lòng nhập mã hợp lệ", false, 1500).show();
+            ToastCustom.notice(this, "Vui lòng nhập mã hợp lệ", ToastCustom.ERROR, TOAST_DEFAULT).show();
             return;
         }
 
@@ -296,7 +315,6 @@ public class EnterOtpActivity extends AppCompatActivity {
                 });
     }
 
-
     private void onVerifySuccess() {
         if (mAction == ACTION_FORGOT_PASSWORD) {
             Intent intent = new Intent(this, EnterPasswordActivity.class);
@@ -310,7 +328,6 @@ public class EnterOtpActivity extends AppCompatActivity {
             signUp();
         }
     }
-
 
     private void signUp() {
         LoadingDialog dialog = new LoadingDialog(this, "Đang tải ...");
@@ -330,18 +347,18 @@ public class EnterOtpActivity extends AppCompatActivity {
                         String mess = "Đăng kí tài khoản thành công!";
                         showDialogSuccess(R.drawable.register_success, mess);
                     } else {
-                        ToastCustom.notice(getApplicationContext(), res.getMsg(), false, 1500).show();
+                        ToastCustom.notice(getApplicationContext(), res.getMsg(), ToastCustom.ERROR, TOAST_DEFAULT).show();
                     }
                 } else {
                     Log.e("ddd", "onResponse: sever error");
-                    ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", false, 1500).show();
+                    ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.ERROR, TOAST_DEFAULT).show();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<Respond> call, @NonNull Throwable t) {
                 dialog.dismiss();
-                ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", false, 1500).show();
+                ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.ERROR, TOAST_DEFAULT).show();
             }
         });
     }

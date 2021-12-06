@@ -1,5 +1,7 @@
 package com.example.foodyshop.model;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -32,16 +34,19 @@ public class OrderDetailModel {
     @SerializedName("img")
     @Expose
     private String img;
+    private boolean isChecked;
 
     public OrderDetailModel() {
     }
 
-    public OrderDetailModel(int productId, Integer saleId, int number, int price, Integer discount) {
-        this.productId = productId;
-        this.saleId = saleId;
+    public OrderDetailModel(@NonNull ProductModel product, int number) {
+        this.productId = product.getId();
+        this.saleId = product.getSaleId();
         this.number = number;
-        this.price = price;
-        this.discount = discount;
+        this.price = product.getPrice();
+        this.discount = product.getDiscount();
+        this.name = product.getName();
+        this.img = product.getImg();
     }
 
     public int getId() {
@@ -114,5 +119,21 @@ public class OrderDetailModel {
 
     public void setImg(String img) {
         this.img = img;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
+
+    public int getPriceSale() {
+        if (discount == null) {
+            return price;
+        } else {
+            return (int) (price - price * discount / 100);
+        }
     }
 }

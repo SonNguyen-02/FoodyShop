@@ -1,5 +1,7 @@
 package com.example.foodyshop.activity;
 
+import static com.example.foodyshop.config.Const.TOAST_DEFAULT;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -101,17 +103,17 @@ public class SigninActivity extends AppCompatActivity {
         btnSignin.setEnabled(false);
         new Handler().postDelayed(() -> {
             btnSignin.setEnabled(true);
-        }, 1500);
+        }, TOAST_DEFAULT);
         if (edtPhone.getText().toString().trim().isEmpty()) {
             edtPhone.requestFocus();
             Helper.showKeyboard(getApplicationContext());
-            ToastCustom.notice(this, "Vui lòng nhập số điện thoại", false, 1500).show();
+            ToastCustom.notice(this, "Vui lòng nhập số điện thoại", ToastCustom.WARNING, TOAST_DEFAULT).show();
             return;
         }
         if (!isValidPhone) {
             edtPhone.requestFocus();
             Helper.showKeyboard(getApplicationContext());
-            ToastCustom.notice(this, "Vui lòng nhập đúng số điện thoại", false, 1500).show();
+            ToastCustom.notice(this, "Vui lòng nhập đúng số điện thoại", ToastCustom.WARNING, TOAST_DEFAULT).show();
             return;
         }
         if (Helper.isInvalidPassword(getApplicationContext(), edtPassword, false)) {
@@ -147,11 +149,11 @@ public class SigninActivity extends AppCompatActivity {
                         startActivity(intent);
                     } else {
                         // Show lỗi khi đăng nhập false
-                        ToastCustom.notice(getApplicationContext(), res.getMsg(), false, 2000).show();
+                        ToastCustom.notice(getApplicationContext(), res.getMsg(), ToastCustom.ERROR, 2000).show();
                         Log.e("ddd", "onResponse: " + res.getMsg());
                     }
                 } else {
-                    ToastCustom.notice(getApplicationContext(), "Có lỗi. Vui lòng thử lại sau!", false, 1500).show();
+                    ToastCustom.notice(getApplicationContext(), "Có lỗi. Vui lòng thử lại sau!", ToastCustom.ERROR, TOAST_DEFAULT).show();
                     Log.e("ddd", "onResponse: " + "server error");
                 }
             }
@@ -159,7 +161,7 @@ public class SigninActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<Respond> call, @NonNull Throwable t) {
                 dialog.dismiss();
-                ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", false, 1500).show();
+                ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.INFO, TOAST_DEFAULT).show();
                 Log.e("ddd", "onFailure: ");
             }
         });

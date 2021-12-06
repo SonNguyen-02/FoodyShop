@@ -17,17 +17,22 @@ import org.jetbrains.annotations.Contract;
 
 public class ToastCustom {
 
+    public static final int SUCCESS = 0;
+    public static final int ERROR = 1;
+    public static final int WARNING = 2;
+    public static final int INFO = 3;
+
     private final Context context;
     private final String message;
-    private boolean isSuccess;
+    private int type;
     private final Toast toast;
     private boolean isLoading;
     private final int duration;
 
-    private ToastCustom(Context context, String message, boolean isSuccess, int duration) {
+    private ToastCustom(Context context, String message, int type, int duration) {
         this.context = context;
         this.message = message;
-        this.isSuccess = isSuccess;
+        this.type = type;
         this.duration = duration;
         toast = new Toast(context);
     }
@@ -42,8 +47,8 @@ public class ToastCustom {
 
     @NonNull
     @org.jetbrains.annotations.Contract("_, _, _, _ -> new")
-    public static ToastCustom notice(Context context, String message, boolean isSuccess, int duration) {
-        return new ToastCustom(context, message, isSuccess, duration);
+    public static ToastCustom notice(Context context, String message, int type, int duration) {
+        return new ToastCustom(context, message, type, duration);
     }
 
     @NonNull
@@ -69,10 +74,19 @@ public class ToastCustom {
             view = LayoutInflater.from(context).inflate(R.layout.toast_notice, null);
             ImageView imgIcon = view.findViewById(R.id.img_icon);
             TextView tvMessage = view.findViewById(R.id.tv_message);
-            if (isSuccess) {
-                imgIcon.setImageResource(R.drawable.ic_valid);
-            } else {
-                imgIcon.setImageResource(R.drawable.ic_invalid);
+            switch (type) {
+                case SUCCESS:
+                    imgIcon.setImageResource(R.drawable.ic_valid);
+                    break;
+                case ERROR:
+                    imgIcon.setImageResource(R.drawable.ic_invalid);
+                    break;
+                case WARNING:
+                    imgIcon.setImageResource(R.drawable.ic_warning);
+                    break;
+                case INFO:
+                    imgIcon.setImageResource(R.drawable.ic_info);
+                    break;
             }
             tvMessage.setText(message);
         }
@@ -80,7 +94,13 @@ public class ToastCustom {
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
         toast.setView(view);
         toast.show();
-        new Handler().postDelayed(toast::cancel, duration);
+        if (duration > 0) {
+            new Handler().postDelayed(toast::cancel, duration);
+        }
+    }
+
+    public void cancel() {
+        toast.cancel();
     }
 
 }

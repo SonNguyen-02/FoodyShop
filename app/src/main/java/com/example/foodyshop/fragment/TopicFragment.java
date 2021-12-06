@@ -2,6 +2,7 @@ package com.example.foodyshop.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,7 @@ public class TopicFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if(requireActivity() instanceof MainActivity){
+        if (requireActivity() instanceof MainActivity) {
             mMainActivity = (MainActivity) requireActivity();
         }
     }
@@ -58,23 +59,23 @@ public class TopicFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_topic, container, false);
         initUi();
         rlNavBar.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.anim_left_in));
-        if(mListTopic == null){
+        if (mListTopic == null) {
             shimmerFrameLayout.startShimmer();
             getListTopic();
-        }else{
+        } else {
             shimmerFrameLayout.setVisibility(View.GONE);
             rcvTopic.setVisibility(View.VISIBLE);
         }
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
         rcvTopic.setLayoutManager(layoutManager);
 
-        if(topicAdapter == null){
+        if (topicAdapter == null) {
             topicAdapter = new TopicAdapter(requireContext());
         }
         topicAdapter.setTopicModelList(mListTopic);
         rcvTopic.setAdapter(topicAdapter);
-        if(mMainActivity != null){
-            imgBack.setOnClickListener(view-> {
+        if (mMainActivity != null) {
+            imgBack.setOnClickListener(view -> {
                 rlNavBar.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.anim_right_out));
                 mMainActivity.removeFragmentFromMainLayout();
             });
@@ -95,22 +96,23 @@ public class TopicFragment extends Fragment {
     }
 
     private void getListTopic() {
-        DataService service= APIService.getService();
-        Call<List<TopicModel>> callback = service.getAllTopic(JWT.createToken());
-        callback.enqueue(new Callback<List<TopicModel>>() {
+        APIService.getService().getAllTopic(JWT.createToken()).enqueue(new Callback<List<TopicModel>>() {
             @Override
             public void onResponse(@NonNull Call<List<TopicModel>> call, @NonNull Response<List<TopicModel>> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     shimmerFrameLayout.stopShimmer();
                     shimmerFrameLayout.setVisibility(View.GONE);
                     rcvTopic.setVisibility(View.VISIBLE);
                     mListTopic = response.body();
                     topicAdapter.setTopicModelList(mListTopic);
+                } else {
+                    Log.e("ddd", "onResponse: " + response.message());
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<List<TopicModel>> call, @NonNull Throwable t) {
+                Log.e("ddd", "onFailure: " + t.getMessage());
             }
         });
     }

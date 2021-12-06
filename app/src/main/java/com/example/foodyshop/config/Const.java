@@ -2,6 +2,7 @@ package com.example.foodyshop.config;
 
 public class Const {
 
+    public static final int TOAST_DEFAULT = 1500;
     // ít nhất 1 kí tự & 1 số & min length 8
     public static final String PASSWORD_REGEX = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
 
@@ -14,11 +15,10 @@ public class Const {
     public static final String KEY_TOPIC = "key_topic";
     public static final String KEY_CATEGORY = "key_category";
     public static final String KEY_PRODUCT = "key_product";
+    public static final String KEY_FROM_CART = "key_from_cart";
 
     public static final String KEY_ACTION = "key_action";
-    //    public static final String KEY_FULL_NAME = "key_full_name";
     public static final String KEY_PHONE_CODE = "key_phone_code";
-    //    public static final String KEY_PHONE_NUMBER = "key_phone_number";
     public static final String KEY_VERIFICATION_ID = "key_verification_id";
 
     // ======== Retrofit api key ======== \\

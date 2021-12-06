@@ -2,16 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="730dp"
+    android:layout_height="500dp"
     android:layout_marginStart="@dimen/space_view"
     android:layout_marginBottom="@dimen/space_view"
-    android:orientation="vertical"
-    android:weightSum="10">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3.3"
+        android:layout_weight="1"
         android:baselineAligned="false"
         tools:ignore="UselessParent">
 
@@ -40,7 +39,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3.3"
+        android:layout_weight="1"
         android:baselineAligned="false"
         tools:ignore="UselessParent">
 
@@ -66,33 +65,5 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3.3"
-        android:baselineAligned="false"
-        tools:ignore="UselessParent">
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            tools:ignore="NestedWeights">
-
-            <include layout="@layout/shimmer_item_product_grid" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <include layout="@layout/shimmer_item_product_grid" />
-
-        </RelativeLayout>
-
-    </LinearLayout>
 
 </LinearLayout>

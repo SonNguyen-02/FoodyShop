@@ -3,7 +3,6 @@ package com.example.foodyshop.dialog;
 import static com.example.foodyshop.config.Const.KEY_PRODUCT;
 
 import android.app.Dialog;
-import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
@@ -119,21 +118,29 @@ public class AddToCardBottomSheetDialogFragment extends BottomSheetDialogFragmen
                         Log.e("ddd", "beforeTextChanged OK: " + charSequence);
                         int amount = Integer.parseInt(charSequence.toString());
                         if (amount == 1) {
+                            imgMinus.setEnabled(false);
                             imgMinus.setAlpha(0.5f);
                             imgPlus.setAlpha(1f);
+                            imgPlus.setEnabled(true);
                         } else if (amount == 999) {
+                            imgMinus.setEnabled(true);
                             imgMinus.setAlpha(1f);
                             imgPlus.setAlpha(0.5f);
+                            imgPlus.setEnabled(false);
                         } else {
+                            imgMinus.setEnabled(true);
+                            imgPlus.setEnabled(true);
                             imgMinus.setAlpha(1f);
                             imgPlus.setAlpha(1f);
                         }
                     } else {
                         if (charSequence.toString().trim().length() != 0) {
                             edtAmount.setText("1");
+                            edtAmount.requestFocus(1);
                             Log.e("ddd", "beforeTextChanged FA: " + charSequence);
                         } else {
                             imgMinus.setAlpha(0.5f);
+                            imgMinus.setEnabled(false);
                         }
                     }
                 }, 100);
@@ -144,45 +151,43 @@ public class AddToCardBottomSheetDialogFragment extends BottomSheetDialogFragmen
             }
         });
 
+
         imgMinus.setOnClickListener(view -> {
-            if (view.getAlpha() == 1) {
-                int amount = Integer.parseInt(edtAmount.getText().toString());
-                edtAmount.setText(String.valueOf(--amount));
-            }
+            int amount = Integer.parseInt(edtAmount.getText().toString());
+            edtAmount.setText(String.valueOf(--amount));
         });
 
         imgPlus.setOnClickListener(view -> {
-            if (view.getAlpha() == 1) {
-                int amount;
-                if (edtAmount.getText().toString().trim().isEmpty()) {
-                    amount = 0;
-                } else {
-                    amount = Integer.parseInt(edtAmount.getText().toString());
-                }
-                edtAmount.setText(String.valueOf(++amount));
+            int amount;
+            if (edtAmount.getText().toString().trim().isEmpty()) {
+                amount = 0;
+            } else {
+                amount = Integer.parseInt(edtAmount.getText().toString());
             }
+            edtAmount.setText(String.valueOf(++amount));
         });
 
         btnAddToCart.setOnClickListener(view -> {
+            btnAddToCart.setEnabled(false);
+            new Handler().postDelayed(() -> btnAddToCart.setEnabled(true), 1000);
             if (!edtAmount.getText().toString().trim().isEmpty()) {
                 addToCart(Integer.parseInt(edtAmount.getText().toString()));
             } else {
                 edtAmount.requestFocus();
-                ToastCustom.notice(getContext(), "Hãy nhập số lượng", false, 1000).show();
+                ToastCustom.notice(getContext(), "Hãy nhập số lượng", ToastCustom.WARNING, 1000).show();
             }
         });
     }
 
     private void addToCart(int amount) {
         if (mProduct != null) {
-            btnAddToCart.setEnabled(false);
+            setCancelable(false);
             ToastCustom.loading(requireContext(), 1000).show();
             new Handler().postDelayed(() -> {
-                OrderDetailModel orderDetail = new OrderDetailModel(mProduct.getId(), mProduct.getSaleId(), amount, mProduct.getPrice(), mProduct.getDiscount());
-                Helper.addOrderDetailToCart(requireContext(), orderDetail);
-                ToastCustom.notice(requireContext(), "Thêm thành công!", true, 2000).show();
+                OrderDetailModel orderDetail = new OrderDetailModel(mProduct, amount);
+                Helper.addOrChangeAmountOrderDetail(requireContext(), orderDetail, true);
+                ToastCustom.notice(requireContext(), "Thêm thành công!", ToastCustom.SUCCESS, 2000).show();
                 dismiss();
-                btnAddToCart.setEnabled(true);
             }, 1000);
         }
     }

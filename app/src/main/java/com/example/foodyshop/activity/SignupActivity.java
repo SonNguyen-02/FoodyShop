@@ -1,6 +1,7 @@
 package com.example.foodyshop.activity;
 
 import static com.example.foodyshop.activity.EnterOtpActivity.ACTION_SIGN_UP;
+import static com.example.foodyshop.config.Const.TOAST_DEFAULT;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -126,7 +127,7 @@ public class SignupActivity extends AppCompatActivity {
         btnSignup.setEnabled(false);
         new Handler().postDelayed(() -> {
             btnSignup.setEnabled(true);
-        }, 1500);
+        }, TOAST_DEFAULT);
         String fullName = edtFullName.getText().toString().trim();
         String password = edtPassword.getText().toString().trim();
         String confPassword = edtConfPassword.getText().toString().trim();
@@ -135,20 +136,20 @@ public class SignupActivity extends AppCompatActivity {
         if (fullName.isEmpty()) {
             edtFullName.requestFocus();
             Helper.showKeyboard(getApplicationContext());
-            ToastCustom.notice(getApplicationContext(), "Vui lòng nhập tên của bạn!", false, 1500).show();
+            ToastCustom.notice(getApplicationContext(), "Vui lòng nhập tên của bạn!", ToastCustom.WARNING, TOAST_DEFAULT).show();
             return;
         }
         // validate sdt
         if (edtPhone.getText().toString().trim().isEmpty()) {
             edtPhone.requestFocus();
             Helper.showKeyboard(getApplicationContext());
-            ToastCustom.notice(getApplicationContext(), "Vui lòng nhập số điện thoại", false, 1500).show();
+            ToastCustom.notice(getApplicationContext(), "Vui lòng nhập số điện thoại", ToastCustom.WARNING, TOAST_DEFAULT).show();
             return;
         }
         if (!isValidPhone) {
             edtPhone.requestFocus();
             Helper.showKeyboard(getApplicationContext());
-            ToastCustom.notice(getApplicationContext(), "Số điện thoại không đúng định dạng", false, 1500).show();
+            ToastCustom.notice(getApplicationContext(), "Số điện thoại không đúng định dạng", ToastCustom.WARNING, TOAST_DEFAULT).show();
             return;
         }
 
@@ -162,7 +163,7 @@ public class SignupActivity extends AppCompatActivity {
         if (!password.equals(confPassword)) {
             edtConfPassword.requestFocus();
             edtConfPassword.selectAll();
-            ToastCustom.notice(this, "Mật khẩu không giống", false, 1500).show();
+            ToastCustom.notice(this, "Mật khẩu không giống", ToastCustom.WARNING, TOAST_DEFAULT).show();
             return;
         }
 
@@ -187,11 +188,11 @@ public class SignupActivity extends AppCompatActivity {
                         verifyPhoneNumber(mPhoneNumber);
                     } else {
                         dialog.dismiss();
-                        ToastCustom.notice(getApplicationContext(), res.getMsg(), false, 1500).show();
+                        ToastCustom.notice(getApplicationContext(), res.getMsg(), ToastCustom.ERROR, TOAST_DEFAULT).show();
                     }
                 } else {
                     dialog.dismiss();
-                    ToastCustom.notice(getApplicationContext(), "Có lỗi sảy ra. Vui lòng thử lại!", false, 1500).show();
+                    ToastCustom.notice(getApplicationContext(), "Có lỗi sảy ra. Vui lòng thử lại!", ToastCustom.ERROR, TOAST_DEFAULT).show();
                     Log.e("ddd", "onResponse: sever error");
                 }
             }
@@ -199,7 +200,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<Respond> call, @NonNull Throwable t) {
                 dialog.dismiss();
-                ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", false, 1500).show();
+                ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.WARNING, TOAST_DEFAULT).show();
             }
         });
     }
@@ -222,7 +223,7 @@ public class SignupActivity extends AppCompatActivity {
                             @Override
                             public void onVerificationFailed(@NonNull FirebaseException e) {
                                 dialog.dismiss();
-                                ToastCustom.notice(SignupActivity.this, "Verification False", false, 1500).show();
+                                ToastCustom.notice(SignupActivity.this, "Verification False", ToastCustom.ERROR, TOAST_DEFAULT).show();
                             }
 
                             @Override
@@ -251,7 +252,7 @@ public class SignupActivity extends AppCompatActivity {
                         Log.e("ddd", "signInWithCredential:failure", task.getException());
                         if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                             // The verification code entered was invalid
-                            ToastCustom.notice(this, "The verification code entered was invalid.", false, 1500).show();
+                            ToastCustom.notice(this, "The verification code entered was invalid.", ToastCustom.ERROR, TOAST_DEFAULT).show();
                         }
                     }
                 });
@@ -288,18 +289,18 @@ public class SignupActivity extends AppCompatActivity {
                         String mess = "Đăng kí tài khoản thành công!";
                         showDialogSuccess(R.drawable.register_success, mess);
                     } else {
-                        ToastCustom.notice(getApplicationContext(), res.getMsg(), false, 1500).show();
+                        ToastCustom.notice(getApplicationContext(), res.getMsg(), ToastCustom.ERROR, TOAST_DEFAULT).show();
                     }
                 } else {
                     Log.e("ddd", "onResponse: sever error");
-                    ToastCustom.notice(getApplicationContext(), "Có lỗi sảy ra. Vui lòng thử lại!", false, 1500).show();
+                    ToastCustom.notice(getApplicationContext(), "Có lỗi sảy ra. Vui lòng thử lại!", ToastCustom.ERROR, TOAST_DEFAULT).show();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<Respond> call, @NonNull Throwable t) {
                 dialog.dismiss();
-                ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", false, 1500).show();
+                ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.INFO, TOAST_DEFAULT).show();
             }
         });
     }

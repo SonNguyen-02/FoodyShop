@@ -127,7 +127,7 @@ public class DetailTopicActivity extends AppCompatActivity implements CategoryAd
         CategoryAdapter adapter = new CategoryAdapter(this, mTopic.getCategories());
         rcvCategory.setAdapter(adapter);
 
-        GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 2, LinearLayoutManager.HORIZONTAL, false);
+        GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 1, LinearLayoutManager.HORIZONTAL, false);
         rcvCategory.setLayoutManager(layoutManager);
     }
 

@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.foodyshop.R;
-import com.example.foodyshop.activity.DetailCategoryActivity;
 import com.example.foodyshop.activity.DetailTopicActivity;
 import com.example.foodyshop.activity.MainActivity;
 import com.example.foodyshop.helper.Helper;
@@ -25,7 +24,7 @@ public class SearchFragment extends Fragment {
     private TopicModel mTopic;
     private CategoryModel mCategory;
     private DetailTopicActivity mDetailTopicActivity;
-    private DetailCategoryActivity mDetailCategoryActivity;
+
 
     private View view;
     private ImageView imgBack;
@@ -52,9 +51,7 @@ public class SearchFragment extends Fragment {
         if (requireActivity() instanceof DetailTopicActivity) {
             mDetailTopicActivity = (DetailTopicActivity) requireActivity();
         }
-        if (requireActivity() instanceof DetailCategoryActivity) {
-            mDetailCategoryActivity = (DetailCategoryActivity) requireActivity();
-        }
+
     }
 
     @Nullable
@@ -82,12 +79,7 @@ public class SearchFragment extends Fragment {
                 mDetailTopicActivity.removeFragmentFromMainLayout();
             });
         }
-        if (mDetailCategoryActivity != null) {
-            imgBack.setOnClickListener(view -> {
-                Helper.hideKeyboard(requireContext(), edtSearch);
-                mDetailCategoryActivity.removeFragmentFromMainLayout();
-            });
-        }
+
 
         return view;
     }

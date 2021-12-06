@@ -52,8 +52,8 @@ public class MainActivity extends AppCompatActivity implements TopicAdapter.IOnc
 
         // init account if login
         if (Helper.isLogin(getApplicationContext())) {
-            Helper.currentAccount = Helper.getUserInfo(getApplicationContext());
-            Log.e("ddd", "onCreate: " + Helper.currentAccount);
+            Helper.setCurrentAccount(Helper.getUserInfo(getApplicationContext()));
+            Log.e("ddd", "onCreate: " + Helper.getCurrentAccount());
         }
 
         initUi();
@@ -98,10 +98,6 @@ public class MainActivity extends AppCompatActivity implements TopicAdapter.IOnc
             Intent intent = new Intent(getApplicationContext(), CartActivity.class);
             startActivity(intent);
         });
-
-        Intent intent = new Intent(this, EnterOtpActivity.class);
-        startActivity(intent);
-
     }
 
     private void initUi() {

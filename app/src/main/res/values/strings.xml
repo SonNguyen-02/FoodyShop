@@ -63,4 +63,9 @@
     <string name="otp_verification">OTP Verification</string>
     <string name="enter_your_new_password">Enter password to complete</string>
     <string name="pass_description">A password has minimum eight characters, at least one letter and one number.</string>
+
+    <string name="cart">Giỏ hàng</string>
+    <string name="discount">{0}%</string>
+    <string name="total_buy">Mua hàng ({0})</string>
+
 </resources>

@@ -144,7 +144,7 @@ public class FeedbackAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 viewHolder.tvCreated.setText(feedback.getCreated());
                 e.printStackTrace();
             }
-            if (Helper.currentAccount != null && Helper.currentAccount.getId() == feedback.getCustomerId()) {
+            if (Helper.getCurrentAccount() != null && Helper.getCurrentAccount().getId() == feedback.getCustomerId()) {
                 viewHolder.tvEdit.setVisibility(View.VISIBLE);
                 viewHolder.tvDelete.setVisibility(View.VISIBLE);
                 viewHolder.tvEdit.setOnClickListener(v -> mIOnClickCallback.onClickEditFeedback(feedback));

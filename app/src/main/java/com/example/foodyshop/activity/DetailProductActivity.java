@@ -1,6 +1,8 @@
 package com.example.foodyshop.activity;
 
+import static com.example.foodyshop.config.Const.KEY_FROM_CART;
 import static com.example.foodyshop.config.Const.KEY_PRODUCT;
+import static com.example.foodyshop.config.Const.TOAST_DEFAULT;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
@@ -80,10 +81,15 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
         if (bundle != null) {
             initUi();
             mProduct = (ProductModel) bundle.getSerializable(KEY_PRODUCT);
+            boolean isFromCart = bundle.getBoolean(KEY_FROM_CART);
             imgBack.setOnClickListener(v -> finish());
             imgCart.setOnClickListener(v -> {
-                Intent intent = new Intent(getApplicationContext(), CartActivity.class);
-                startActivity(intent);
+                if (isFromCart) {
+                    finish();
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), CartActivity.class);
+                    startActivity(intent);
+                }
             });
 
             // init feedback
@@ -91,7 +97,7 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
             initTotalPage();
             initFeedbackData();
             btnAddFeedback.setOnClickListener(v -> {
-                if (Helper.currentAccount == null) {
+                if (Helper.getCurrentAccount() == null) {
                     Intent intent = new Intent(DetailProductActivity.this, SigninActivity.class);
                     startActivity(intent);
                     return;
@@ -99,7 +105,6 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
                 fDialog = new FeedbackDialog(this);
                 fDialog.show();
             });
-
             // init product
 //            Glide.with(this).load(mProduct.getImg()).placeholder(R.drawable.placeholder_img).into(imgProduct);
             imgProduct.setImageResource(R.drawable.test_product_detail);
@@ -107,7 +112,7 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
             tvDescription.setText(mProduct.getDescription());
             tvPriceSale.setText(format.format(mProduct.getPriceSale()));
             if (mProduct.getDiscount() != null) {
-                tvDiscount.setText(MessageFormat.format("{0}%", mProduct.getDiscount()));
+                tvDiscount.setText(MessageFormat.format(getResources().getString(R.string.discount), mProduct.getDiscount()));
                 tvPrice.setText(format.format(mProduct.getPrice()));
                 tvPrice.setPaintFlags(tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             } else {
@@ -121,10 +126,10 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
             });
 
             llBuyNow.setOnClickListener(v -> {
-                ToastCustom.loading(getApplicationContext(), 800).show();
+                ToastCustom.loading(this, 800).show();
                 new Handler().postDelayed(() -> {
-                    OrderDetailModel orderDetail = new OrderDetailModel(mProduct.getId(), mProduct.getSaleId(), 1, mProduct.getPrice(), mProduct.getDiscount());
-                    Helper.addOrderDetailToCart(getApplicationContext(), orderDetail);
+                    OrderDetailModel orderDetail = new OrderDetailModel(mProduct, 1);
+                    Helper.addOrChangeAmountOrderDetail(getApplicationContext(), orderDetail, true);
                     Intent intent = new Intent(getApplicationContext(), CartActivity.class);
                     startActivity(intent);
                 }, 800);
@@ -231,7 +236,7 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
             loadingDialog.show();
             String token = Helper.getTokenLogin(getApplicationContext());
             FeedbackModel feedback = new FeedbackModel();
-            feedback.setCustomerId(Helper.currentAccount.getId());
+            feedback.setCustomerId(Helper.getCurrentAccount().getId());
             feedback.setProductId(mProduct.getId());
             feedback.setContent(content);
             Gson gson = new Gson();
@@ -243,16 +248,16 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
                     if (response.isSuccessful()) {
                         tvTotalFeedback.setText(MessageFormat.format(getResources().getString(R.string.total_feedback), ++totalFeedback));
                         mFeedbackAdapter.addFirst(response.body());
-                        ToastCustom.notice(getApplicationContext(), "Thêm đánh giá thành công!", true, 1500).show();
+                        ToastCustom.notice(getApplicationContext(), "Thêm đánh giá thành công!", ToastCustom.SUCCESS, TOAST_DEFAULT).show();
                     } else {
-                        ToastCustom.notice(getApplicationContext(), "Thêm đánh giá thất bại", false, 1500).show();
+                        ToastCustom.notice(getApplicationContext(), "Thêm đánh giá thất bại", ToastCustom.ERROR, TOAST_DEFAULT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<FeedbackModel> call, @NonNull Throwable t) {
                     loadingDialog.dismiss();
-                    ToastCustom.notice(getApplicationContext(), "Thêm đánh giá thất bại", false, 1500).show();
+                    ToastCustom.notice(getApplicationContext(), "Thêm đánh giá thất bại", ToastCustom.ERROR, TOAST_DEFAULT).show();
                 }
             });
         }
@@ -275,16 +280,16 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
                     if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
                         feedback.setContent(content);
                         mFeedbackAdapter.reloadFeedback(feedback);
-                        ToastCustom.notice(getApplicationContext(), "Thay đổi thành công!", true, 1500).show();
+                        ToastCustom.notice(getApplicationContext(), "Thay đổi thành công!", ToastCustom.SUCCESS, TOAST_DEFAULT).show();
                     } else {
-                        ToastCustom.notice(getApplicationContext(), "Thay đổi thất bại! Vui lòng thử lại sau", false, 1500).show();
+                        ToastCustom.notice(getApplicationContext(), "Thay đổi thất bại! Vui lòng thử lại sau", ToastCustom.ERROR, TOAST_DEFAULT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<Respond> call, @NonNull Throwable t) {
                     loadingDialog.dismiss();
-                    ToastCustom.notice(getApplicationContext(), "Thay đổi thất bại! Vui lòng thử lại sau", false, 1500).show();
+                    ToastCustom.notice(getApplicationContext(), "Thay đổi thất bại! Vui lòng thử lại sau", ToastCustom.ERROR, TOAST_DEFAULT).show();
                 }
             });
         }
@@ -336,16 +341,16 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
                             tvTotalFeedback.setText(R.string.no_have_feedback);
                         }
                         mFeedbackAdapter.removeFeedback(feedback);
-                        ToastCustom.notice(getApplicationContext(), "Xóa thành công!", true, 1500).show();
+                        ToastCustom.notice(getApplicationContext(), "Xóa thành công!", ToastCustom.SUCCESS, TOAST_DEFAULT).show();
                     } else {
-                        ToastCustom.notice(getApplicationContext(), "Xóa thất bại! Vui lòng thử lại sau", false, 1500).show();
+                        ToastCustom.notice(getApplicationContext(), "Xóa thất bại! Vui lòng thử lại sau", ToastCustom.ERROR, TOAST_DEFAULT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<Respond> call, @NonNull Throwable t) {
                     loadingDialog.dismiss();
-                    ToastCustom.notice(getApplicationContext(), "Xóa thất bại! Vui lòng thử lại sau", false, 1500).show();
+                    ToastCustom.notice(getApplicationContext(), "Xóa thất bại! Vui lòng thử lại sau", ToastCustom.ERROR, TOAST_DEFAULT).show();
                 }
             });
         }).show();
