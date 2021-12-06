@@ -5,6 +5,7 @@
  */
 package com.foodyshop.controller;
 
+import com.foodyshop.helper.BCrypt;
 import com.foodyshop.helper.StaffHelper;
 import com.foodyshop.model.StaffModel;
 import java.net.URL;
@@ -98,7 +99,9 @@ public class StaffController implements Initializable {
 
     @FXML
     void onClickAdd(ActionEvent event) {
-
+        String password = "123456";
+        String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
+//        System.out.println();
     }
 
     @FXML

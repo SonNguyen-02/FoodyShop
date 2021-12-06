@@ -51,22 +51,4 @@ public class OrderHelper {
         }
         return listOrder;
     }
-//    public static boolean updateOrder(int status, int ship_price, int id) throws SQLException {
-//        String query = "UPDATE fs_order SET status=?,ship_price=? WHERE id=?";
-//        try (Connection cnt = DBConnection.getConnection();) {
-//            PreparedStatement preStm = cnt.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-//            preStm.setInt(1, status);
-//            preStm.setInt(2, ship_price);
-//            preStm.setInt(3,id);
-//            if (preStm.executeUpdate() > 0) {
-//               return true;
-//            }
-//
-//        } catch (Exception e) {
-//            System.out.println("Error: " + e.getMessage());
-//            e.printStackTrace();
-//        }
-//
-//        return false;
-//    }
 }

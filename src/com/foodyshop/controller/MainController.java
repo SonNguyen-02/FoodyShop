@@ -118,8 +118,10 @@ public class MainController implements Initializable {
         });
         orderPage.setOnMouseClicked(e -> {
             Navigator.getInstance().loadOrder(rightLayout);
-
         });   
+        customerPage.setOnMouseClicked(e ->{
+             Navigator.getInstance().loadCustomer(rightLayout);
+        });
         feedbackPage.setOnMouseClicked(e ->{
            Navigator.getInstance().loadFeedback(rightLayout);
 

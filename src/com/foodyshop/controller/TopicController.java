@@ -7,10 +7,15 @@ package com.foodyshop.controller;
 
 import com.foodyshop.helper.CategoryHelper;
 import com.foodyshop.helper.TopicHelper;
+import com.foodyshop.main.Const;
 import com.foodyshop.main.Navigator;
+import com.foodyshop.main.UploadImageToApi;
 import com.foodyshop.model.TopicModel;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -116,17 +121,22 @@ public class TopicController implements Initializable {
                         alert.setHeaderText("Topic has link with any category you must delete product first");
                         alert.show();
                     } else {
-                        if (TopicHelper.delete(topic)) {
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                            alert.setTitle("ERROR");
-                            alert.setHeaderText("Delete success!");
-                            alert.show();
-                            listTopic.remove(topic);
-                        } else {
-                            Alert alert = new Alert(Alert.AlertType.ERROR);
-                            alert.setTitle("ERROR");
-                            alert.setHeaderText("Delete error");
-                            alert.show();
+                        try {
+                            UploadImageToApi.removeImageFromApi(Const.TYPE_TOPIC, topic.getImg());
+                            if (TopicHelper.delete(topic)) {
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                alert.setTitle("ERROR");
+                                alert.setHeaderText("Delete success!");
+                                alert.show();
+                                listTopic.remove(topic);
+                            } else {
+                                Alert alert = new Alert(Alert.AlertType.ERROR);
+                                alert.setTitle("ERROR");
+                                alert.setHeaderText("Delete error");
+                                alert.show();
+                            }
+                        } catch (IOException ex) {
+                            Logger.getLogger(TopicController.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                 }

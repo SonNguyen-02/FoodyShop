@@ -67,9 +67,6 @@ public class OrderController implements Initializable {
     private TableColumn<OrderModel, Integer> tcStatus;
 
     @FXML
-    private Button btnAdd;
-
-    @FXML
     private Button btnEditStatus;
 
     @FXML

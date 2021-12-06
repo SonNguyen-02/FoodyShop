@@ -5,6 +5,7 @@
  */
 package com.foodyshop.controller;
 
+import com.foodyshop.helper.BCrypt;
 import com.foodyshop.helper.StaffHelper;
 import com.foodyshop.main.Navigator;
 import com.foodyshop.model.StaffModel;
@@ -51,43 +52,54 @@ public class LoginController implements Initializable {
     void onClickSignIn(ActionEvent event) throws SQLException {
         // Navigator.getInstance().goToMainLayout();
 
-        StaffModel staff = StaffHelper.getStaffByEmail(txtEmail.getText());
+        String username = txtEmail.getText().trim();
+//        String regexUsername = "[a-zA-z0-9_\\.]{3,20}@[a-zA-Z0-9_\\.]{3,10}\\.[a-zA-Z0-9_\\.]{2,5}";
+        String regexUsername = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+        String password = passPassword.getText().trim();
+//        String regexPassword = "^[A-Z]{1}.*[a-zA-Z0-9].+{8,}$";
+        String regexPassword = "^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$";
 
-        String username = txtEmail.getText();
-        String regexUsername = "[a-zA-z0-9_\\.]{3,20}@[a-zA-Z0-9_\\.]{3,10}\\.[a-zA-Z0-9_\\.]{2,5}";
-        String password = passPassword.getText();
-        String regexPassword = "^[A-Z]{1}.*[a-zA-Z0-9].+{8,}$";
-
-        if (username.matches(regexUsername)) {
-            if (password.matches(regexPassword)) {
-                if (staff == null) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText("Account not exited!");
-                    alert.show();
-                } else {
-                    if (staff.getPassword().equals(passPassword.getText())) {
-                        Navigator.getInstance().goToMainLayout();
-                        
-                    } else {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setContentText("Password is incorected!");
-                        alert.show();
-                    }
-                }
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("error password");
-                alert.setContentText("password invalid");
-                alert.show();
-            }
-        } else {
+        if (!username.matches(regexUsername)) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("error email");
             alert.setContentText("email invalid");
             alert.show();
+            return;
+        }
+        if (!password.matches(regexPassword)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error password");
+            alert.setContentText("password invalid");
+            alert.show();
+            return;
         }
 
+        StaffModel staff = StaffHelper.getStaffByEmail(username);
+        if (staff == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Account not exited!");
+            alert.show();
+        } else {
+            if (BCrypt.checkpw(password, staff.getPassword())) {
+                // check account bi lock k
+                if(staff.getStatus().equals("0")){
+                    Navigator.getInstance().goToMainLayout();
+                }else{
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setContentText("Your account is locked!");
+                    alert.show();
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setContentText("Password is incorected!");
+                alert.show();
+            }
         }
+
+    }
 }
 
 //      @FXML
