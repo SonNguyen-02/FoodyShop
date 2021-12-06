@@ -7,10 +7,12 @@ package com.foodyshop.controller;
 
 import com.foodyshop.helper.Order_DetailHelper;
 import com.foodyshop.model.CustomerModel;
+import com.foodyshop.model.FeedbackModel;
 import com.foodyshop.model.OrderModel;
 import com.foodyshop.model.Order_DetailModel;
 import com.foodyshop.model.ProductModel;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import static javafx.collections.FXCollections.observableArrayList;
@@ -28,12 +30,12 @@ import javafx.scene.shape.Rectangle;
  * @author APlaptop
  */
 public class Order_DetailController implements Initializable {
-    
-    private OrderModel mOrder;
 
-    
+    private OrderModel mOrder;
+    private FeedbackModel mfeedback;
+
     @FXML
-    private Label lbOrder_Code,lbTotalPrice,lbTotalProduct,lbName,lbPhone,lbAddress,lbFeedback,lbNote;
+    private Label lbOrder_Code, lbTotalPrice, lbTotalProduct, lbName, lbPhone, lbAddress, lbFeedback, lbNote;
 
     @FXML
     private TableView<Order_DetailModel> tblOrder_detail;
@@ -55,19 +57,28 @@ public class Order_DetailController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    
-    ObservableList<Order_DetailModel> listOrder_Detail =  FXCollections.observableArrayList();
-    
-    public void initOrderModel(OrderModel order){
+
+    ObservableList<Order_DetailModel> listOrder_Detail = FXCollections.observableArrayList();
+    DecimalFormat formatter = new DecimalFormat("###,###,###");
+
+    public void initOrderModel(OrderModel order, FeedbackModel feedback) {
         this.mOrder = order;
-        order.getOrderCode();
-        lbTotalPrice.setText(order.getTotalMoney().toString());
+        this.mfeedback = feedback;
+        lbName.setText(order.getName().toString());
+        lbPhone.setText(order.getPhone().toString());
+        lbNote.setText(order.getNote().toString());
+        lbAddress.setText(order.getAddress().toString());
+//        lbFeedback.setText(feedback.getContent().toString());
+//        System.out.println(feedback.getContent().toString());
+        String fomatter1 = formatter.format(order.getTotalMoney() );
+        lbTotalPrice.setText(fomatter1.toString()+ " VNĐ");
+
         lbOrder_Code.setText(order.getOrderCode().toString());
         listOrder_Detail = Order_DetailHelper.getAllOrder_Detail(order);
         tblOrder_detail.setItems(listOrder_Detail);
-        
+
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -77,5 +88,5 @@ public class Order_DetailController implements Initializable {
         tcNumber.setCellValueFactory(cellValue -> cellValue.getValue().getNumberProperty());
         tcPrice.setCellValueFactory(cellValue -> cellValue.getValue().getPriceProperty());
         tcDiscount.setCellValueFactory(cellValue -> cellValue.getValue().getDiscountProperty());
-    }       
+    }
 }

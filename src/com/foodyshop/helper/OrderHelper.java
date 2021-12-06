@@ -51,4 +51,26 @@ public class OrderHelper {
         }
         return listOrder;
     }
+    public static boolean updateStatusOrder(OrderModel orderModel){
+        String sql = db.update("fs_order")               
+                .set("status", String.valueOf(orderModel.getStatus()))
+                .where("id", String.valueOf(orderModel.getId()))
+                .getCompiledUpdate(true);      
+        int result = DBConnection.execUpdate(sql);
+        if(result > 0){
+            return true;
+        }
+        return false;
+    }
+    public static boolean updatePriceOrder(OrderModel orderModel){
+        String sql = db.update("fs_order")               
+                .set("status", String.valueOf(orderModel.getStatus()))
+                .where("id", String.valueOf(orderModel.getId()))
+                .getCompiledUpdate(true);      
+        int result = DBConnection.execUpdate(sql);
+        if(result > 0){
+            return true;
+        }
+        return false;
+    }
 }
