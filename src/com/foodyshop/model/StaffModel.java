@@ -5,6 +5,11 @@
  */
 package com.foodyshop.model;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  *
  * @author DELL
@@ -18,6 +23,20 @@ public class StaffModel {
     String updated;
     String type;
     String status;
+    
+    public static final String TYPE_ADMIN = "admin";
+    public static final String TYPE_STAFF ="staff";
+    public static final String STATUS_LOCK = "lock";
+    public static final String STATUS_UNLOCK = "unlock";
+    
+    ObjectProperty<Integer> idProperty;
+    StringProperty usernameProperty;
+    StringProperty passwordProperty;
+    StringProperty nameProperty;
+    StringProperty typeProperty;
+    StringProperty createdProperty;
+    StringProperty updatedProperty;
+    StringProperty statusProperty;
 
     public StaffModel() {
     }
@@ -31,7 +50,63 @@ public class StaffModel {
         this.updated = updated;
         this.type = type;
         this.status = status;
+        
+        idProperty = new SimpleObjectProperty<>(id);
+        usernameProperty = new SimpleStringProperty(username);
+        passwordProperty = new SimpleStringProperty(password);
+        nameProperty = new SimpleStringProperty(name);
+        typeProperty = new SimpleStringProperty(type);
+        createdProperty = new SimpleStringProperty(created);
+        updatedProperty = new SimpleStringProperty(updated);
+        statusProperty = new SimpleStringProperty(status);
+        
+        if(this.type==type){
+            this.typeProperty = new SimpleStringProperty(TYPE_ADMIN);
+        }else{
+            this.typeProperty = new SimpleStringProperty(TYPE_STAFF);
+        }
+        
+        if (this.status==status) {
+            this.statusProperty = new SimpleStringProperty(STATUS_UNLOCK);
+        }else{
+            this.statusProperty = new SimpleStringProperty(STATUS_LOCK);
+        }
     }
+
+    public ObjectProperty<Integer> getIdProperty() {
+        return idProperty;
+    }
+
+    public StringProperty getUsernameProperty() {
+        return usernameProperty;
+    }
+
+    public StringProperty getPasswordProperty() {
+        return passwordProperty;
+    }
+
+    public StringProperty getNameProperty() {
+        return nameProperty;
+    }
+
+    public StringProperty getTypeProperty() {
+        return typeProperty;
+    }
+
+    public StringProperty getCreatedProperty() {
+        return createdProperty;
+    }
+
+    public StringProperty getUpdatedProperty() {
+        return updatedProperty;
+    }
+
+    public StringProperty getStatusProperty() {
+        return statusProperty;
+    }
+    
+    
+    
 
     public int getId() {
         return id;
@@ -39,6 +114,7 @@ public class StaffModel {
 
     public void setId(int id) {
         this.id = id;
+        this.idProperty.setValue(id);
     }
 
     public String getUsername() {
@@ -47,6 +123,7 @@ public class StaffModel {
 
     public void setUsername(String username) {
         this.username = username;
+        this.usernameProperty.setValue(username);
     }
 
     public String getPassword() {
@@ -55,6 +132,7 @@ public class StaffModel {
 
     public void setPassword(String password) {
         this.password = password;
+        this.passwordProperty.setValue(password);
     }
 
     public String getName() {
@@ -63,6 +141,7 @@ public class StaffModel {
 
     public void setName(String name) {
         this.name = name;
+        this.nameProperty.setValue(name);
     }
 
     public String getCreated() {
@@ -71,6 +150,7 @@ public class StaffModel {
 
     public void setCreated(String created) {
         this.created = created;
+        this.createdProperty.setValue(created);
     }
 
     public String getUpdated() {
@@ -79,6 +159,7 @@ public class StaffModel {
 
     public void setUpdated(String updated) {
         this.updated = updated;
+        this.updatedProperty.setValue(updated);
     }
 
     public String getType() {
@@ -87,6 +168,7 @@ public class StaffModel {
 
     public void setType(String type) {
         this.type = type;
+        this.typeProperty.setValue(type);
     }
 
     public String getStatus() {
@@ -95,6 +177,7 @@ public class StaffModel {
 
     public void setStatus(String status) {
         this.status = status;
+        this.statusProperty.setValue(status);
     }
 
    

@@ -6,6 +6,7 @@
 package com.foodyshop.main;
 
 import com.foodyshop.database.DBConnection;
+import com.foodyshop.helper.BCrypt;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -19,8 +20,8 @@ public class App extends Application {
     public void start(Stage primaryStage) throws Exception {
         Navigator.getInstance().setPrimaryStage(primaryStage);
 
-        Navigator.getInstance().goToMainLayout();
-   // Navigator.getInstance().goToLoginUI();
+//        Navigator.getInstance().goToMainLayout();
+        Navigator.getInstance().goToLoginUI();
 
     }
 

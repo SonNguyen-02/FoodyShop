@@ -19,13 +19,19 @@ public class FeedbackModel {
     int ID;
     String customerID;
     String productID;
+    int orderDetailID;
     String content;
+    String created;
+    String updated;
     String status;
 
     ObjectProperty<Integer> IDproperty;
     StringProperty customerIDProperty;
     StringProperty productIDProperty;
+    ObjectProperty<Integer> orderDetailIDproperty;
     StringProperty contentProperty;
+    StringProperty createdProperty;
+    StringProperty updatedProperty;
     StringProperty statusProperty;
 
     public static final String STATUS_SHOW = "show";
@@ -34,17 +40,23 @@ public class FeedbackModel {
     public FeedbackModel() {
     }
 
-    public FeedbackModel(int ID, String customerID, String productID, String content, String status) {
+    public FeedbackModel(int ID, String customerID, String productID, int orderDetailID, String content,String created, String updated, String status) {
         this.ID = ID;
         this.customerID = customerID;
         this.productID = productID;
+        this.orderDetailID = orderDetailID;
         this.content = content;
+        this.created = created;
+        this.updated = updated;
         this.status = status;
 
         IDproperty = new SimpleObjectProperty<>(ID);
         customerIDProperty = new SimpleStringProperty(customerID);
         productIDProperty = new SimpleStringProperty(productID);
+        orderDetailIDproperty = new SimpleObjectProperty<>(orderDetailID);
         contentProperty = new SimpleStringProperty(content);
+        createdProperty = new SimpleStringProperty(created);
+        updatedProperty = new SimpleStringProperty(updated);
         statusProperty = new SimpleStringProperty(status);
 
         if (this.status==status) {
@@ -66,14 +78,30 @@ public class FeedbackModel {
         return productIDProperty;
     }
 
+    public ObjectProperty<Integer> getOrderDetailIDproperty() {
+        return orderDetailIDproperty;
+    }
+
     public StringProperty getContentProperty() {
         return contentProperty;
+    }
+
+    public StringProperty getCreatedProperty() {
+        return createdProperty;
+    }
+
+    public StringProperty getUpdatedProperty() {
+        return updatedProperty;
     }
 
     public StringProperty getStatusProperty() {
         return statusProperty;
     }
 
+    
+    
+    
+    
     public int getID() {
         return ID;
     }
@@ -101,6 +129,15 @@ public class FeedbackModel {
         this.productIDProperty.setValue(productID);
     }
 
+    public int getOrderDetailID() {
+        return orderDetailID;
+    }
+
+    public void setOrderDetailID(int orderDetailID) {
+        this.orderDetailID = orderDetailID;
+        this.orderDetailIDproperty.setValue(orderDetailID);
+    }
+
     public String getContent() {
         return content;
     }
@@ -108,6 +145,24 @@ public class FeedbackModel {
     public void setContent(String content) {
         this.content = content;
         this.contentProperty.setValue(content);
+    }
+
+    public String getCreated() {
+        return created;
+    }
+
+    public void setCreated(String created) {
+        this.created = created;
+        this.createdProperty.setValue(created);
+    }
+
+    public String getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(String updated) {
+        this.updated = updated;
+        this.updatedProperty.setValue(updated);
     }
 
     public String getStatus() {
