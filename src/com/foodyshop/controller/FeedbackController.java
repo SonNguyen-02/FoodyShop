@@ -39,9 +39,18 @@ public class FeedbackController implements Initializable {
 
     @FXML
     private TableColumn<FeedbackModel, String> tcProductID;
+    
+    @FXML
+    private TableColumn<FeedbackModel, Integer> tcOrderDetailID;
 
     @FXML
     private TableColumn<FeedbackModel, String> tcContent;
+    
+     @FXML
+    private TableColumn<FeedbackModel, String> tcCreated;
+
+    @FXML
+    private TableColumn<FeedbackModel, String> tcUpdated;
 
     @FXML
     private TableColumn<FeedbackModel, String> tcStatus;
@@ -62,7 +71,10 @@ public class FeedbackController implements Initializable {
         tcID.setCellValueFactory(cellData -> cellData.getValue().getIDproperty());
         tcCustomerID.setCellValueFactory(cellData -> cellData.getValue().getCustomerIDProperty());
         tcProductID.setCellValueFactory(cellData -> cellData.getValue().getProductIDProperty());
+        tcOrderDetailID.setCellValueFactory(cellData -> cellData.getValue().getOrderDetailIDproperty());
         tcContent.setCellValueFactory(cellData -> cellData.getValue().getContentProperty());
+        tcCreated.setCellValueFactory(cellData -> cellData.getValue().getCreatedProperty());
+        tcUpdated.setCellValueFactory(cellData -> cellData.getValue().getUpdatedProperty());
         tcStatus.setCellValueFactory(cellData -> cellData.getValue().getStatusProperty());
 
         try {

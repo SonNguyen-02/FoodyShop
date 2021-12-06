@@ -10,11 +10,11 @@ import com.foodyshop.database.DBQuery;
 import com.foodyshop.database.DBQueryBuilder;
 import com.foodyshop.model.ProductModel;
 import com.foodyshop.model.StaffModel;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -26,12 +26,10 @@ public class StaffHelper {
 
     public static StaffModel getStaffByEmail(String username) throws SQLException {
         StaffModel staff = null;
-        String query = "SELECT * FROM fs_staff WHERE username=?";
-        try (
-                Connection cnn = DBHelper.getConnection();
-                PreparedStatement stm = cnn.prepareStatement(query);) {
-            stm.setString(1, username);
-            ResultSet rs = stm.executeQuery();
+
+        try {
+            String query = "SELECT * FROM fs_staff WHERE username=?";
+            ResultSet rs = DBConnection.execSelect(query);
             if (rs.next()) {
                 int idDb = rs.getInt("id");
                 String usernameDb = rs.getString("username");
@@ -43,10 +41,37 @@ public class StaffHelper {
 //                staff = new StaffModel(idDb, usernameDb, passwordDb, nameDb, typeDb, statusDb);
                 staff = new StaffModel(idDb, username, passwordDb, nameDb, nameDb, nameDb, typeDb, statusDb);
             }
+        }finally{
+                    DBConnection.close();
+                    }
             return staff;
-        }
+      
     }
 
+    public static List<StaffModel> getAllStaff() throws SQLException{
+        List<StaffModel> listStaff = new ArrayList<>();
+        try{
+            String query = "SELECT * FROM `fs_staff`";
+            ResultSet rs = DBConnection.execSelect(query);
+            while(rs.next()){
+            int idDB = rs.getInt("id");
+            String usernameDB = rs.getString("username");
+            String passwordDB = rs.getString("password");
+            String nameDB = rs.getString("name");
+            String typeDB = rs.getString("type");
+            String createdDB = rs.getString("created");
+            String updatedDB = rs.getString("updated");
+            String statusDB = rs.getString("status");
+            
+            StaffModel ls = new StaffModel(idDB, usernameDB, passwordDB, nameDB, createdDB, updatedDB, typeDB, statusDB);
+            listStaff.add(ls);
+            }
+        }finally{
+            DBConnection.close();
+        }
+        return listStaff;
+    }
+    
     private static DBQuery db = DBQueryBuilder.newDBQuery();
 
     public static ObservableList<ProductModel> getAll() {
