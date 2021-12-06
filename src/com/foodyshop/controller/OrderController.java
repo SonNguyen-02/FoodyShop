@@ -7,6 +7,7 @@ package com.foodyshop.controller;
 
 import com.foodyshop.helper.OrderHelper;
 import com.foodyshop.main.Navigator;
+import com.foodyshop.model.FeedbackModel;
 import com.foodyshop.model.OrderModel;
 import java.net.URL;
 import java.sql.SQLException;
@@ -64,7 +65,7 @@ public class OrderController implements Initializable {
     private TableColumn<OrderModel, String> tcCreated;
 
     @FXML
-    private TableColumn<OrderModel, Integer> tcStatus;
+    private TableColumn<OrderModel, String> tcStatus;
 
     @FXML
     private Button btnEditStatus;
@@ -86,41 +87,10 @@ public class OrderController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-
-        btnOrder_detail.setOnMouseClicked(e -> {
-            OrderModel order = tblOrder.getSelectionModel().getSelectedItem();
-            if (order != null) {
-                Navigator.getInstance().showOrder_Detail(order);
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("You Must choose!!!");
-                alert.show();
-            }
-        });
-//        btnEditStatus.setOnMouseClicked(e -> {
-//            OrderModel order = tblOrder.getSelectionModel().getSelectedItem();
-//            if (order != null) {
-//                Navigator.getInstance().showEditOrder(order);
-//            } else {
-//                Alert alert = new Alert(Alert.AlertType.ERROR);
-//                alert.setTitle("Error");
-//                alert.setHeaderText("You Must choose!!!");
-//                alert.show();
-//            }
-//        });
-//        btnEditPrice.setOnMouseClicked(e -> {
-//            OrderModel order = tblOrder.getSelectionModel().getSelectedItem();
-//            if (order != null) {
-//                Navigator.getInstance().showEditOrder(order);
-//            } else {
-//                Alert alert = new Alert(Alert.AlertType.ERROR);
-//                alert.setTitle("Error");
-//                alert.setHeaderText("You Must choose!!!");
-//                alert.show();
-//            }
-//        });
-
+        btnEditStatus.setOnMouseClicked(this::onclickShowEditStatus);
+        btnOrder_detail.setOnMouseClicked(this::onclickShowOrderDetail);
+//        btnEditPrice.setOnMouseClicked(this::onclickShowEditPrice);
+//          
         tcId.setCellValueFactory(cellValue -> cellValue.getValue().getIdProperty());
         tcOrder_code.setCellValueFactory(cellValue -> cellValue.getValue().getOrderCodeProperty());
         tcName.setCellValueFactory(cellValue -> cellValue.getValue().getNameProperty());
@@ -130,9 +100,50 @@ public class OrderController implements Initializable {
         tcShip_price.setCellValueFactory(cellValue -> cellValue.getValue().getShipPriceProperty());
         tcTotal_money.setCellValueFactory(cellValue -> cellValue.getValue().getTotalMoneyProperty());
         tcCreated.setCellValueFactory(cellValue -> cellValue.getValue().getCreatedProperty());
-        tcStatus.setCellValueFactory(cellValue -> cellValue.getValue().getStatusProperty());
-
+        tcStatus.setCellValueFactory(cellValue -> cellValue.getValue().getStatusVal());
         listOrder = OrderHelper.getAllOrder();
         tblOrder.setItems(listOrder);
     }
+
+    private void onclickShowOrderDetail(MouseEvent e) {
+        OrderModel order = tblOrder.getSelectionModel().getSelectedItem();
+        FeedbackModel feedback = new FeedbackModel();
+        if (order != null) {
+            Navigator.getInstance().showOrder_Detail(order,feedback);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("You Must choose!!!");
+            alert.show();
+        }
+    }
+
+    private void onclickShowEditStatus(MouseEvent e) {
+        OrderModel order = tblOrder.getSelectionModel().getSelectedItem();
+        if (order != null) {
+           Navigator.getInstance().showEditStatusOrder(order, new EditStatusOrderController.IOnUpdateOrderSuccess() {
+               @Override
+               public void callback() {
+                   tblOrder.refresh();
+               }
+           });
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("You Must choose!!!");
+            alert.show();
+        }
+    }
+
+//    private void onclickShowEditPrice(MouseEvent e) {
+//        OrderModel order = tblOrder.getSelectionModel().getSelectedItem();
+//        if (order != null) {
+//            Navigator.getInstance().showEditStatusOrder(order);
+//        } else {
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Error");
+//            alert.setHeaderText("You Must choose!!!");
+//            alert.show();
+//        }
+//    }
 }

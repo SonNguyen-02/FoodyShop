@@ -15,10 +15,10 @@
       <TableView fx:id="tblOrder_detail" layoutX="446.0" layoutY="100.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="335.0" prefWidth="442.0" AnchorPane.leftAnchor="446.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="100.0">
          <columns>
             <TableColumn fx:id="tcStt" prefWidth="57.222259521484375" text="STT" />
-            <TableColumn fx:id="tcProduct" prefWidth="108.5555419921875" text="Product" />
-            <TableColumn fx:id="tcNumber" prefWidth="89.888916015625" style="-fx-alignment: Center;" text="Number" />
-            <TableColumn fx:id="tcPrice" minWidth="0.0" prefWidth="104.888916015625" style="-fx-alignment: CENTER;" text="Price" />
-            <TableColumn fx:id="tcDiscount" prefWidth="79.111083984375" style="-fx-alignment: center;" text="Discount" />
+            <TableColumn fx:id="tcProduct" prefWidth="156.44451904296875" text="Product" />
+            <TableColumn fx:id="tcNumber" prefWidth="61.1112060546875" style="-fx-alignment: Center;" text="Number" />
+            <TableColumn fx:id="tcPrice" minWidth="0.0" prefWidth="89.8887939453125" style="-fx-alignment: CENTER;" text="Price" />
+            <TableColumn fx:id="tcDiscount" prefWidth="72.0" style="-fx-alignment: center;" text="Discount" />
          </columns>
       </TableView>
       <Label alignment="CENTER" layoutX="312.0" layoutY="24.0" prefHeight="52.0" prefWidth="211.0" text="Order Detail :" textAlignment="CENTER" textFill="#bf3737" AnchorPane.leftAnchor="312.0" AnchorPane.rightAnchor="147.0" AnchorPane.topAnchor="23.0">

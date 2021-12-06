@@ -17,18 +17,28 @@ import javafx.beans.property.StringProperty;
  */
 public class OrderModel {
 
-    ObjectProperty<Integer> id;
-    StringProperty orderCode;
-    ObjectProperty<Integer> customerId;
-    StringProperty name;
-    StringProperty address;
-    StringProperty phone;
-    StringProperty note;
-    StringProperty created;
-    StringProperty updated;
-    ObjectProperty<Integer> shipPrice;
-    ObjectProperty<Integer> totalMoney;
-    ObjectProperty<Integer> status;
+    public static final String WAIT_AOS_CF = "Wait admin or staff confirm";
+    public static final String AOS_CF = "Admin or staff confirmed";
+    public static final String AOS_CL = "Admin or staff cancel";
+    public static final String WAIT_CUS_CF = "Wait customer confirm";
+    public static final String CUS_CL = "Cutomer cancel";
+    public static final String CUS_CF = "Custom confirmed";
+    public static final String SHIPPING = "Shipping";
+    public static final String SUCCESS_DELIVERY = "Successful delivery";
+
+    private ObjectProperty<Integer> id;
+    private StringProperty orderCode;
+    private ObjectProperty<Integer> customerId;
+    private StringProperty name;
+    private StringProperty address;
+    private StringProperty phone;
+    private StringProperty note;
+    private StringProperty created;
+    private StringProperty updated;
+    private ObjectProperty<Integer> shipPrice;
+    private ObjectProperty<Integer> totalMoney;
+    int status;
+    private StringProperty statusVal;
 
     public OrderModel() {
         this.id = new SimpleObjectProperty<>();
@@ -42,7 +52,7 @@ public class OrderModel {
         this.updated = new SimpleStringProperty();
         this.shipPrice = new SimpleObjectProperty<>();
         this.totalMoney = new SimpleObjectProperty<>();
-        this.status = new SimpleObjectProperty<>();
+        statusVal = new SimpleStringProperty();
     }
 
     //Getter    
@@ -66,10 +76,10 @@ public class OrderModel {
         return address.getValue();
     }
 
-    public Integer getStatus() {
-        return status.getValue();
+    public int getStatus() {
+        return status;
     }
-
+    
     public Integer getTotalMoney() {
         return totalMoney.getValue();
     }
@@ -115,10 +125,6 @@ public class OrderModel {
         return address;
     }
 
-    public ObjectProperty<Integer> getStatusProperty() {
-        return status;
-    }
-
     public ObjectProperty<Integer> getTotalMoneyProperty() {
         return totalMoney;
     }
@@ -141,6 +147,10 @@ public class OrderModel {
 
     public StringProperty getPhoneProperty() {
         return phone;
+    }
+
+    public StringProperty getStatusVal() {
+        return statusVal;
     }
 
     //Setter
@@ -188,7 +198,46 @@ public class OrderModel {
         this.totalMoney.setValue(total_money);
     }
 
+    public void setStatusVal(String statusVal) {
+        this.statusVal.set(statusVal);
+        if (statusVal.equals(WAIT_AOS_CF)) {
+            this.status = 0;
+        } else if (statusVal.equals(AOS_CF)) {
+            this.status = 1;
+        } else if (statusVal.equals(AOS_CL)) {
+            this.status = -1;
+        } else if (statusVal.equals(WAIT_CUS_CF)) {
+            this.status = 2;
+        } else if (statusVal.equals(CUS_CL)) {
+            this.status = -2;
+        } else if (statusVal.equals(CUS_CF)) {
+            this.status = 3;
+        } else if (statusVal.equals(SHIPPING)) {
+            this.status = 4;
+        } else {
+            this.status = 5;
+        }
+    }
+
     public void setStatus(Integer status) {
-        this.status.setValue(status);
+        this.status = status;
+        if (status == 0) {
+            this.statusVal.setValue(WAIT_AOS_CF);
+        } else if (status == 1) {
+            this.statusVal.setValue(AOS_CF);
+        } else if (status == -1) {
+            this.statusVal.setValue(AOS_CL);
+        } else if (status == 2) {
+            this.statusVal.setValue(WAIT_CUS_CF);
+        } else if (status == -2) {
+            this.statusVal.setValue(CUS_CL);
+        } else if (status == 3) {
+            this.statusVal.setValue(CUS_CF);
+        } else if (status == 4) {
+            this.statusVal.setValue(SHIPPING);
+        } else {
+            this.statusVal.setValue(AOS_CF);
+        }
+
     }
 }

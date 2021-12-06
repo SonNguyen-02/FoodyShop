@@ -34,13 +34,13 @@
                   <TableColumn fx:id="tcId" prefWidth="59.0" text="ID" />
                   <TableColumn fx:id="tcOrder_code" prefWidth="120.11112976074219" text="Order_code" />
                   <TableColumn fx:id="tcName" prefWidth="87.88887023925781" text="Name" />
-                  <TableColumn fx:id="tcAddress" prefWidth="103.44442749023438" text="Address" />
-                  <TableColumn fx:id="tcPhone" prefWidth="88.111083984375" text="Phone" />
-                  <TableColumn fx:id="tcNote" prefWidth="104.111083984375" text="Note" />
-                  <TableColumn fx:id="tcShip_price" prefWidth="88.77777099609375" text="Ship_price" />
-                  <TableColumn fx:id="tcTotal_money" prefWidth="93.111083984375" text="Total_money" />
-                  <TableColumn fx:id="tcCreated" prefWidth="71.666748046875" text="Created" />
-                  <TableColumn fx:id="tcStatus" minWidth="0.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Status" />
+                  <TableColumn fx:id="tcAddress" prefWidth="81.77783203125" style="-fx-alignment: center;" text="Address" />
+                  <TableColumn fx:id="tcPhone" prefWidth="96.77783203125" text="Phone" />
+                  <TableColumn fx:id="tcNote" prefWidth="90.888916015625" text="Note" />
+                  <TableColumn fx:id="tcShip_price" prefWidth="73.111083984375" text="Ship_price" />
+                  <TableColumn fx:id="tcTotal_money" prefWidth="85.888916015625" text="Total_money" />
+                  <TableColumn fx:id="tcCreated" prefWidth="78.66668701171875" text="Created" />
+                  <TableColumn fx:id="tcStatus" minWidth="0.0" prefWidth="128.33331298828125" text="Status" />
                </columns>
             </TableView>
          </children>

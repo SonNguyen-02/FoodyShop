@@ -6,11 +6,14 @@ import com.foodyshop.controller.AddTopicController;
 import com.foodyshop.controller.AddTopicController.IOnInsertTopicSuccess;
 
 import com.foodyshop.controller.EditCategoryController;
+import com.foodyshop.controller.EditStatusOrderController;
+import com.foodyshop.controller.EditStatusOrderController.IOnUpdateOrderSuccess;
 import com.foodyshop.controller.EditTopicController;
 import com.foodyshop.controller.EditTopicController.IOnUpdateSuccess;
 import com.foodyshop.controller.Order_DetailController;
 import com.foodyshop.controller.TestDemoController;
 import com.foodyshop.model.CategoryModel;
+import com.foodyshop.model.FeedbackModel;
 import com.foodyshop.model.OrderModel;
 import com.foodyshop.model.TopicModel;
 import java.io.IOException;
@@ -59,6 +62,7 @@ public class Navigator {
     private static final String EDIT_CATEGORY_FORM = ROOT_FOLDER + "EditCategoryForm.fxml";
     private static final String ADD_TOPIC_FORM = ROOT_FOLDER + "AddTopicForm.fxml";
     private static final String EDIT_TOPIC_FORM = ROOT_FOLDER + "EditTopicForm.fxml";
+    private static final String EDIT_STATUS_ORDER_FORM = ROOT_FOLDER + "EditStatusOrderForm.fxml";
 
     // Khai báo di chuyển giữa các màn hình
     public void goToLoginUI() {
@@ -68,8 +72,6 @@ public class Navigator {
     public void goToMainLayout() {
         redirectTo("Admin", MAIN_UI);
     }
-
-
 
     // Load Page
     public void loadDashboard(BorderPane borderPane) {
@@ -83,11 +85,11 @@ public class Navigator {
     public void loadFeedback(BorderPane borderPane) {
         borderPane.setCenter(getParent(FEEDBACK_PAGE));
     }
-    
-     public void loadCustomer(BorderPane borderPane) {
+
+    public void loadCustomer(BorderPane borderPane) {
         borderPane.setCenter(getParent(CUSTOMER_PAGE));
     }
-    
+
     public void loadCategory(BorderPane borderPane) {
         borderPane.setCenter(getParent(CATEGORY_PAGE));
     }
@@ -95,17 +97,16 @@ public class Navigator {
     public void loadTopic(BorderPane borderPane) {
         borderPane.setCenter(getParent(TOPIC_PAGE));
     }
-    
+
     public void loadStaff(BorderPane borderPane) {
         borderPane.setCenter(getParent(STAFF_PAGE));
     }
 
     // Show Modal
- 
-    public void showOrder_Detail(OrderModel order) {
+    public void showOrder_Detail(OrderModel order, FeedbackModel feedback) {
         showModal("Order Detail", ORDER_DETAIL);
         Order_DetailController controller = fxLoader.getController();
-        controller.initOrderModel(order);
+        controller.initOrderModel(order, feedback);
     }
 
     public void showAddCategory(IOnAddSuccess mIOnAddSuccess) {
@@ -125,13 +126,18 @@ public class Navigator {
         AddTopicController controller = fxLoader.getController();
         controller.initData(modalStage, mIOnInsertTopicSuccess);
     }
-    
+
     public void showEditTopic(TopicModel topic, IOnUpdateSuccess mIOnUpdateSuccess) {
         showModal("Topic ", EDIT_TOPIC_FORM);
         EditTopicController controller = fxLoader.getController();
         controller.initData(modalStage, topic, mIOnUpdateSuccess);
     }
-
+    
+    public void showEditStatusOrder(OrderModel order,IOnUpdateOrderSuccess mIOnUpdateOrderSuccess) {
+        showModal("Edit Status Order ", EDIT_STATUS_ORDER_FORM);
+        EditStatusOrderController controller = fxLoader.getController();
+        controller.setData(order,modalStage,mIOnUpdateOrderSuccess);
+    }
     // </editor-fold> 
     private Navigator() {
     }
