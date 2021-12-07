@@ -7,6 +7,7 @@ package com.foodyshop.controller;
 
 import com.foodyshop.helper.BCrypt;
 import com.foodyshop.helper.StaffHelper;
+import com.foodyshop.main.Navigator;
 import com.foodyshop.model.StaffModel;
 import java.net.URL;
 import java.sql.SQLException;
@@ -95,13 +96,15 @@ public class StaffController implements Initializable {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddStaff());
     }
 
     @FXML
     void onClickAdd(ActionEvent event) {
-        String password = "123456";
-        String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
+//        String password = "123456";
+//        String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
 //        System.out.println();
+
     }
 
     @FXML
@@ -111,7 +114,36 @@ public class StaffController implements Initializable {
 
     @FXML
     void onClickDelete(ActionEvent event) {
+        StaffModel staffModel = tvStaff.getSelectionModel().getSelectedItem();
+        if (staffModel != null) {
+            Alert alerts = new Alert(Alert.AlertType.CONFIRMATION);
+            alerts.setTitle("ERROR");
+            alerts.setHeaderText("Do you want delete " + staffModel.getUsername());
+            alerts.showAndWait().ifPresent(btn -> {
+                if (btn == ButtonType.OK) {
+                  //  else {
+                        
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("ERROR");
+                            alert.setHeaderText("Delete success!");
+                            alert.show();
+                            listStaff.remove(staffModel);
+                        } else {
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("ERROR");
+                            alert.setHeaderText("Delete error");
+                            alert.show();
+                        }
+                   // }
+                
+            });
 
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Please choose category");
+            alert.show();
+        }
     }
 
     @FXML

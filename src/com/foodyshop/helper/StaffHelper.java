@@ -75,7 +75,13 @@ public class StaffHelper {
         return listStaff;
     }
 
-    
+//    public static boolean insertStaff(StaffModel staffModel){
+//        try{
+//            String query = "INSERT INTO `fs_staff`( `username`, `password`, `name`, `type`, `status`) VALUES(?,?,?,?,?)";
+//        ResultSet rs = DBConnection.execSelect(query);
+//        }
+//        return false;
+//    }
 
     public static ObservableList<ProductModel> getAll() {
         ObservableList<ProductModel> list = FXCollections.observableArrayList();

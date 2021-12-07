@@ -51,8 +51,8 @@ public class AddStaffController implements Initializable {
         cbStatus.getItems().add("lock");
         cbStatus.getItems().add("unlock");
 
-        btnSubmit.setOnMouseClicked(this::onClickSubmit);
-        btnCancel.setOnMouseClicked(this::onClickCancel);
+//        btnSubmit.setOnMouseClicked(this::onClickSubmit);
+//        btnCancel.setOnMouseClicked(this::onClickCancel);
     }
 
     @FXML
