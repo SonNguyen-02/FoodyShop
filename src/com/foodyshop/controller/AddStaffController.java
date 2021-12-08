@@ -69,10 +69,41 @@ public class AddStaffController implements Initializable {
 
     @FXML
     void onClickSubmit(ActionEvent event) {
+        String userName = txtUsername.getText().trim();
+        String password = txtPassword.getText().trim();
+        String name = txtName.getText().trim();
+
+        if (userName.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Please enter username!");
+            alert.show();
+            return;
+        }
+        if (password.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Please enter password!");
+            alert.show();
+            return;
+        }
+        if (name.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Please enter name!");
+            alert.show();
+            return;
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Submit");
+            alert.setHeaderText("Do you want submit?");
+            alert.showAndWait().ifPresent(btnType -> {
+                if (btnType == ButtonType.OK) {
+                    Navigator.getInstance().getModalStage().close();
+                }
+            });
+        }
 
     }
 
-    
- 
-    
 }
