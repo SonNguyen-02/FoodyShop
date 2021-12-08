@@ -221,23 +221,6 @@ public class OrderModel {
 
     public void setStatus(Integer status) {
         this.status = status;
-//        if (status == 0) {
-//            this.statusVal.setValue(WAIT_AOS_CF);
-//        } else if (status == 1) {
-//            this.statusVal.setValue(AOS_CF);
-//        } else if (status == -1) {
-//            this.statusVal.setValue(AOS_CL);
-//        } else if (status == 2) {
-//            this.statusVal.setValue(WAIT_CUS_CF);
-//        } else if (status == -2) {
-//            this.statusVal.setValue(CUS_CL);
-//        } else if (status == 3) {
-//            this.statusVal.setValue(CUS_CF);
-//        } else if (status == 4) {
-//            this.statusVal.setValue(SHIPPING);
-//        } else {
-//            this.statusVal.setValue(SUCCESS_DELIVERY);
-//        }
         switch(status){
             case 0:
                 this.statusVal.set(WAIT_AOS_CF);

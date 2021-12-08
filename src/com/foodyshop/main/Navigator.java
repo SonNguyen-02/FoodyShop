@@ -58,7 +58,7 @@ public class Navigator {
     private static final String TOPIC_PAGE = ROOT_FOLDER + "TopicPage.fxml";
     private static final String FEEDBACK_PAGE = ROOT_FOLDER + "FeedbackUI.fxml";
     private static final String STAFF_PAGE = ROOT_FOLDER + "StaffUI.fxml";
-
+    private static final String SALE_PAGE = ROOT_FOLDER + "SalePage.fxml";
     // FORM
     private static final String ADD_CATEGORY_FORM = ROOT_FOLDER + "AddCategoryForm.fxml";
     private static final String EDIT_CATEGORY_FORM = ROOT_FOLDER + "EditCategoryForm.fxml";
@@ -103,6 +103,10 @@ public class Navigator {
 
     public void loadStaff(BorderPane borderPane) {
         borderPane.setCenter(getParent(STAFF_PAGE));
+    }
+    
+    public void loadSale(BorderPane borderPane) {
+        borderPane.setCenter(getParent(SALE_PAGE));
     }
 
     // Show Modal

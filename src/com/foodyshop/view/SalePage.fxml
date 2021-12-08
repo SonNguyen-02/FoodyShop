@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.SaleController">
+   <children>
+      <TableView fx:id="tblSale" layoutX="155.0" layoutY="38.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="628.0" prefWidth="888.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0">
+         <columns>
+            <TableColumn fx:id="tcStt" prefWidth="51.888877868652344" text="STT" />
+            <TableColumn fx:id="tcProductName" prefWidth="124.4444580078125" text="Product Name" />
+            <TableColumn fx:id="tcDiscount" prefWidth="62.88890075683594" text="Discount" />
+            <TableColumn fx:id="tcContent" prefWidth="124.77774047851562" text="Content" />
+            <TableColumn fx:id="tcImg" prefWidth="134.66668701171875" text="Image" />
+            <TableColumn fx:id="tcStart" prefWidth="102.0" text="Start date" />
+            <TableColumn fx:id="tcEnd" prefWidth="110.11114501953125" text="End date" />
+            <TableColumn fx:id="tcCreated" prefWidth="116.44439697265625" text="Created" />
+            <TableColumn fx:id="tcStatus" prefWidth="57.55560302734375" text="Status" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>

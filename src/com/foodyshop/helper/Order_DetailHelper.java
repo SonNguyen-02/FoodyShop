@@ -32,8 +32,9 @@ public class Order_DetailHelper {
         ObservableList<Order_DetailModel> listOrder_Detail = FXCollections.observableArrayList();
         
         try {
-            String sql = "SELECT odt.id,odt.number,odt.price,odt.discount,odt.order_id,odt.product_id, prd.name,fb.content "
+            String sql = "SELECT odt.id,odt.number,odt.price,odt.discount, prd.name,fb.content,sl.content,sl.start_date,sl.end_date "
                     + "FROM fs_order_detail odt JOIN fs_product prd on odt.product_id = prd.id "
+                    + "JOIN fs_sale sl on odt.sale_id = sl.id "
                     + "LEFT JOIN fs_feedback fb on odt.id = fb.order_detail_id where odt.order_id = ?";
             PreparedStatement stm = DBConnection.getConnection().prepareStatement(sql);
             stm.setInt(1, order.getId());
@@ -44,6 +45,9 @@ public class Order_DetailHelper {
                 order_detail.setId(rs.getInt("id"));
                 order_detail.setProduct_name(rs.getString("name"));
                 order_detail.setContent(rs.getString("content"));
+                order_detail.setContentSale(rs.getString("content"));
+                order_detail.setStartDate(rs.getString("start_date"));
+                order_detail.setEndDate(rs.getString("end_date"));
                 order_detail.setNumber(rs.getInt("number"));
                 order_detail.setPrice(rs.getInt("price"));
                 order_detail.setDiscount(rs.getInt("discount"));

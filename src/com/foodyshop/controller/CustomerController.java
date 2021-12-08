@@ -65,10 +65,7 @@ public class CustomerController implements Initializable {
     private Button btnCustomerDetail;
 
     @FXML
-    private Button btnLockStatus;
-
-    @FXML
-    private Button btnUnlockStatus;
+    private Button btnEditStatus;
 
     public void setData(CustomerModel customer){
         mCustomer = customer;
@@ -86,8 +83,7 @@ public class CustomerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        btnUnlockStatus.setOnMouseClicked(this::onclickUnlock);
-        btnLockStatus.setOnMouseClicked(this::onclickLock);
+//        btnEditStatus.setOnMouseClicked(this::onclicKShowEditCustomer);
         
         tcStt.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tblCustomer.getItems().indexOf(cellData.getValue()) + 1) + ""));
         tcPhone.setCellValueFactory(cellValue -> cellValue.getValue().getPhoneProperty());
@@ -103,27 +99,16 @@ public class CustomerController implements Initializable {
         tblCustomer.setItems(listCustomer);
     }
 
-    private void onclickUnlock(MouseEvent e) {
-        CustomerModel customer = tblCustomer.getSelectionModel().getSelectedItem();
-        if (customer == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("You Must choose!!!");
-            alert.show();
-        } else {
-
-        }
-    }
-    
-    private void onclickLock(MouseEvent e) {
-        CustomerModel customer = tblCustomer.getSelectionModel().getSelectedItem();
-        if (customer == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("You Must choose!!!");
-            alert.show();
-        } else {
-
-        }
-    }
+//    private void onclicKShowEditCustomer(MouseEvent e) {
+//        CustomerModel customer = tblCustomer.getSelectionModel().getSelectedItem();
+//        if (!customer == null) {
+////            Navigator.getInstance()
+//
+//        } else {
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Error");
+//            alert.setHeaderText("You Must choose!!!");
+//            alert.show();
+//        }
+//    }
 }

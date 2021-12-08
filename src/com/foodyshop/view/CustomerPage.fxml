@@ -8,17 +8,12 @@
 
 <AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.CustomerController">
    <children>
-      <Button fx:id="btnCustomerDetail" layoutX="685.0" layoutY="631.0" minHeight="40.0" minWidth="140.0" mnemonicParsing="false" style="-fx-background-color: #FF6633; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); -fx-cursor: hand;" text="Customer Detail" textFill="#f6f6f6" AnchorPane.bottomAnchor="27.0" AnchorPane.topAnchor="631.0">
+      <Button fx:id="btnCustomerDetail" layoutX="685.0" layoutY="631.0" minHeight="40.0" minWidth="140.0" mnemonicParsing="false" style="-fx-background-color: #FF6633; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); -fx-cursor: hand;" text="Customer Detail" textFill="#f6f6f6" AnchorPane.bottomAnchor="27.0" AnchorPane.topAnchor="633.0">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <Button fx:id="btnLockStatus" layoutX="472.0" layoutY="632.0" minHeight="40.0" minWidth="120.0" mnemonicParsing="false" style="-fx-background-color: #3499fb; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); -fx-cursor: hand;" text="Lock Status" textFill="WHITE" AnchorPane.bottomAnchor="27.0" AnchorPane.topAnchor="633.0">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnUnlockStatus" layoutX="288.0" layoutY="630.0" minHeight="40.0" minWidth="120.0" mnemonicParsing="false" style="-fx-background-color: #3499fb; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); -fx-cursor: hand;" text="Unlock Status" textFill="WHITE" AnchorPane.bottomAnchor="27.0" AnchorPane.topAnchor="633.0">
+      <Button fx:id="btnEditStatus" layoutX="405.0" layoutY="630.0" minHeight="40.0" minWidth="120.0" mnemonicParsing="false" style="-fx-background-color: #3499fb; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); -fx-cursor: hand;" text="Edit Status" textFill="WHITE" AnchorPane.bottomAnchor="30.0" AnchorPane.topAnchor="633.0">
          <font>
             <Font size="16.0" />
          </font>
