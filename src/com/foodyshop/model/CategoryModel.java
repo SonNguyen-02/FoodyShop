@@ -11,16 +11,17 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class CategoryModel {
-    
+
     public static final String HIDDEN = "Hidden";
     public static final String SHOW = "Show";
-
+    private StringProperty topic;
     private ObjectProperty<Integer> id;
     private ObjectProperty<Integer> topic_id;
     private StringProperty name;
     private StringProperty created;
     private ObjectProperty<Integer> status;
     private StringProperty statusVal;
+    private StringProperty topicName;
 
     public CategoryModel() {
         this.id = new SimpleObjectProperty<>();
@@ -29,6 +30,7 @@ public class CategoryModel {
         this.created = new SimpleStringProperty();
         this.status = new SimpleObjectProperty<>();
         statusVal = new SimpleStringProperty();
+        this.topicName = new SimpleStringProperty();
     }
 
     public Integer getId() {
@@ -42,13 +44,17 @@ public class CategoryModel {
     public String getName() {
         return name.getValue();
     }
-    
+
     public String getCreated() {
         return created.getValue();
     }
-    
+
     public Integer getStatus() {
         return status.getValue();
+    }
+
+    public String getTopicName() {
+        return topicName.getValue();
     }
 
     public ObjectProperty<Integer> getIdProperty() {
@@ -62,25 +68,29 @@ public class CategoryModel {
     public StringProperty getNameProperty() {
         return name;
     }
-    
-     public StringProperty getCreatedProperty() {
+
+    public StringProperty getCreatedProperty() {
         return created;
     }
 
     public ObjectProperty<Integer> getStatusProperty() {
         return status;
     }
-    
-    public void setStatusVal(String status){
+
+    public StringProperty getTopicNameProperty() {
+        return topicName;
+    }
+
+    public void setStatusVal(String status) {
         this.statusVal.set(status);
-        if(status.equals(SHOW)){
+        if (status.equals(SHOW)) {
             this.status.set(0);
-        }else{
+        } else {
             this.status.set(1);
         }
     }
-    
-    public StringProperty getStatusVal(){
+
+    public StringProperty getStatusVal() {
         return statusVal;
     }
 
@@ -92,23 +102,29 @@ public class CategoryModel {
         this.topic_id.setValue(topic_id);
     }
 
+    public void setTopic(String topic) {
+        this.topic.setValue(topic);
+    }
+
     public void setName(String name) {
         this.name.setValue(name);
     }
-    
+
     public void setCreated(String created) {
         this.created.setValue(created);
     }
 
+    public void setTopicName(String topicName) {
+        this.topicName.setValue(topicName);
+    }
+
     public void setStatus(Integer status) {
         this.status.setValue(status);
-        if(status == 0){
+        if (status == 0) {
             this.statusVal.setValue(SHOW);
-        }else{
+        } else {
             this.statusVal.setValue(HIDDEN);
         }
     }
-    
-
 
 }

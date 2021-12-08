@@ -24,6 +24,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -35,6 +36,9 @@ public class EditCategoryController implements Initializable {
     
     private CategoryModel category;
     
+    private IOnEditCategorySuccess mIOnEditCategorySuccess;
+    
+    private Stage stage;
     @FXML
     private TextField txtName;
 
@@ -50,16 +54,19 @@ public class EditCategoryController implements Initializable {
     @FXML
     private ComboBox<String> cbStatus;
 
-    // nhận hàng từ bảng Category
-    public void setData(CategoryModel category){
-        this.category = category;
-        
-        txtName.setText(category.getName());
+    public interface IOnEditCategorySuccess {
 
+        void callback();
+    }
+    // nhận hàng từ bảng Category
+    public void setData(Stage stage, CategoryModel category, IOnEditCategorySuccess mIOnEditCategorySuccess ){
+        this.stage = stage;
+        this.category = category;
+        txtName.setText(category.getName());
         topicList = TopicHelper.getAllTopic();
         if (topicList != null && !topicList.isEmpty()) {
             cbTopic.setItems(topicList);
-//            cbTopic.setValue(topicList.get(0));
+            cbTopic.setValue(topicList.get(0));
             for (TopicModel topic : topicList) {
                 if(topic.getId() == category.getTopic_id()){
                     cbTopic.setValue(topic);
@@ -68,8 +75,10 @@ public class EditCategoryController implements Initializable {
             }
         }
         // set mac dinh val cho checkbox
-        cbStatus.setItems(FXCollections.observableArrayList(CategoryModel.SHOW, CategoryModel.HIDDEN));
+        cbStatus.setItems(FXCollections.observableArrayList(TopicModel.SHOW, TopicModel.HIDDEN));
         cbStatus.setValue(category.getStatusVal().get());
+        
+        this.mIOnEditCategorySuccess = mIOnEditCategorySuccess;
     }
     
     @Override
@@ -78,20 +87,44 @@ public class EditCategoryController implements Initializable {
         btnCancel.setOnMouseClicked(this::onClickCancel);
     }  
     private void onClickSave(MouseEvent e) {
-        
-        System.out.println(cbStatus.getValue());
+       String name = txtName.getText().trim();
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        if (name.isEmpty()){
+            txtName.requestFocus();
+            alert.setHeaderText("Please enter name");
+            alert.show();
+            return;
+        }
+        category.setName(name);
+        category.setTopic_id(cbTopic.getValue().getId());
         category.setStatusVal(cbStatus.getValue());
-    }
+        boolean resutl = CategoryHelper.updateCategory(category);
+        if (resutl) {
+            Alert alerts = new Alert(Alert.AlertType.INFORMATION);
+            alerts.setTitle("Success");
+            alerts.setHeaderText("Edit success!");
+            alerts.show();
+            mIOnEditCategorySuccess.callback();
+            Navigator.getInstance().getModalStage().close();
+        } else {
+            Alert alerts = new Alert(Alert.AlertType.ERROR);
+            alerts.setTitle("Error");
+            alerts.setHeaderText("Edit false");
+            alerts.show();
+        }
+
+   }
     
     private void onClickCancel(MouseEvent e){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Close");
         alert.setHeaderText("Do you want close?");
         alert.showAndWait().ifPresent(btnType -> {
-            if(btnType == ButtonType.OK){
+            if (btnType == ButtonType.OK) {
                 Navigator.getInstance().getModalStage().close();
             }
         });
-        
+
     }
 }

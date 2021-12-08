@@ -31,13 +31,13 @@ public class CategoryHelper {
 
     public static ObservableList<CategoryModel> getAllCategory() {
         ObservableList<CategoryModel> listCategory = FXCollections.observableArrayList();
-        String sql = db.select().from("fs_category").orderByDESC("id").getCompiledSelect(true);
+        String sql = db.select("ct.id,ct.name,ct.created,ct.status,tp.name").from("fs_category ct").join("fs_topic tp", "ct.topic_id = tp.id").orderByDESC("id").getCompiledSelect(true);
         ResultSet rs = DBConnection.execSelect(sql);
         try {
             while (rs.next()) {
                 CategoryModel category = new CategoryModel();
                 category.setId(rs.getInt("id"));
-                category.setTopic_id(rs.getInt("topic_id"));
+                category.setTopicName(rs.getString("name"));
                 category.setName(rs.getString("name"));
                 category.setCreated(rs.getString("created"));
                 category.setStatus(rs.getInt("status"));
@@ -112,6 +112,19 @@ public class CategoryHelper {
             }
         }
         return null;
+    }
+    public static boolean updateCategory(CategoryModel categoryModel){
+        String sql = db.update("fs_category")  
+                .set("name", categoryModel.getName())
+                .set("status", String.valueOf(categoryModel.getStatus()))
+                .set("topic_id", String.valueOf(categoryModel.getTopic_id()))
+                .where("id", String.valueOf(categoryModel.getId()))
+                .getCompiledUpdate(true);      
+        int result = DBConnection.execUpdate(sql);
+        if(result > 0){
+            return true;
+        }
+        return false;
     }
 
 }

@@ -135,6 +135,9 @@ public class MainController implements Initializable {
         staffPage.setOnMouseClicked(e ->{
             Navigator.getInstance().loadStaff(rightLayout);
         });
+        productPage.setOnMouseClicked(e ->{
+            Navigator.getInstance().loadProduct(rightLayout);
+        });
     }
 
 }
