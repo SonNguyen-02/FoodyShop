@@ -35,7 +35,7 @@ public class CustomerModel {
     private StringProperty datebirth;
     private StringProperty name;
     private String img;
-    private ObjectProperty<Integer> status;
+    private int status;
     private ObservableValue<ImageView> imgView;
     private StringProperty created;
     private StringProperty statusVal;
@@ -48,7 +48,6 @@ public class CustomerModel {
         this.datebirth = new SimpleStringProperty();
         this.name = new SimpleStringProperty();
         this.created = new SimpleStringProperty();
-        this.status = new SimpleObjectProperty<>();
         statusVal = new SimpleStringProperty();
         genderVal = new SimpleStringProperty();
     }
@@ -156,11 +155,7 @@ public class CustomerModel {
         this.created.setValue(created);
     }
 
-    public Integer getStatus() {
-        return status.getValue();
-    }
-  
-    public ObjectProperty<Integer> getStatusProperty() {
+    public int getStatus() {
         return status;
     }
     
@@ -185,11 +180,20 @@ public class CustomerModel {
     }
     
     public void setStatus(Integer status) {
-        this.status.setValue(status);
+        this.status = status;
         if (status == 1) {
             this.statusVal.setValue(LOCK);
         } else {
             this.statusVal.setValue(UNLOCK);
+        }
+    }
+    
+    public  void setStatusVal(String statusval){
+        this.statusVal.set(statusval);
+        if(statusVal.equals(UNLOCK)){
+            this.status = 0;
+        }else{
+            this.status = 1;
         }
     }
 }

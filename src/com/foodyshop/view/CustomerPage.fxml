@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -8,23 +8,33 @@
 
 <AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.CustomerController">
    <children>
-      <Label layoutX="387.0" layoutY="353.0">
+      <Button fx:id="btnCustomerDetail" layoutX="685.0" layoutY="631.0" minHeight="40.0" minWidth="140.0" mnemonicParsing="false" style="-fx-background-color: #FF6633; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); -fx-cursor: hand;" text="Customer Detail" textFill="#f6f6f6" AnchorPane.bottomAnchor="27.0" AnchorPane.topAnchor="631.0">
          <font>
-            <Font size="96.0" />
+            <Font name="System Bold" size="16.0" />
          </font>
-      </Label>
-      <TableView fx:id="tblCustomer" layoutX="166.0" layoutY="4.0" prefHeight="600.0" prefWidth="888.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="16.0">
-        <columns>
-          <TableColumn fx:id="ctStt" prefWidth="51.0" text="STT" />
-          <TableColumn fx:id="ctPhone" prefWidth="121.111083984375" text="Phone" />
-            <TableColumn fx:id="ctName" prefWidth="132.33331298828125" text="Name" />
-            <TableColumn fx:id="ctAddress" minWidth="0.0" prefWidth="78.22225952148438" text="Address" />
-            <TableColumn fx:id="ctGender" prefWidth="113.6666259765625" text="Gender" />
-            <TableColumn fx:id="ctDatebirth" prefWidth="76.3333740234375" text="Datebirth" />
-            <TableColumn fx:id="ctCreated" prefWidth="116.3333740234375" text="Created" />
-            <TableColumn fx:id="ctImage" prefWidth="148.6666259765625" text="Image" />
-            <TableColumn fx:id="ctStatus" minWidth="0.0" prefWidth="48.6666259765625" text="Status" />
-        </columns>
+      </Button>
+      <Button fx:id="btnLockStatus" layoutX="472.0" layoutY="632.0" minHeight="40.0" minWidth="120.0" mnemonicParsing="false" style="-fx-background-color: #3499fb; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); -fx-cursor: hand;" text="Lock Status" textFill="WHITE" AnchorPane.bottomAnchor="27.0" AnchorPane.topAnchor="633.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnUnlockStatus" layoutX="288.0" layoutY="630.0" minHeight="40.0" minWidth="120.0" mnemonicParsing="false" style="-fx-background-color: #3499fb; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); -fx-cursor: hand;" text="Unlock Status" textFill="WHITE" AnchorPane.bottomAnchor="27.0" AnchorPane.topAnchor="633.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <TableView fx:id="tblCustomer" layoutX="19.0" layoutY="29.0" prefHeight="580.0" prefWidth="820.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="40.0">
+         <columns>
+            <TableColumn fx:id="tcStt" prefWidth="55.66668701171875" text="STT" />
+            <TableColumn fx:id="tcPhone" prefWidth="109.33331298828125" text="Phone" />
+            <TableColumn fx:id="tcName" prefWidth="115.0" text="Name" />
+            <TableColumn fx:id="tcAddress" prefWidth="134.33331298828125" style="-fx-alignment: center;" text="Address" />
+            <TableColumn fx:id="tcGender" prefWidth="62.6666259765625" text="Gender" />
+            <TableColumn fx:id="tcDatebirth" prefWidth="99.0" text="Datebirth" />
+            <TableColumn fx:id="tcCreated" prefWidth="83.6666259765625" text="Created" />
+            <TableColumn fx:id="tcImage" prefWidth="89.3333740234375" text="Image" />
+            <TableColumn fx:id="tcStatus" minWidth="0.0" prefWidth="67.0" text="Status" />
+         </columns>
       </TableView>
    </children>
 </AnchorPane>

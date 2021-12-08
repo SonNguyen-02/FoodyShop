@@ -9,6 +9,7 @@ import com.foodyshop.helper.OrderHelper;
 import com.foodyshop.main.Navigator;
 import com.foodyshop.model.FeedbackModel;
 import com.foodyshop.model.OrderModel;
+import com.foodyshop.model.Order_DetailModel;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
@@ -86,11 +87,9 @@ public class OrderController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        btnEditStatus.setOnMouseClicked(this::onclickShowEditStatus);
+        btnEditStatus.setOnMouseClicked(this::onclickShowEditOrder);
         btnOrder_detail.setOnMouseClicked(this::onclickShowOrderDetail);
-//        btnEditPrice.setOnMouseClicked(this::onclickShowEditPrice);
-//          
+        
         tcId.setCellValueFactory(cellValue -> cellValue.getValue().getIdProperty());
         tcOrder_code.setCellValueFactory(cellValue -> cellValue.getValue().getOrderCodeProperty());
         tcName.setCellValueFactory(cellValue -> cellValue.getValue().getNameProperty());
@@ -107,9 +106,8 @@ public class OrderController implements Initializable {
 
     private void onclickShowOrderDetail(MouseEvent e) {
         OrderModel order = tblOrder.getSelectionModel().getSelectedItem();
-        FeedbackModel feedback = new FeedbackModel();
         if (order != null) {
-            Navigator.getInstance().showOrder_Detail(order,feedback);
+            Navigator.getInstance().showOrder_Detail(order);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -118,10 +116,10 @@ public class OrderController implements Initializable {
         }
     }
 
-    private void onclickShowEditStatus(MouseEvent e) {
+    private void onclickShowEditOrder(MouseEvent e) {
         OrderModel order = tblOrder.getSelectionModel().getSelectedItem();
         if (order != null) {
-           Navigator.getInstance().showEditStatusOrder(order, new EditStatusOrderController.IOnUpdateOrderSuccess() {
+           Navigator.getInstance().showEditOrder(order, new EditOrderController.IOnUpdateOrderSuccess() {
                @Override
                public void callback() {
                    tblOrder.refresh();
@@ -134,16 +132,4 @@ public class OrderController implements Initializable {
             alert.show();
         }
     }
-
-//    private void onclickShowEditPrice(MouseEvent e) {
-//        OrderModel order = tblOrder.getSelectionModel().getSelectedItem();
-//        if (order != null) {
-//            Navigator.getInstance().showEditStatusOrder(order);
-//        } else {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Error");
-//            alert.setHeaderText("You Must choose!!!");
-//            alert.show();
-//        }
-//    }
 }

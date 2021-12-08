@@ -22,6 +22,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -30,7 +31,7 @@ import javafx.stage.Stage;
  *
  * @author APlaptop
  */
-public class EditStatusOrderController implements Initializable {
+public class EditOrderController implements Initializable {
 
     private OrderModel mOrder;
     private Stage stage;
@@ -46,19 +47,24 @@ public class EditStatusOrderController implements Initializable {
 
     @FXML
     private Label lbOrderCode;
-    
-    private IOnUpdateOrderSuccess mIOnUpdateOrderSuccess; 
-    
-    public interface IOnUpdateOrderSuccess{
+
+    @FXML
+    private TextField txtShipPrice;
+
+    private IOnUpdateOrderSuccess mIOnUpdateOrderSuccess;
+
+    public interface IOnUpdateOrderSuccess {
+
         void callback();
     }
- 
-    public void setData(OrderModel order,Stage stage,IOnUpdateOrderSuccess mIOnUpdateOrderSuccess) {
+
+    public void setData(OrderModel order, Stage stage, IOnUpdateOrderSuccess mIOnUpdateOrderSuccess) {
         mOrder = order;
         this.stage = stage;
         this.mIOnUpdateOrderSuccess = mIOnUpdateOrderSuccess;
         lbOrderCode.setText(order.getOrderCode().toString());
-        cbStatus.setItems(FXCollections.observableArrayList(OrderModel.WAIT_AOS_CF, OrderModel.AOS_CF,OrderModel.AOS_CL,OrderModel.WAIT_CUS_CF,OrderModel.CUS_CL,OrderModel.CUS_CF,OrderModel.SHIPPING,OrderModel.SUCCESS_DELIVERY));
+        txtShipPrice.setText(order.getShipPrice().toString());
+        cbStatus.setItems(FXCollections.observableArrayList(OrderModel.WAIT_AOS_CF, OrderModel.AOS_CF, OrderModel.AOS_CL, OrderModel.WAIT_CUS_CF, OrderModel.CUS_CL, OrderModel.CUS_CF, OrderModel.SHIPPING, OrderModel.SUCCESS_DELIVERY));
         cbStatus.setValue(order.getStatusVal().get());
     }
 
@@ -82,10 +88,26 @@ public class EditStatusOrderController implements Initializable {
             }
         });
     }
-    
-    private void onclickSave(MouseEvent e){
+
+    private void onclickSave(MouseEvent e) {
+        String shipPrice = txtShipPrice.getText().trim();
+        String regaxShipPrice = "^[0-9]{1,11}$";
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        if (shipPrice.isEmpty()) {
+            txtShipPrice.requestFocus();
+            alert.setHeaderText("Please enter ship price");
+            alert.show();
+            return;
+        }
+        if(!shipPrice.matches(regaxShipPrice)){
+            alert.setHeaderText("Please enter number");
+            alert.show();
+            return;
+        }
+        mOrder.setShipPrice(Integer.parseInt(shipPrice));
         mOrder.setStatusVal(cbStatus.getValue());
-        boolean resutl = OrderHelper.updateStatusOrder(mOrder);
+        boolean resutl = OrderHelper.updateOrder(mOrder);
         if (resutl) {
             Alert alerts = new Alert(Alert.AlertType.INFORMATION);
             alerts.setTitle("Success");
@@ -99,5 +121,5 @@ public class EditStatusOrderController implements Initializable {
             alerts.setHeaderText("Edit false");
             alerts.show();
         }
-    } 
+    }
 }

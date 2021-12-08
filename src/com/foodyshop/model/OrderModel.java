@@ -221,23 +221,48 @@ public class OrderModel {
 
     public void setStatus(Integer status) {
         this.status = status;
-        if (status == 0) {
-            this.statusVal.setValue(WAIT_AOS_CF);
-        } else if (status == 1) {
-            this.statusVal.setValue(AOS_CF);
-        } else if (status == -1) {
-            this.statusVal.setValue(AOS_CL);
-        } else if (status == 2) {
-            this.statusVal.setValue(WAIT_CUS_CF);
-        } else if (status == -2) {
-            this.statusVal.setValue(CUS_CL);
-        } else if (status == 3) {
-            this.statusVal.setValue(CUS_CF);
-        } else if (status == 4) {
-            this.statusVal.setValue(SHIPPING);
-        } else {
-            this.statusVal.setValue(AOS_CF);
+//        if (status == 0) {
+//            this.statusVal.setValue(WAIT_AOS_CF);
+//        } else if (status == 1) {
+//            this.statusVal.setValue(AOS_CF);
+//        } else if (status == -1) {
+//            this.statusVal.setValue(AOS_CL);
+//        } else if (status == 2) {
+//            this.statusVal.setValue(WAIT_CUS_CF);
+//        } else if (status == -2) {
+//            this.statusVal.setValue(CUS_CL);
+//        } else if (status == 3) {
+//            this.statusVal.setValue(CUS_CF);
+//        } else if (status == 4) {
+//            this.statusVal.setValue(SHIPPING);
+//        } else {
+//            this.statusVal.setValue(SUCCESS_DELIVERY);
+//        }
+        switch(status){
+            case 0:
+                this.statusVal.set(WAIT_AOS_CF);
+                break;
+            case 1:
+                this.statusVal.set(AOS_CF );
+                break;
+            case -1:
+                this.statusVal.set(AOS_CL );
+                break;
+            case 2:
+                this.statusVal.set(WAIT_CUS_CF);
+                break;
+            case -2:
+                this.statusVal.set(CUS_CL );
+                break;
+            case 3:
+                this.statusVal.set(CUS_CF );
+                break;
+            case 4:
+                this.statusVal.set(SHIPPING);
+                break;
+            case 5:
+                this.statusVal.set(SUCCESS_DELIVERY );
+                break;
         }
-
     }
 }

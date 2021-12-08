@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -12,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(#8E78FF, #FC7D7B);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.EditStatusOrderController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(#8E78FF, #FC7D7B);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.EditOrderController">
    <children>
       <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="48.0" prefWidth="600.0" text="Edit Status Order" textAlignment="CENTER" textFill="#bf3737" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>
@@ -57,14 +58,28 @@
          </columnConstraints>
          <rowConstraints>
             <RowConstraints maxHeight="333.0" minHeight="10.0" prefHeight="167.66668701171875" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="333.0" minHeight="10.0" prefHeight="167.66668701171875" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label prefHeight="35.0" text="Name :">
+            <Label prefHeight="35.0" text="Status :" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <ComboBox fx:id="cbStatus" prefHeight="44.0" prefWidth="404.0" GridPane.columnIndex="1" />
+            <ComboBox fx:id="cbStatus" prefHeight="44.0" prefWidth="404.0" style="-fx-background-color: #ffffff;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin></ComboBox>
+            <Label prefHeight="35.0" text="Ship Price :">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtShipPrice" prefHeight="44.0" prefWidth="351.0" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin>
+            </TextField>
          </children>
       </GridPane>
    </children>

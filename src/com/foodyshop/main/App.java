@@ -20,8 +20,8 @@ public class App extends Application {
     public void start(Stage primaryStage) throws Exception {
         Navigator.getInstance().setPrimaryStage(primaryStage);
 
-//        Navigator.getInstance().goToMainLayout();
-        Navigator.getInstance().goToLoginUI();
+        Navigator.getInstance().goToMainLayout();
+//        Navigator.getInstance().goToLoginUI();
 
     }
 

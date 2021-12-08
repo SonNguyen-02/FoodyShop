@@ -47,4 +47,16 @@ public class CustomerHelper {
         }
         return listCustomer;
     }
+    
+    public static boolean updateCustomer(CustomerModel customerModel){
+        String sql = db.update("fs_customer")  
+                .set("status", String.valueOf(customerModel.getStatus()))
+                .where("id", String.valueOf(customerModel.getId()))
+                .getCompiledUpdate(true);      
+        int result = DBConnection.execUpdate(sql);
+        if(result > 0){
+            return true;
+        }
+        return false;
+    }
 }

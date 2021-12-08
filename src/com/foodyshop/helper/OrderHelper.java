@@ -27,7 +27,7 @@ public class OrderHelper {
 
     public static ObservableList<OrderModel> getAllOrder() {
         ObservableList<OrderModel> listOrder = FXCollections.observableArrayList();
-        String sql = db.select().from("fs_order").orderByASC("id").getCompiledSelect(true);       
+        String sql = db.select().from("fs_order").orderByASC("id").where("status", "5").limit(20).getCompiledSelect(true);
         ResultSet rs = DBConnection.execSelect(sql);
         try {
             while (rs.next()) {
@@ -51,19 +51,9 @@ public class OrderHelper {
         }
         return listOrder;
     }
-    public static boolean updateStatusOrder(OrderModel orderModel){
-        String sql = db.update("fs_order")               
-                .set("status", String.valueOf(orderModel.getStatus()))
-                .where("id", String.valueOf(orderModel.getId()))
-                .getCompiledUpdate(true);      
-        int result = DBConnection.execUpdate(sql);
-        if(result > 0){
-            return true;
-        }
-        return false;
-    }
-    public static boolean updatePriceOrder(OrderModel orderModel){
-        String sql = db.update("fs_order")               
+    public static boolean updateOrder(OrderModel orderModel){
+        String sql = db.update("fs_order")  
+                .set("ship_price", String.valueOf(orderModel.getShipPrice()))
                 .set("status", String.valueOf(orderModel.getStatus()))
                 .where("id", String.valueOf(orderModel.getId()))
                 .getCompiledUpdate(true);      
