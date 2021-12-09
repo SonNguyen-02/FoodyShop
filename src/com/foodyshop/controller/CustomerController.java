@@ -14,12 +14,15 @@ import com.foodyshop.controller.EditCustomerController;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
@@ -63,6 +66,9 @@ public class CustomerController implements Initializable {
     private TableColumn<CustomerModel, String> tcStatus;
 
     @FXML
+    private TextField txtSearch;
+
+    @FXML
     private Button btnCustomerDetail;
 
     @FXML
@@ -72,7 +78,6 @@ public class CustomerController implements Initializable {
         mCustomer = customer;
     }
 
-    
     ObservableList<CustomerModel> listCustomer = FXCollections.observableArrayList();
 
     /**
@@ -85,6 +90,7 @@ public class CustomerController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         btnEditStatus.setOnMouseClicked(this::onclickShowEditCustomer);
+        btnCustomerDetail.setOnMouseClicked(this::onclickShowCustomerDetail);
 
         tcStt.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tblCustomer.getItems().indexOf(cellData.getValue()) + 1) + ""));
         tcPhone.setCellValueFactory(cellValue -> cellValue.getValue().getPhoneProperty());
@@ -98,6 +104,36 @@ public class CustomerController implements Initializable {
 
         listCustomer = CustomerHelper.getAllCustomer();
         tblCustomer.setItems(listCustomer);
+
+        FilteredList<CustomerModel> filteredData = new FilteredList<>(listCustomer, b -> true);
+        txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(CustomerModel -> {
+
+                if (newValue.isEmpty() || newValue == null) {
+                    return true;
+                }
+
+                String searchKeyword = newValue.toLowerCase();
+
+                if (CustomerModel.getName().toLowerCase().indexOf(searchKeyword) > -1) {
+                    return true;
+                } else if (CustomerModel.getPhone().toLowerCase().indexOf(searchKeyword) > -1) {
+                    return true;
+                } else if (CustomerModel.getAddress().toLowerCase().indexOf(searchKeyword) > -1) {
+                    return true;
+                } else if (CustomerModel.getDatebirth().toLowerCase().indexOf(searchKeyword) > -1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+
+        SortedList<CustomerModel> sortedData = new SortedList<>(filteredData);
+
+        sortedData.comparatorProperty().bind(tblCustomer.comparatorProperty());
+
+        tblCustomer.setItems(sortedData);
     }
 
     private void onclickShowEditCustomer(MouseEvent e) {
@@ -106,11 +142,21 @@ public class CustomerController implements Initializable {
             Navigator.getInstance().showEditCustomerForm(customer, new EditCustomerController.IOnUpdateCustomer() {
                 @Override
                 public void callback() {
-                   tblCustomer.refresh();
+                    tblCustomer.refresh();
                 }
             });
-                
-                
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("You Must choose!!!");
+            alert.show();
+        }
+    }
+
+    private void onclickShowCustomerDetail(MouseEvent e) {
+        CustomerModel customer = tblCustomer.getSelectionModel().getSelectedItem();
+        if (customer != null) {
+            Navigator.getInstance().showCustomerDetail(customer);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");

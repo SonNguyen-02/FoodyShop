@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -45,8 +45,8 @@ public class Order_DetailHelper {
                 Order_DetailModel order_detail = new Order_DetailModel();
                 order_detail.setId(rs.getInt("id"));
                 order_detail.setProduct_name(rs.getString("name"));
-                order_detail.setContent(rs.getString("content"));
-                order_detail.setContentSale(rs.getString("content"));
+                order_detail.setContent(rs.getString("fb.content"));
+                order_detail.setContentSale(rs.getString("sl.content"));
                 order_detail.setStartDate(rs.getString("start_date"));
                 order_detail.setEndDate(rs.getString("end_date"));
                 order_detail.setNumber(rs.getInt("number"));
@@ -60,6 +60,7 @@ public class Order_DetailHelper {
         }
         return listOrder_Detail;
     }
+
     public static boolean isProductHasLinkToOrder_detail(ProductModel product) {
 
         try {
@@ -77,4 +78,5 @@ public class Order_DetailHelper {
         return false;
 
     }
+
 }
