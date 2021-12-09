@@ -149,7 +149,16 @@ public class StaffController implements Initializable {
     
     @FXML
     void onClickEdit(ActionEvent event) {
-        btnEdit.setOnMouseClicked(e -> Navigator.getInstance().showEditStaff());
+        StaffModel staff = tvStaff.getSelectionModel().getSelectedItem();
+        if(staff != null){
+            btnEdit.setOnMouseClicked(e -> Navigator.getInstance().showEditStaff());
+        }else{
+             Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Please choose staff!");
+            alert.show();
+        }
+        
     }
     
     @FXML
