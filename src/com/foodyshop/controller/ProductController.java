@@ -5,6 +5,8 @@
  */
 package com.foodyshop.controller;
 
+import com.foodyshop.helper.OrderHelper;
+import com.foodyshop.helper.Order_DetailHelper;
 import com.foodyshop.helper.ProductHelper;
 import com.foodyshop.model.ProductModel;
 import java.net.URL;
@@ -14,9 +16,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -43,7 +49,7 @@ public class ProductController implements Initializable {
     private TableColumn<ProductModel, Integer> tcPrice;
 
     @FXML
-    private TableColumn<ProductModel, ?> tcImg;
+    private TableColumn<ProductModel, ImageView> tcImg;
 
     @FXML
     private TableColumn<ProductModel, ?> tcImgdetail;
@@ -58,7 +64,7 @@ public class ProductController implements Initializable {
     private TableColumn<ProductModel, ?> tcLK;
 
     @FXML
-    private Button btnAdd,btnEdit,btnDelete;
+    private Button btnAdd,btnEdit,btnDelete,btnProductDetail;
 
     ObservableList<ProductModel> listProduct = FXCollections.observableArrayList();
     @Override
@@ -66,12 +72,47 @@ public class ProductController implements Initializable {
         tcStt.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tblProduct.getItems().indexOf(cellData.getValue()) + 1) + ""));
         tcCateName.setCellValueFactory(cellValue -> cellValue.getValue().getCategoryNameProperty());
         tcName.setCellValueFactory(cellValue -> cellValue.getValue().getNameProperty());
-        tcDes.setCellValueFactory(cellValue -> cellValue.getValue().getDescriptionProperty());
         tcPrice.setCellValueFactory(cellValue -> cellValue.getValue().getPriceProperty());
         tcCreated.setCellValueFactory(cellValue -> cellValue.getValue().getCreatedProperty());
         tcStatus.setCellValueFactory(cellValue -> cellValue.getValue().getStatusVal());
+        tcImg.setCellValueFactory(cellValue -> cellValue.getValue().getImgView());
         listProduct = ProductHelper.getAllCategory();
         tblProduct.setItems(listProduct);
-    }    
+        btnDelete.setOnMouseClicked(this::onClickDelete);
+        
+    }   
+    private void onClickDelete(MouseEvent e) {
+
+        ProductModel product = tblProduct.getSelectionModel().getSelectedItem();
+        if (product != null) {
+            Alert alerts = new Alert(Alert.AlertType.CONFIRMATION);
+            alerts.setTitle("ERROR");
+            alerts.setHeaderText("Do you want delete " + product.getName());
+            alerts.showAndWait().ifPresent(btn -> {
+                if (btn == ButtonType.OK) {
+                    boolean isHasLink = Order_DetailHelper.isProductHasLinkToOrder_detail(product);
+                    if (isHasLink) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("ERROR");
+                        alert.setHeaderText("product has link with any order you must delete order first");
+                        alert.show();
+                    } else {
+                        if (ProductHelper.delete(product)) {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("ERROR");
+                            alert.setHeaderText("Delete success!");
+                            alert.show();
+                            listProduct.remove(product);
+                        } else {
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("ERROR");
+                            alert.setHeaderText("Delete error");
+                            alert.show();
+                        }
+                    }
+                }
+            });
     
+}
+    }
 }

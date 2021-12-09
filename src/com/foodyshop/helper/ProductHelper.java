@@ -27,18 +27,19 @@ public class ProductHelper {
 
     public static ObservableList<ProductModel> getAllCategory() {
         ObservableList<ProductModel> listProduct = FXCollections.observableArrayList();
-        String sql = db.select("pd.id,pd.name,pd.description,pd.price,pd.created,pd.status,ct.name").from("fs_product pd").join("fs_category ct", "pd.category_id = ct.id").orderByDESC("id").getCompiledSelect(true);
+        String sql = db.select("pd.id,pd.name,pd.description,pd.price,pd.created,pd.status,pd.img,ct.name").from("fs_product pd").join("fs_category ct", "pd.category_id = ct.id").orderByDESC("id").getCompiledSelect(true);
         ResultSet rs = DBConnection.execSelect(sql);
         try {
             while (rs.next()) {
                 ProductModel product = new ProductModel();
                 product.setId(rs.getInt("id"));
-                product.setCategoryName(rs.getString("name"));
+                product.setCategoryName(rs.getString("ct.name"));
                 product.setDescription(rs.getString("description"));
                 product.setPrice(rs.getInt("price"));
-                product.setName(rs.getString("name"));
+                product.setName(rs.getString("pd.name"));
                 product.setCreated(rs.getString("created"));
                 product.setStatus(rs.getInt("status"));
+                product.setImg(rs.getString("img"));
                 listProduct.add(product);
             }
         } catch (SQLException e) {
@@ -50,9 +51,21 @@ public class ProductHelper {
     }
     
     
-    
-    
-    
+    public static boolean delete(ProductModel product) {
+        try {
+            String sql = "delete from fs_product where id = ?";
+            PreparedStatement stm = DBConnection.getConnection().prepareStatement(sql);
+            stm.setInt(1, product.getId());
+            if (stm.executeUpdate() > 0) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryHelper.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBConnection.close();
+        }
+        return false;
+    }
     
     
     public static boolean isCategoryHasLinkToProducts(CategoryModel category) {

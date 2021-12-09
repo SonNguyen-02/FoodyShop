@@ -67,7 +67,6 @@ public class UploadImageToApi {
         Gson gson = new Gson();
         return gson.fromJson(result, Respond.class);
     }
-
     public static String createToken() {
         try {
             String jwt = JWT.create()
@@ -80,6 +79,7 @@ public class UploadImageToApi {
         }
         return null;
     }
+
 
     private static String encodeFileToBase64Binary(File file) throws IOException {
         FileInputStream fileInputStreamReader = new FileInputStream(file);

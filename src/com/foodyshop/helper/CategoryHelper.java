@@ -28,17 +28,18 @@ import javafx.collections.ObservableList;
 public class CategoryHelper {
 
     private static DBQuery db = DBQueryBuilder.newDBQuery();
-
+    // select count(*) as total from fs_category where topic_id = ?
     public static ObservableList<CategoryModel> getAllCategory() {
         ObservableList<CategoryModel> listCategory = FXCollections.observableArrayList();
-        String sql = db.select("ct.id,ct.name,ct.created,ct.status,tp.name").from("fs_category ct").join("fs_topic tp", "ct.topic_id = tp.id").orderByDESC("id").getCompiledSelect(true);
+        String sql = db.select("ct.id, ct.name, ct.created, ct.status, tp.id as topic_id, tp.name as topic_name").from("fs_category ct").join("fs_topic tp", "ct.topic_id = tp.id").orderByDESC("id").getCompiledSelect(true);
         ResultSet rs = DBConnection.execSelect(sql);
         try {
             while (rs.next()) {
                 CategoryModel category = new CategoryModel();
                 category.setId(rs.getInt("id"));
-                category.setTopicName(rs.getString("name"));
                 category.setName(rs.getString("name"));
+                category.setTopic_id(rs.getInt("topic_id"));
+                category.setTopicName(rs.getString("topic_name"));
                 category.setCreated(rs.getString("created"));
                 category.setStatus(rs.getInt("status"));
                 listCategory.add(category);

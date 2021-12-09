@@ -14,11 +14,10 @@
       <TableView fx:id="tblCategory" layoutX="27.0" layoutY="21.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="628.0" prefWidth="848.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="16.0">
         <columns>
           <TableColumn fx:id="tcID" prefWidth="47.0" text="STT" />
-          <TableColumn fx:id="tcTopicID" prefWidth="198.0" text="Topic name" />
-            <TableColumn fx:id="tcName" minWidth="0.0" prefWidth="292.0" text="Name" />
-            <TableColumn fx:id="tcCreated" prefWidth="203.0" text="Created" />
-            <TableColumn fx:id="tcStatus" prefWidth="69.0" text="Status" />
-            <TableColumn fx:id="tcLk" prefWidth="78.0" text="prd cn" />
+          <TableColumn fx:id="tcTopicID" prefWidth="240.0" text="Topic name" />
+            <TableColumn fx:id="tcName" minWidth="0.0" prefWidth="285.0" text="Name" />
+            <TableColumn fx:id="tcCreated" prefWidth="235.0" text="Created" />
+            <TableColumn fx:id="tcStatus" prefWidth="79.0" text="Status" />
         </columns>
       </TableView>
       <HBox alignment="CENTER" layoutX="36.0" layoutY="634.0" prefHeight="100.0" prefWidth="877.0">

@@ -9,23 +9,20 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="1120.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.ProductController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.ProductController">
    <children>
-      <TableView fx:id="tblProduct" layoutY="-2.0" prefHeight="587.0" prefWidth="1120.0">
+      <TableView fx:id="tblProduct" layoutY="-2.0" prefHeight="587.0" prefWidth="920.0">
         <columns>
           <TableColumn fx:id="tcStt" prefWidth="46.0" text="STT" />
-          <TableColumn fx:id="tcCateName" prefWidth="147.0" text="category name" />
-            <TableColumn fx:id="tcName" minWidth="0.0" prefWidth="128.0" text="name" />
-            <TableColumn fx:id="tcDes" minWidth="0.0" prefWidth="129.0" text="description" />
-            <TableColumn fx:id="tcPrice" prefWidth="115.0" text="price" />
+          <TableColumn fx:id="tcName" prefWidth="204.0" text="name" />
+            <TableColumn fx:id="tcCateName" minWidth="0.0" prefWidth="190.0" text="category name" />
+            <TableColumn fx:id="tcPrice" prefWidth="133.0" text="price" />
             <TableColumn fx:id="tcImg" prefWidth="100.0" text="img" />
-            <TableColumn fx:id="tcImgdetail" prefWidth="150.0" text="img detail" />
-            <TableColumn fx:id="tcCreated" prefWidth="134.0" text="created" />
-            <TableColumn fx:id="tcStatus" minWidth="0.0" prefWidth="85.0" text="status" />
-            <TableColumn fx:id="tcLK" minWidth="0.0" prefWidth="85.0" text="order cn" />
+            <TableColumn fx:id="tcCreated" minWidth="0.0" prefWidth="178.0" text="created" />
+            <TableColumn fx:id="tcStatus" minWidth="0.0" prefWidth="79.0" text="status" />
         </columns>
       </TableView>
-      <HBox alignment="CENTER" layoutY="585.0" prefHeight="80.0" prefWidth="1120.0">
+      <HBox alignment="CENTER" layoutY="585.0" prefHeight="80.0" prefWidth="920.0">
          <children>
             <Button fx:id="btnAdd" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #3499fb; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Add" textFill="WHITE">
                <font>
@@ -47,6 +44,17 @@
                </HBox.margin>
             </Button>
             <Button fx:id="btnDelete" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #f54020; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Delete" textFill="WHITE" textOverrun="CLIP">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <HBox.margin>
+                  <Insets right="30.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnProductDetail" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #f54020; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Product Detail" textFill="WHITE" textOverrun="CLIP">
                <font>
                   <Font size="16.0" />
                </font>

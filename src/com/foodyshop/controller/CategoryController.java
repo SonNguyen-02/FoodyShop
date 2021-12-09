@@ -55,8 +55,6 @@ public class CategoryController implements Initializable {
     private Button btnDelete;
 
     ObservableList<CategoryModel> listCategory = FXCollections.observableArrayList();
-    
-    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -75,7 +73,7 @@ public class CategoryController implements Initializable {
         }));
         btnDelete.setOnMouseClicked(this::onClickDelete);
         btnEdit.setOnMouseClicked(this::onClickEdit);
-            
+
     }
 
     private void onClickDelete(MouseEvent e) {
@@ -117,21 +115,23 @@ public class CategoryController implements Initializable {
             alert.show();
         }
     }
-    private void onClickEdit(MouseEvent e){
+
+    private void onClickEdit(MouseEvent e) {
         CategoryModel category = tblCategory.getSelectionModel().getSelectedItem();
-        if(category !=null){
+        if (category != null) {
             Navigator.getInstance().showEditCategory(category, new EditCategoryController.IOnEditCategorySuccess() {
                 @Override
                 public void callback() {
                     tblCategory.refresh();
                 }
             });
-            
-        }else{
+
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
             alert.setHeaderText("Please choose category");
             alert.show();
         }
     }
+    
 }
