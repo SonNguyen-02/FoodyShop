@@ -5,7 +5,9 @@
  */
 package com.foodyshop.controller;
 
+import com.foodyshop.helper.StaffHelper;
 import com.foodyshop.main.Navigator;
+import com.foodyshop.model.StaffModel;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -69,6 +71,7 @@ public class AddStaffController implements Initializable {
 
     @FXML
     void onClickSubmit(ActionEvent event) {
+        //StaffModel staff = StaffHelper.insertStaff(txtUsername.getText(),txtPassword.getText(),txtName.getText());
         String userName = txtUsername.getText().trim();
         String password = txtPassword.getText().trim();
         String name = txtName.getText().trim();

@@ -104,7 +104,7 @@ public class StaffController implements Initializable {
 //        String password = "123456";
 //        String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
 //        System.out.println();
-        btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddStaff());
+        btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddStaff( /*new AddStaffController(). */));
         
     }
     
