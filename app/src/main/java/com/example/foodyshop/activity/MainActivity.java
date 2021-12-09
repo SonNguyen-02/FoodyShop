@@ -1,6 +1,7 @@
 package com.example.foodyshop.activity;
 
 import static com.example.foodyshop.config.Const.KEY_TOPIC;
+import static com.example.foodyshop.config.Const.TOAST_DEFAULT;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,11 +23,20 @@ import android.widget.TextView;
 import com.example.foodyshop.R;
 import com.example.foodyshop.adapter.HomeViewPagerAdapter;
 import com.example.foodyshop.adapter.TopicAdapter;
+import com.example.foodyshop.dialog.ToastCustom;
 import com.example.foodyshop.fragment.TopicFragment;
 import com.example.foodyshop.fragment.SearchFragment;
 import com.example.foodyshop.helper.Helper;
+import com.example.foodyshop.helper.JWT;
 import com.example.foodyshop.model.TopicModel;
+import com.example.foodyshop.service.APIService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements TopicAdapter.IOnclickTopicItem {
 
@@ -36,27 +46,29 @@ public class MainActivity extends AppCompatActivity implements TopicAdapter.IOnc
 
 
     private ImageView imgMenu, imgSearch, imgCart;
-    private TextView tvTitle;
-    private RelativeLayout rlSearch;
+    private TextView tvTitle, tvIndicator;
+    private RelativeLayout rlSearch, rlCart;
     private ViewPager2 mViewPager2;
     private BottomNavigationView mBottomNavigationView;
     private TopicFragment mTopicFragment;
 
+    private List<TopicModel> mListTopic;
+
+    private boolean isBackPress;
+    private boolean isInit;
 //    private boolean isClickBottomNav;
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // init account if login
         if (Helper.isLogin(getApplicationContext())) {
             Helper.setCurrentAccount(Helper.getUserInfo(getApplicationContext()));
             Log.e("ddd", "onCreate: " + Helper.getCurrentAccount());
         }
-
+        isInit = true;
         initUi();
+        initListTopic();
         mTopicFragment = new TopicFragment();
         mBottomNavigationView.setOnItemSelectedListener(this::onItemSelected);
         HomeViewPagerAdapter adapter = new HomeViewPagerAdapter(this);
@@ -94,10 +106,22 @@ public class MainActivity extends AppCompatActivity implements TopicAdapter.IOnc
         rlSearch.setOnClickListener(view -> addFragmentToMainLayout(new SearchFragment(), SearchFragment.class.getName()));
         imgSearch.setOnClickListener(view -> addFragmentToMainLayout(new SearchFragment(), SearchFragment.class.getName()));
         imgMenu.setOnClickListener(view -> addFragmentToMainLayout(mTopicFragment, TopicFragment.class.getName()));
-        imgCart.setOnClickListener(view -> {
+        rlCart.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), CartActivity.class);
             startActivity(intent);
         });
+
+        initRlCart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (isInit) {
+            isInit = false;
+            return;
+        }
+        initRlCart();
     }
 
     private void initUi() {
@@ -109,12 +133,27 @@ public class MainActivity extends AppCompatActivity implements TopicAdapter.IOnc
         imgSearch = findViewById(R.id.img_search);
         imgCart = findViewById(R.id.img_cart);
         tvTitle = findViewById(R.id.tv_title);
+        tvIndicator = findViewById(R.id.tv_indicator);
         rlSearch = findViewById(R.id.rl_search);
+        rlCart = findViewById(R.id.rl_cart);
         mViewPager2 = findViewById(R.id.view_pager2_main);
         mBottomNavigationView = findViewById(R.id.menu_nav);
     }
 
+    private void initRlCart() {
+        int totalCart = Helper.getTotalProductInCart(getApplicationContext());
+        if (totalCart > 0) {
+            tvIndicator.setVisibility(View.VISIBLE);
+            tvIndicator.setText(String.valueOf(totalCart));
+            imgCart.setTranslationX(-3f);
+        } else {
+            tvIndicator.setVisibility(View.GONE);
+            imgCart.setTranslationX(0);
+        }
+    }
+
     private void addFragmentToMainLayout(Fragment fragment, String name) {
+        isBackPress = false;
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.anim_fade_in, R.anim.anim_left_out, R.anim.anim_right_in, R.anim.anim_fade_out);
         transaction.add(R.id.fl_main_layout, fragment);
@@ -124,6 +163,28 @@ public class MainActivity extends AppCompatActivity implements TopicAdapter.IOnc
 
     public void removeFragmentFromMainLayout() {
         getSupportFragmentManager().popBackStack();
+    }
+
+    public List<TopicModel> getListTopic() {
+        return mListTopic;
+    }
+
+    private void initListTopic() {
+        APIService.getService().getAllTopic(JWT.createToken()).enqueue(new Callback<List<TopicModel>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<TopicModel>> call, @NonNull Response<List<TopicModel>> response) {
+                if (response.isSuccessful()) {
+                    mListTopic = response.body();
+                } else {
+                    Log.e("ddd", "onResponse: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<TopicModel>> call, @NonNull Throwable t) {
+                Log.e("ddd", "onFailure: " + t.getMessage());
+            }
+        });
     }
 
     private void setSearchBarVisibility(boolean show) {
@@ -143,6 +204,7 @@ public class MainActivity extends AppCompatActivity implements TopicAdapter.IOnc
         int id = item.getItemId();
         if (id != mBottomNavigationView.getSelectedItemId()) {
 //            isClickBottomNav = true;
+            isBackPress = false;
             setSearchBarVisibility(id == R.id.menu_home);
             switch (id) {
                 case R.id.menu_home:
@@ -172,5 +234,21 @@ public class MainActivity extends AppCompatActivity implements TopicAdapter.IOnc
         bundle.putSerializable(KEY_TOPIC, topic);
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            isBackPress = false;
+            removeFragmentFromMainLayout();
+            return;
+        }
+        if (isBackPress) {
+            isBackPress = false;
+            super.onBackPressed();
+        } else {
+            ToastCustom.notice(this, "Nhấn back thêm lần nữa để thoát", ToastCustom.NONE, TOAST_DEFAULT).show();
+            isBackPress = true;
+        }
     }
 }

@@ -123,7 +123,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/space_view"
                             android:background="@color/colorShimmer"
-                            android:textSize="14sp" />
+                            android:textSize="16sp" />
 
                         <include layout="@layout/shimmer_rcv_product_linear" />
 
@@ -132,7 +132,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/space_view"
                             android:background="@color/colorShimmer"
-                            android:textSize="14sp" />
+                            android:textSize="16sp" />
 
                         <include layout="@layout/shimmer_rcv_category_grid" />
 
@@ -162,6 +162,8 @@
                             android:layout_alignParentTop="true"
                             android:padding="@dimen/space_view"
                             android:text="@string/on_sale"
+                            android:textAllCaps="true"
+                            android:textColor="@color/colorTextSecond"
                             android:textSize="14sp" />
 
                         <androidx.recyclerview.widget.RecyclerView
@@ -185,6 +187,8 @@
                             android:layout_alignParentTop="true"
                             android:padding="@dimen/space_view"
                             android:text="Danh mục"
+                            android:textAllCaps="true"
+                            android:textColor="@color/colorTextSecond"
                             android:textSize="14sp" />
 
                         <androidx.recyclerview.widget.RecyclerView
@@ -212,7 +216,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/space_view"
                             android:background="@color/colorShimmer"
-                            android:textSize="14sp" />
+                            android:textSize="16sp" />
 
                         <include layout="@layout/shimmer_rcv_product_grid" />
 
@@ -236,6 +240,8 @@
                         android:layout_alignParentTop="true"
                         android:padding="@dimen/space_view"
                         android:text="Sản phẩm"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorTextSecond"
                         android:textSize="14sp" />
 
                     <androidx.recyclerview.widget.RecyclerView

@@ -2,49 +2,58 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:gravity="center"
-    android:padding="@dimen/space_view"
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical">
+        android:minHeight="50dp">
 
         <TextView
             android:id="@+id/tv_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="12dp"
             android:text="Bạn có muốn xóa sản phẩm này?"
+            android:textAlignment="center"
             android:textColor="@color/colorTextPrimary"
-            android:textSize="16sp" />
+            android:textSize="17sp" />
 
     </LinearLayout>
 
+
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
 
         <Button
             android:id="@+id/btn_cancel"
-            style="@style/ButtonWarning"
-            android:layout_width="80dp"
-            android:layout_height="32dp"
-            android:textSize="11sp"
-            android:layout_marginEnd="@dimen/space_view"
-            android:layout_marginBottom="@dimen/space_view"
-            android:text="@string/cancel_feedback" />
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="-1dp"
+            android:layout_marginEnd="-1dp"
+            android:layout_weight="1"
+            android:background="@drawable/ripple_btn_amount"
+            android:text="@string/cancel_feedback"
+            android:textAllCaps="false"
+            android:textColor="@color/colorTextAccent"
+            android:textSize="14sp"
+            style="?android:attr/buttonBarButtonStyle" />
 
         <Button
             android:id="@+id/btn_ok"
-            style="@style/ButtonSigninSignup"
-            android:layout_width="100dp"
-            android:textSize="11sp"
-            android:layout_height="32dp"
-            android:layout_marginStart="@dimen/space_view"
-            android:layout_marginBottom="@dimen/space_view"
-            android:text="@string/confirm" />
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="-1dp"
+            android:layout_marginEnd="-1dp"
+            android:layout_weight="1"
+            android:background="@drawable/ripple_btn_amount"
+            android:text="@string/confirm"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp"
+            style="?android:attr/buttonBarButtonStyle" />
     </LinearLayout>
 </LinearLayout>

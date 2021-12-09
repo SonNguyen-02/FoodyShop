@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,7 @@ import java.text.NumberFormat;
 import java.util.Currency;
 import java.util.List;
 
-public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.OrderDetailViewHolder> {
+public class ProductCartAdapter extends RecyclerView.Adapter<ProductCartAdapter.OrderDetailViewHolder> {
 
     private final Context context;
     private List<OrderDetailModel> mListOrderDetail;
@@ -37,7 +36,7 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     private final NumberFormat format;
     private final IInteractItem mInteractItem;
 
-    public OrderDetailAdapter(Context context, List<OrderDetailModel> mListOrderDetail, IInteractItem mInteractItem) {
+    public ProductCartAdapter(Context context, List<OrderDetailModel> mListOrderDetail, IInteractItem mInteractItem) {
         this.context = context;
         this.mListOrderDetail = mListOrderDetail;
         this.mInteractItem = mInteractItem;
@@ -63,15 +62,15 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
 
         void onCheckBoxChange(boolean checked);
 
-        void onAmountNumberChange(OrderDetailModel orderDetail, int amountNumber);
+        void onAmountNumberChange(OrderDetailModel orderDetail, int amount);
 
-        void onDeleteItem(OrderDetailModel orderDetail);
+        void onDeleteItem();
     }
 
     @NonNull
     @Override
     public OrderDetailViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_order_detail_cart, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_product_cart, parent, false);
         return new OrderDetailViewHolder(view);
     }
 
@@ -86,8 +85,8 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
         holder.imgProduct.setImageResource(R.drawable.test_product_icon);
         holder.tvName.setText(orderDetail.getName());
         holder.tvPriceSale.setText(format.format(orderDetail.getPriceSale()));
-        holder.edtAmount.setText(String.valueOf(orderDetail.getNumber()));
-        holder.initAmount(orderDetail.getNumber());
+        holder.edtAmount.setText(String.valueOf(orderDetail.getAmount()));
+        holder.initAmount(orderDetail.getAmount());
         if (orderDetail.isChecked()) {
             if (!holder.cbItem.isChecked()) {
                 holder.cbItem.setChecked(true);
@@ -191,7 +190,7 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
 
         holder.llItemDelete.setOnClickListener(view -> {
             mListOrderDetail.remove(orderDetail);
-            mInteractItem.onDeleteItem(orderDetail);
+            mInteractItem.onDeleteItem();
             notifyItemRemoved(holder.getAdapterPosition());
         });
 

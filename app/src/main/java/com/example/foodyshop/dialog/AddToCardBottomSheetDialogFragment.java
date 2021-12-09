@@ -185,7 +185,7 @@ public class AddToCardBottomSheetDialogFragment extends BottomSheetDialogFragmen
             ToastCustom.loading(requireContext(), 1000).show();
             new Handler().postDelayed(() -> {
                 OrderDetailModel orderDetail = new OrderDetailModel(mProduct, amount);
-                Helper.addOrChangeAmountOrderDetail(requireContext(), orderDetail, true);
+                Helper.addProductToCart(requireContext(), orderDetail);
                 ToastCustom.notice(requireContext(), "Thêm thành công!", ToastCustom.SUCCESS, 2000).show();
                 dismiss();
             }, 1000);

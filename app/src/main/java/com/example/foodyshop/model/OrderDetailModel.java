@@ -21,7 +21,7 @@ public class OrderDetailModel {
     private Integer saleId;
     @SerializedName("number")
     @Expose
-    private int number;
+    private int amount;
     @SerializedName("price")
     @Expose
     private int price;
@@ -39,10 +39,10 @@ public class OrderDetailModel {
     public OrderDetailModel() {
     }
 
-    public OrderDetailModel(@NonNull ProductModel product, int number) {
+    public OrderDetailModel(@NonNull ProductModel product, int amount) {
         this.productId = product.getId();
         this.saleId = product.getSaleId();
-        this.number = number;
+        this.amount = amount;
         this.price = product.getPrice();
         this.discount = product.getDiscount();
         this.name = product.getName();
@@ -81,12 +81,12 @@ public class OrderDetailModel {
         this.saleId = saleId;
     }
 
-    public int getNumber() {
-        return number;
+    public int getAmount() {
+        return amount;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     public int getPrice() {
@@ -133,7 +133,7 @@ public class OrderDetailModel {
         if (discount == null) {
             return price;
         } else {
-            return (int) (price - price * discount / 100);
+            return price - (price * discount / 100);
         }
     }
 }

@@ -1,7 +1,10 @@
 package com.example.foodyshop.activity;
 
+import static com.example.foodyshop.config.Const.KEY_FROM_BUY_AGAIN;
 import static com.example.foodyshop.config.Const.KEY_FROM_CART;
 import static com.example.foodyshop.config.Const.KEY_PRODUCT;
+import static com.example.foodyshop.config.Const.KEY_RELOAD_CART;
+import static com.example.foodyshop.config.Const.KEY_SELECT_TAP_ALL;
 import static com.example.foodyshop.config.Const.TOAST_DEFAULT;
 
 import androidx.annotation.NonNull;
@@ -9,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -37,6 +41,7 @@ import com.example.foodyshop.model.ProductModel;
 import com.example.foodyshop.model.Respond;
 import com.example.foodyshop.service.APIService;
 import com.google.gson.Gson;
+import com.ms.square.android.expandabletextview.ExpandableTextView;
 
 import java.text.MessageFormat;
 import java.text.NumberFormat;
@@ -53,11 +58,12 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
     private FeedbackDialog fDialog;
 
     private ImageView imgBack, imgCart, imgProduct;
-    private TextView tvProductName, tvPrice, tvPriceSale, tvDiscount, tvDescription, tvTotalFeedback;
+    private TextView tvIndicator, tvProductName, tvPrice, tvPriceSale, tvDiscount, tvTotalFeedback;
+    private ExpandableTextView tvDescription;
     private Button btnAddFeedback;
 
-    private RelativeLayout rlSale;
-    private LinearLayout llAddToCart, llBuyNow;
+    private RelativeLayout rlSale, rlCart;
+    private LinearLayout llBottomBar, llAddToCart, llBuyNow;
 
     private RecyclerView rcvFeedback;
     private FeedbackAdapter mFeedbackAdapter;
@@ -67,6 +73,8 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
     private int totalPage;
     private int currentPage;
 
+    private boolean isFromBuyAgain;
+    private boolean isInit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,15 +90,38 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
             initUi();
             mProduct = (ProductModel) bundle.getSerializable(KEY_PRODUCT);
             boolean isFromCart = bundle.getBoolean(KEY_FROM_CART);
-            imgBack.setOnClickListener(v -> finish());
-            imgCart.setOnClickListener(v -> {
-                if (isFromCart) {
-                    finish();
+            isFromBuyAgain = bundle.getBoolean(KEY_FROM_BUY_AGAIN);
+            if (isFromCart) {
+                imgBack.setOnClickListener(v -> finish());
+                rlCart.setVisibility(View.GONE);
+                llBottomBar.setVisibility(View.GONE);
+            } else {
+                if (isFromBuyAgain) {
+                    imgBack.setOnClickListener(v -> backToBuyAgain());
+                    rlCart.setVisibility(View.GONE);
                 } else {
-                    Intent intent = new Intent(getApplicationContext(), CartActivity.class);
-                    startActivity(intent);
+                    imgBack.setOnClickListener(v -> finish());
+                    rlCart.setOnClickListener(v -> gotoCart());
                 }
-            });
+
+                llAddToCart.setOnClickListener(v -> {
+                    AddToCardBottomSheetDialogFragment sheetDialogFragment = AddToCardBottomSheetDialogFragment.newInstant(mProduct);
+                    sheetDialogFragment.show(getSupportFragmentManager(), sheetDialogFragment.getTag());
+                });
+
+                llBuyNow.setOnClickListener(v -> {
+                    ToastCustom.loading(this, 800).show();
+                    new Handler().postDelayed(() -> {
+                        OrderDetailModel orderDetail = new OrderDetailModel(mProduct, 1);
+                        Helper.addProductToCart(getApplicationContext(), orderDetail);
+                        if (isFromBuyAgain) {
+                            backToCart();
+                        } else {
+                            gotoCart();
+                        }
+                    }, 800);
+                });
+            }
 
             // init feedback
             totalPage = currentPage = 1;
@@ -110,6 +141,7 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
             imgProduct.setImageResource(R.drawable.test_product_detail);
             tvProductName.setText(mProduct.getName());
             tvDescription.setText(mProduct.getDescription());
+
             tvPriceSale.setText(format.format(mProduct.getPriceSale()));
             if (mProduct.getDiscount() != null) {
                 tvDiscount.setText(MessageFormat.format(getResources().getString(R.string.discount), mProduct.getDiscount()));
@@ -119,30 +151,28 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
                 rlSale.setVisibility(View.GONE);
                 tvPrice.setVisibility(View.GONE);
             }
+            initRlCart();
 
-            llAddToCart.setOnClickListener(v -> {
-                AddToCardBottomSheetDialogFragment sheetDialogFragment = AddToCardBottomSheetDialogFragment.newInstant(mProduct);
-                sheetDialogFragment.show(getSupportFragmentManager(), sheetDialogFragment.getTag());
-            });
-
-            llBuyNow.setOnClickListener(v -> {
-                ToastCustom.loading(this, 800).show();
-                new Handler().postDelayed(() -> {
-                    OrderDetailModel orderDetail = new OrderDetailModel(mProduct, 1);
-                    Helper.addOrChangeAmountOrderDetail(getApplicationContext(), orderDetail, true);
-                    Intent intent = new Intent(getApplicationContext(), CartActivity.class);
-                    startActivity(intent);
-                }, 800);
-            });
         } else {
             finish();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (isInit) {
+            isInit = false;
+            return;
+        }
+        initRlCart();
     }
 
     private void initUi() {
         imgBack = findViewById(R.id.img_back);
         imgCart = findViewById(R.id.img_cart);
         imgProduct = findViewById(R.id.img_product);
+        tvIndicator = findViewById(R.id.tv_indicator);
         tvProductName = findViewById(R.id.tv_product_name);
         tvPrice = findViewById(R.id.tv_price);
         tvPriceSale = findViewById(R.id.tv_price_sale);
@@ -151,10 +181,24 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
         tvTotalFeedback = findViewById(R.id.tv_total_feedback);
         btnAddFeedback = findViewById(R.id.btn_add_feedback);
         rlSale = findViewById(R.id.rl_sale);
+        rlCart = findViewById(R.id.rl_cart);
 
+        llBottomBar = findViewById(R.id.ll_bottom_bar);
         llAddToCart = findViewById(R.id.ll_add_to_cart);
         llBuyNow = findViewById(R.id.ll_buy_now);
         rcvFeedback = findViewById(R.id.rcv_feedback);
+    }
+
+    private void initRlCart() {
+        int totalCart = Helper.getTotalProductInCart(getApplicationContext());
+        if (totalCart > 0) {
+            tvIndicator.setVisibility(View.VISIBLE);
+            tvIndicator.setText(String.valueOf(totalCart));
+            imgCart.setTranslationX(-3f);
+        } else {
+            tvIndicator.setVisibility(View.GONE);
+            imgCart.setTranslationX(0);
+        }
     }
 
     private void initTotalPage() {
@@ -356,4 +400,33 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
         }).show();
     }
 
+    private void gotoCart() {
+        Intent intent = new Intent(getApplicationContext(), CartActivity.class);
+        startActivity(intent);
+    }
+
+    private void backToCart() {
+        Intent intent = new Intent();
+        intent.putExtra(KEY_RELOAD_CART, true);
+        intent.putExtra(KEY_SELECT_TAP_ALL, true);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    private void backToBuyAgain() {
+        Intent intent = new Intent();
+        intent.putExtra(KEY_RELOAD_CART, true);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (isFromBuyAgain) {
+            backToBuyAgain();
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

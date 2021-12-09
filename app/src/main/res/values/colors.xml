@@ -11,16 +11,15 @@
 
     <color name="colorTextPrimary">#212121</color>
     <color name="colorTextSecond">#757575</color>
-    <color name="colorTextPrice">@color/md_red_A400</color>
+    <color name="colorTextPrice">#EC1616</color>
     <color name="colorTextAccent">@color/md_deep_orange_500</color>
 
     <color name="colorShimmer">#E4D5D5D5</color>
     <color name="colorRipplePrimary">#4D00B1FF</color>
     <color name="colorRippleGrey">#33000000</color>
 
-    <color name="colorTextInputBackground">#F7F7F7</color>
     <color name="transparent">@android:color/transparent</color>
-
+    <color name="expandable_default_more_color">#9c9c9c</color>
     <!--reds-->
     <color name="md_red_50">#FFEBEE</color>
     <color name="md_red_100">#FFCDD2</color>

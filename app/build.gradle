@@ -71,9 +71,11 @@ dependencies {
     // CountryCodePicker
     implementation 'com.hbb20:ccp:2.3.1'
 
-    //     custom swipe for recyclerview
+    // custom swipe for recyclerview
     implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
 
+    // expandable TextView
+    implementation 'com.ms-square:expandableTextView:0.1.4'
 //     Sticky Header for recyclerview
 //    implementation 'com.timehop.stickyheadersrecyclerview:library:0.4.3@aar'
 //     blur img

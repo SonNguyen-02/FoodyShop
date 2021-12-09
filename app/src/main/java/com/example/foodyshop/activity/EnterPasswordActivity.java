@@ -1,7 +1,5 @@
 package com.example.foodyshop.activity;
 
-import static com.example.foodyshop.activity.EnterOtpActivity.ACTION_FORGOT_PASSWORD;
-import static com.example.foodyshop.activity.EnterOtpActivity.ACTION_SIGN_UP;
 import static com.example.foodyshop.config.Const.TOAST_DEFAULT;
 
 import androidx.annotation.NonNull;
@@ -13,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.foodyshop.R;
 import com.example.foodyshop.config.Const;
@@ -86,7 +83,12 @@ public class EnterPasswordActivity extends AppCompatActivity {
                     Respond res = response.body();
                     if (res.isSuccess()) {
                         String mess = "Đổi mật khẩu thành công!";
-                        showDialogSuccess(R.drawable.resetpw_success, mess);
+                        AuthSuccessDialog successDialog = new AuthSuccessDialog(EnterPasswordActivity.this, R.drawable.resetpw_success, mess, () -> {
+                            Intent intent = new Intent(getApplicationContext(), SigninActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        });
+                        successDialog.show();
                     } else {
                         ToastCustom.notice(getApplicationContext(), res.getMsg(), ToastCustom.ERROR, TOAST_DEFAULT).show();
                     }
@@ -104,24 +106,16 @@ public class EnterPasswordActivity extends AppCompatActivity {
         });
     }
 
-
-    private void showDialogSuccess(int imgRes, String mess) {
-        AuthSuccessDialog successDialog = new AuthSuccessDialog(EnterPasswordActivity.this, imgRes, mess, () -> {
-            Intent intent = new Intent(getApplicationContext(), SigninActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        });
-        successDialog.show();
-    }
-
     @Override
     public void onBackPressed() {
         if (isBackPress) {
             isBackPress = false;
-            super.onBackPressed();
+            Intent intent = new Intent(this, ForgotPasswordActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         } else {
+            ToastCustom.notice(this, "Nhấn back thêm lần nữa để thoát", ToastCustom.NONE, TOAST_DEFAULT).show();
             isBackPress = true;
-            Toast.makeText(this, "Nhấn back thêm lần nữa để thoát", Toast.LENGTH_SHORT).show();
         }
     }
 }

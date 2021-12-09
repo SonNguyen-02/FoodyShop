@@ -1,6 +1,7 @@
 package com.example.foodyshop.adapter;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +20,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     private final List<CategoryModel> mListCategory;
     private final IOnclickCategoryItem mIOnclickCategoryItem;
     private View currentCategory;
+    private int lastCheckPos;
 
     public CategoryAdapter(IOnclickCategoryItem listener, List<CategoryModel> mListCategory) {
+        lastCheckPos = 0;
         this.mIOnclickCategoryItem = listener;
         this.mListCategory = mListCategory;
     }
 
-    public interface IOnclickCategoryItem{
+    public interface IOnclickCategoryItem {
         void onclickCategoryItem(CategoryModel category);
     }
 
@@ -42,18 +45,18 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         if (category == null) {
             return;
         }
-        if(currentCategory == null || currentCategory == holder.itemView){
-            currentCategory = holder.itemView;
+        if (category.isChecked()) {
             holder.itemView.setBackgroundResource(R.drawable.custom_bg_item_category_active);
+        } else {
+            holder.itemView.setBackgroundResource(R.drawable.custom_bg_item_category);
         }
         holder.tvName.setText(category.getName());
         holder.itemView.setOnClickListener(view -> {
-            if(currentCategory != holder.itemView){
-                new Handler().postDelayed(() -> {
-                    currentCategory.setBackgroundResource(R.drawable.custom_bg_item_category);
-                    currentCategory = holder.itemView;
-                    holder.itemView.setBackgroundResource(R.drawable.custom_bg_item_category_active);
-                }, 350);
+            if (lastCheckPos != holder.getAdapterPosition()) {
+                mListCategory.get(lastCheckPos).setChecked(false);
+                lastCheckPos = holder.getAdapterPosition();
+                mListCategory.get(lastCheckPos).setChecked(true);
+                notifyDataSetChanged();
                 mIOnclickCategoryItem.onclickCategoryItem(category);
             }
         });

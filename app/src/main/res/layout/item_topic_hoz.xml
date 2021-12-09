@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_item"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="6dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_topic"
+        android:layout_width="76dp"
+        android:layout_height="76dp"
+        android:layout_margin="4dp"
+        android:elevation="2dp"
+        android:src="@drawable/test_product_icon" />
+
+    <TextView
+        android:id="@+id/tv_topic_name"
+        android:layout_width="76dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img_topic"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:gravity="center"
+        android:text="Gạo, bột, đồ khô"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="15sp" />
+
+
+</RelativeLayout>

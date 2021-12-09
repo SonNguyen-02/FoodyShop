@@ -53,25 +53,26 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/inp_mar_top"
-                    app:cardBackgroundColor="@color/colorTextInputBackground"
-                    app:cardCornerRadius="24dp"
-                    app:cardElevation="0dp">
+                    android:layout_marginStart="@dimen/card_mar_l_r"
+                    android:layout_marginTop="@dimen/edt_mar_top"
+                    android:layout_marginEnd="@dimen/card_mar_l_r"
+                    android:background="@drawable/custom_bg_edt_form"
+                    app:cardCornerRadius="@dimen/edt_btn_radius">
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:minWidth="336dp"
-                        android:paddingStart="8dp"
+                        android:minWidth="@dimen/edt_form_width"
                         tools:ignore="RtlSymmetry">
 
                         <com.hbb20.CountryCodePicker
                             android:id="@+id/country_code_picker"
-                            android:layout_width="130dp"
+                            android:layout_width="@dimen/ccp_width"
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/ccp_mar_start"
                             app:ccp_defaultPhoneCode="84"
                             app:ccp_textSize="16sp" />
 
@@ -85,19 +86,19 @@
                             android:imeOptions="actionNext"
                             android:inputType="phone"
                             android:maxLength="15"
-                            android:minWidth="206dp"
-                            android:minHeight="50dp"
+                            android:minWidth="@dimen/ccp_edt_width"
+                            android:minHeight="@dimen/edt_min_height"
                             android:paddingStart="0dp"
-                            android:paddingEnd="50dp"
+                            android:paddingEnd="@dimen/ccp_icon_validate_length"
                             android:singleLine="true" />
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/img_check"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="@dimen/ccp_icon_validate_length"
+                            android:layout_height="@dimen/ccp_icon_validate_length"
                             android:layout_alignEnd="@id/edt_phone"
                             android:layout_centerVertical="true"
-                            android:padding="12dp"
+                            android:padding="@dimen/ccp_icon_pad"
                             android:visibility="gone" />
 
                     </RelativeLayout>
@@ -110,10 +111,11 @@
                     android:layout_below="@id/card_phone"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/inp_mar_top"
-                    app:cardBackgroundColor="@color/colorTextInputBackground"
-                    app:cardCornerRadius="24dp"
-                    app:cardElevation="0dp">
+                    android:layout_marginStart="@dimen/card_mar_l_r"
+                    android:layout_marginTop="@dimen/edt_mar_top"
+                    android:layout_marginEnd="@dimen/card_mar_l_r"
+                    android:background="@drawable/custom_bg_edt_form"
+                    app:cardCornerRadius="@dimen/edt_btn_radius">
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
@@ -127,16 +129,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginEnd="4dp"
                             android:background="@android:color/transparent"
                             android:drawableStart="@drawable/ic_lock"
-                            android:drawablePadding="12dp"
+                            android:drawablePadding="@dimen/edt_draw_pad"
                             android:hint="@string/hint_password"
                             android:imeOptions="actionDone"
                             android:inputType="textPassword"
-                            android:minWidth="328dp"
-                            android:minHeight="50dp"
+                            android:minWidth="@dimen/edt_form_width"
+                            android:minHeight="@dimen/edt_min_height"
+                            android:paddingStart="@dimen/edt_pad_start"
+                            android:paddingEnd="0dp"
                             tools:ignore="Autofill" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </androidx.cardview.widget.CardView>

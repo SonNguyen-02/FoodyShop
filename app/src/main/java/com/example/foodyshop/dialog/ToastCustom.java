@@ -21,6 +21,7 @@ public class ToastCustom {
     public static final int ERROR = 1;
     public static final int WARNING = 2;
     public static final int INFO = 3;
+    public static final int NONE = 4;
 
     private final Context context;
     private final String message;
@@ -86,6 +87,9 @@ public class ToastCustom {
                     break;
                 case INFO:
                     imgIcon.setImageResource(R.drawable.ic_info);
+                    break;
+                case NONE:
+                    imgIcon.setVisibility(View.GONE);
                     break;
             }
             tvMessage.setText(message);

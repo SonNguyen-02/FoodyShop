@@ -22,6 +22,7 @@ public class AccountFragment extends Fragment {
     private View view;
     private TextView tvCustomerName;
     private Button btnSignIn, btnSignOut;
+    private boolean isCreate;
 
     @Nullable
     @Override
@@ -29,7 +30,6 @@ public class AccountFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_account, container, false);
         initUi();
         initLogin();
-        Log.e("ddd", "onCreateView: account");
         btnSignOut.setOnClickListener(view -> {
             Helper.logOut(getContext());
             initLogin();
@@ -38,8 +38,26 @@ public class AccountFragment extends Fragment {
             Intent intent = new Intent(getContext(), SigninActivity.class);
             startActivity(intent);
         });
-
+        isCreate = true;
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isCreate) {
+            isCreate = false;
+            return;
+        }
+        initLogin();
+        btnSignOut.setOnClickListener(view -> {
+            Helper.logOut(getContext());
+            initLogin();
+        });
+        btnSignIn.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), SigninActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void initLogin() {

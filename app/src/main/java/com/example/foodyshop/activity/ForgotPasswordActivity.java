@@ -1,6 +1,7 @@
 package com.example.foodyshop.activity;
 
 import static com.example.foodyshop.activity.EnterOtpActivity.ACTION_FORGOT_PASSWORD;
+import static com.example.foodyshop.config.Const.KEY_PHONE;
 import static com.example.foodyshop.config.Const.TOAST_DEFAULT;
 
 import android.content.Intent;
@@ -15,6 +16,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -56,7 +59,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     private String token;
 
     private LoadingDialog dialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +102,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         btnSendOtp.setOnClickListener(v -> checkPhoneUser());
     }
 
-    private void initToolbar(){
+    private void initToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Forgot password");
         toolbar.setNavigationOnClickListener(view -> {
@@ -140,7 +142,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         // call api & check phone is register ?
         Map<String, Object> payloadMap = new HashMap<>();
         // get phone number
-        payloadMap.put(Const.KEY_PHONE, ccp.getFullNumberWithPlus());
+        payloadMap.put(KEY_PHONE, ccp.getFullNumberWithPlus());
         // create token to call api
         String tokenSend = JWT.createToken(payloadMap, System.currentTimeMillis() + 60 * 1000);
         APIService.getService().forgotPassword(tokenSend).enqueue(new Callback<Respond>() {
@@ -233,7 +235,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         bundle.putInt(Const.KEY_ACTION, ACTION_FORGOT_PASSWORD);
         bundle.putString(Const.KEY_TOKEN, token);
         bundle.putString(Const.KEY_PHONE_CODE, ccp.getSelectedCountryCodeWithPlus());
-        bundle.putString(Const.KEY_PHONE, phoneNumber);
+        bundle.putString(KEY_PHONE, phoneNumber);
         bundle.putString(Const.KEY_VERIFICATION_ID, verificationId);
         intent.putExtras(bundle);
         startActivity(intent);

@@ -17,6 +17,8 @@ public class CategoryModel implements Serializable {
     @Expose
     private String name;
 
+    private boolean isChecked;
+
     public CategoryModel() {
     }
 
@@ -50,4 +52,11 @@ public class CategoryModel implements Serializable {
         this.name = name;
     }
 
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
 }

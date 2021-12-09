@@ -2,13 +2,13 @@ package com.example.foodyshop.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
@@ -23,7 +23,6 @@ import com.example.foodyshop.adapter.TopicAdapter;
 import com.example.foodyshop.helper.JWT;
 import com.example.foodyshop.model.TopicModel;
 import com.example.foodyshop.service.APIService;
-import com.example.foodyshop.service.DataService;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.List;
@@ -59,31 +58,40 @@ public class TopicFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_topic, container, false);
         initUi();
         rlNavBar.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.anim_left_in));
-        if (mListTopic == null) {
-            shimmerFrameLayout.startShimmer();
-            getListTopic();
-        } else {
-            shimmerFrameLayout.setVisibility(View.GONE);
-            rcvTopic.setVisibility(View.VISIBLE);
-        }
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
         rcvTopic.setLayoutManager(layoutManager);
 
         if (topicAdapter == null) {
-            topicAdapter = new TopicAdapter(requireContext());
+            topicAdapter = new TopicAdapter(requireContext(), TopicAdapter.ORIENTATION.VERTICAL);
         }
-        topicAdapter.setTopicModelList(mListTopic);
         rcvTopic.setAdapter(topicAdapter);
-        if (mMainActivity != null) {
-            imgBack.setOnClickListener(view -> {
-                rlNavBar.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.anim_right_out));
-                mMainActivity.removeFragmentFromMainLayout();
-            });
-            overlay.setOnClickListener(view -> {
-                rlNavBar.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.anim_right_out));
-                mMainActivity.removeFragmentFromMainLayout();
-            });
+
+        if (mListTopic == null) {
+            mListTopic = mMainActivity.getListTopic();
+            shimmerFrameLayout.startShimmer();
+            if (mListTopic == null) {
+                initListTopic();
+            } else {
+                new Handler().postDelayed(() -> {
+                    stopShimmer();
+                    topicAdapter.setTopicModelList(mListTopic);
+                }, 500);
+            }
+        } else {
+            shimmerFrameLayout.setVisibility(View.GONE);
+            rcvTopic.setVisibility(View.VISIBLE);
+            topicAdapter.setTopicModelList(mListTopic);
         }
+
+        imgBack.setOnClickListener(view -> {
+            rlNavBar.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.anim_right_out));
+            mMainActivity.removeFragmentFromMainLayout();
+        });
+        overlay.setOnClickListener(view -> {
+            rlNavBar.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.anim_right_out));
+            mMainActivity.removeFragmentFromMainLayout();
+        });
         return view;
     }
 
@@ -95,14 +103,18 @@ public class TopicFragment extends Fragment {
         overlay = view.findViewById(R.id.view_overlay);
     }
 
-    private void getListTopic() {
+    private void stopShimmer() {
+        shimmerFrameLayout.stopShimmer();
+        shimmerFrameLayout.setVisibility(View.GONE);
+        rcvTopic.setVisibility(View.VISIBLE);
+    }
+
+    private void initListTopic() {
         APIService.getService().getAllTopic(JWT.createToken()).enqueue(new Callback<List<TopicModel>>() {
             @Override
             public void onResponse(@NonNull Call<List<TopicModel>> call, @NonNull Response<List<TopicModel>> response) {
                 if (response.isSuccessful()) {
-                    shimmerFrameLayout.stopShimmer();
-                    shimmerFrameLayout.setVisibility(View.GONE);
-                    rcvTopic.setVisibility(View.VISIBLE);
+                    stopShimmer();
                     mListTopic = response.body();
                     topicAdapter.setTopicModelList(mListTopic);
                 } else {

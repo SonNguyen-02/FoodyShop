@@ -4,9 +4,9 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:maxWidth="280dp"
     android:background="@drawable/custom_bg_toast"
     android:gravity="center"
+    android:maxWidth="280dp"
     android:minWidth="200dp"
     android:minHeight="80dp"
     android:orientation="vertical"
@@ -16,6 +16,7 @@
         android:id="@+id/img_icon"
         android:layout_width="32dp"
         android:layout_height="32dp"
+        android:layout_marginBottom="8dp"
         android:src="@drawable/ic_info"
         tools:ignore="ContentDescription" />
 
@@ -27,6 +28,5 @@
         android:maxWidth="280dp"
         android:text="@string/add_feed_success"
         android:textColor="@color/white"
-        android:textSize="14sp"
-        android:layout_marginTop="8dp" />
+        android:textSize="14sp" />
 </LinearLayout>

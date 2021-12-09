@@ -3,7 +3,7 @@
     <dimen name="space_view">8dp</dimen>
 
     <!-- topic-->
-    <dimen name="item_topic_height">50dp</dimen>
+    <dimen name="item_topic_height">56dp</dimen>
 
     <!-- category  -->
     <dimen name="item_category_height">50dp</dimen>
@@ -11,6 +11,24 @@
 
     <!-- product  -->
     <dimen name="item_product_width">150dp</dimen>
-    <dimen name="inp_mar_top">16dp</dimen>
+
+    <!-- form general -->
+    <dimen name="card_mar_l_r">4dp</dimen>
+
+    <!-- edt width ccp   -->
+    <dimen name="ccp_box_width">340dp</dimen>
+    <dimen name="ccp_width">128dp</dimen>
+    <dimen name="ccp_mar_start">2dp</dimen>
+    <dimen name="ccp_edt_width">210dp</dimen>
+    <dimen name="ccp_icon_validate_length">50dp</dimen>
+    <dimen name="ccp_icon_pad">15dp</dimen>
+    <!-- nor edit text -->
+    <dimen name="edt_btn_radius">8dp</dimen>
+    <dimen name="edt_min_height">50dp</dimen>
+    <dimen name="edt_mar_top">16dp</dimen>
+
+    <dimen name="edt_form_width">340dp</dimen>
+    <dimen name="edt_pad_start">10dp</dimen>
+    <dimen name="edt_draw_pad">12dp</dimen>
 
 </resources>

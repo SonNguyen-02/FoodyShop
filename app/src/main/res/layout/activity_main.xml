@@ -39,7 +39,8 @@
                         android:background="@drawable/ripple_circle_effect"
                         android:padding="@dimen/space_view"
                         android:src="@drawable/ic_menu_song_line"
-                        app:tint="@color/white" />
+                        app:tint="@color/white"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
                         android:id="@+id/tv_title"
@@ -62,7 +63,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/space_view"
                         android:layout_marginEnd="@dimen/space_view"
-                        android:layout_toStartOf="@id/img_cart"
+                        android:layout_toStartOf="@id/rl_cart"
                         android:layout_toEndOf="@id/img_menu_category"
                         android:background="@drawable/custom_edt_search_home"
                         android:visibility="visible">
@@ -74,7 +75,8 @@
                             android:background="@color/white"
                             android:padding="5dp"
                             android:src="@drawable/ic_search"
-                            app:tint="@android:color/darker_gray" />
+                            app:tint="@android:color/darker_gray"
+                            tools:ignore="ContentDescription" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -82,7 +84,7 @@
                             android:layout_centerVertical="true"
                             android:layout_toEndOf="@id/img_search_ic"
                             android:gravity="center"
-                            android:text="Search"
+                            android:text="@string/search"
                             android:textColor="@android:color/darker_gray"
                             android:textSize="16sp" />
                     </RelativeLayout>
@@ -92,21 +94,44 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_marginEnd="@dimen/space_view"
-                        android:layout_toStartOf="@id/img_cart"
+                        android:layout_toStartOf="@id/rl_cart"
                         android:padding="@dimen/space_view"
                         android:src="@drawable/ic_search"
                         android:visibility="gone"
-                        app:tint="@color/white" />
+                        app:tint="@color/white"
+                        tools:ignore="ContentDescription" />
 
-                    <ImageView
-                        android:id="@+id/img_cart"
+                    <RelativeLayout
+                        android:id="@+id/rl_cart"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_alignParentEnd="true"
-                        android:background="@drawable/ripple_circle_effect"
-                        android:padding="4dp"
-                        android:src="@drawable/ic_cart"
-                        app:tint="@color/white" />
+                        android:background="@drawable/ripple_circle_effect">
+
+                        <ImageView
+                            android:id="@+id/img_cart"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:padding="4dp"
+                            android:src="@drawable/ic_cart"
+                            android:translationX="-3dp"
+                            app:tint="@color/white"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:id="@+id/tv_indicator"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:textSize="10sp"
+                            android:layout_alignParentEnd="true"
+                            android:background="@drawable/custom_indicator_ic_cart"
+                            android:gravity="center"
+                            android:text="11"
+                            android:textColor="@color/white"
+                            tools:ignore="SmallSp" />
+                    </RelativeLayout>
+
+
                 </RelativeLayout>
 
             </androidx.appcompat.widget.Toolbar>

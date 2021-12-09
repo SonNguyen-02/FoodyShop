@@ -34,17 +34,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     private final int margin;
     private static int itemLength;
 
-    public ProductAdapter(@NonNull Context context, List<ProductModel> mListProduct, boolean isLinearLayoutManager) {
+    public ProductAdapter(@NonNull Context context, List<ProductModel> mListProduct, boolean isLinearLayoutManager, IOnclickProductItem mIOnclickProductItem) {
         this.context = context;
         this.mListProduct = mListProduct;
         this.isLinearLayoutManager = isLinearLayoutManager;
+        this.mIOnclickProductItem = mIOnclickProductItem;
         format = NumberFormat.getCurrencyInstance();
         format.setMaximumFractionDigits(0);
         format.setCurrency(Currency.getInstance("VND"));
-        mIOnclickProductItem = (IOnclickProductItem) context;
         margin = (int) context.getResources().getDimension(R.dimen.space_view);
         itemLength = (MainActivity.WIDTH_DEVICE - (margin * (1 + MainActivity.TOTAL_ITEM_PRODUCT))) / MainActivity.TOTAL_ITEM_PRODUCT;
-
     }
 
     public void setListProduct(List<ProductModel> mListProduct) {

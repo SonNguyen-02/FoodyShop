@@ -1,5 +1,7 @@
 package com.example.foodyshop.activity;
 
+import static com.example.foodyshop.config.Const.KEY_PHONE;
+import static com.example.foodyshop.config.Const.KEY_PHONE_CODE;
 import static com.example.foodyshop.config.Const.TOAST_DEFAULT;
 
 import androidx.annotation.NonNull;
@@ -62,6 +64,7 @@ public class EnterOtpActivity extends AppCompatActivity {
     private String mToken;
     private String mFullName;
     private String mPhoneNumber;
+    private String mPhoneCode;
     private String mPassword;
 
     private String mVerificationId;
@@ -87,7 +90,7 @@ public class EnterOtpActivity extends AppCompatActivity {
         if (bundle != null) {
             mAction = bundle.getInt(Const.KEY_ACTION);
 
-            String mPhoneCode = bundle.getString(Const.KEY_PHONE_CODE);
+            mPhoneCode = bundle.getString(Const.KEY_PHONE_CODE);
             mPhoneNumber = bundle.getString(Const.KEY_PHONE);
             mVerificationId = bundle.getString(Const.KEY_VERIFICATION_ID);
             if (mAction == ACTION_SIGN_UP) {
@@ -321,7 +324,6 @@ public class EnterOtpActivity extends AppCompatActivity {
             Bundle bundle = new Bundle();
             bundle.putString(Const.KEY_TOKEN, mToken);
             intent.putExtras(bundle);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
         if (mAction == ACTION_SIGN_UP) {
@@ -345,7 +347,16 @@ public class EnterOtpActivity extends AppCompatActivity {
                     Respond res = response.body();
                     if (res.isSuccess()) {
                         String mess = "Đăng kí tài khoản thành công!";
-                        showDialogSuccess(R.drawable.register_success, mess);
+                        AuthSuccessDialog successDialog = new AuthSuccessDialog(EnterOtpActivity.this, R.drawable.register_success, mess, () -> {
+                            Intent intent = new Intent(getApplicationContext(), SigninActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString(KEY_PHONE, mPhoneNumber);
+                            bundle.putString(KEY_PHONE_CODE, mPhoneCode);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        });
+                        successDialog.show();
                     } else {
                         ToastCustom.notice(getApplicationContext(), res.getMsg(), ToastCustom.ERROR, TOAST_DEFAULT).show();
                     }
@@ -363,13 +374,5 @@ public class EnterOtpActivity extends AppCompatActivity {
         });
     }
 
-    private void showDialogSuccess(int imgRes, String mess) {
-        AuthSuccessDialog successDialog = new AuthSuccessDialog(this, imgRes, mess, () -> {
-            Intent intent = new Intent(getApplicationContext(), SigninActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        });
-        successDialog.show();
-    }
 
 }

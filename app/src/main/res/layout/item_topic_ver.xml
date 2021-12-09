@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_item"
     android:layout_width="match_parent"
     android:layout_height="@dimen/item_topic_height"
-    android:orientation="horizontal">
+    android:background="@drawable/ripple_item_topic_ver"
+    android:padding="3dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/img_topic"
@@ -14,19 +16,13 @@
 
     <TextView
         android:id="@+id/tv_topic_name"
-        style="@style/TextButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="3dp"
         android:layout_toEndOf="@id/img_topic"
         android:gravity="center_vertical"
         android:text="@string/app_name"
         android:textColor="@color/colorTextPrimary"
         android:textSize="17sp" />
-
-    <include
-        layout="@layout/divider"
-        android:layout_width="match_parent"
-        android:layout_height="0.8dp"
-        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

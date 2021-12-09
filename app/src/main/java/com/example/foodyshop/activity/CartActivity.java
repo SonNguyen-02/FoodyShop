@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,12 +22,16 @@ import com.example.foodyshop.fragment.ProductInCartFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.util.Objects;
+
 public class CartActivity extends AppCompatActivity {
 
+    public static final String TAB_ALL = "Tất cả";
+    public static final String TAB_BUY_AGAIN = "Mua lần nữa";
     private TabLayout mTabLayout;
     private ImageView imgBack;
     private ViewPager2 mViewPager2;
-    private TextView tvEdit;
+    private Button btnEdit;
     private boolean isEdit;
     private ProductInCartFragment productInCartFragment;
 
@@ -37,15 +42,15 @@ public class CartActivity extends AppCompatActivity {
         productInCartFragment = new ProductInCartFragment();
 
         initUi();
-
+        isEdit = true;
         imgBack.setOnClickListener(view -> finish());
-        tvEdit.setOnClickListener(view -> {
+        btnEdit.setOnClickListener(view -> {
             productInCartFragment.setBottomBox(isEdit);
             if (isEdit) {
-                tvEdit.setText(R.string.confirm);
+                btnEdit.setText(R.string.confirm);
                 isEdit = false;
             } else {
-                tvEdit.setText(R.string.edit);
+                btnEdit.setText(R.string.edit);
                 isEdit = true;
             }
         });
@@ -55,18 +60,39 @@ public class CartActivity extends AppCompatActivity {
 
         new TabLayoutMediator(mTabLayout, mViewPager2, (tab, position) -> {
             if (position == 0) {
-                tab.setText("Tất cả");
+                tab.setText(TAB_ALL);
             } else {
-                tab.setText("Mua lần nữa");
+                tab.setText(TAB_BUY_AGAIN);
             }
         }).attach();
+
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (Objects.requireNonNull(tab.getText()).toString().equals(TAB_ALL)) {
+                    if (!productInCartFragment.isEmptyCart()) {
+                        btnEdit.setVisibility(View.VISIBLE);
+                        return;
+                    }
+                }
+                btnEdit.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
     }
 
     private void initUi() {
         mTabLayout = findViewById(R.id.tab_layout_cart);
         mViewPager2 = findViewById(R.id.view_pager2_cart);
         imgBack = findViewById(R.id.img_back);
-        tvEdit = findViewById(R.id.tv_edit);
+        btnEdit = findViewById(R.id.btn_edit);
     }
 
     @Override
@@ -86,7 +112,16 @@ public class CartActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(event);
     }
 
-    public TextView getTvEdit() {
-        return tvEdit;
+    public Button getBtnEdit() {
+        return btnEdit;
+    }
+
+    public void reLoadCart(boolean isSelectTabAll) {
+        if (productInCartFragment != null) {
+            if (isSelectTabAll) {
+                Objects.requireNonNull(mTabLayout.getTabAt(0)).select();
+            }
+            productInCartFragment.reLoadCart();
+        }
     }
 }

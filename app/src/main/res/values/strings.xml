@@ -9,9 +9,15 @@
     <string name="title_topic">Danh mục sản phẩm</string>
     <string name="filter">Lọc</string>
     <string name="on_sale">Đang giảm giá</string>
+    <string name="search">Search</string>
 
+
+    <string name="hint_phone">Phone</string>
     <string name="hint_fullname">Full name</string>
+    <string name="hint_address">Address</string>
+    <string name="hint_note">Note</string>
     <string name="hint_password">Password</string>
+    <string name="hint_confirm_password">Confirm Password</string>
     <string name="button_sign_in">Sign in</string>
     <string name="button_sign_up">Sign up</string>
     <string name="button_change_password">Change password</string>
@@ -26,10 +32,6 @@
 
     <string name="text_forgot_password_title">Forgot password? No worries</string>
     <string name="text_forgot_password_message">We will send you a OTP to reset your password</string>
-
-    <string name="hint_email">Email</string>
-    <string name="hint_phone">Phone</string>
-    <string name="hint_confirm_password">Confirm Password</string>
 
     <string name="product_detail">Chi tiết sản phẩm</string>
     <string name="product_name">Ba rọi heo khay 500g</string>
@@ -56,6 +58,8 @@
     <string name="edit">Chỉnh sửa</string>
     <string name="delete">Xóa</string>
     <string name="confirm">Xác nhận</string>
+    <string name="cancel">Hủy</string>
+    <string name="back">Quay lại</string>
 
     <string name="change_password_success">Đổi mật khẩu thành công!</string>
     <string name="ok">OK</string>
@@ -65,7 +69,23 @@
     <string name="pass_description">A password has minimum eight characters, at least one letter and one number.</string>
 
     <string name="cart">Giỏ hàng</string>
+    <string name="order">Đơn hàng</string>
     <string name="discount">{0}%</string>
     <string name="total_buy">Mua hàng ({0})</string>
+
+    <string name="info_receive_order">Thông tin nhận hàng</string>
+    <string name="list_product">Danh sách sản phẩm</string>
+    <string name="total_money">Tổng tiền</string>
+    <string name="ordering">Đặt hàng</string>
+
+    <string name="full_name"><![CDATA[Họ & tên]]></string>
+    <string name="address">Địa chỉ</string>
+    <string name="phone">Số điện thoại</string>
+    <string name="note">Ghi chú</string>
+    <string name="order_code">Mã đơn hàng</string>
+    <string name="order_info">Thông tin đơn hàng</string>
+    <string name="order_success">Đã đặt hàng thành công!</string>
+    <string name="sub_order_success">Cảm ơn bạn đã đặt hàng tại shop!</string>
+
 
 </resources>

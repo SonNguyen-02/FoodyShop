@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
+            android:name=".activity.OrderActivity"
+            android:exported="true" />
+        <activity
             android:name=".activity.DetailProductActivity"
             android:exported="true" />
         <activity
@@ -30,10 +33,10 @@
             android:name=".activity.SigninActivity"
             android:exported="true">
 
-            <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.MAIN" />-->
-            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--            </intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".activity.SignupActivity"

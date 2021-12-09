@@ -1,5 +1,10 @@
 package com.example.foodyshop.activity;
 
+import static com.example.foodyshop.config.Const.KEY_NEW_TASK;
+import static com.example.foodyshop.config.Const.KEY_PHONE;
+import static com.example.foodyshop.config.Const.KEY_PHONE_CODE;
+import static com.example.foodyshop.config.Const.KEY_SIGN_IN_OK;
+import static com.example.foodyshop.config.Const.KEY_TOTAL_MONEY;
 import static com.example.foodyshop.config.Const.TOAST_DEFAULT;
 
 import androidx.annotation.NonNull;
@@ -16,7 +21,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.foodyshop.R;
 import com.example.foodyshop.config.Const;
@@ -24,10 +28,8 @@ import com.example.foodyshop.dialog.ToastCustom;
 import com.example.foodyshop.helper.Helper;
 import com.example.foodyshop.helper.JWT;
 import com.example.foodyshop.dialog.LoadingDialog;
-import com.example.foodyshop.model.CustomerModel;
 import com.example.foodyshop.model.Respond;
 import com.example.foodyshop.service.APIService;
-import com.google.gson.Gson;
 import com.hbb20.CountryCodePicker;
 
 import java.util.HashMap;
@@ -44,11 +46,15 @@ public class SigninActivity extends AppCompatActivity {
     private ImageView imgCheck;
     private Button btnSignin, btnSignup, btnForgotPassword;
     private boolean isValidPhone;
+    private boolean isNewTask;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
+
+        isNewTask = getIntent().getBooleanExtra(KEY_NEW_TASK, false);
 
         initUi();
         // attach CarrierNumber editText to CCP
@@ -85,6 +91,20 @@ public class SigninActivity extends AppCompatActivity {
         btnSignin.setOnClickListener(v -> login());
         btnSignup.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), SignupActivity.class)));
         btnForgotPassword.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), ForgotPasswordActivity.class)));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            String mPhoneCode = bundle.getString(KEY_PHONE_CODE);
+            String mPhoneNumber = bundle.getString(KEY_PHONE);
+            if (mPhoneCode != null && mPhoneNumber != null) {
+                ccp.setCountryForPhoneCode(Integer.parseInt(mPhoneCode.replaceAll("\\D", "")));
+                edtPhone.setText(mPhoneNumber.replace(mPhoneCode, ""));
+            }
+        }
     }
 
     private void initUi() {
@@ -133,26 +153,39 @@ public class SigninActivity extends AppCompatActivity {
         APIService.getService().login(tokenSend).enqueue(new Callback<Respond>() {
             @Override
             public void onResponse(@NonNull Call<Respond> call, @NonNull Response<Respond> response) {
-                dialog.dismiss();
                 if (response.isSuccessful() && response.body() != null) {
                     Respond res = response.body();
                     if (res.isSuccess()) {
                         // lưu token mới khi đăng nhập thành công
-
                         SharedPreferences.Editor editor = Helper.getSharedPreferences(getApplicationContext()).edit();
-                        Helper.saveUserInfo(getApplicationContext(), res.getMsg());
                         editor.putString(Const.KEY_TOKEN_LOGIN, res.getMsg());
+                        editor.putString(Const.KEY_PHONE_CODE, ccp.getSelectedCountryCodeWithPlus());
                         editor.apply();
-
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
+                        Helper.saveUserInfo(getApplicationContext(), res.getMsg(), isSuccessful -> {
+                            dialog.dismiss();
+                            if (isSuccessful) {
+                                if (isNewTask) {
+                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                } else {
+                                    Intent intent = new Intent();
+                                    intent.putExtra(KEY_SIGN_IN_OK, true);
+                                    setResult(RESULT_OK, intent);
+                                    finish();
+                                }
+                            } else {
+                                ToastCustom.notice(getApplicationContext(), "Đã xảy ra lỗi. Vui lòng thử lại!", ToastCustom.WARNING, TOAST_DEFAULT).show();
+                            }
+                        });
                     } else {
                         // Show lỗi khi đăng nhập false
-                        ToastCustom.notice(getApplicationContext(), res.getMsg(), ToastCustom.ERROR, 2000).show();
+                        dialog.dismiss();
+                        ToastCustom.notice(getApplicationContext(), res.getMsg(), ToastCustom.ERROR, TOAST_DEFAULT).show();
                         Log.e("ddd", "onResponse: " + res.getMsg());
                     }
                 } else {
+                    dialog.dismiss();
                     ToastCustom.notice(getApplicationContext(), "Có lỗi. Vui lòng thử lại sau!", ToastCustom.ERROR, TOAST_DEFAULT).show();
                     Log.e("ddd", "onResponse: " + "server error");
                 }

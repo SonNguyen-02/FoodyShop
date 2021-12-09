@@ -49,23 +49,42 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/space_view"
                     android:layout_marginEnd="@dimen/space_view"
-                    android:layout_toStartOf="@id/img_cart"
+                    android:layout_toStartOf="@id/rl_cart"
                     android:layout_toEndOf="@id/img_back"
                     android:text="@string/product_detail"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
 
-                <ImageView
-                    android:id="@+id/img_cart"
+                <RelativeLayout
+                    android:id="@+id/rl_cart"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/ripple_circle_effect"
-                    android:padding="4dp"
-                    android:src="@drawable/ic_cart"
-                    app:tint="@color/white"
-                    tools:ignore="ContentDescription" />
+                    android:background="@drawable/ripple_circle_effect">
+
+                    <ImageView
+                        android:id="@+id/img_cart"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:padding="4dp"
+                        android:src="@drawable/ic_cart"
+                        android:translationX="-3dp"
+                        app:tint="@color/white"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/tv_indicator"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/custom_indicator_ic_cart"
+                        android:gravity="center"
+                        android:text="11"
+                        android:textColor="@color/white"
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
+                </RelativeLayout>
 
             </RelativeLayout>
 
@@ -181,15 +200,30 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <TextView
+                <com.ms.square.android.expandabletextview.ExpandableTextView xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/tv_description"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="6"
-                    android:text="@string/description_product"
-                    android:textColor="@color/colorTextPrimary"
-                    android:textSize="16sp" />
+                    expandableTextView:animDuration="200"
+                    expandableTextView:maxCollapsedLines="5">
+
+                    <TextView
+                        android:id="@id/expandable_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/description_product"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textSize="16sp" />
+
+                    <ImageButton
+                        android:id="@id/expand_collapse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|bottom"
+                        android:background="@android:color/transparent"
+                        android:padding="16dp" />
+                </com.ms.square.android.expandabletextview.ExpandableTextView>
+
 
             </LinearLayout>
 

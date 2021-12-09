@@ -109,7 +109,7 @@ public class DetailTopicActivity extends AppCompatActivity implements CategoryAd
             public void onResponse(@NonNull Call<List<ProductModel>> call, @NonNull Response<List<ProductModel>> response) {
                 showUi();
                 if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
-                    ProductAdapter adapter = new ProductAdapter(DetailTopicActivity.this, response.body(), true);
+                    ProductAdapter adapter = new ProductAdapter(getApplicationContext(), response.body(), true, DetailTopicActivity.this);
                     rcvSaleProduct.setAdapter(adapter);
                 } else {
                     rlSaleProduct.setVisibility(View.GONE);
@@ -123,7 +123,9 @@ public class DetailTopicActivity extends AppCompatActivity implements CategoryAd
     }
 
     private void initCategoryData() {
-        mTopic.getCategories().add(0, new CategoryModel(-1, mTopic.getId(), "Tất cả"));
+        CategoryModel mCategory = new CategoryModel(-1, mTopic.getId(), "Tất cả");
+        mCategory.setChecked(true);
+        mTopic.getCategories().add(0, mCategory);
         CategoryAdapter adapter = new CategoryAdapter(this, mTopic.getCategories());
         rcvCategory.setAdapter(adapter);
 
@@ -148,7 +150,7 @@ public class DetailTopicActivity extends AppCompatActivity implements CategoryAd
                     if (totalAllPage > 1) {
                         rlLoading.setVisibility(View.VISIBLE);
                     }
-                    mProductAdapter = new ProductAdapter(DetailTopicActivity.this, response.body(), false);
+                    mProductAdapter = new ProductAdapter(getApplicationContext(), response.body(), false, DetailTopicActivity.this);
                     rcvProduct.setAdapter(mProductAdapter);
                     rcvProduct.setFocusable(false);
                     rcvProduct.setNestedScrollingEnabled(false);
@@ -186,9 +188,10 @@ public class DetailTopicActivity extends AppCompatActivity implements CategoryAd
                 if (response.isSuccessful() && response.body() != null) {
                     totalAllPage = totalPage = response.body();
                     if (totalPage == 0) {
+                        isLastPage = true;
                         rlNoHaveData.setVisibility(View.VISIBLE);
-                    }
-                    if (totalPage <= 1) {
+                        rlLoading.setVisibility(View.GONE);
+                    } else if (totalPage == 1) {
                         isLastPage = true;
                         rlLoading.setVisibility(View.GONE);
                     } else {
@@ -235,7 +238,7 @@ public class DetailTopicActivity extends AppCompatActivity implements CategoryAd
                     if (sflProduct.isShimmerStarted()) {
                         setVisibilityProduct(true);
                     }
-                    mProductAdapter = new ProductAdapter(DetailTopicActivity.this, response.body(), false);
+                    mProductAdapter = new ProductAdapter(getApplicationContext(), response.body(), false, DetailTopicActivity.this);
                     rcvProduct.setAdapter(mProductAdapter);
                     rcvProduct.setFocusable(false);
                     rcvProduct.setNestedScrollingEnabled(false);

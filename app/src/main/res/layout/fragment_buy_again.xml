@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nested_scroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/ll_oops_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_marginTop="36dp"
+            android:padding="32dp"
+            android:visibility="visible">
+
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginEnd="12sp"
+                android:src="@drawable/oops_login"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Bạn cần phải đăng nhập để xem lịch sử mua hàng"
+                android:textAlignment="center"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/btn_go_to_login"
+                style="@style/ButtonWarning"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:text="Đăng nhập" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_data_bought_product"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerFrameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/space_view">
+
+                <include layout="@layout/shimmer_rcv_product_grid" />
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_product"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_view"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/space_view"
+                android:visibility="gone">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcv_product_bought"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_view" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_loading"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/rcv_product_bought"
+                    android:padding="@dimen/space_view"
+                    android:visibility="gone">
+
+                    <ProgressBar
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_centerInParent="true" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_no_have_data"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/rcv_product_bought"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginEnd="12sp"
+                        android:src="@drawable/order_history"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="Chưa có lịch sử mua hàng!"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+</androidx.core.widget.NestedScrollView>
+

@@ -2,13 +2,13 @@ package com.example.foodyshop.helper;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import static com.example.foodyshop.config.Const.KEY_PHONE_CODE;
 import static com.example.foodyshop.config.Const.KEY_TOKEN_LOGIN;
 import static com.example.foodyshop.config.Const.KEY_USER_CART;
 import static com.example.foodyshop.config.Const.KEY_USER_OBJ;
 import static com.example.foodyshop.config.Const.KEY_USER_PREFERENCES;
 import static com.example.foodyshop.config.Const.TOAST_DEFAULT;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -31,13 +31,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwt;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,6 +43,10 @@ import retrofit2.Response;
 public class Helper {
 
     private static CustomerModel currentAccount;
+
+    public interface IOnSaveUserRespond {
+        void onRespond(boolean isSuccessful);
+    }
 
     public static void setCurrentAccount(CustomerModel currentAccount) {
         Helper.currentAccount = currentAccount;
@@ -90,22 +92,18 @@ public class Helper {
         return list;
     }
 
-    public static void addOrChangeAmountOrderDetail(Context context, OrderDetailModel mOrderDetail, boolean isAdd) {
-        List<OrderDetailModel> listOrderDetail = getAllOrderDetailCart(context);
+    public static void addProductToCart(Context context, OrderDetailModel mOrderDetail) {
+        List<OrderDetailModel> listOrderDetail = getAllProductInCart(context);
         if (!listOrderDetail.isEmpty()) {
             boolean isExists = false;
             for (OrderDetailModel ord : listOrderDetail) {
                 if (mOrderDetail.getProductId() == ord.getProductId()) {
-                    if (isAdd) {
-                        ord.setNumber(ord.getNumber() + mOrderDetail.getNumber());
-                    } else {
-                        ord.setNumber(mOrderDetail.getNumber());
-                    }
+                    ord.setAmount(ord.getAmount() + mOrderDetail.getAmount());
                     isExists = true;
                     break;
                 }
             }
-            if (!isExists && isAdd) {
+            if (!isExists) {
                 listOrderDetail.add(mOrderDetail);
             }
         } else {
@@ -114,21 +112,8 @@ public class Helper {
         saveCart(context, listOrderDetail);
     }
 
-    public static void removeOrderDetailFromCart(Context context, OrderDetailModel mOrderDetail) {
-        List<OrderDetailModel> listOrderDetail = getAllOrderDetailCart(context);
-        if (!listOrderDetail.isEmpty()) {
-            OrderDetailModel tmpOrd = null;
-            for (OrderDetailModel ord : listOrderDetail) {
-                if (mOrderDetail.getProductId() == ord.getProductId()) {
-                    tmpOrd = ord;
-                    break;
-                }
-            }
-            if (tmpOrd != null) {
-                listOrderDetail.remove(tmpOrd);
-            }
-            saveCart(context, listOrderDetail);
-        }
+    public static int getTotalProductInCart(Context context) {
+        return getAllProductInCart(context).size();
     }
 
     public static void clearCart(Context context) {
@@ -138,7 +123,7 @@ public class Helper {
     }
 
     @NonNull
-    public static List<OrderDetailModel> getAllOrderDetailCart(Context context) {
+    public static List<OrderDetailModel> getAllProductInCart(Context context) {
         SharedPreferences sharedPreferences = getSharedPreferences(context);
         String listOrderDetailJson = sharedPreferences.getString(KEY_USER_CART, "");
         return convertJsonToListOrderDetail(listOrderDetailJson);
@@ -160,7 +145,11 @@ public class Helper {
 
     @NonNull
     public static String getTokenLogin(Context context) {
-        return getSharedPreferences(context).getString(Const.KEY_TOKEN_LOGIN, "").trim();
+        return getSharedPreferences(context).getString(KEY_TOKEN_LOGIN, "").trim();
+    }
+
+    public static String getPrefVal(Context context, String key) {
+        return getSharedPreferences(context).getString(KEY_PHONE_CODE, "");
     }
 
     public static boolean isLogin(Context context) {
@@ -173,24 +162,33 @@ public class Helper {
         return false;
     }
 
-    public static void saveUserInfo(Context context, String token) {
-        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+    public static void saveUserInfo(Context context, String token, IOnSaveUserRespond mIOnSaveUserRespond) {
         APIService.getService().getUserInfo(token).enqueue(new Callback<CustomerModel>() {
             @Override
             public void onResponse(@NonNull Call<CustomerModel> call, @NonNull Response<CustomerModel> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    currentAccount = response.body();
-                    Gson gson = new Gson();
-                    String customerJson = gson.toJson(response.body());
-                    editor.putString(KEY_USER_OBJ, customerJson);
-                    editor.apply();
+                    saveUserInfo(context, response.body());
+                    mIOnSaveUserRespond.onRespond(true);
+                } else {
+                    mIOnSaveUserRespond.onRespond(false);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<CustomerModel> call, @NonNull Throwable t) {
+                mIOnSaveUserRespond.onRespond(false);
             }
         });
+    }
+
+    public static void saveUserInfo(Context context, CustomerModel customer) {
+        if (customer == null) return;
+        currentAccount = customer;
+        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        Gson gson = new Gson();
+        String customerJson = gson.toJson(customer);
+        editor.putString(KEY_USER_OBJ, customerJson);
+        editor.apply();
     }
 
     public static CustomerModel getUserInfo(Context context) {

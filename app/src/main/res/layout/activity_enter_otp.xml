@@ -83,18 +83,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/inp_mar_top"
+                    android:layout_marginTop="@dimen/edt_mar_top"
                     android:orientation="horizontal">
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginEnd="4dp"
-                        app:cardBackgroundColor="@color/colorTextInputBackground"
-                        app:cardCornerRadius="8dp"
-                        app:cardElevation="0dp">
+                        android:layout_margin="@dimen/card_mar_l_r"
+                        android:background="@drawable/custom_bg_edt_form"
+                        app:cardCornerRadius="@dimen/edt_btn_radius">
 
                         <EditText
                             android:id="@+id/edt_code1"
@@ -116,11 +114,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginEnd="4dp"
-                        app:cardBackgroundColor="@color/colorTextInputBackground"
-                        app:cardCornerRadius="8dp"
-                        app:cardElevation="0dp">
+                        android:layout_margin="@dimen/card_mar_l_r"
+                        android:background="@drawable/custom_bg_edt_form"
+                        app:cardCornerRadius="@dimen/edt_btn_radius">
 
                         <EditText
                             android:id="@+id/edt_code2"
@@ -142,11 +138,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginEnd="4dp"
-                        app:cardBackgroundColor="@color/colorTextInputBackground"
-                        app:cardCornerRadius="8dp"
-                        app:cardElevation="0dp">
+                        android:layout_margin="@dimen/card_mar_l_r"
+                        android:background="@drawable/custom_bg_edt_form"
+                        app:cardCornerRadius="@dimen/edt_btn_radius">
 
                         <EditText
                             android:id="@+id/edt_code3"
@@ -168,11 +162,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginEnd="4dp"
-                        app:cardBackgroundColor="@color/colorTextInputBackground"
-                        app:cardCornerRadius="8dp"
-                        app:cardElevation="0dp">
+                        android:layout_margin="@dimen/card_mar_l_r"
+                        android:background="@drawable/custom_bg_edt_form"
+                        app:cardCornerRadius="@dimen/edt_btn_radius">
 
                         <EditText
                             android:id="@+id/edt_code4"
@@ -194,11 +186,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginEnd="4dp"
-                        app:cardBackgroundColor="@color/colorTextInputBackground"
-                        app:cardCornerRadius="8dp"
-                        app:cardElevation="0dp">
+                        android:layout_margin="@dimen/card_mar_l_r"
+                        android:background="@drawable/custom_bg_edt_form"
+                        app:cardCornerRadius="@dimen/edt_btn_radius">
 
                         <EditText
                             android:id="@+id/edt_code5"
@@ -220,11 +210,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginEnd="4dp"
-                        app:cardBackgroundColor="@color/colorTextInputBackground"
-                        app:cardCornerRadius="8dp"
-                        app:cardElevation="0dp">
+                        android:layout_margin="@dimen/card_mar_l_r"
+                        android:background="@drawable/custom_bg_edt_form"
+                        app:cardCornerRadius="@dimen/edt_btn_radius">
 
                         <EditText
                             android:id="@+id/edt_code6"
