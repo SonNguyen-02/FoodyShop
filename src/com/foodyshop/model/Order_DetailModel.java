@@ -23,6 +23,9 @@ public class Order_DetailModel {
     private ObjectProperty<Integer> number;
     private ObjectProperty<Integer> price;
     private ObjectProperty<Integer> discount;
+    private StringProperty contentSale;
+    private StringProperty startDate;
+    private StringProperty endDate;
 
     public Order_DetailModel() {
         this.id = new SimpleObjectProperty<>();
@@ -32,6 +35,9 @@ public class Order_DetailModel {
         this.price = new SimpleObjectProperty<>();
         this.discount = new SimpleObjectProperty<>();
         this.content = new SimpleStringProperty();
+        this.contentSale = new SimpleStringProperty();
+        this.startDate = new SimpleStringProperty();
+        this.endDate = new SimpleStringProperty();
     }
 
     public Integer getId() {
@@ -62,6 +68,18 @@ public class Order_DetailModel {
         return content.getValue();
     }
 
+    public String getContentSale() {
+        return contentSale.getValue();
+    }
+
+    public String getStartDate() {
+        return startDate.getValue();
+    }
+
+    public String getEndDate() {
+        return endDate.getValue();
+    }
+
 //
     public ObjectProperty<Integer> getIdProperty() {
         return id;
@@ -75,10 +93,22 @@ public class Order_DetailModel {
         return product_name;
     }
 
-     public StringProperty getContentProperty() {
+    public StringProperty getContentProperty() {
         return content;
     }
     
+    public StringProperty getContentSaleProperty() {
+        return contentSale;
+    }
+
+    public StringProperty getStartDateProperty() {
+        return startDate;
+    }
+
+    public StringProperty getEndDateProperty() {
+        return endDate;
+    }
+
     public ObjectProperty<Integer> getNumberProperty() {
         return number;
     }
@@ -119,4 +149,17 @@ public class Order_DetailModel {
     public void setDiscount(Integer discount) {
         this.discount.setValue(discount);
     }
+
+    public void setEndDate(String endDate) {
+        this.endDate.setValue(endDate);
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate.setValue(startDate);
+    }
+
+    public void setContentSale(String contentSale) {
+        this.contentSale.setValue(contentSale);
+    }
+
 }

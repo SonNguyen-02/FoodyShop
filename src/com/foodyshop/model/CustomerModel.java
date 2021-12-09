@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.foodyshop.model;
 
 import static com.foodyshop.main.Config.IMG_TOPIC_DIR;
@@ -116,7 +111,7 @@ public class CustomerModel {
         return name;
     }
 
-    public String getname() {
+    public String getName() {
         return name.getValue();
     }
 

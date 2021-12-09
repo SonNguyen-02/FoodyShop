@@ -27,7 +27,7 @@ public class OrderHelper {
 
     public static ObservableList<OrderModel> getAllOrder() {
         ObservableList<OrderModel> listOrder = FXCollections.observableArrayList();
-        String sql = db.select().from("fs_order").orderByASC("id").where("status", "5").limit(20).getCompiledSelect(true);
+        String sql = db.select().from("fs_order").orderByASC("id")  .getCompiledSelect(true);
         ResultSet rs = DBConnection.execSelect(sql);
         try {
             while (rs.next()) {

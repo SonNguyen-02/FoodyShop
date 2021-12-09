@@ -10,6 +10,7 @@ import com.foodyshop.main.Navigator;
 import com.foodyshop.model.CustomerModel;
 import java.net.URL;
 import java.util.ResourceBundle;
+import com.foodyshop.controller.EditCustomerController;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,7 +29,7 @@ import javafx.scene.input.MouseEvent;
  * @author APlaptop
  */
 public class CustomerController implements Initializable {
-    
+
     private CustomerModel mCustomer;
 
     @FXML
@@ -65,15 +66,12 @@ public class CustomerController implements Initializable {
     private Button btnCustomerDetail;
 
     @FXML
-    private Button btnLockStatus;
+    private Button btnEditStatus;
 
-    @FXML
-    private Button btnUnlockStatus;
-
-    public void setData(CustomerModel customer){
+    public void setData(CustomerModel customer) {
         mCustomer = customer;
     }
-    
+
     
     ObservableList<CustomerModel> listCustomer = FXCollections.observableArrayList();
 
@@ -86,9 +84,8 @@ public class CustomerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        btnUnlockStatus.setOnMouseClicked(this::onclickUnlock);
-        btnLockStatus.setOnMouseClicked(this::onclickLock);
-        
+        btnEditStatus.setOnMouseClicked(this::onclickShowEditCustomer);
+
         tcStt.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tblCustomer.getItems().indexOf(cellData.getValue()) + 1) + ""));
         tcPhone.setCellValueFactory(cellValue -> cellValue.getValue().getPhoneProperty());
         tcName.setCellValueFactory(cellValue -> cellValue.getValue().getNameProperty());
@@ -103,27 +100,22 @@ public class CustomerController implements Initializable {
         tblCustomer.setItems(listCustomer);
     }
 
-    private void onclickUnlock(MouseEvent e) {
+    private void onclickShowEditCustomer(MouseEvent e) {
         CustomerModel customer = tblCustomer.getSelectionModel().getSelectedItem();
-        if (customer == null) {
+        if (customer != null) {
+            Navigator.getInstance().showEditCustomerForm(customer, new EditCustomerController.IOnUpdateCustomer() {
+                @Override
+                public void callback() {
+                   tblCustomer.refresh();
+                }
+            });
+                
+                
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("You Must choose!!!");
             alert.show();
-        } else {
-
-        }
-    }
-    
-    private void onclickLock(MouseEvent e) {
-        CustomerModel customer = tblCustomer.getSelectionModel().getSelectedItem();
-        if (customer == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("You Must choose!!!");
-            alert.show();
-        } else {
-
         }
     }
 }

@@ -5,15 +5,11 @@
  */
 package com.foodyshop.controller;
 
-import com.foodyshop.helper.OrderHelper;
-import com.foodyshop.helper.TopicHelper;
+import com.foodyshop.helper.CustomerHelper;
 import com.foodyshop.main.Navigator;
-import com.foodyshop.model.OrderModel;
-import java.io.IOException;
+import com.foodyshop.model.CustomerModel;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,7 +18,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -31,13 +26,12 @@ import javafx.stage.Stage;
  *
  * @author APlaptop
  */
-public class EditOrderController implements Initializable {
+public class EditCustomerController implements Initializable {
 
-    private OrderModel mOrder;
-    private Stage stage;
+    private CustomerModel mCustomer;
 
     @FXML
-    private ComboBox<String> cbStatus;
+    private Label lbCustomerName;
 
     @FXML
     private Button btnSave;
@@ -46,26 +40,24 @@ public class EditOrderController implements Initializable {
     private Button btnCancel;
 
     @FXML
-    private Label lbOrderCode;
+    private ComboBox<String> cbStatus;
 
-    @FXML
-    private TextField txtShipPrice;
+    private IOnUpdateCustomer mIOnUpdateCustomer;
 
-    private IOnUpdateOrderSuccess mIOnUpdateOrderSuccess;
-
-    public interface IOnUpdateOrderSuccess {
+    private Stage stage;
+    
+    public interface IOnUpdateCustomer {
 
         void callback();
     }
 
-    public void setData(OrderModel order, Stage stage, IOnUpdateOrderSuccess mIOnUpdateOrderSuccess) {
-        mOrder = order;
+    public void initData(CustomerModel customer,Stage stage,IOnUpdateCustomer mIOnUpdateCustomer) {
+        mCustomer = customer;
         this.stage = stage;
-        this.mIOnUpdateOrderSuccess = mIOnUpdateOrderSuccess;
-        lbOrderCode.setText(order.getOrderCode().toString());
-        txtShipPrice.setText(order.getShipPrice().toString());
-        cbStatus.setItems(FXCollections.observableArrayList(OrderModel.WAIT_AOS_CF, OrderModel.AOS_CF, OrderModel.AOS_CL, OrderModel.WAIT_CUS_CF, OrderModel.CUS_CL, OrderModel.CUS_CF, OrderModel.SHIPPING, OrderModel.SUCCESS_DELIVERY));
-        cbStatus.setValue(order.getStatusVal().get());
+        this.mIOnUpdateCustomer = mIOnUpdateCustomer;
+        lbCustomerName.setText(customer.getName());
+        cbStatus.setItems(FXCollections.observableArrayList(CustomerModel.LOCK, CustomerModel.UNLOCK));
+        cbStatus.setValue(customer.getStatusVal().get());
     }
 
     /**
@@ -76,6 +68,7 @@ public class EditOrderController implements Initializable {
         // TODO
         btnCancel.setOnMouseClicked(this::onClickCancel);
         btnSave.setOnMouseClicked(this::onclickSave);
+
     }
 
     private void onClickCancel(MouseEvent e) {
@@ -90,30 +83,14 @@ public class EditOrderController implements Initializable {
     }
 
     private void onclickSave(MouseEvent e) {
-        String shipPrice = txtShipPrice.getText().trim();
-        String regaxShipPrice = "^[0-9]{1,11}$";
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        if (shipPrice.isEmpty()) {
-            txtShipPrice.requestFocus();
-            alert.setHeaderText("Please enter ship price");
-            alert.show();
-            return;
-        }
-        if(!shipPrice.matches(regaxShipPrice)){
-            alert.setHeaderText("Please enter number");
-            alert.show();
-            return;
-        }
-        mOrder.setShipPrice(Integer.parseInt(shipPrice));
-        mOrder.setStatusVal(cbStatus.getValue());
-        boolean resutl = OrderHelper.updateOrder(mOrder);
-        if (resutl) {
+        mCustomer.setStatusVal(cbStatus.getValue());
+        boolean result = CustomerHelper.updateCustomer(mCustomer);
+        if (result) {
             Alert alerts = new Alert(Alert.AlertType.INFORMATION);
             alerts.setTitle("Success");
             alerts.setHeaderText("Edit success!");
             alerts.show();
-            mIOnUpdateOrderSuccess.callback();
+            mIOnUpdateCustomer.callback();
             Navigator.getInstance().getModalStage().close();
         } else {
             Alert alerts = new Alert(Alert.AlertType.ERROR);
@@ -122,4 +99,5 @@ public class EditOrderController implements Initializable {
             alerts.show();
         }
     }
+
 }

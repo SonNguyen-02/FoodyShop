@@ -6,6 +6,7 @@
 package com.foodyshop.controller;
 
 import com.foodyshop.helper.Order_DetailHelper;
+import com.foodyshop.main.Navigator;
 import com.foodyshop.model.CustomerModel;
 import com.foodyshop.model.FeedbackModel;
 import com.foodyshop.model.OrderModel;
@@ -13,12 +14,17 @@ import com.foodyshop.model.Order_DetailModel;
 import com.foodyshop.model.ProductModel;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -39,7 +45,7 @@ public class Order_DetailController implements Initializable {
     private Order_DetailModel mOrder_detail;
 
     @FXML
-    private Label lbOrder_Code, lbTotalPrice, lbTotalProduct, lbName, lbPhone, lbAddress, lbFeedback, lbNote;
+    private Label lbOrder_Code, lbTotalPrice, lbTotalProduct, lbName, lbPhone, lbAddress, lbFeedback, lbNote,lbContentSale,lbStart,lbEnd;
 
     @FXML
     private TableView<Order_DetailModel> tblOrder_detail;
@@ -58,10 +64,14 @@ public class Order_DetailController implements Initializable {
 
     @FXML
     private TableColumn<Order_DetailModel, Integer> tcDiscount;
+    
+    @FXML
+    private Button btnCancel;
+     
     /**
      * Initializes the controller class.
      */
-
+    ArrayList<String> product = new ArrayList<>();
     ObservableList<Order_DetailModel> listOrder_Detail = FXCollections.observableArrayList();
     DecimalFormat formatter = new DecimalFormat("###,###,###");
 
@@ -76,16 +86,19 @@ public class Order_DetailController implements Initializable {
         lbOrder_Code.setText(order.getOrderCode());
         listOrder_Detail = Order_DetailHelper.getAllOrder_Detail(order);
         tblOrder_detail.setItems(listOrder_Detail);
-//        int size = listOrder_Detail.size();
-
+        lbTotalProduct.setText(String.valueOf(listOrder_Detail.size())+"prd");
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+        btnCancel.setOnMouseClicked(this::onClickCancel);
         lbFeedback.setWrapText(true);
-        //Setting the alignment to the label
         lbFeedback.setTextAlignment(TextAlignment.JUSTIFY);
+        lbNote.setWrapText(true);
+        lbNote.setTextAlignment(TextAlignment.JUSTIFY);
+        lbContentSale.setWrapText(true);
+        lbContentSale.setTextAlignment(TextAlignment.JUSTIFY);
         tcStt.setCellValueFactory(cellValue -> cellValue.getValue().getIdProperty());
         tcProduct.setCellValueFactory(cellValue -> cellValue.getValue().getProduct_nameProperty());
         tcNumber.setCellValueFactory(cellValue -> cellValue.getValue().getNumberProperty());
@@ -102,6 +115,9 @@ public class Order_DetailController implements Initializable {
 //                    }
                     if (e.getClickCount() == 1) {
                         lbFeedback.setText(row.getItem().getContent());
+                        lbContentSale.setText(row.getItem().getContentSale());
+                        lbStart.setText(row.getItem().getStartDate());
+                        lbEnd.setText(row.getItem().getEndDate());
                     }
                 }
             });
@@ -110,10 +126,23 @@ public class Order_DetailController implements Initializable {
                 if (index < 0 || index >= tblOrder_detail.getItems().size()) {
                     tblOrder_detail.getSelectionModel().clearSelection();
                     lbFeedback.setText("");
+                    lbContentSale.setText("");
+                    lbStart.setText("");
+                    lbEnd.setText("");
                     event.consume();
                 }
             });
             return row;
+        });
+    }
+    private void onClickCancel(MouseEvent e) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Close");
+        alert.setHeaderText("Do you want close?");
+        alert.showAndWait().ifPresent(btnType -> {
+            if (btnType == ButtonType.OK) {
+                Navigator.getInstance().getModalStage().close();
+            }
         });
     }
 }

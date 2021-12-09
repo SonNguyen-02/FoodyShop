@@ -89,7 +89,7 @@ public class OrderController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         btnEditStatus.setOnMouseClicked(this::onclickShowEditOrder);
         btnOrder_detail.setOnMouseClicked(this::onclickShowOrderDetail);
-        
+
         tcId.setCellValueFactory(cellValue -> cellValue.getValue().getIdProperty());
         tcOrder_code.setCellValueFactory(cellValue -> cellValue.getValue().getOrderCodeProperty());
         tcName.setCellValueFactory(cellValue -> cellValue.getValue().getNameProperty());
@@ -119,12 +119,12 @@ public class OrderController implements Initializable {
     private void onclickShowEditOrder(MouseEvent e) {
         OrderModel order = tblOrder.getSelectionModel().getSelectedItem();
         if (order != null) {
-           Navigator.getInstance().showEditOrder(order, new EditOrderController.IOnUpdateOrderSuccess() {
-               @Override
-               public void callback() {
-                   tblOrder.refresh();
-               }
-           });
+            Navigator.getInstance().showEditOrder(order, new EditOrderController.IOnUpdateOrderSuccess() {
+                @Override
+                public void callback() {
+                    tblOrder.refresh();
+                }
+            });
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
