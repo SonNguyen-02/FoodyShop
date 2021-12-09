@@ -179,7 +179,7 @@ public class Navigator {
     public void showCustomerDetail(CustomerModel customer) {
         showModal("Customer Detail ", CUSTOMER_DETAIL);
         CustomerDetailController controller = fxLoader.getController();
-        controller.initCutomerModel(customer);
+        controller.initCustomerModel(customer);
     }
     // </editor-fold> 
     private Navigator() {
