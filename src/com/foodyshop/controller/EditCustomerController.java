@@ -55,7 +55,7 @@ public class EditCustomerController implements Initializable {
         mCustomer = customer;
         this.stage = stage;
         this.mIOnUpdateCustomer = mIOnUpdateCustomer;
-        lbCustomerName.setText(customer.getName().toString());
+        lbCustomerName.setText(customer.getName());
         cbStatus.setItems(FXCollections.observableArrayList(CustomerModel.LOCK, CustomerModel.UNLOCK));
         cbStatus.setValue(customer.getStatusVal().get());
     }

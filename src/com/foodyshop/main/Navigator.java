@@ -63,9 +63,7 @@ public class Navigator {
     private static final String TOPIC_PAGE = ROOT_FOLDER + "TopicPage.fxml";
     private static final String FEEDBACK_PAGE = ROOT_FOLDER + "FeedbackUI.fxml";
     private static final String STAFF_PAGE = ROOT_FOLDER + "StaffUI.fxml";
-
     private static final String SALE_PAGE = ROOT_FOLDER + "SalePage.fxml";
-
     private static final String PRODUCT_PAGE = ROOT_FOLDER + "ProductPage.fxml";
 
 

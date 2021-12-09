@@ -6,7 +6,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.SaleController">
    <children>
-      <TableView fx:id="tblSale" layoutX="155.0" layoutY="38.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="628.0" prefWidth="888.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0">
+      <TableView fx:id="tblSale" layoutX="155.0" layoutY="38.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="862.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="30.0">
          <columns>
             <TableColumn fx:id="tcStt" prefWidth="51.888877868652344" text="STT" />
             <TableColumn fx:id="tcProductName" prefWidth="124.4444580078125" text="Product Name" />
@@ -18,6 +18,9 @@
             <TableColumn fx:id="tcCreated" prefWidth="116.44439697265625" text="Created" />
             <TableColumn fx:id="tcStatus" prefWidth="57.55560302734375" text="Status" />
          </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
       </TableView>
    </children>
 </AnchorPane>
