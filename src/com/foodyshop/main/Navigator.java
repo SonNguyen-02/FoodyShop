@@ -7,13 +7,17 @@ import com.foodyshop.controller.AddTopicController;
 import com.foodyshop.controller.AddTopicController.IOnInsertTopicSuccess;
 
 import com.foodyshop.controller.EditCategoryController;
+import com.foodyshop.controller.EditCustomerController;
+import com.foodyshop.controller.EditCustomerController.IOnUpdateCustomer;
 import com.foodyshop.controller.EditOrderController;
 import com.foodyshop.controller.EditOrderController.IOnUpdateOrderSuccess;
+
 import com.foodyshop.controller.EditTopicController;
 import com.foodyshop.controller.EditTopicController.IOnUpdateSuccess;
 import com.foodyshop.controller.Order_DetailController;
 import com.foodyshop.controller.TestDemoController;
 import com.foodyshop.model.CategoryModel;
+import com.foodyshop.model.CustomerModel;
 import com.foodyshop.model.FeedbackModel;
 import com.foodyshop.model.OrderModel;
 import com.foodyshop.model.Order_DetailModel;
@@ -66,6 +70,7 @@ public class Navigator {
     private static final String EDIT_TOPIC_FORM = ROOT_FOLDER + "EditTopicForm.fxml";
     private static final String EDIT_ORDER_FORM = ROOT_FOLDER + "EditOrderForm.fxml";
     private static final String ADD_STAFF = ROOT_FOLDER + "AddStaff.fxml";
+    private static final String EDIT_CUSTOMER_FORM = ROOT_FOLDER + "EditCustomerForm.fxml";
     
     // Khai báo di chuyển giữa các màn hình
     public void goToLoginUI() {
@@ -149,6 +154,11 @@ public class Navigator {
         showModal("Add Staff ", ADD_STAFF);
         AddStaffController controller = fxLoader.getController();
 
+    }
+    public void showEditCustomerForm(CustomerModel customer,IOnUpdateCustomer mIOnUpdateCustomer) {
+        showModal("Edit Customer ", EDIT_CUSTOMER_FORM);
+        EditCustomerController controllerCustomer = fxLoader.getController();
+        controllerCustomer.initData(customer,modalStage,mIOnUpdateCustomer);
     }
     // </editor-fold> 
     private Navigator() {

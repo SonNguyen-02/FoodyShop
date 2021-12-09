@@ -45,10 +45,8 @@ public class EditOrderController implements Initializable {
     @FXML
     private Button btnCancel;
 
-    @FXML
     private Label lbOrderCode;
 
-    @FXML
     private TextField txtShipPrice;
 
     private IOnUpdateOrderSuccess mIOnUpdateOrderSuccess;
@@ -59,10 +57,13 @@ public class EditOrderController implements Initializable {
     }
 
     public void setData(OrderModel order, Stage stage, IOnUpdateOrderSuccess mIOnUpdateOrderSuccess) {
-        mOrder = order;
+        this.mOrder = order;
         this.stage = stage;
         this.mIOnUpdateOrderSuccess = mIOnUpdateOrderSuccess;
-        lbOrderCode.setText(order.getOrderCode().toString());
+        lbOrderCode.setText(order.getOrderCode());
+//        System.out.println(order.getOrderCode());
+//        System.out.println(order.getShipPrice());
+        
         txtShipPrice.setText(order.getShipPrice().toString());
         cbStatus.setItems(FXCollections.observableArrayList(OrderModel.WAIT_AOS_CF, OrderModel.AOS_CF, OrderModel.AOS_CL, OrderModel.WAIT_CUS_CF, OrderModel.CUS_CL, OrderModel.CUS_CF, OrderModel.SHIPPING, OrderModel.SUCCESS_DELIVERY));
         cbStatus.setValue(order.getStatusVal().get());
@@ -76,6 +77,7 @@ public class EditOrderController implements Initializable {
         // TODO
         btnCancel.setOnMouseClicked(this::onClickCancel);
         btnSave.setOnMouseClicked(this::onclickSave);
+        System.out.println("123");
     }
 
     private void onClickCancel(MouseEvent e) {

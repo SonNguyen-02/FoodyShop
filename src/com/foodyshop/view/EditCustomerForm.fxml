@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="360.0" prefWidth="575.0" style="-fx-background-color: linear-gradient(#8E78FF, #FC7D7B);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.EditOrderController">
+<AnchorPane id="AnchorPane" prefHeight="360.0" prefWidth="575.0" style="-fx-background-color: linear-gradient(#8E78FF, #FC7D7B);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.EditCustomerController">
    <children>
       <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="48.0" prefWidth="600.0" text="Edit Status Customer" textAlignment="CENTER" textFill="#bf3737" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>

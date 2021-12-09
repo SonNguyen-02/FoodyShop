@@ -111,7 +111,7 @@ public class CustomerModel {
         return name;
     }
 
-    public String getname() {
+    public String getName() {
         return name.getValue();
     }
 

@@ -122,7 +122,7 @@ public class OrderController implements Initializable {
            Navigator.getInstance().showEditOrder(order, new EditOrderController.IOnUpdateOrderSuccess() {
                @Override
                public void callback() {
-                   tblOrder.refresh();
+                tblOrder.refresh();
                }
            });
         } else {
