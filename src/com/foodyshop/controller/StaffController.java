@@ -31,54 +31,54 @@ import javafx.scene.control.TableView;
  * @author DELL
  */
 public class StaffController implements Initializable {
-
+    
     @FXML
     private TableView<StaffModel> tvStaff;
-
+    
     @FXML
     private TableColumn<StaffModel, Integer> tcStt;
-
+    
     @FXML
     private TableColumn<StaffModel, String> tcUsername;
-
+    
     @FXML
     private TableColumn<StaffModel, String> tcPassword;
-
+    
     @FXML
     private TableColumn<StaffModel, String> tcName;
-
+    
     @FXML
     private TableColumn<StaffModel, String> tcType;
-
+    
     @FXML
     private TableColumn<StaffModel, String> tcCreated;
-
+    
     @FXML
     private TableColumn<StaffModel, String> tcUpdated;
-
+    
     @FXML
     private TableColumn<StaffModel, String> tcStatus;
-
+    
     @FXML
     private Button btnAdd;
-
+    
     @FXML
     private Button btnEdit;
-
+    
     @FXML
     private Button btnLock;
-
+    
     @FXML
     private Button btnUnLock;
-
+    
     @FXML
     private Button btnChangePassword;
-
+    
     @FXML
     private Button btnDelete;
-
+    
     ObservableList<StaffModel> listStaff;
-
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         listStaff = FXCollections.observableArrayList();
@@ -96,22 +96,23 @@ public class StaffController implements Initializable {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddStaff());
+        // btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddStaff());
     }
-
+    
     @FXML
     void onClickAdd(ActionEvent event) {
 //        String password = "123456";
 //        String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
 //        System.out.println();
-
+        btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddStaff( /*new AddStaffController(). */));
+        
     }
-
+    
     @FXML
     void onClickChangePassword(ActionEvent event) {
-
+        
     }
-
+    
     @FXML
     void onClickDelete(ActionEvent event) {
         StaffModel staffModel = tvStaff.getSelectionModel().getSelectedItem();
@@ -121,36 +122,36 @@ public class StaffController implements Initializable {
             alerts.setHeaderText("Do you want delete " + staffModel.getUsername());
             alerts.showAndWait().ifPresent(btn -> {
                 if (btn == ButtonType.OK) {
-                  //  else {
-                        
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                            alert.setTitle("ERROR");
-                            alert.setHeaderText("Delete success!");
-                            alert.show();
-                            listStaff.remove(staffModel);
-                        } else {
-                            Alert alert = new Alert(Alert.AlertType.ERROR);
-                            alert.setTitle("ERROR");
-                            alert.setHeaderText("Delete error");
-                            alert.show();
-                        }
-                   // }
+                    //  else {
+                    
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("ERROR");
+                    alert.setHeaderText("Delete success!");
+                    alert.show();
+                    listStaff.remove(staffModel);
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("ERROR");
+                    alert.setHeaderText("Delete error");
+                    alert.show();
+                }
+                // }
                 
             });
-
+            
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
-            alert.setHeaderText("Please choose category");
+            alert.setHeaderText("Please choose staff");
             alert.show();
         }
     }
-
+    
     @FXML
     void onClickEdit(ActionEvent event) {
-
+        btnEdit.setOnMouseClicked(e -> Navigator.getInstance().showEditStaff());
     }
-
+    
     @FXML
     void onClickLock(ActionEvent event) {
         StaffModel staffModel = tvStaff.getSelectionModel().getSelectedItem();
@@ -163,7 +164,7 @@ public class StaffController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("confirm");
             alert.setContentText("Are you sure to lock this staff?");
-
+            
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 System.out.println("Click Ok");
@@ -173,7 +174,7 @@ public class StaffController implements Initializable {
             }
         }
     }
-
+    
     @FXML
     void onClickUnLock(ActionEvent event) {
         StaffModel staffModel = tvStaff.getSelectionModel().getSelectedItem();
@@ -186,7 +187,7 @@ public class StaffController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("confirm");
             alert.setContentText("Are you sure to unlock this staff?");
-
+            
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 System.out.println("Click Ok");
@@ -196,5 +197,5 @@ public class StaffController implements Initializable {
             }
         }
     }
-
+    
 }

@@ -13,6 +13,7 @@ import com.foodyshop.controller.EditCustomerController.IOnUpdateCustomer;
 import com.foodyshop.controller.EditCategoryController.IOnEditCategorySuccess;
 import com.foodyshop.controller.EditOrderController;
 import com.foodyshop.controller.EditOrderController.IOnUpdateOrderSuccess;
+import com.foodyshop.controller.EditStaffController;
 
 import com.foodyshop.controller.EditTopicController;
 import com.foodyshop.controller.EditTopicController.IOnUpdateSuccess;
@@ -75,6 +76,7 @@ public class Navigator {
     private static final String EDIT_TOPIC_FORM = ROOT_FOLDER + "EditTopicForm.fxml";
     private static final String EDIT_ORDER_FORM = ROOT_FOLDER + "EditOrderForm.fxml";
     private static final String ADD_STAFF = ROOT_FOLDER + "AddStaff.fxml";
+    private static final String EDIT_STAFF = ROOT_FOLDER + "EditStaff.fxml";
     private static final String EDIT_CUSTOMER_FORM = ROOT_FOLDER + "EditCustomerForm.fxml";
     
     // Khai báo di chuyển giữa các màn hình
@@ -164,6 +166,10 @@ public class Navigator {
         AddStaffController controller = fxLoader.getController();
 
     }
+    public void showEditStaff() {
+        showModal("Edit Staff ", EDIT_STAFF);
+        EditStaffController controller = fxLoader.getController();
+    }
     public void showEditCustomerForm(CustomerModel customer,IOnUpdateCustomer mIOnUpdateCustomer) {
         showModal("Edit Customer ", EDIT_CUSTOMER_FORM);
         EditCustomerController controllerCustomer = fxLoader.getController();
@@ -244,3 +250,4 @@ public class Navigator {
     }
 
 }
+

@@ -15,6 +15,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -66,7 +68,7 @@ public class StaffHelper {
                 String updatedDB = rs.getString("updated");
                 String statusDB = rs.getString("status");
 
-                StaffModel ls = new StaffModel(idDB, usernameDB, passwordDB, nameDB, createdDB, updatedDB, typeDB, statusDB);
+                StaffModel ls = new StaffModel(idDB, usernameDB, passwordDB, nameDB, typeDB, createdDB, updatedDB, statusDB);
                 listStaff.add(ls);
             }
         } finally {
@@ -75,13 +77,42 @@ public class StaffHelper {
         return listStaff;
     }
 
-//    public static boolean insertStaff(StaffModel staffModel){
+    public static StaffModel insertStaff(StaffModel staffModel) {
+        String sql = db.insert("fs_staff")
+                .set("username", staffModel.getUsername())
+                .set("password", staffModel.getPassword())
+                .set("name", staffModel.getName())
+                .set("type", staffModel.getType())
+                .getCompiledInsert(true);
+
+        int username = DBConnection.execInsert(sql);
+        if (username > 0) {
+            try {
+                sql = db.select().from("fs_staff").where("username", String.valueOf(username)).getCompiledSelect(true);
+                ResultSet rs = DBConnection.execSelect(sql);
+                if (rs.next()) {
+                   // staffModel.setId(lastId);
+                    staffModel.setUsername(rs.getString("username"));
+                    staffModel.setPassword(rs.getString("password"));
+                    staffModel.setName(rs.getString("name"));
+                    staffModel.setType(rs.getString("type"));
+                    return staffModel;
+                }
+            } catch (SQLException ex) {
+                //Logger.getLogger(StaffHelper.class.getName()).log(Level.SEVERE,null,ex);
+               // Logger.getLogger(StaffHelper.class.getName()).log(Level.SEVERE, null, ex);
+               ex.printStackTrace();
+            } finally {
+                DBConnection.close();
+            }
+        }
+        return null;
 //        try{
 //            String query = "INSERT INTO `fs_staff`( `username`, `password`, `name`, `type`, `status`) VALUES(?,?,?,?,?)";
 //        ResultSet rs = DBConnection.execSelect(query);
 //        }
 //        return false;
-//    }
+    }
 
     public static ObservableList<ProductModel> getAll() {
         ObservableList<ProductModel> list = FXCollections.observableArrayList();
@@ -108,4 +139,6 @@ public class StaffHelper {
         }
         return list;
     }
+
+
 }

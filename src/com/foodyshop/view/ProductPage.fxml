@@ -9,10 +9,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="1120.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="com.foodyshop.controller.ProductController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="1120.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.ProductController">
    <children>
-      <TableView layoutY="-2.0" prefHeight="587.0" prefWidth="1120.0">
+      <TableView fx:id="tblProduct" layoutY="-2.0" prefHeight="587.0" prefWidth="1120.0">
         <columns>
           <TableColumn fx:id="tcStt" prefWidth="46.0" text="STT" />
           <TableColumn fx:id="tcCateName" prefWidth="147.0" text="category name" />
