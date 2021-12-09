@@ -5,6 +5,7 @@ import com.foodyshop.controller.AddCategoryController.IOnAddSuccess;
 import com.foodyshop.controller.AddStaffController;
 import com.foodyshop.controller.AddTopicController;
 import com.foodyshop.controller.AddTopicController.IOnInsertTopicSuccess;
+import com.foodyshop.controller.CustomerDetailController;
 
 import com.foodyshop.controller.EditCategoryController;
 import com.foodyshop.controller.EditCustomerController;
@@ -65,7 +66,7 @@ public class Navigator {
     private static final String STAFF_PAGE = ROOT_FOLDER + "StaffUI.fxml";
     private static final String SALE_PAGE = ROOT_FOLDER + "SalePage.fxml";
     private static final String PRODUCT_PAGE = ROOT_FOLDER + "ProductPage.fxml";
-
+    private static final String CUSTOMER_DETAIL = ROOT_FOLDER + "CustomerDetailPage.fxml";
 
     // FORM
     private static final String ADD_CATEGORY_FORM = ROOT_FOLDER + "AddCategoryForm.fxml";
@@ -167,6 +168,12 @@ public class Navigator {
         showModal("Edit Customer ", EDIT_CUSTOMER_FORM);
         EditCustomerController controllerCustomer = fxLoader.getController();
         controllerCustomer.initData(customer,modalStage,mIOnUpdateCustomer);
+    }
+    
+    public void showCustomerDetail(CustomerModel customer) {
+        showModal("Customer Detail ", CUSTOMER_DETAIL);
+        CustomerDetailController controller = fxLoader.getController();
+        controller.initCutomerModel(customer);
     }
     // </editor-fold> 
     private Navigator() {

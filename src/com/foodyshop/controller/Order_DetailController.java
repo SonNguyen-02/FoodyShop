@@ -42,8 +42,7 @@ import javafx.scene.text.TextAlignment;
 public class Order_DetailController implements Initializable {
 
     private OrderModel mOrder;
-    private Order_DetailModel mOrder_detail;
-
+    
     @FXML
     private Label lbOrder_Code, lbTotalPrice, lbTotalProduct, lbName, lbPhone, lbAddress, lbFeedback, lbNote,lbContentSale,lbStart,lbEnd;
 
@@ -71,7 +70,6 @@ public class Order_DetailController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    ArrayList<String> product = new ArrayList<>();
     ObservableList<Order_DetailModel> listOrder_Detail = FXCollections.observableArrayList();
     DecimalFormat formatter = new DecimalFormat("###,###,###");
 
