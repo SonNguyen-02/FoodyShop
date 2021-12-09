@@ -6,6 +6,7 @@
 package com.foodyshop.controller;
 
 import com.foodyshop.main.Navigator;
+import com.foodyshop.model.StaffModel;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -22,7 +23,7 @@ import javafx.scene.control.TextField;
  * @author DELL
  */
 public class EditStaffController implements Initializable {
-
+    private StaffModel staff;
     @FXML
     private TextField txtUsername;
 
@@ -41,6 +42,10 @@ public class EditStaffController implements Initializable {
     @FXML
     private Button btnCancel;
 
+    public void setDataStaff(StaffModel staff){
+        this.staff = staff;
+    }
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
