@@ -66,8 +66,11 @@ public class EditCategoryController implements Initializable {
         topicList = TopicHelper.getAllTopic();
         if (topicList != null && !topicList.isEmpty()) {
             cbTopic.setItems(topicList);
-            cbTopic.setValue(topicList.get(0));
+            System.out.println(category.getTopic_id());
+            System.out.println(topicList.size());
             for (TopicModel topic : topicList) {
+                
+                System.out.println(topic + " | " + topic.getId());
                 if(topic.getId() == category.getTopic_id()){
                     cbTopic.setValue(topic);
                     break;

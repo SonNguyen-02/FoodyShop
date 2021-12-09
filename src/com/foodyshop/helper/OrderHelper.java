@@ -9,11 +9,14 @@ import com.foodyshop.database.DBConnection;
 import com.foodyshop.database.DBQuery;
 import com.foodyshop.database.DBQueryBuilder;
 import com.foodyshop.model.OrderModel;
+import com.foodyshop.model.ProductModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -63,4 +66,5 @@ public class OrderHelper {
         }
         return false;
     }
+    
 }

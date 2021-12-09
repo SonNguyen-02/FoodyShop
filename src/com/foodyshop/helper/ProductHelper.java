@@ -33,10 +33,10 @@ public class ProductHelper {
             while (rs.next()) {
                 ProductModel product = new ProductModel();
                 product.setId(rs.getInt("id"));
-                product.setCategoryName(rs.getString("name"));
+                product.setCategoryName(rs.getString("ct.name"));
                 product.setDescription(rs.getString("description"));
                 product.setPrice(rs.getInt("price"));
-                product.setName(rs.getString("name"));
+                product.setName(rs.getString("pd.name"));
                 product.setCreated(rs.getString("created"));
                 product.setStatus(rs.getInt("status"));
                 listProduct.add(product);
@@ -50,9 +50,21 @@ public class ProductHelper {
     }
     
     
-    
-    
-    
+    public static boolean delete(ProductModel product) {
+        try {
+            String sql = "delete from fs_product where id = ?";
+            PreparedStatement stm = DBConnection.getConnection().prepareStatement(sql);
+            stm.setInt(1, product.getId());
+            if (stm.executeUpdate() > 0) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryHelper.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBConnection.close();
+        }
+        return false;
+    }
     
     
     public static boolean isCategoryHasLinkToProducts(CategoryModel category) {
