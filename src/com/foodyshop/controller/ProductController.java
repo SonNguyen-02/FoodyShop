@@ -21,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -48,7 +49,7 @@ public class ProductController implements Initializable {
     private TableColumn<ProductModel, Integer> tcPrice;
 
     @FXML
-    private TableColumn<ProductModel, ?> tcImg;
+    private TableColumn<ProductModel, ImageView> tcImg;
 
     @FXML
     private TableColumn<ProductModel, ?> tcImgdetail;
@@ -63,7 +64,7 @@ public class ProductController implements Initializable {
     private TableColumn<ProductModel, ?> tcLK;
 
     @FXML
-    private Button btnAdd,btnEdit,btnDelete;
+    private Button btnAdd,btnEdit,btnDelete,btnProductDetail;
 
     ObservableList<ProductModel> listProduct = FXCollections.observableArrayList();
     @Override
@@ -74,6 +75,7 @@ public class ProductController implements Initializable {
         tcPrice.setCellValueFactory(cellValue -> cellValue.getValue().getPriceProperty());
         tcCreated.setCellValueFactory(cellValue -> cellValue.getValue().getCreatedProperty());
         tcStatus.setCellValueFactory(cellValue -> cellValue.getValue().getStatusVal());
+        tcImg.setCellValueFactory(cellValue -> cellValue.getValue().getImgView());
         listProduct = ProductHelper.getAllCategory();
         tblProduct.setItems(listProduct);
         btnDelete.setOnMouseClicked(this::onClickDelete);

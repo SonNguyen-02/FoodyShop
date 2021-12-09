@@ -50,6 +50,17 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
+               <HBox.margin>
+                  <Insets right="30.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnProductDetail" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #f54020; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Product Detail" textFill="WHITE" textOverrun="CLIP">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
          </children>
       </HBox>
