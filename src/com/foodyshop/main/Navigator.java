@@ -9,6 +9,7 @@ import com.foodyshop.controller.AddTopicController.IOnInsertTopicSuccess;
 import com.foodyshop.controller.EditCategoryController;
 import com.foodyshop.controller.EditCustomerController;
 import com.foodyshop.controller.EditCustomerController.IOnUpdateCustomer;
+import com.foodyshop.controller.EditCategoryController.IOnEditCategorySuccess;
 import com.foodyshop.controller.EditOrderController;
 import com.foodyshop.controller.EditOrderController.IOnUpdateOrderSuccess;
 
@@ -62,7 +63,12 @@ public class Navigator {
     private static final String TOPIC_PAGE = ROOT_FOLDER + "TopicPage.fxml";
     private static final String FEEDBACK_PAGE = ROOT_FOLDER + "FeedbackUI.fxml";
     private static final String STAFF_PAGE = ROOT_FOLDER + "StaffUI.fxml";
+
     private static final String SALE_PAGE = ROOT_FOLDER + "SalePage.fxml";
+
+    private static final String PRODUCT_PAGE = ROOT_FOLDER + "ProductPage.fxml";
+
+
     // FORM
     private static final String ADD_CATEGORY_FORM = ROOT_FOLDER + "AddCategoryForm.fxml";
     private static final String EDIT_CATEGORY_FORM = ROOT_FOLDER + "EditCategoryForm.fxml";
@@ -113,6 +119,10 @@ public class Navigator {
     public void loadSale(BorderPane borderPane) {
         borderPane.setCenter(getParent(SALE_PAGE));
     }
+    
+     public void loadProduct(BorderPane borderPane) {
+        borderPane.setCenter(getParent(PRODUCT_PAGE));
+    }
 
     // Show Modal
     public void showOrder_Detail(OrderModel order) {
@@ -127,10 +137,10 @@ public class Navigator {
         controller.initCallback(mIOnAddSuccess);
     }
 
-    public void showEditCategory(CategoryModel category) {
+    public void showEditCategory( CategoryModel category, IOnEditCategorySuccess mIOnEditCategorySuccess) {
         showModal("Edit Category ", EDIT_CATEGORY_FORM);
         EditCategoryController controller = fxLoader.getController();
-        controller.setData(category);
+        controller.setData(modalStage,category, mIOnEditCategorySuccess);
     }
 
     public void showAddTopic(IOnInsertTopicSuccess mIOnInsertTopicSuccess) {

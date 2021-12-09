@@ -34,7 +34,7 @@ public class CategoryController implements Initializable {
     private TableColumn<CategoryModel, Integer> tcID;
 
     @FXML
-    private TableColumn<CategoryModel, Integer> tcTopicID;
+    private TableColumn<CategoryModel, String> tcTopicID;
 
     @FXML
     private TableColumn<CategoryModel, String> tcName;
@@ -61,7 +61,7 @@ public class CategoryController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         tcID.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tblCategory.getItems().indexOf(cellData.getValue()) + 1) + ""));
-        tcTopicID.setCellValueFactory(cellValue -> cellValue.getValue().getTopic_idProperty());
+        tcTopicID.setCellValueFactory(cellValue -> cellValue.getValue().getTopicNameProperty());
         tcName.setCellValueFactory(cellValue -> cellValue.getValue().getNameProperty());
         tcCreated.setCellValueFactory(cellValue -> cellValue.getValue().getCreatedProperty());
         tcStatus.setCellValueFactory(cellValue -> cellValue.getValue().getStatusVal());
@@ -120,7 +120,13 @@ public class CategoryController implements Initializable {
     private void onClickEdit(MouseEvent e){
         CategoryModel category = tblCategory.getSelectionModel().getSelectedItem();
         if(category !=null){
-            Navigator.getInstance().showEditCategory(category);
+            Navigator.getInstance().showEditCategory(category, new EditCategoryController.IOnEditCategorySuccess() {
+                @Override
+                public void callback() {
+                    tblCategory.refresh();
+                }
+            });
+            
         }else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
