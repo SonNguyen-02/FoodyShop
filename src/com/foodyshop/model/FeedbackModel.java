@@ -57,12 +57,12 @@ public class FeedbackModel {
         contentProperty = new SimpleStringProperty(content);
         createdProperty = new SimpleStringProperty(created);
         updatedProperty = new SimpleStringProperty(updated);
-        statusProperty = new SimpleStringProperty(status);
+        statusProperty = new SimpleStringProperty();
 
-        if (this.status==status) {
-            this.statusProperty = new SimpleStringProperty("show");
+        if (this.status.equals("0")) {
+            this.statusProperty.set(STATUS_SHOW);
         }else{
-            this.statusProperty = new SimpleStringProperty("hidden");
+            this.statusProperty.set(STATUS_HIDDEN);
         }
     }
 
@@ -97,10 +97,7 @@ public class FeedbackModel {
     public StringProperty getStatusProperty() {
         return statusProperty;
     }
-
-    
-    
-    
+ 
     
     public int getID() {
         return ID;
@@ -169,9 +166,13 @@ public class FeedbackModel {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-        this.statusProperty.setValue(status);
+    public void setStatus(String statusVal) {
+        this.statusProperty.setValue(statusVal);
+        if(statusVal.equals(STATUS_SHOW)){
+            this.status = "0";
+        }else{
+            this.status = "1";
+        }
     }
 
 }

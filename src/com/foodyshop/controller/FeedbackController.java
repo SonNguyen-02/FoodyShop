@@ -5,7 +5,7 @@
  */
 package com.foodyshop.controller;
 
-import com.foodyshop.helper.DBFeedbackHelper;
+import com.foodyshop.helper.FeedbackHelper;
 import com.foodyshop.model.FeedbackModel;
 import java.net.URL;
 import java.sql.SQLException;
@@ -78,7 +78,7 @@ public class FeedbackController implements Initializable {
         tcStatus.setCellValueFactory(cellData -> cellData.getValue().getStatusProperty());
 
         try {
-            listFeedback.addAll(DBFeedbackHelper.showAllFeedback());
+            listFeedback.addAll(FeedbackHelper.showAllFeedback());
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -96,11 +96,21 @@ public class FeedbackController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("confirm");
             alert.setContentText("Are you sure to hidden this feedback?");
-
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 System.out.println("Click Ok");
-                fbmodel.setStatus("hidden");
+                fbmodel.setStatus(FeedbackModel.STATUS_HIDDEN);
+                if(updStatus(fbmodel)){
+                    alert.setAlertType(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Success");
+                    alert.setHeaderText("Update success!");
+                    alert.show();
+                }else{
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Update false!");
+                    alert.show();
+                }
             } else {
                 System.out.println("Click Cancel");
             }
@@ -124,12 +134,27 @@ public class FeedbackController implements Initializable {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 System.out.println("Click Ok");
-                fbmodel.setStatus("show");
+                fbmodel.setStatus(FeedbackModel.STATUS_SHOW);
+                if(updStatus(fbmodel)){
+                    alert.setAlertType(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Success");
+                    alert.setHeaderText("Update success!");
+                    alert.show();
+                }else{
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Update false!");
+                    alert.show();
+                }
             } else {
                 System.out.println("Click Cancel");
             }
 
         }
+    }
+    
+    private boolean updStatus(FeedbackModel fb){
+        return FeedbackHelper.updateStatusFb(fb);
     }
 
 }
