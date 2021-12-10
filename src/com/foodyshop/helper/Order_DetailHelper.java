@@ -10,6 +10,7 @@ import com.foodyshop.database.DBQuery;
 import com.foodyshop.database.DBQueryBuilder;
 import com.foodyshop.model.OrderModel;
 import com.foodyshop.model.Order_DetailModel;
+import com.foodyshop.model.ProductModel;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -59,4 +60,23 @@ public class Order_DetailHelper {
         }
         return listOrder_Detail;
     }
+
+    public static boolean isProductHasLinkToOrder_detail(ProductModel product) {
+
+        try {
+            String sql = "SELECT * FROM `fs_order_detail` WHERE product_id = ? LIMIT 1";
+            PreparedStatement stm = DBConnection.getConnection().prepareStatement(sql);
+
+            stm.setInt(1, product.getId());
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+
+    }
+
 }

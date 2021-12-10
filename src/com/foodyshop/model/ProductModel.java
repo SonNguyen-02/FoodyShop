@@ -6,6 +6,7 @@
 package com.foodyshop.model;
 
 import com.foodyshop.database.DBConnection;
+import static com.foodyshop.main.Config.IMG_TOPIC_DIR;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,6 +18,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  *
@@ -35,6 +37,7 @@ public class ProductModel {
     private StringProperty created;
     private StringProperty statusVal;
     private StringProperty categoryName;
+    private ObservableValue<ImageView> imgView;
 
 
 
@@ -128,9 +131,9 @@ public class ProductModel {
     public void setImgDetail(String imgDetail) {
         this.imgDetail = imgDetail;
     }
-    public void setImg(String img) {
-        this.img = img;
-    }
+//    public void setImg(String img) {
+//        this.img = img;
+//    }
     public void setCreated(String created) {
         this.created.setValue(created);
     }
@@ -158,7 +161,14 @@ public class ProductModel {
             this.statusVal.setValue(SOLD_OUT);
         }
     }
-    
-    
+    public void setImg(String img) {
+        this.img = img;
+        String url = IMG_TOPIC_DIR + img;
+        Image image = new Image(url, 100, 100, false, true, true);
+        this.imgView = new SimpleObjectProperty<>(new ImageView(image));
+    }
+       public ObservableValue<ImageView> getImgView() {
+        return imgView;
+    }
 }
 

@@ -7,25 +7,21 @@ package com.foodyshop.controller;
 
 import com.foodyshop.helper.OrderHelper;
 import com.foodyshop.main.Navigator;
-import com.foodyshop.model.FeedbackModel;
 import com.foodyshop.model.OrderModel;
-import com.foodyshop.model.Order_DetailModel;
 import java.net.URL;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -77,6 +73,9 @@ public class OrderController implements Initializable {
     @FXML
     private Button btnOrder_detail;
 
+    @FXML
+    private TextField txtSearch;
+
     ObservableList<OrderModel> listOrder = FXCollections.observableArrayList();
 
     /**
@@ -90,7 +89,7 @@ public class OrderController implements Initializable {
         btnEditStatus.setOnMouseClicked(this::onclickShowEditOrder);
         btnOrder_detail.setOnMouseClicked(this::onclickShowOrderDetail);
 
-        tcId.setCellValueFactory(cellValue -> cellValue.getValue().getIdProperty());
+        tcId.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tblOrder.getItems().indexOf(cellData.getValue()) + 1) + ""));
         tcOrder_code.setCellValueFactory(cellValue -> cellValue.getValue().getOrderCodeProperty());
         tcName.setCellValueFactory(cellValue -> cellValue.getValue().getNameProperty());
         tcAddress.setCellValueFactory(cellValue -> cellValue.getValue().getAddressProperty());
@@ -102,6 +101,43 @@ public class OrderController implements Initializable {
         tcStatus.setCellValueFactory(cellValue -> cellValue.getValue().getStatusVal());
         listOrder = OrderHelper.getAllOrder();
         tblOrder.setItems(listOrder);
+
+        FilteredList<OrderModel> filteredData = new FilteredList<>(listOrder, b -> true);
+        txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(OrderModel -> {
+
+                if (newValue.isEmpty() || newValue == null) {
+                    return true;
+                }
+
+                String searchKeyword = newValue.toLowerCase();
+
+                if (OrderModel.getName().toLowerCase().indexOf(searchKeyword) > -1) {
+                    return true;
+                } else if (OrderModel.getName().toLowerCase().indexOf(searchKeyword) > -1) {
+                    return true;
+                } else if (OrderModel.getOrderCode().toLowerCase().indexOf(searchKeyword) > -1) {
+                    return true;
+                } else if (OrderModel.getAddress().toLowerCase().indexOf(searchKeyword) > -1) {
+                    return true;
+                } else if (OrderModel.getPhone().toLowerCase().indexOf(searchKeyword) > -1) {
+                    return true;
+                } else if (OrderModel.getNote().toLowerCase().indexOf(searchKeyword) > -1) {
+                    return true;
+                } else if (OrderModel.getTotalMoney().toString().indexOf(searchKeyword) > -1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+
+        SortedList<OrderModel> sortedData = new SortedList<>(filteredData);
+
+        sortedData.comparatorProperty().bind(tblOrder.comparatorProperty());
+
+        tblOrder.setItems(sortedData);
+
     }
 
     private void onclickShowOrderDetail(MouseEvent e) {
