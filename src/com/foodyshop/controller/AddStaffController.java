@@ -45,6 +45,19 @@ public class AddStaffController implements Initializable {
 
     @FXML
     private Button btnCancel;
+    
+    private IOnAddSuccess mIOnAddSuccess;
+
+
+    public interface IOnAddSuccess {
+
+        void onAddSuccess(StaffModel staff);
+    }
+
+    public void initCallback(IOnAddSuccess mIOnAddSuccess) {
+        this.mIOnAddSuccess = mIOnAddSuccess;
+    }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -107,6 +120,10 @@ public class AddStaffController implements Initializable {
             });
         }
 
+        StaffModel staff = new StaffModel();
+        staff.setUsername(userName);
+        staff.setPassword(password);
+        staff.setName(name);
     }
 
 }

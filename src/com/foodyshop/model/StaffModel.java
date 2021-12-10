@@ -66,10 +66,10 @@ public class StaffModel {
             this.typeProperty = new SimpleStringProperty(TYPE_STAFF);
         }
         
-        if (this.status==status) {
-            this.statusProperty = new SimpleStringProperty(STATUS_UNLOCK);
+        if (this.status.equals("0")) {
+            this.statusProperty.set(STATUS_UNLOCK);
         }else{
-            this.statusProperty = new SimpleStringProperty(STATUS_LOCK);
+            this.statusProperty.set(STATUS_LOCK);
         }
     }
 
@@ -175,9 +175,13 @@ public class StaffModel {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatus(String statusVal) {
         this.statusProperty.setValue(status);
+        if(statusVal.equals(STATUS_UNLOCK)){
+            this.status ="0";
+        }else{
+            this.status = "1";
+        }
     }
 
    
