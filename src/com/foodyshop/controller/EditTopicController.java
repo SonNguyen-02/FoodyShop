@@ -9,7 +9,6 @@ import com.foodyshop.helper.FormHelper;
 import com.foodyshop.helper.TopicHelper;
 import static com.foodyshop.main.Config.IMG_TOPIC_DIR;
 import com.foodyshop.main.Const;
-import static com.foodyshop.main.Const.PLACEHOLDER_IMG_PATH;
 import com.foodyshop.main.Navigator;
 import com.foodyshop.main.UploadImageToApi;
 import com.foodyshop.model.CategoryModel;
@@ -37,6 +36,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import static com.foodyshop.main.Const.PLACEHOLDER_NO_IMG_PATH;
 
 /**
  * FXML Controller class
@@ -198,7 +198,7 @@ public class EditTopicController implements Initializable {
 
     private void setDefaultImg(Button btnChoose, ImageView imgView) {
         btnChoose.setText("Choose files");
-        imgView.setImage(new Image("file:" + PLACEHOLDER_IMG_PATH));
+        imgView.setImage(new Image("file:" + PLACEHOLDER_NO_IMG_PATH));
     }
 
 }

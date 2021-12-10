@@ -1,6 +1,8 @@
 package com.foodyshop.model;
 
 import static com.foodyshop.main.Config.IMG_TOPIC_DIR;
+import com.foodyshop.main.Const;
+import static com.foodyshop.main.Const.PLACEHOLDER_NO_IMG_PATH;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -126,7 +128,13 @@ public class CustomerModel {
     public void setImg(String img) {
         this.img = img;
         String url = IMG_TOPIC_DIR + img;
-        Image image = new Image(url, 100, 100, false, true, true);
+        Image image = null;
+
+        image = new Image(url, 64, 64, false, true);
+        if (!image.getException().getMessage().isEmpty()) {
+            image = new Image("file:" + Const.PLACEHOLDER_USER_IMG_PATH, 100, 100, false, true);
+        }
+         
         this.imgView = new SimpleObjectProperty<>(new ImageView(image));
     }
 
@@ -153,7 +161,7 @@ public class CustomerModel {
     public int getStatus() {
         return status;
     }
-    
+
     public StringProperty getStatusVal() {
         return statusVal;
     }
@@ -161,19 +169,18 @@ public class CustomerModel {
     public StringProperty getGenderVal() {
         return genderVal;
     }
-    
-     public void setGender(Integer gender) {
+
+    public void setGender(Integer gender) {
         this.gender.setValue(gender);
         if (gender == 0) {
             this.genderVal.setValue(MALE);
-        }else if(gender == 1){
+        } else if (gender == 1) {
             this.genderVal.setValue(FEMALE);
-        }
-        else {
+        } else {
             this.genderVal.setValue(ORTHER);
         }
     }
-    
+
     public void setStatus(Integer status) {
         this.status = status;
         if (status == 1) {
@@ -182,12 +189,12 @@ public class CustomerModel {
             this.statusVal.setValue(UNLOCK);
         }
     }
-    
-    public  void setStatusVal(String statusval){
-        this.statusVal.set(statusval);
-        if(statusVal.equals(UNLOCK)){
+
+    public void setStatusVal(String statusVal) {
+        this.statusVal.set(statusVal);
+        if (statusVal.equals(UNLOCK)) {
             this.status = 0;
-        }else{
+        } else {
             this.status = 1;
         }
     }
