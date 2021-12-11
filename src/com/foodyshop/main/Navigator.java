@@ -68,6 +68,7 @@ public class Navigator {
     private static final String SALE_PAGE = ROOT_FOLDER + "SalePage.fxml";
     private static final String PRODUCT_PAGE = ROOT_FOLDER + "ProductPage.fxml";
     private static final String CUSTOMER_DETAIL = ROOT_FOLDER + "CustomerDetailPage.fxml";
+    private static final String ACCOUNT_PAGE = ROOT_FOLDER + "Account.fxml";
 
     // FORM
     private static final String ADD_CATEGORY_FORM = ROOT_FOLDER + "AddCategoryForm.fxml";
@@ -124,6 +125,10 @@ public class Navigator {
      public void loadProduct(BorderPane borderPane) {
         borderPane.setCenter(getParent(PRODUCT_PAGE));
     }
+     
+     public void loadAccount(BorderPane borderPane) {
+        borderPane.setCenter(getParent(ACCOUNT_PAGE));
+    }
 
     // Show Modal
     public void showOrder_Detail(OrderModel order) {
@@ -164,7 +169,7 @@ public class Navigator {
     public void showAddStaff() {
         showModal("Add Staff ", ADD_STAFF);
         AddStaffController controller = fxLoader.getController();
-
+        //controller.initCallback(mIOnAddSuccess);
     }
     public void showEditStaff() {
         showModal("Edit Staff ", EDIT_STAFF);
@@ -248,6 +253,8 @@ public class Navigator {
     public void setModalStage(Stage modalStage) {
         this.modalStage = modalStage;
     }
+
+    
 
 }
 

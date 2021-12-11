@@ -111,36 +111,37 @@ public class MainController implements Initializable {
         item.setOpacity(NAV_DEF_OPACITY);
     }
 
-      
     private void initClickNavItem() {
         dashboardPage.setOnMouseClicked(e -> {
             Navigator.getInstance().loadDashboard(rightLayout);
         });
         orderPage.setOnMouseClicked(e -> {
             Navigator.getInstance().loadOrder(rightLayout);
-        });   
-        customerPage.setOnMouseClicked(e ->{
-             Navigator.getInstance().loadCustomer(rightLayout);
         });
-        feedbackPage.setOnMouseClicked(e ->{
-           Navigator.getInstance().loadFeedback(rightLayout);
+        customerPage.setOnMouseClicked(e -> {
+            Navigator.getInstance().loadCustomer(rightLayout);
+        });
+        feedbackPage.setOnMouseClicked(e -> {
+            Navigator.getInstance().loadFeedback(rightLayout);
 
-        }); 
-        categoryPage.setOnMouseClicked(e ->{
+        });
+        categoryPage.setOnMouseClicked(e -> {
             Navigator.getInstance().loadCategory(rightLayout);
         });
-        topicPage.setOnMouseClicked(e ->{
+        topicPage.setOnMouseClicked(e -> {
             Navigator.getInstance().loadTopic(rightLayout);
         });
-        staffPage.setOnMouseClicked(e ->{
+        staffPage.setOnMouseClicked(e -> {
             Navigator.getInstance().loadStaff(rightLayout);
         });
-        productPage.setOnMouseClicked(e ->{
+        productPage.setOnMouseClicked(e -> {
             Navigator.getInstance().loadProduct(rightLayout);
-        });    
-        salePage.setOnMouseClicked(e ->{
+        });
+        salePage.setOnMouseClicked(e -> {
             Navigator.getInstance().loadSale(rightLayout);
         });
+        accountSettingPage.setOnMouseClicked(e -> {
+            Navigator.getInstance().loadAccount(rightLayout);
+        });
     }
-
 }

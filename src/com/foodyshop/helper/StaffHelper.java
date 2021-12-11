@@ -94,7 +94,6 @@ public class StaffHelper {
                     return staffModel;
                 }
             } catch (SQLException ex) {
-                //Logger.getLogger(StaffHelper.class.getName()).log(Level.SEVERE,null,ex);
                // Logger.getLogger(StaffHelper.class.getName()).log(Level.SEVERE, null, ex);
                ex.printStackTrace();
             } finally {
@@ -105,5 +104,13 @@ public class StaffHelper {
 
     }
 
-
+public static boolean updateStatusStaff(StaffModel staff){
+    String sql = db.update("fs_staff")
+                .set("status", staff.getStatus())
+                .where("id", String.valueOf(staff.getId()))
+                .getCompiledUpdate(true);
+        int n = DBConnection.execUpdate(sql);
+        DBConnection.close();
+    return n >0;
+}
 }
