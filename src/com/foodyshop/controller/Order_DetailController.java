@@ -123,10 +123,10 @@ public class Order_DetailController implements Initializable {
                 final int index = row.getIndex();
                 if (index < 0 || index >= tblOrder_detail.getItems().size()) {
                     tblOrder_detail.getSelectionModel().clearSelection();
-                    lbFeedback.setText("");
-                    lbContentSale.setText("");
-                    lbStart.setText("");
-                    lbEnd.setText("");
+                    lbFeedback.setText("Choose one!");
+                    lbContentSale.setText("Choose one!");
+                    lbStart.setText("null");
+                    lbEnd.setText("null");
                     event.consume();
                 }
             });

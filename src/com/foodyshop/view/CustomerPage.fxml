@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.CustomerController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.CustomerController">
    <children>
       <TableView fx:id="tblCustomer" layoutX="19.0" layoutY="29.0" prefHeight="500.0" prefWidth="841.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="100.0">
          <columns>
@@ -28,14 +28,14 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <HBox layoutX="360.0" layoutY="624.0" prefHeight="42.0" prefWidth="469.0" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="360.0" AnchorPane.rightAnchor="99.0" AnchorPane.topAnchor="620.0">
+      <HBox layoutX="360.0" layoutY="624.0" prefHeight="42.0" prefWidth="450.0" AnchorPane.rightAnchor="85.0" AnchorPane.topAnchor="609.0">
          <children>
             <Button fx:id="btnEditStatus" minHeight="40.0" minWidth="120.0" mnemonicParsing="false" style="-fx-background-color: #3499fb; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); -fx-cursor: hand;" text="Edit Status" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button fx:id="btnCustomerDetail" minHeight="40.0" minWidth="126.0" mnemonicParsing="false" style="-fx-background-color: #FF6633; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); -fx-cursor: hand;" text="Customer Detail" textFill="#f6f6f6">
+            <Button fx:id="btnCustomerDetail" minHeight="40.0" minWidth="144.0" mnemonicParsing="false" style="-fx-background-color: #FF6633; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); -fx-cursor: hand;" text="Customer Detail" textFill="#f6f6f6">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>

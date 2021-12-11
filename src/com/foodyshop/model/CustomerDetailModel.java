@@ -31,6 +31,8 @@ public class CustomerDetailModel {
     private StringProperty created;
     int status;
     private StringProperty statusVal;
+    private StringProperty note;
+    private StringProperty content;
 
     public CustomerDetailModel() {
         this.id = new SimpleObjectProperty<>();
@@ -38,12 +40,14 @@ public class CustomerDetailModel {
         this.totalMoney = new SimpleObjectProperty<>();
         this.created = new SimpleStringProperty();
         statusVal = new SimpleStringProperty();
+        this.note = new SimpleStringProperty();
+        this.content = new SimpleStringProperty();
     }
 
-     public Integer getId() {
+    public Integer getId() {
         return id.getValue();
     }
-    
+
     public ObjectProperty<Integer> getIdProperty() {
         return id;
     }
@@ -68,6 +72,13 @@ public class CustomerDetailModel {
         return statusVal;
     }
 
+    public String getNote() {
+        return note.getValue();
+    }
+    
+    public String getContent() {
+        return content.getValue();
+    }
     
     public void setId(Integer id) {
         this.id.setValue(id);
@@ -85,32 +96,40 @@ public class CustomerDetailModel {
         this.created.setValue(created);
     }
 
+    public void setNote(String note) {
+        this.note.setValue(note);
+    }
+    
+    public void setContent(String content) {
+        this.content.setValue(content);
+    }
+    
     public void setStatus(Integer status) {
         this.status = status;
-        switch(status){
+        switch (status) {
             case 0:
                 this.statusVal.set(WAIT_AOS_CF);
                 break;
             case 1:
-                this.statusVal.set(AOS_CF );
+                this.statusVal.set(AOS_CF);
                 break;
             case -1:
-                this.statusVal.set(AOS_CL );
+                this.statusVal.set(AOS_CL);
                 break;
             case 2:
                 this.statusVal.set(WAIT_CUS_CF);
                 break;
             case -2:
-                this.statusVal.set(CUS_CL );
+                this.statusVal.set(CUS_CL);
                 break;
             case 3:
-                this.statusVal.set(CUS_CF );
+                this.statusVal.set(CUS_CF);
                 break;
             case 4:
                 this.statusVal.set(SHIPPING);
                 break;
             case 5:
-                this.statusVal.set(SUCCESS_DELIVERY );
+                this.statusVal.set(SUCCESS_DELIVERY);
                 break;
         }
     }
