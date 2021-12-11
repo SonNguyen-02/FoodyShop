@@ -6,7 +6,9 @@
 package com.foodyshop.model;
 
 import com.foodyshop.database.DBConnection;
-import static com.foodyshop.main.Config.IMG_TOPIC_DIR;
+import static com.foodyshop.main.Config.IMG_FOOD_DIR;
+
+import com.foodyshop.main.Const;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -128,12 +130,7 @@ public class ProductModel {
     public void setPrice(Integer price) {
         this.price.setValue(price);
     }
-    public void setImgDetail(String imgDetail) {
-        this.imgDetail = imgDetail;
-    }
-//    public void setImg(String img) {
-//        this.img = img;
-//    }
+
     public void setCreated(String created) {
         this.created.setValue(created);
     }
@@ -163,11 +160,37 @@ public class ProductModel {
     }
     public void setImg(String img) {
         this.img = img;
-        String url = IMG_TOPIC_DIR + img;
-        Image image = new Image(url, 100, 100, false, true, true);
+        String url = IMG_FOOD_DIR + img;
+        Image image = null;
+
+//        image = new Image(url, 100, 100, false, true);
+//        tutu
+//        System.out.println(image.getException().toString());
+//        if (!image.getException().getMessage().isEmpty()) {
+            image = new Image("file:" + Const.PLACEHOLDER_NO_IMG_PATH, 100, 100, false, true, true);
+//        }
+        
         this.imgView = new SimpleObjectProperty<>(new ImageView(image));
     }
-       public ObservableValue<ImageView> getImgView() {
+    
+    public ObservableValue<ImageView> getImgView() {
+        return imgView;
+    }
+    public void setImgDetail(String imgDetail){
+        this.imgDetail = imgDetail;
+        String url = IMG_FOOD_DIR + img;
+        Image image = null;
+
+//        image = new Image(url, 100, 100, false, true);
+//        tutu
+//        System.out.println(image.getException().toString());
+//        if (!image.getException().getMessage().isEmpty()) {
+            image = new Image("file:" + Const.PLACEHOLDER_NO_IMG_PATH, 100, 100, false, true, true);
+//        }
+        
+        this.imgView = new SimpleObjectProperty<>(new ImageView(image));      
+    }
+    public ObservableValue<ImageView> getImgViewDetail() {
         return imgView;
     }
 }

@@ -18,12 +18,14 @@ import com.foodyshop.controller.EditStaffController;
 import com.foodyshop.controller.EditTopicController;
 import com.foodyshop.controller.EditTopicController.IOnUpdateSuccess;
 import com.foodyshop.controller.Order_DetailController;
+import com.foodyshop.controller.ProductDetailController;
 import com.foodyshop.controller.TestDemoController;
 import com.foodyshop.model.CategoryModel;
 import com.foodyshop.model.CustomerModel;
 import com.foodyshop.model.FeedbackModel;
 import com.foodyshop.model.OrderModel;
 import com.foodyshop.model.Order_DetailModel;
+import com.foodyshop.model.ProductModel;
 import com.foodyshop.model.TopicModel;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -69,6 +71,8 @@ public class Navigator {
     private static final String PRODUCT_PAGE = ROOT_FOLDER + "ProductPage.fxml";
     private static final String CUSTOMER_DETAIL = ROOT_FOLDER + "CustomerDetailPage.fxml";
     private static final String ACCOUNT_PAGE = ROOT_FOLDER + "Account.fxml";
+    private static final String PRODUCTDETAIL_PAGE = ROOT_FOLDER + "ProductDetailPage.fxml";
+    
 
     // FORM
     private static final String ADD_CATEGORY_FORM = ROOT_FOLDER + "AddCategoryForm.fxml";
@@ -129,7 +133,7 @@ public class Navigator {
      public void loadAccount(BorderPane borderPane) {
         borderPane.setCenter(getParent(ACCOUNT_PAGE));
     }
-
+    
     // Show Modal
     public void showOrder_Detail(OrderModel order) {
         showModal("Order Detail", ORDER_DETAIL);
@@ -185,6 +189,12 @@ public class Navigator {
         showModal("Customer Detail ", CUSTOMER_DETAIL);
         CustomerDetailController controller = fxLoader.getController();
         controller.initCustomerModel(customer);
+    }
+    
+     public void showProductDetail(ProductModel product) {
+        showModal("Product Detail ", PRODUCTDETAIL_PAGE);
+        ProductDetailController controller = fxLoader.getController();
+        controller.initProductModel(product);
     }
     // </editor-fold> 
     private Navigator() {
