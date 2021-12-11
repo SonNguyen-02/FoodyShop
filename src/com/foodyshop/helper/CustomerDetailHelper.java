@@ -31,8 +31,9 @@ public class CustomerDetailHelper {
         ObservableList<CustomerDetailModel> listCustomerDetail = FXCollections.observableArrayList();
         
         try {
-             String sql = "SELECT ct.id,od.order_code,od.total_money,od.created,od.status "
-                    + "FROM fs_customer ct LEFT JOIN fs_order od on ct.id = od.customer_id where ct.id = ?";
+             String sql = "SELECT ct.id,od.order_code,od.total_money,od.created,od.status,od.note,fb.content "
+                    + "FROM fs_customer ct LEFT JOIN fs_order od on ct.id = od.customer_id "
+                     + "LEFT JOIN fs_feedback fb on ct.id = od.customer_id where ct.id = ?";
             PreparedStatement stm = DBConnection.getConnection().prepareStatement(sql);
             stm.setInt(1, customer.getId());
             ResultSet rs = stm.executeQuery();
@@ -40,6 +41,8 @@ public class CustomerDetailHelper {
                 CustomerDetailModel customerDetail = new CustomerDetailModel();
                 customerDetail.setId(rs.getInt("id"));
                 customerDetail.setOrderCode(rs.getString("order_code"));
+                customerDetail.setNote(rs.getString("note"));
+                customerDetail.setContent(rs.getString("content"));
                 customerDetail.setTotalMoney(rs.getInt("total_money"));
                 customerDetail.setCreated(rs.getString("created"));
                 customerDetail.setStatus(rs.getInt("status"));
