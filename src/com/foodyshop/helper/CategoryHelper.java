@@ -67,7 +67,6 @@ public class CategoryHelper {
             Logger.getLogger(TopicModel.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
-
     }
 
     public static boolean delete(CategoryModel category) {

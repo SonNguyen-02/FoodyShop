@@ -1,26 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.SaleController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.SaleController">
    <children>
-      <TableView fx:id="tblSale" layoutX="155.0" layoutY="38.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="862.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="30.0">
+      <TableView fx:id="tblSale" layoutX="19.0" layoutY="19.0" prefHeight="556.0" prefWidth="820.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="30.0">
          <columns>
-            <TableColumn fx:id="tcStt" prefWidth="51.888877868652344" text="STT" />
-            <TableColumn fx:id="tcProductName" prefWidth="124.4444580078125" text="Product Name" />
-            <TableColumn fx:id="tcDiscount" prefWidth="62.88890075683594" text="Discount" />
-            <TableColumn fx:id="tcContent" prefWidth="124.77774047851562" text="Content" />
-            <TableColumn fx:id="tcImg" prefWidth="134.66668701171875" text="Image" />
-            <TableColumn fx:id="tcStart" prefWidth="102.0" text="Start date" />
-            <TableColumn fx:id="tcEnd" prefWidth="110.11114501953125" text="End date" />
-            <TableColumn fx:id="tcCreated" prefWidth="116.44439697265625" text="Created" />
-            <TableColumn fx:id="tcStatus" prefWidth="57.55560302734375" text="Status" />
+            <TableColumn fx:id="tcStt" prefWidth="40.0" text="STT" />
+            <TableColumn fx:id="tcProductName" prefWidth="114.4444580078125" text="Product Name" />
+            <TableColumn fx:id="tcDiscount" prefWidth="62.333343505859375" style="-fx-padding: 0 5px;" text="Discount" />
+            <TableColumn fx:id="tcContent" prefWidth="115.66665649414062" text="Content" />
+            <TableColumn fx:id="tcImg" prefWidth="145.66668701171875" text="Image" />
+            <TableColumn fx:id="tcStart" prefWidth="90.11114501953125" text="Start date" />
+            <TableColumn fx:id="tcEnd" prefWidth="102.2222900390625" text="End date" />
+            <TableColumn fx:id="tcCreated" prefWidth="118.888916015625" text="Created" />
+            <TableColumn fx:id="tcStatus" prefWidth="98.111083984375" text="Status" />
          </columns>
-         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
       </TableView>
+      <Button fx:id="btnAdd" layoutX="-33.0" layoutY="495.0" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #3499fb; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Add" textFill="WHITE" AnchorPane.rightAnchor="550.0" AnchorPane.topAnchor="600.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="btnEdit" alignment="CENTER" layoutX="-36.0" layoutY="422.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #ed982d; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Edit" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="600.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="btnDelete" layoutX="-23.0" layoutY="349.0" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #f54020; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Delete" textFill="WHITE" textOverrun="CLIP" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="600.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>

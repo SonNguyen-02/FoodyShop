@@ -33,7 +33,7 @@ public class Order_DetailHelper {
         ObservableList<Order_DetailModel> listOrder_Detail = FXCollections.observableArrayList();
         
         try {
-            String sql = "SELECT odt.id,odt.number,odt.price,odt.discount, prd.name,fb.content,sl.content,sl.start_date,sl.end_date "
+            String sql = "SELECT odt.id,odt.number,odt.price,odt.discount, prd.name,fb.content,sl.content,sl.start_date,sl.end_date"
                     + "FROM fs_order_detail odt JOIN fs_product prd on odt.product_id = prd.id "
                     + "JOIN fs_sale sl on odt.sale_id = sl.id "
                     + "LEFT JOIN fs_feedback fb on odt.id = fb.order_detail_id where odt.order_id = ?";

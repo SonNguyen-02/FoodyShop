@@ -15,6 +15,10 @@ import javafx.beans.property.StringProperty;
  * @author APlaptop
  */
 public class SaleModel {
+
+    public static final String ON_SALE = "On sale";
+    public static final String DISCOUNT_END = "Discount end";
+
     private ObjectProperty<Integer> id;
     private StringProperty productName;
     private ObjectProperty<Integer> discount;
@@ -23,7 +27,8 @@ public class SaleModel {
     private StringProperty start_date;
     private StringProperty end_date;
     private StringProperty created;
-    private ObjectProperty<Integer> status;
+    private int status;
+    private StringProperty statusVal;
 
     public SaleModel() {
         this.id = new SimpleObjectProperty<>();
@@ -33,9 +38,13 @@ public class SaleModel {
         this.start_date = new SimpleStringProperty();
         this.end_date = new SimpleStringProperty();
         this.created = new SimpleStringProperty();
-        this.status = new SimpleObjectProperty<>();
+        statusVal = new SimpleStringProperty();
     }
 
+     public Integer getId() {
+        return id.getValue();
+    }
+    
     public ObjectProperty<Integer> getIdProperty() {
         return id;
     }
@@ -48,6 +57,10 @@ public class SaleModel {
         return productName;
     }
 
+    public String getProductName() {
+        return productName.getValue();
+    }
+    
     public void setProductName(String productName) {
         this.productName.setValue(productName);
     }
@@ -72,6 +85,10 @@ public class SaleModel {
         return img;
     }
 
+    public String getImg() {
+        return img;
+    }
+    
     public void setImg(String img) {
         this.img = img;
     }
@@ -100,13 +117,29 @@ public class SaleModel {
         this.created.setValue(created);
     }
 
-    public ObjectProperty<Integer> getStatusProperty() {
+     public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
-        this.status.setValue(status);
+    public StringProperty getStatusVal() {
+        return statusVal;
     }
     
-    
+    public void setStatus(Integer status) {
+        this.status = status;
+        if (status == 0) {
+            this.statusVal.setValue(ON_SALE);
+        } else {
+            this.statusVal.setValue(DISCOUNT_END);
+        }
+    }
+
+    public void setStatusVal(String statusVal) {
+        this.statusVal.set(statusVal);
+        if (statusVal.equals(ON_SALE)) {
+            this.status = 0;
+        } else {
+            this.status = 1;
+        }
+    }
 }

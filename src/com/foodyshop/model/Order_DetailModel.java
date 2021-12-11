@@ -23,6 +23,7 @@ public class Order_DetailModel {
     private ObjectProperty<Integer> number;
     private ObjectProperty<Integer> price;
     private ObjectProperty<Integer> discount;
+    private ObjectProperty<Integer> saleId;
     private StringProperty contentSale;
     private StringProperty startDate;
     private StringProperty endDate;
@@ -38,12 +39,17 @@ public class Order_DetailModel {
         this.contentSale = new SimpleStringProperty();
         this.startDate = new SimpleStringProperty();
         this.endDate = new SimpleStringProperty();
+        this.saleId = new SimpleObjectProperty<>();
     }
 
     public Integer getId() {
         return id.getValue();
     }
 
+    public Integer getSaleId() {
+        return saleId.getValue();
+    }
+    
     public String getOrder_code() {
         return order_code.getValue();
     }
@@ -85,6 +91,10 @@ public class Order_DetailModel {
         return id;
     }
 
+    public ObjectProperty<Integer> getSaleIdProperty() {
+        return saleId;
+    }
+    
     public StringProperty getOrder_codeProperty() {
         return order_code;
     }
@@ -96,7 +106,7 @@ public class Order_DetailModel {
     public StringProperty getContentProperty() {
         return content;
     }
-    
+
     public StringProperty getContentSaleProperty() {
         return contentSale;
     }
@@ -126,6 +136,10 @@ public class Order_DetailModel {
         this.id.setValue(id);
     }
 
+    public void setSaleId(Integer saleId) {
+        this.saleId.setValue(saleId);
+    }
+    
     public void setOrder_code(String order_code) {
         this.order_code.setValue(order_code);
     }
