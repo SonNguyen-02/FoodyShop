@@ -1,6 +1,8 @@
 package com.example.foodyshop.dialog;
 
 import static com.example.foodyshop.config.Const.KEY_PRODUCT;
+import static com.example.foodyshop.config.Const.TOAST_DEFAULT;
+import static com.example.foodyshop.helper.Helper.PRICE_FORMAT;
 
 import android.app.Dialog;
 import android.graphics.Paint;
@@ -21,15 +23,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.foodyshop.R;
-import com.example.foodyshop.helper.Helper;
-import com.example.foodyshop.model.OrderDetailModel;
 import com.example.foodyshop.model.ProductModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-import java.text.NumberFormat;
-import java.util.Currency;
 import java.util.Objects;
 
 public class AddToCardBottomSheetDialogFragment extends BottomSheetDialogFragment {
@@ -39,10 +37,19 @@ public class AddToCardBottomSheetDialogFragment extends BottomSheetDialogFragmen
     private TextView tvProductName, tvPrice, tvPriceSale;
     private EditText edtAmount;
     private Button btnAddToCart;
+    private final IOnClickAddToCart mIOnClickAddToCart;
+
+    public AddToCardBottomSheetDialogFragment(IOnClickAddToCart mIOnClickAddToCart) {
+        this.mIOnClickAddToCart = mIOnClickAddToCart;
+    }
+
+    public interface IOnClickAddToCart {
+        void onClick(int amount);
+    }
 
     @NonNull
-    public static AddToCardBottomSheetDialogFragment newInstant(ProductModel product) {
-        AddToCardBottomSheetDialogFragment addToCardBottomSheetDialogFragment = new AddToCardBottomSheetDialogFragment();
+    public static AddToCardBottomSheetDialogFragment newInstant(ProductModel product, IOnClickAddToCart mIOnClickAddToCart) {
+        AddToCardBottomSheetDialogFragment addToCardBottomSheetDialogFragment = new AddToCardBottomSheetDialogFragment(mIOnClickAddToCart);
         Bundle bundle = new Bundle();
         bundle.putSerializable(KEY_PRODUCT, product);
         addToCardBottomSheetDialogFragment.setArguments(bundle);
@@ -90,15 +97,12 @@ public class AddToCardBottomSheetDialogFragment extends BottomSheetDialogFragmen
         if (mProduct == null) {
             return;
         }
-        NumberFormat format = NumberFormat.getCurrencyInstance();
-        format.setMaximumFractionDigits(0);
-        format.setCurrency(Currency.getInstance("VND"));
 //            Glide.with(this).load(mProduct.getImg()).placeholder(R.drawable.placeholder_img).into(imgProduct);
         imgProduct.setImageResource(R.drawable.test_product_icon);
         tvProductName.setText(mProduct.getName());
-        tvPriceSale.setText(format.format(mProduct.getPriceSale()));
+        tvPriceSale.setText(PRICE_FORMAT.format(mProduct.getPriceSale()));
         if (mProduct.getDiscount() != null) {
-            tvPrice.setText(format.format(mProduct.getPrice()));
+            tvPrice.setText(PRICE_FORMAT.format(mProduct.getPrice()));
             tvPrice.setPaintFlags(tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         } else {
             tvPrice.setVisibility(View.GONE);
@@ -151,7 +155,6 @@ public class AddToCardBottomSheetDialogFragment extends BottomSheetDialogFragmen
             }
         });
 
-
         imgMinus.setOnClickListener(view -> {
             int amount = Integer.parseInt(edtAmount.getText().toString());
             edtAmount.setText(String.valueOf(--amount));
@@ -174,7 +177,7 @@ public class AddToCardBottomSheetDialogFragment extends BottomSheetDialogFragmen
                 addToCart(Integer.parseInt(edtAmount.getText().toString()));
             } else {
                 edtAmount.requestFocus();
-                ToastCustom.notice(getContext(), "Hãy nhập số lượng", ToastCustom.WARNING, 1000).show();
+                ToastCustom.notice(getContext(), "Hãy nhập số lượng", ToastCustom.INFO).show();
             }
         });
     }
@@ -184,9 +187,8 @@ public class AddToCardBottomSheetDialogFragment extends BottomSheetDialogFragmen
             setCancelable(false);
             ToastCustom.loading(requireContext(), 1000).show();
             new Handler().postDelayed(() -> {
-                OrderDetailModel orderDetail = new OrderDetailModel(mProduct, amount);
-                Helper.addProductToCart(requireContext(), orderDetail);
-                ToastCustom.notice(requireContext(), "Thêm thành công!", ToastCustom.SUCCESS, 2000).show();
+                mIOnClickAddToCart.onClick(amount);
+                ToastCustom.notice(requireContext(), "Thêm thành công!", ToastCustom.SUCCESS).show();
                 dismiss();
             }, 1000);
         }

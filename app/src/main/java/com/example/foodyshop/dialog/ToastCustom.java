@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.foodyshop.R;
+import com.example.foodyshop.config.Const;
 
 import org.jetbrains.annotations.Contract;
 
@@ -50,6 +51,12 @@ public class ToastCustom {
     @org.jetbrains.annotations.Contract("_, _, _, _ -> new")
     public static ToastCustom notice(Context context, String message, int type, int duration) {
         return new ToastCustom(context, message, type, duration);
+    }
+
+    @NonNull
+    @org.jetbrains.annotations.Contract("_, _, _ -> new")
+    public static ToastCustom notice(Context context, String message, int type) {
+        return new ToastCustom(context, message, type, Const.TOAST_DEFAULT);
     }
 
     @NonNull

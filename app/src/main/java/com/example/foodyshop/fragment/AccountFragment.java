@@ -61,7 +61,7 @@ public class AccountFragment extends Fragment {
     }
 
     private void initLogin() {
-        if (Helper.getCurrentAccount() != null) {
+        if (Helper.isLogin(requireContext())) {
             String s = "Hello " + Helper.getCurrentAccount().getName();
             tvCustomerName.setText(s);
             btnSignIn.setVisibility(View.GONE);

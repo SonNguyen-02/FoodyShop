@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_title_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple_title_order"
+        android:padding="@dimen/space_view">
+
+        <TextView
+            android:id="@+id/tv_order_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/tv_status"
+            android:paddingTop="@dimen/space_view"
+            android:paddingBottom="@dimen/space_view"
+            android:text="@string/code"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:paddingTop="@dimen/space_view"
+            android:paddingBottom="@dimen/space_view"
+            android:text="Đang giao"
+            android:textColor="@color/colorTextAccent"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv_order_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:paddingBottom="4dp" />
+
+    <include layout="@layout/divider" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_view">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/into_money_text"
+            android:text="Giá ship: "
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_ship_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="@dimen/space_view"
+            android:minWidth="100dp"
+            android:text="Đang cập nhập"
+            android:textAlignment="textEnd"
+            android:textColor="@color/colorTextSecond"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_total_product"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_ship_price"
+            android:text="@string/total_product"
+            android:textColor="@color/colorTextSecond"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/into_money_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_ship_price"
+            android:layout_toStartOf="@id/tv_total_money"
+            android:text="Thành tiền: "
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_total_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_ship_price"
+            android:layout_alignParentEnd="true"
+            android:minWidth="100dp"
+            android:text="đ 84.400"
+            android:textAlignment="textEnd"
+            android:textColor="@color/colorTextPrice"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/divider" />
+
+    <RelativeLayout
+        android:id="@+id/rl_buy_again"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_view">
+
+        <TextView
+            android:id="@+id/tv_mix_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="@dimen/space_view"
+            android:layout_toStartOf="@id/btn_buy_again"
+            android:text="Đã hủy bởi bạn" />
+
+        <Button
+            android:id="@+id/btn_buy_again"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/ripple_warning_rad_4"
+            android:text="Mua lại"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_cancel_conf_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:padding="@dimen/space_view">
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ripple_warning_rad_4"
+            android:text="Hủy đơn"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btn_confirm"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="@dimen/space_view"
+            android:background="@drawable/ripple_info_rad_4"
+            android:text="@string/confirm"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_view"
+        android:background="@color/white_smoke" />
+
+</LinearLayout>

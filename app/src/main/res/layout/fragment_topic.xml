@@ -77,31 +77,31 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <include layout="@layout/shimmer_item_topic" />
+                    <include layout="@layout/shimmer_item_topic_ver" />
 
-                    <include layout="@layout/shimmer_item_topic" />
+                    <include layout="@layout/shimmer_item_topic_ver" />
 
-                    <include layout="@layout/shimmer_item_topic" />
+                    <include layout="@layout/shimmer_item_topic_ver" />
 
-                    <include layout="@layout/shimmer_item_topic" />
+                    <include layout="@layout/shimmer_item_topic_ver" />
 
-                    <include layout="@layout/shimmer_item_topic" />
+                    <include layout="@layout/shimmer_item_topic_ver" />
 
-                    <include layout="@layout/shimmer_item_topic" />
+                    <include layout="@layout/shimmer_item_topic_ver" />
 
-                    <include layout="@layout/shimmer_item_topic" />
+                    <include layout="@layout/shimmer_item_topic_ver" />
 
-                    <include layout="@layout/shimmer_item_topic" />
+                    <include layout="@layout/shimmer_item_topic_ver" />
 
-                    <include layout="@layout/shimmer_item_topic" />
+                    <include layout="@layout/shimmer_item_topic_ver" />
 
-                    <include layout="@layout/shimmer_item_topic" />
+                    <include layout="@layout/shimmer_item_topic_ver" />
 
-                    <include layout="@layout/shimmer_item_topic" />
+                    <include layout="@layout/shimmer_item_topic_ver" />
 
-                    <include layout="@layout/shimmer_item_topic" />
+                    <include layout="@layout/shimmer_item_topic_ver" />
 
-                    <include layout="@layout/shimmer_item_topic" />
+                    <include layout="@layout/shimmer_item_topic_ver" />
 
                 </LinearLayout>
 

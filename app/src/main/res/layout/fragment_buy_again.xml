@@ -14,17 +14,17 @@
             android:id="@+id/ll_oops_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
             android:gravity="center"
             android:orientation="vertical"
-            android:layout_marginTop="36dp"
             android:padding="32dp"
             android:visibility="visible">
 
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginEnd="12sp"
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:layout_marginEnd="8sp"
                 android:src="@drawable/oops_login"
                 tools:ignore="ContentDescription" />
 
@@ -35,13 +35,13 @@
                 android:text="Bạn cần phải đăng nhập để xem lịch sử mua hàng"
                 android:textAlignment="center"
                 android:textColor="@color/colorTextPrimary"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/btn_go_to_login"
                 style="@style/ButtonWarning"
                 android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
                 android:text="Đăng nhập" />
@@ -103,12 +103,13 @@
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="16dp"
+                    android:layout_marginTop="32dp"
                     android:visibility="gone">
 
                     <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginEnd="12sp"
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:layout_marginEnd="8dp"
                         android:src="@drawable/order_history"
                         tools:ignore="ContentDescription" />
 

@@ -6,6 +6,7 @@ import static com.example.foodyshop.config.Const.KEY_PRODUCT;
 import static com.example.foodyshop.config.Const.KEY_SIGN_IN_OK;
 import static com.example.foodyshop.config.Const.KEY_TOTAL_MONEY;
 import static com.example.foodyshop.config.Const.TOAST_DEFAULT;
+import static com.example.foodyshop.helper.Helper.PRICE_FORMAT;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -20,13 +21,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,9 +46,7 @@ import com.example.foodyshop.model.ProductModel;
 import com.example.foodyshop.service.APIService;
 
 import java.text.MessageFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.List;
 
 import retrofit2.Call;
@@ -167,11 +163,8 @@ public class ProductInCartFragment extends Fragment implements ProductCartAdapte
     }
 
     private void initBottomBox(int totalMoney, int totalProduct) {
-        NumberFormat format = NumberFormat.getCurrencyInstance();
-        format.setMaximumFractionDigits(0);
-        format.setCurrency(Currency.getInstance("VND"));
         btnBuy.setText(MessageFormat.format(requireContext().getResources().getString(R.string.total_buy), totalProduct));
-        tvTotalMoney.setText(format.format(totalMoney));
+        tvTotalMoney.setText(PRICE_FORMAT.format(totalMoney));
         mTotalMoney = totalMoney;
     }
 
@@ -194,7 +187,7 @@ public class ProductInCartFragment extends Fragment implements ProductCartAdapte
         view.setEnabled(false);
         new Handler().postDelayed(() -> view.setEnabled(true), TOAST_DEFAULT);
         if (mListOrderDetail.isEmpty()) {
-            ToastCustom.notice(requireContext(), "Giỏ hàng trống!", ToastCustom.WARNING, TOAST_DEFAULT).show();
+            ToastCustom.notice(requireContext(), "Giỏ hàng trống!", ToastCustom.WARNING).show();
             return;
         }
         if (cbAll.isChecked()) {
@@ -207,7 +200,7 @@ public class ProductInCartFragment extends Fragment implements ProductCartAdapte
                 initViewAfterDelete();
                 initBottomBox(0, 0);
                 confirmDialog.dismiss();
-                ToastCustom.notice(requireContext(), "Đã xóa sạch giỏ hàng.", ToastCustom.SUCCESS, TOAST_DEFAULT).show();
+                ToastCustom.notice(requireContext(), "Đã xóa sạch giỏ hàng.", ToastCustom.SUCCESS).show();
             });
             dialog.show();
         } else {
@@ -220,9 +213,9 @@ public class ProductInCartFragment extends Fragment implements ProductCartAdapte
                 }
             }
             if (!hasCheck) {
-                ToastCustom.notice(requireContext(), "Hãy chọn một sản phẩm.", ToastCustom.INFO, TOAST_DEFAULT).show();
+                ToastCustom.notice(requireContext(), "Hãy chọn một sản phẩm.", ToastCustom.INFO).show();
             } else {
-                ToastCustom.notice(requireContext(), "Đã xóa " + tmlList.size() + " sản phẩm.", ToastCustom.SUCCESS, TOAST_DEFAULT).show();
+                ToastCustom.notice(requireContext(), "Đã xóa " + tmlList.size() + " sản phẩm.", ToastCustom.SUCCESS).show();
                 mListOrderDetail.removeAll(tmlList);
                 adapter.setmListOrderDetail(mListOrderDetail);
                 Helper.saveCart(requireContext(), mListOrderDetail);
@@ -249,6 +242,7 @@ public class ProductInCartFragment extends Fragment implements ProductCartAdapte
             rlCart.setVisibility(View.VISIBLE);
             mListOrderDetail = Helper.getAllProductInCart(requireContext());
             adapter.setmListOrderDetail(mListOrderDetail);
+            initBottomBox();
         }
     }
 
@@ -264,7 +258,7 @@ public class ProductInCartFragment extends Fragment implements ProductCartAdapte
         view.setEnabled(false);
         new Handler().postDelayed(() -> view.setEnabled(true), TOAST_DEFAULT);
         if (mTotalMoney == 0) {
-            ToastCustom.notice(requireContext(), "Hãy chọn một sản phẩm.", ToastCustom.INFO, TOAST_DEFAULT).show();
+            ToastCustom.notice(requireContext(), "Hãy chọn một sản phẩm.", ToastCustom.INFO).show();
             return;
         }
         if (Helper.isLogin(requireContext())) {
@@ -326,14 +320,14 @@ public class ProductInCartFragment extends Fragment implements ProductCartAdapte
                     intent.putExtras(bundle);
                     startActivity(intent);
                 } else {
-                    ToastCustom.notice(requireContext(), "Vui lòng kiểm tra lại kết nối!", ToastCustom.ERROR, TOAST_DEFAULT).show();
+                    ToastCustom.notice(requireContext(), "Vui lòng kiểm tra lại kết nối!", ToastCustom.ERROR).show();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ProductModel> call, @NonNull Throwable t) {
                 load.cancel();
-                ToastCustom.notice(requireContext(), "Vui lòng kiểm tra lại kết nối!", ToastCustom.ERROR, TOAST_DEFAULT).show();
+                ToastCustom.notice(requireContext(), "Vui lòng kiểm tra lại kết nối!", ToastCustom.ERROR).show();
             }
         });
     }

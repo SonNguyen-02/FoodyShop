@@ -69,7 +69,7 @@ public class EnterPasswordActivity extends AppCompatActivity {
         if (!password.equals(confPassword)) {
             edtConfPassword.requestFocus();
             edtConfPassword.selectAll();
-            ToastCustom.notice(this, "Mật khẩu không giống", ToastCustom.WARNING, TOAST_DEFAULT).show();
+            ToastCustom.notice(this, "Mật khẩu không giống", ToastCustom.WARNING).show();
             return;
         }
 
@@ -90,10 +90,10 @@ public class EnterPasswordActivity extends AppCompatActivity {
                         });
                         successDialog.show();
                     } else {
-                        ToastCustom.notice(getApplicationContext(), res.getMsg(), ToastCustom.ERROR, TOAST_DEFAULT).show();
+                        ToastCustom.notice(getApplicationContext(), res.getMsg(), ToastCustom.ERROR).show();
                     }
                 } else {
-                    ToastCustom.notice(getApplicationContext(), "Có lỗi sảy ra. Vui lòng thử lại!", ToastCustom.ERROR, TOAST_DEFAULT).show();
+                    ToastCustom.notice(getApplicationContext(), "Có lỗi sảy ra. Vui lòng thử lại!", ToastCustom.ERROR).show();
                     Log.e("ddd", "onResponse: sever error");
                 }
             }
@@ -101,7 +101,7 @@ public class EnterPasswordActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<Respond> call, @NonNull Throwable t) {
                 dialog.dismiss();
-                ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.INFO, TOAST_DEFAULT).show();
+                ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.INFO).show();
             }
         });
     }
@@ -114,7 +114,7 @@ public class EnterPasswordActivity extends AppCompatActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         } else {
-            ToastCustom.notice(this, "Nhấn back thêm lần nữa để thoát", ToastCustom.NONE, TOAST_DEFAULT).show();
+            ToastCustom.notice(this, "Nhấn back thêm lần nữa để thoát", ToastCustom.NONE).show();
             isBackPress = true;
         }
     }

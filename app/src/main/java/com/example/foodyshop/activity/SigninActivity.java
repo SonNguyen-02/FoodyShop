@@ -127,13 +127,13 @@ public class SigninActivity extends AppCompatActivity {
         if (edtPhone.getText().toString().trim().isEmpty()) {
             edtPhone.requestFocus();
             Helper.showKeyboard(getApplicationContext());
-            ToastCustom.notice(this, "Vui lòng nhập số điện thoại", ToastCustom.WARNING, TOAST_DEFAULT).show();
+            ToastCustom.notice(this, "Vui lòng nhập số điện thoại", ToastCustom.WARNING).show();
             return;
         }
         if (!isValidPhone) {
             edtPhone.requestFocus();
             Helper.showKeyboard(getApplicationContext());
-            ToastCustom.notice(this, "Vui lòng nhập đúng số điện thoại", ToastCustom.WARNING, TOAST_DEFAULT).show();
+            ToastCustom.notice(this, "Vui lòng nhập đúng số điện thoại", ToastCustom.WARNING).show();
             return;
         }
         if (Helper.isInvalidPassword(getApplicationContext(), edtPassword, false)) {
@@ -175,18 +175,18 @@ public class SigninActivity extends AppCompatActivity {
                                     finish();
                                 }
                             } else {
-                                ToastCustom.notice(getApplicationContext(), "Đã xảy ra lỗi. Vui lòng thử lại!", ToastCustom.WARNING, TOAST_DEFAULT).show();
+                                ToastCustom.notice(getApplicationContext(), "Đã xảy ra lỗi. Vui lòng thử lại!", ToastCustom.WARNING).show();
                             }
                         });
                     } else {
                         // Show lỗi khi đăng nhập false
                         dialog.dismiss();
-                        ToastCustom.notice(getApplicationContext(), res.getMsg(), ToastCustom.ERROR, TOAST_DEFAULT).show();
+                        ToastCustom.notice(getApplicationContext(), res.getMsg(), ToastCustom.ERROR).show();
                         Log.e("ddd", "onResponse: " + res.getMsg());
                     }
                 } else {
                     dialog.dismiss();
-                    ToastCustom.notice(getApplicationContext(), "Có lỗi. Vui lòng thử lại sau!", ToastCustom.ERROR, TOAST_DEFAULT).show();
+                    ToastCustom.notice(getApplicationContext(), "Có lỗi. Vui lòng thử lại sau!", ToastCustom.ERROR).show();
                     Log.e("ddd", "onResponse: " + "server error");
                 }
             }
@@ -194,7 +194,7 @@ public class SigninActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<Respond> call, @NonNull Throwable t) {
                 dialog.dismiss();
-                ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.INFO, TOAST_DEFAULT).show();
+                ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.INFO).show();
                 Log.e("ddd", "onFailure: ");
             }
         });

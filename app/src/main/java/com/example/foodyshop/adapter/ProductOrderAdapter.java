@@ -1,5 +1,7 @@
 package com.example.foodyshop.adapter;
 
+import static com.example.foodyshop.helper.Helper.PRICE_FORMAT;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,22 +17,16 @@ import com.example.foodyshop.R;
 import com.example.foodyshop.model.OrderDetailModel;
 
 import java.text.MessageFormat;
-import java.text.NumberFormat;
-import java.util.Currency;
 import java.util.List;
 
 public class ProductOrderAdapter extends RecyclerView.Adapter<ProductOrderAdapter.ProductOrderViewHolder> {
 
     private final Context context;
     private final List<OrderDetailModel> mListOrderDetail;
-    private final NumberFormat format;
 
     public ProductOrderAdapter(Context context, List<OrderDetailModel> mListOrderDetail) {
         this.context = context;
         this.mListOrderDetail = mListOrderDetail;
-        format = NumberFormat.getCurrencyInstance();
-        format.setMaximumFractionDigits(0);
-        format.setCurrency(Currency.getInstance("VND"));
     }
 
     @NonNull
@@ -48,21 +44,21 @@ public class ProductOrderAdapter extends RecyclerView.Adapter<ProductOrderAdapte
         }
         holder.imgProduct.setImageResource(R.drawable.test_product_icon);
         holder.tvName.setText(orderDetail.getName());
-        holder.tvPrice.setText(format.format(orderDetail.getPrice()));
+        holder.tvPrice.setText(PRICE_FORMAT.format(orderDetail.getPrice()));
         holder.tvAmount.setText(String.valueOf(orderDetail.getAmount()));
         int totalMoney = orderDetail.getPrice() * orderDetail.getAmount();
         if (orderDetail.getDiscount() != null) {
             holder.tvDiscount.setVisibility(View.VISIBLE);
             holder.tvDiscount.setText(MessageFormat.format("Giảm " + context.getResources().getString(R.string.discount), orderDetail.getDiscount()));
             int totalSale = totalMoney * orderDetail.getDiscount() / 100;
-            holder.tvTotalMoney.setText(format.format(totalMoney));
-            holder.tvTotalSale.setText(format.format(totalSale));
-            holder.tvIntoMoney.setText(format.format(totalMoney - totalSale));
+            holder.tvTotalMoney.setText(PRICE_FORMAT.format(totalMoney));
+            holder.tvTotalSale.setText(PRICE_FORMAT.format(totalSale));
+            holder.tvIntoMoney.setText(PRICE_FORMAT.format(totalMoney - totalSale));
         } else {
             holder.tvDiscount.setVisibility(View.GONE);
             holder.llTotalMoney.setVisibility(View.GONE);
             holder.divider.setVisibility(View.GONE);
-            holder.tvIntoMoney.setText(format.format(totalMoney));
+            holder.tvIntoMoney.setText(PRICE_FORMAT.format(totalMoney));
         }
     }
 

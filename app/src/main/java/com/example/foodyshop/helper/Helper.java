@@ -22,6 +22,7 @@ import com.example.foodyshop.config.Const;
 import com.example.foodyshop.dialog.ToastCustom;
 import com.example.foodyshop.model.CustomerModel;
 import com.example.foodyshop.model.OrderDetailModel;
+import com.example.foodyshop.model.OrderModel;
 import com.example.foodyshop.service.APIService;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -30,8 +31,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Currency;
 import java.util.List;
 
 import io.jsonwebtoken.Claims;
@@ -50,6 +53,13 @@ public class Helper {
 
     public static void setCurrentAccount(CustomerModel currentAccount) {
         Helper.currentAccount = currentAccount;
+    }
+
+    public static final NumberFormat PRICE_FORMAT = NumberFormat.getCurrencyInstance();
+
+    static {
+        PRICE_FORMAT.setMaximumFractionDigits(0);
+        PRICE_FORMAT.setCurrency(Currency.getInstance("VND"));
     }
 
     public static CustomerModel getCurrentAccount() {
@@ -104,10 +114,68 @@ public class Helper {
                 }
             }
             if (!isExists) {
-                listOrderDetail.add(mOrderDetail);
+                listOrderDetail.add(0, mOrderDetail);
             }
         } else {
             listOrderDetail = new ArrayList<>(Collections.singletonList(mOrderDetail));
+        }
+        saveCart(context, listOrderDetail);
+    }
+
+    public static void buyNow(Context context, @NonNull OrderDetailModel mOrderDetail) {
+        mOrderDetail.setChecked(true);
+        List<OrderDetailModel> listOrderDetail = getAllProductInCart(context);
+        if (!listOrderDetail.isEmpty()) {
+            boolean isExists = false;
+            for (OrderDetailModel ord : listOrderDetail) {
+                if (mOrderDetail.getProductId() == ord.getProductId()) {
+                    ord.setChecked(true);
+                    ord.setAmount(ord.getAmount() + mOrderDetail.getAmount());
+                    isExists = true;
+                } else {
+                    ord.setChecked(false);
+                }
+            }
+            if (!isExists) {
+                listOrderDetail.add(0, mOrderDetail);
+            }
+        } else {
+            listOrderDetail = new ArrayList<>(Collections.singletonList(mOrderDetail));
+        }
+        saveCart(context, listOrderDetail);
+    }
+
+    public static void buyAgain(Context context, @NonNull OrderModel orderModel) {
+        List<OrderDetailModel> listOrderDetail = getAllProductInCart(context);
+        if (!listOrderDetail.isEmpty()) {
+            for (OrderDetailModel ord : listOrderDetail) {
+                ord.setChecked(false);
+            }
+            List<OrderDetailModel> tmpList = new ArrayList<>();
+            for (OrderDetailModel newOrd : orderModel.getOrderDetails()) {
+                boolean isExists = false;
+                for (OrderDetailModel ord : listOrderDetail) {
+                    if (newOrd.getProductId() == ord.getProductId()) {
+                        if (!tmpList.contains(ord)) {
+                            tmpList.add(ord);
+                            ord.setChecked(true);
+                            ord.setAmount(ord.getAmount() + newOrd.getAmount());
+                        }
+                        isExists = true;
+                        break;
+                    }
+                }
+                if (!isExists) {
+                    tmpList.add(newOrd);
+                    newOrd.setChecked(true);
+                    listOrderDetail.add(0, newOrd);
+                }
+            }
+        } else {
+            for (OrderDetailModel newOrd : orderModel.getOrderDetails()) {
+                newOrd.setChecked(true);
+            }
+            listOrderDetail = orderModel.getOrderDetails();
         }
         saveCart(context, listOrderDetail);
     }
@@ -153,6 +221,9 @@ public class Helper {
     }
 
     public static boolean isLogin(Context context) {
+        if (currentAccount != null) {
+            return true;
+        }
         String token = getTokenLogin(context);
         Log.e("ddd", "isLogin: Token: " + token);
         if (!token.isEmpty()) {
@@ -210,20 +281,20 @@ public class Helper {
         if (password.isEmpty()) {
             edtPassword.requestFocus();
             if (isConfirmPass) {
-                ToastCustom.notice(context, "Vui lòng nhập lại mật khẩu", ToastCustom.WARNING, TOAST_DEFAULT).show();
+                ToastCustom.notice(context, "Vui lòng nhập lại mật khẩu", ToastCustom.WARNING).show();
             } else {
-                ToastCustom.notice(context, "Vui lòng nhập mật khẩu", ToastCustom.WARNING, TOAST_DEFAULT).show();
+                ToastCustom.notice(context, "Vui lòng nhập mật khẩu", ToastCustom.WARNING).show();
             }
             return true;
         }
         if (password.length() < 8) {
             edtPassword.requestFocus();
-            ToastCustom.notice(context, "Mật khẩu tối thiểu 8 kí tự", ToastCustom.WARNING, TOAST_DEFAULT).show();
+            ToastCustom.notice(context, "Mật khẩu tối thiểu 8 kí tự", ToastCustom.WARNING).show();
             return true;
         }
         if (!password.matches(Const.PASSWORD_REGEX)) {
             edtPassword.requestFocus();
-            ToastCustom.notice(context, "Mật khẩu cần có ít nhất 1 chữ và 1 số", ToastCustom.WARNING, TOAST_DEFAULT).show();
+            ToastCustom.notice(context, "Mật khẩu cần có ít nhất 1 chữ và 1 số", ToastCustom.WARNING).show();
             return true;
         }
         return false;

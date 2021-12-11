@@ -1,6 +1,7 @@
 package com.example.foodyshop.adapter;
 
-import android.annotation.SuppressLint;
+import static com.example.foodyshop.helper.Helper.PRICE_FORMAT;
+
 import android.content.Context;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
@@ -19,8 +20,6 @@ import com.example.foodyshop.activity.MainActivity;
 import com.example.foodyshop.model.ProductModel;
 
 import java.text.MessageFormat;
-import java.text.NumberFormat;
-import java.util.Currency;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
@@ -28,7 +27,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     private final Context context;
     private List<ProductModel> mListProduct;
     private final boolean isLinearLayoutManager;
-    private final NumberFormat format;
     private final IOnclickProductItem mIOnclickProductItem;
 
     private final int margin;
@@ -39,9 +37,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         this.mListProduct = mListProduct;
         this.isLinearLayoutManager = isLinearLayoutManager;
         this.mIOnclickProductItem = mIOnclickProductItem;
-        format = NumberFormat.getCurrencyInstance();
-        format.setMaximumFractionDigits(0);
-        format.setCurrency(Currency.getInstance("VND"));
         margin = (int) context.getResources().getDimension(R.dimen.space_view);
         itemLength = (MainActivity.WIDTH_DEVICE - (margin * (1 + MainActivity.TOTAL_ITEM_PRODUCT))) / MainActivity.TOTAL_ITEM_PRODUCT;
     }
@@ -95,10 +90,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         holder.imgProduct.setImageResource(R.drawable.test_product_icon);
         holder.tvName.setText(product.getName());
-        holder.tvPriceSale.setText(format.format(product.getPriceSale()));
+        holder.tvPriceSale.setText(PRICE_FORMAT.format(product.getPriceSale()));
         if (product.getDiscount() != null) {
             holder.tvDiscount.setText(MessageFormat.format(context.getResources().getString(R.string.discount), product.getDiscount()));
-            holder.tvPrice.setText(format.format(product.getPrice()));
+            holder.tvPrice.setText(PRICE_FORMAT.format(product.getPrice()));
             holder.tvPrice.setPaintFlags(holder.tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         } else {
             holder.rlSale.setVisibility(View.GONE);

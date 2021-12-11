@@ -246,7 +246,7 @@ public class EnterOtpActivity extends AppCompatActivity {
                 || isEmpty(edtCode4)
                 || isEmpty(edtCode5)
                 || isEmpty(edtCode6)) {
-            ToastCustom.notice(this, "Vui lòng nhập mã hợp lệ", ToastCustom.ERROR, TOAST_DEFAULT).show();
+            ToastCustom.notice(this, "Vui lòng nhập mã hợp lệ", ToastCustom.ERROR).show();
             return;
         }
 
@@ -358,18 +358,18 @@ public class EnterOtpActivity extends AppCompatActivity {
                         });
                         successDialog.show();
                     } else {
-                        ToastCustom.notice(getApplicationContext(), res.getMsg(), ToastCustom.ERROR, TOAST_DEFAULT).show();
+                        ToastCustom.notice(getApplicationContext(), res.getMsg(), ToastCustom.ERROR).show();
                     }
                 } else {
                     Log.e("ddd", "onResponse: sever error");
-                    ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.ERROR, TOAST_DEFAULT).show();
+                    ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.ERROR).show();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<Respond> call, @NonNull Throwable t) {
                 dialog.dismiss();
-                ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.ERROR, TOAST_DEFAULT).show();
+                ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.ERROR).show();
             }
         });
     }

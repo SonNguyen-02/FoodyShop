@@ -4,6 +4,7 @@ import static com.example.foodyshop.config.Const.KEY_IS_CHECK_ALL;
 import static com.example.foodyshop.config.Const.KEY_PHONE_CODE;
 import static com.example.foodyshop.config.Const.KEY_TOTAL_MONEY;
 import static com.example.foodyshop.config.Const.TOAST_DEFAULT;
+import static com.example.foodyshop.helper.Helper.PRICE_FORMAT;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -135,12 +137,9 @@ public class OrderActivity extends AppCompatActivity {
     }
 
     private void initListProduct() {
-        NumberFormat format;
-        format = NumberFormat.getCurrencyInstance();
-        format.setMaximumFractionDigits(0);
-        format.setCurrency(Currency.getInstance("VND"));
+
         mTotalMoney = getIntent().getIntExtra(KEY_TOTAL_MONEY, 0);
-        tvTotalMoney.setText(format.format(mTotalMoney));
+        tvTotalMoney.setText(PRICE_FORMAT.format(mTotalMoney));
 
         boolean isCheckAll = getIntent().getBooleanExtra(KEY_IS_CHECK_ALL, false);
         if (isCheckAll) {
@@ -171,28 +170,28 @@ public class OrderActivity extends AppCompatActivity {
 
         if (name.isEmpty()) {
             edtFullName.requestFocus();
-            ToastCustom.notice(getApplicationContext(), "Vui lòng nhập tên của bạn!", ToastCustom.WARNING, TOAST_DEFAULT).show();
+            ToastCustom.notice(getApplicationContext(), "Vui lòng nhập tên của bạn!", ToastCustom.WARNING).show();
             Helper.showKeyboard(getApplicationContext());
             return;
         }
 
         if (phone.isEmpty()) {
             edtPhone.requestFocus();
-            ToastCustom.notice(getApplicationContext(), "Vui lòng nhập số điện thoại!", ToastCustom.WARNING, TOAST_DEFAULT).show();
+            ToastCustom.notice(getApplicationContext(), "Vui lòng nhập số điện thoại!", ToastCustom.WARNING).show();
             Helper.showKeyboard(getApplicationContext());
             return;
         }
 
         if (!isValidPhone) {
             edtPhone.requestFocus();
-            ToastCustom.notice(getApplicationContext(), "Số điện thoại không hợp lệ.", ToastCustom.ERROR, TOAST_DEFAULT).show();
+            ToastCustom.notice(getApplicationContext(), "Số điện thoại không hợp lệ.", ToastCustom.ERROR).show();
             Helper.showKeyboard(getApplicationContext());
             return;
         }
 
         if (address.isEmpty()) {
             edtAddress.requestFocus();
-            ToastCustom.notice(getApplicationContext(), "Vui lòng nhập địa chỉ nhận hàng!", ToastCustom.WARNING, TOAST_DEFAULT).show();
+            ToastCustom.notice(getApplicationContext(), "Vui lòng nhập địa chỉ nhận hàng!", ToastCustom.WARNING).show();
             Helper.showKeyboard(getApplicationContext());
             return;
         }
@@ -205,20 +204,20 @@ public class OrderActivity extends AppCompatActivity {
             order.setAddress(address);
             order.setNote(note);
             order.setTotalMoney(mTotalMoney);
+            order.setOrderDetails(mListOrderDetailChoose);
             sendOrder(order);
         });
         cfDialog.show();
     }
 
-    private void sendOrder(OrderModel order) {
+    private void sendOrder(@NonNull OrderModel order) {
 
         Gson gson = new Gson();
         String orderJson = gson.toJson(order);
 
         LoadingDialog dialog = new LoadingDialog(this);
         dialog.show();
-        APIService.getService().sendOrder(Helper.getTokenLogin(getApplicationContext()),
-                orderJson, Helper.convertListOrderDetailToJson(mListOrderDetailChoose)).enqueue(new Callback<Respond>() {
+        APIService.getService().sendOrder(Helper.getTokenLogin(getApplicationContext()), orderJson).enqueue(new Callback<Respond>() {
             @Override
             public void onResponse(@NonNull Call<Respond> call, @NonNull Response<Respond> response) {
                 dialog.dismiss();
@@ -231,17 +230,17 @@ public class OrderActivity extends AppCompatActivity {
                         transaction.replace(R.id.frame_order_root, new OrderSuccessFragment(order));
                         transaction.commit();
                     } else {
-                        ToastCustom.notice(getApplicationContext(), res.getMsg(), ToastCustom.ERROR, TOAST_DEFAULT).show();
+                        ToastCustom.notice(getApplicationContext(), res.getMsg(), ToastCustom.ERROR).show();
                     }
                 } else {
-                    ToastCustom.notice(getApplicationContext(), "Đã có lỗi sảy ra! Vui lòng thử lại.", ToastCustom.ERROR, TOAST_DEFAULT).show();
+                    ToastCustom.notice(getApplicationContext(), "Đã có lỗi sảy ra! Vui lòng thử lại.", ToastCustom.ERROR).show();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<Respond> call, @NonNull Throwable t) {
                 dialog.dismiss();
-                ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.INFO, TOAST_DEFAULT).show();
+                ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.INFO).show();
             }
         });
     }

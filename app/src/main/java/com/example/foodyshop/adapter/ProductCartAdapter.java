@@ -1,5 +1,7 @@
 package com.example.foodyshop.adapter;
 
+import static com.example.foodyshop.helper.Helper.PRICE_FORMAT;
+
 import android.content.Context;
 import android.graphics.Paint;
 import android.os.Handler;
@@ -24,8 +26,6 @@ import com.example.foodyshop.R;
 import com.example.foodyshop.model.OrderDetailModel;
 
 import java.text.MessageFormat;
-import java.text.NumberFormat;
-import java.util.Currency;
 import java.util.List;
 
 public class ProductCartAdapter extends RecyclerView.Adapter<ProductCartAdapter.OrderDetailViewHolder> {
@@ -33,16 +33,12 @@ public class ProductCartAdapter extends RecyclerView.Adapter<ProductCartAdapter.
     private final Context context;
     private List<OrderDetailModel> mListOrderDetail;
     private final ViewBinderHelper mViewBinderHelper = new ViewBinderHelper();
-    private final NumberFormat format;
     private final IInteractItem mInteractItem;
 
     public ProductCartAdapter(Context context, List<OrderDetailModel> mListOrderDetail, IInteractItem mInteractItem) {
         this.context = context;
         this.mListOrderDetail = mListOrderDetail;
         this.mInteractItem = mInteractItem;
-        format = NumberFormat.getCurrencyInstance();
-        format.setMaximumFractionDigits(0);
-        format.setCurrency(Currency.getInstance("VND"));
     }
 
     public void setmListOrderDetail(List<OrderDetailModel> mListOrderDetail) {
@@ -84,7 +80,7 @@ public class ProductCartAdapter extends RecyclerView.Adapter<ProductCartAdapter.
         mViewBinderHelper.closeLayout(String.valueOf(orderDetail.getId()));
         holder.imgProduct.setImageResource(R.drawable.test_product_icon);
         holder.tvName.setText(orderDetail.getName());
-        holder.tvPriceSale.setText(format.format(orderDetail.getPriceSale()));
+        holder.tvPriceSale.setText(PRICE_FORMAT.format(orderDetail.getPriceSale()));
         holder.edtAmount.setText(String.valueOf(orderDetail.getAmount()));
         holder.initAmount(orderDetail.getAmount());
         if (orderDetail.isChecked()) {
@@ -101,7 +97,7 @@ public class ProductCartAdapter extends RecyclerView.Adapter<ProductCartAdapter.
             holder.tvDiscount.setVisibility(View.VISIBLE);
             holder.tvPrice.setVisibility(View.VISIBLE);
             holder.tvDiscount.setText(MessageFormat.format("Giảm " + context.getResources().getString(R.string.discount), orderDetail.getDiscount()));
-            holder.tvPrice.setText(format.format(orderDetail.getPrice()));
+            holder.tvPrice.setText(PRICE_FORMAT.format(orderDetail.getPrice()));
             holder.tvPrice.setPaintFlags(holder.tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         } else {
             holder.tvDiscount.setVisibility(View.GONE);

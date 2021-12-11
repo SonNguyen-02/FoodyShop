@@ -126,13 +126,13 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         if (edtPhone.getText().toString().trim().isEmpty()) {
             edtPhone.requestFocus();
             Helper.showKeyboard(getApplicationContext());
-            ToastCustom.notice(getApplicationContext(), "Vui lòng nhập số điện thoại", ToastCustom.WARNING, TOAST_DEFAULT).show();
+            ToastCustom.notice(getApplicationContext(), "Vui lòng nhập số điện thoại", ToastCustom.WARNING).show();
             return;
         }
         if (!isValidPhone) {
             edtPhone.requestFocus();
             Helper.showKeyboard(getApplicationContext());
-            ToastCustom.notice(getApplicationContext(), "Số điện thoại không đúng định dạng", ToastCustom.ERROR, TOAST_DEFAULT).show();
+            ToastCustom.notice(getApplicationContext(), "Số điện thoại không đúng định dạng", ToastCustom.ERROR).show();
             return;
         }
         Helper.hideKeyboard(getApplicationContext(), edtPhone);
@@ -157,11 +157,11 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                         verifyPhoneNumber(ccp.getFullNumberWithPlus());
                     } else {
                         dialog.dismiss();
-                        ToastCustom.notice(ForgotPasswordActivity.this, res.getMsg(), ToastCustom.ERROR, TOAST_DEFAULT).show();
+                        ToastCustom.notice(ForgotPasswordActivity.this, res.getMsg(), ToastCustom.ERROR).show();
                     }
                 } else {
                     dialog.dismiss();
-                    ToastCustom.notice(getApplicationContext(), "Có lỗi sảy ra. Vui lòng thử lại!", ToastCustom.ERROR, TOAST_DEFAULT).show();
+                    ToastCustom.notice(getApplicationContext(), "Có lỗi sảy ra. Vui lòng thử lại!", ToastCustom.ERROR).show();
                     Log.e("ddd", "onResponse: sever error");
                 }
             }
@@ -169,7 +169,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<Respond> call, @NonNull Throwable t) {
                 dialog.dismiss();
-                ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.INFO, TOAST_DEFAULT).show();
+                ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.INFO).show();
                 Log.e("ddd", "onFailure: sever error");
             }
         });

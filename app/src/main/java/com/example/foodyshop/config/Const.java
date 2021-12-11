@@ -43,7 +43,9 @@ public class Const {
     public static final String KEY_PRODUCT_ID = "product_id";
 
     public static final String KEY_ORDER = "order";
-    public static final String KEY_LIST_ORDER_DETAIL = "list_order_detail";
+    public static final String KEY_ORDER_ID = "order_id";
+
+    public static final String KEY_REQUEST_STATUS = "request_status";
 
     public static final String KEY_FEEDBACK = "feedback";
     public static final String KEY_FEEDBACK_ID = "feedback_id";

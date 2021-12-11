@@ -86,6 +86,8 @@
     <string name="order_info">Thông tin đơn hàng</string>
     <string name="order_success">Đã đặt hàng thành công!</string>
     <string name="sub_order_success">Cảm ơn bạn đã đặt hàng tại shop!</string>
+    <string name="code">Mã: {0}</string>
+    <string name="total_product">{0} sản phẩm</string>
 
 
 </resources>

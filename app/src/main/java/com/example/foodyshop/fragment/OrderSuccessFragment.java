@@ -1,7 +1,8 @@
 package com.example.foodyshop.fragment;
 
+import static com.example.foodyshop.helper.Helper.PRICE_FORMAT;
+
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.foodyshop.R;
-import com.example.foodyshop.activity.CartActivity;
 import com.example.foodyshop.model.OrderModel;
-
-import java.text.NumberFormat;
-import java.util.Currency;
 
 public class OrderSuccessFragment extends Fragment {
 
@@ -37,16 +34,12 @@ public class OrderSuccessFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_order_success, container, false);
         initUi();
-        NumberFormat format;
-        format = NumberFormat.getCurrencyInstance();
-        format.setMaximumFractionDigits(0);
-        format.setCurrency(Currency.getInstance("VND"));
         tvOrderCode.setText(mOrder.getOrderCode());
         tvFullname.setText(mOrder.getName());
         tvPhone.setText(mOrder.getPhone());
         tvAddress.setText(mOrder.getAddress());
         tvNote.setText(mOrder.getNote());
-        tvTotalMoney.setText(format.format(mOrder.getTotalMoney()));
+        tvTotalMoney.setText(PRICE_FORMAT.format(mOrder.getTotalMoney()));
 
         btnBack.setOnClickListener(this::onClickBack);
 

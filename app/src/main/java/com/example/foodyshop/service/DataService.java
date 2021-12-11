@@ -4,6 +4,7 @@ package com.example.foodyshop.service;
 import com.example.foodyshop.config.Const;
 import com.example.foodyshop.model.CustomerModel;
 import com.example.foodyshop.model.FeedbackModel;
+import com.example.foodyshop.model.OrderModel;
 import com.example.foodyshop.model.ProductModel;
 import com.example.foodyshop.model.Respond;
 import com.example.foodyshop.model.TopicModel;
@@ -104,13 +105,48 @@ public interface DataService {
     Call<List<ProductModel>> getBoughtProduct(@Field(Const.KEY_TOKEN) String token,
                                               @Field(Const.KEY_CURRENT_PAGE) int currentPage);
 
+    @FormUrlEncoded
+    @POST("get_popular_product")
+    Call<List<ProductModel>> getPopularProduct(@Field(Const.KEY_TOKEN) String token);
+
+    @FormUrlEncoded
+    @POST("get_total_page_suggest_product")
+    Call<Integer> getTotalPageSuggestProduct(@Field(Const.KEY_TOKEN) String token);
+
+    @FormUrlEncoded
+    @POST("get_suggest_product")
+    Call<List<ProductModel>> getSuggestProduct(@Field(Const.KEY_TOKEN) String token,
+                                               @Field(Const.KEY_CURRENT_PAGE) int currentPage);
+
+
     //    =========== Order =============
+
+    @FormUrlEncoded
+    @POST("get_list_order")
+    Call<List<OrderModel>> getListOrder(@Field(Const.KEY_TOKEN) String token,
+                                        @Field(Const.KEY_REQUEST_STATUS) String requestStatus);
 
     @FormUrlEncoded
     @POST("send_order")
     Call<Respond> sendOrder(@Field(Const.KEY_TOKEN) String token,
-                            @Field(Const.KEY_ORDER) String orderJson,
-                            @Field(Const.KEY_LIST_ORDER_DETAIL) String listOrderDetailJson);
+                            @Field(Const.KEY_ORDER) String orderJson);
+
+    @FormUrlEncoded
+    @POST("cancel_order")
+    Call<Respond> cancelOrder(@Field(Const.KEY_TOKEN) String token,
+                              @Field(Const.KEY_ORDER_ID) int orderId);
+
+    @FormUrlEncoded
+    @POST("confirm_buy")
+        // 0 là hủy đơn, 1 là xác nhận
+    Call<Respond> confirmBuy(@Field(Const.KEY_TOKEN) String token,
+                             @Field(Const.KEY_ORDER_ID) int orderId);
+
+    @FormUrlEncoded
+    @POST("confirm_received")
+        // 0 là hủy đơn, 1 là xác nhận
+    Call<Respond> confirmReceived(@Field(Const.KEY_TOKEN) String token,
+                                  @Field(Const.KEY_ORDER_ID) int orderId);
 
     @FormUrlEncoded
     @POST("add_feedback")

@@ -3,7 +3,10 @@ package com.example.foodyshop.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class OrderModel {
+import java.io.Serializable;
+import java.util.List;
+
+public class OrderModel implements Serializable {
 
     @SerializedName("id")
     @Expose
@@ -38,6 +41,9 @@ public class OrderModel {
     @SerializedName("status")
     @Expose
     private int status;
+    @SerializedName("order_details")
+    @Expose
+    private List<OrderDetailModel> orderDetails = null;
 
     public int getId() {
         return id;
@@ -125,5 +131,27 @@ public class OrderModel {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public List<OrderDetailModel> getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(List<OrderDetailModel> orderDetails) {
+        this.orderDetails = orderDetails;
+    }
+
+    public int getTotalProduct() {
+        if (orderDetails != null && !orderDetails.isEmpty()) {
+            int total = 0;
+            for (OrderDetailModel ord : orderDetails) {
+                if (ord != null) {
+                    total += ord.getAmount();
+                }
+            }
+            return total;
+        } else {
+            return 0;
+        }
     }
 }

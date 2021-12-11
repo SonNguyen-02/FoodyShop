@@ -6,6 +6,7 @@ import static com.example.foodyshop.config.Const.KEY_PRODUCT;
 import static com.example.foodyshop.config.Const.KEY_RELOAD_CART;
 import static com.example.foodyshop.config.Const.KEY_SELECT_TAP_ALL;
 import static com.example.foodyshop.config.Const.TOAST_DEFAULT;
+import static com.example.foodyshop.helper.Helper.PRICE_FORMAT;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -81,10 +82,6 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_product);
 
-        NumberFormat format = NumberFormat.getCurrencyInstance();
-        format.setMaximumFractionDigits(0);
-        format.setCurrency(Currency.getInstance("VND"));
-
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             initUi();
@@ -105,21 +102,27 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
                 }
 
                 llAddToCart.setOnClickListener(v -> {
-                    AddToCardBottomSheetDialogFragment sheetDialogFragment = AddToCardBottomSheetDialogFragment.newInstant(mProduct);
+                    AddToCardBottomSheetDialogFragment sheetDialogFragment = AddToCardBottomSheetDialogFragment.newInstant(mProduct, amount -> {
+                        OrderDetailModel orderDetail = new OrderDetailModel(mProduct, amount);
+                        Helper.addProductToCart(getApplicationContext(), orderDetail);
+                        initRlCart();
+                    });
                     sheetDialogFragment.show(getSupportFragmentManager(), sheetDialogFragment.getTag());
                 });
 
                 llBuyNow.setOnClickListener(v -> {
+                    llBuyNow.setEnabled(false);
                     ToastCustom.loading(this, 800).show();
                     new Handler().postDelayed(() -> {
                         OrderDetailModel orderDetail = new OrderDetailModel(mProduct, 1);
-                        Helper.addProductToCart(getApplicationContext(), orderDetail);
+                        Helper.buyNow(getApplicationContext(), orderDetail);
+                        llBuyNow.setEnabled(true);
                         if (isFromBuyAgain) {
                             backToCart();
                         } else {
                             gotoCart();
                         }
-                    }, 800);
+                    }, 600);
                 });
             }
 
@@ -128,7 +131,7 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
             initTotalPage();
             initFeedbackData();
             btnAddFeedback.setOnClickListener(v -> {
-                if (Helper.getCurrentAccount() == null) {
+                if (Helper.isLogin(getApplicationContext())) {
                     Intent intent = new Intent(DetailProductActivity.this, SigninActivity.class);
                     startActivity(intent);
                     return;
@@ -142,10 +145,10 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
             tvProductName.setText(mProduct.getName());
             tvDescription.setText(mProduct.getDescription());
 
-            tvPriceSale.setText(format.format(mProduct.getPriceSale()));
+            tvPriceSale.setText(PRICE_FORMAT.format(mProduct.getPriceSale()));
             if (mProduct.getDiscount() != null) {
                 tvDiscount.setText(MessageFormat.format(getResources().getString(R.string.discount), mProduct.getDiscount()));
-                tvPrice.setText(format.format(mProduct.getPrice()));
+                tvPrice.setText(PRICE_FORMAT.format(mProduct.getPrice()));
                 tvPrice.setPaintFlags(tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             } else {
                 rlSale.setVisibility(View.GONE);
@@ -292,16 +295,16 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
                     if (response.isSuccessful()) {
                         tvTotalFeedback.setText(MessageFormat.format(getResources().getString(R.string.total_feedback), ++totalFeedback));
                         mFeedbackAdapter.addFirst(response.body());
-                        ToastCustom.notice(getApplicationContext(), "Thêm đánh giá thành công!", ToastCustom.SUCCESS, TOAST_DEFAULT).show();
+                        ToastCustom.notice(getApplicationContext(), "Thêm đánh giá thành công!", ToastCustom.SUCCESS).show();
                     } else {
-                        ToastCustom.notice(getApplicationContext(), "Thêm đánh giá thất bại", ToastCustom.ERROR, TOAST_DEFAULT).show();
+                        ToastCustom.notice(getApplicationContext(), "Thêm đánh giá thất bại", ToastCustom.ERROR).show();
                     }
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<FeedbackModel> call, @NonNull Throwable t) {
                     loadingDialog.dismiss();
-                    ToastCustom.notice(getApplicationContext(), "Thêm đánh giá thất bại", ToastCustom.ERROR, TOAST_DEFAULT).show();
+                    ToastCustom.notice(getApplicationContext(), "Thêm đánh giá thất bại", ToastCustom.ERROR).show();
                 }
             });
         }
@@ -324,16 +327,16 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
                     if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
                         feedback.setContent(content);
                         mFeedbackAdapter.reloadFeedback(feedback);
-                        ToastCustom.notice(getApplicationContext(), "Thay đổi thành công!", ToastCustom.SUCCESS, TOAST_DEFAULT).show();
+                        ToastCustom.notice(getApplicationContext(), "Thay đổi thành công!", ToastCustom.SUCCESS).show();
                     } else {
-                        ToastCustom.notice(getApplicationContext(), "Thay đổi thất bại! Vui lòng thử lại sau", ToastCustom.ERROR, TOAST_DEFAULT).show();
+                        ToastCustom.notice(getApplicationContext(), "Thay đổi thất bại! Vui lòng thử lại sau", ToastCustom.ERROR).show();
                     }
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<Respond> call, @NonNull Throwable t) {
                     loadingDialog.dismiss();
-                    ToastCustom.notice(getApplicationContext(), "Thay đổi thất bại! Vui lòng thử lại sau", ToastCustom.ERROR, TOAST_DEFAULT).show();
+                    ToastCustom.notice(getApplicationContext(), "Thay đổi thất bại! Vui lòng thử lại sau", ToastCustom.ERROR).show();
                 }
             });
         }
@@ -385,16 +388,16 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
                             tvTotalFeedback.setText(R.string.no_have_feedback);
                         }
                         mFeedbackAdapter.removeFeedback(feedback);
-                        ToastCustom.notice(getApplicationContext(), "Xóa thành công!", ToastCustom.SUCCESS, TOAST_DEFAULT).show();
+                        ToastCustom.notice(getApplicationContext(), "Xóa thành công!", ToastCustom.SUCCESS).show();
                     } else {
-                        ToastCustom.notice(getApplicationContext(), "Xóa thất bại! Vui lòng thử lại sau", ToastCustom.ERROR, TOAST_DEFAULT).show();
+                        ToastCustom.notice(getApplicationContext(), "Xóa thất bại! Vui lòng thử lại sau", ToastCustom.ERROR).show();
                     }
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<Respond> call, @NonNull Throwable t) {
                     loadingDialog.dismiss();
-                    ToastCustom.notice(getApplicationContext(), "Xóa thất bại! Vui lòng thử lại sau", ToastCustom.ERROR, TOAST_DEFAULT).show();
+                    ToastCustom.notice(getApplicationContext(), "Xóa thất bại! Vui lòng thử lại sau", ToastCustom.ERROR).show();
                 }
             });
         }).show();

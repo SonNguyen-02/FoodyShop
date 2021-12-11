@@ -247,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements TopicAdapter.IOnc
             isBackPress = false;
             super.onBackPressed();
         } else {
-            ToastCustom.notice(this, "Nhấn back thêm lần nữa để thoát", ToastCustom.NONE, TOAST_DEFAULT).show();
+            ToastCustom.notice(this, "Nhấn back thêm lần nữa để thoát", ToastCustom.NONE).show();
             isBackPress = true;
         }
     }

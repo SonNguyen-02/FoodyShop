@@ -115,7 +115,6 @@ public class BuyAgainFragment extends Fragment implements ProductAdapter.IOnclic
             @Override
             public void onResponse(@NonNull Call<Integer> call, @NonNull Response<Integer> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Log.e("ddd", "onResponse: 1");
                     totalPage = response.body();
                     if (totalPage == 0) {
                         stopShimmer();
@@ -128,13 +127,13 @@ public class BuyAgainFragment extends Fragment implements ProductAdapter.IOnclic
                     }
                     initProductData();
                 } else {
-                    ToastCustom.notice(requireContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.INFO, TOAST_DEFAULT);
+                    ToastCustom.notice(requireContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.INFO).show();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<Integer> call, @NonNull Throwable t) {
-                ToastCustom.notice(requireContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.INFO, TOAST_DEFAULT);
+                ToastCustom.notice(requireContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.INFO).show();
             }
         });
     }

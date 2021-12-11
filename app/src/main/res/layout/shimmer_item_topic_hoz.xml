@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rl_item"
     android:layout_width="wrap_content"
     android:layout_height="140dp"
+    android:background="@color/white_smoke"
     android:orientation="vertical"
     android:padding="6dp">
 
@@ -11,20 +13,27 @@
         android:layout_width="76dp"
         android:layout_height="76dp"
         android:layout_margin="4dp"
-        android:elevation="2dp"
-        android:src="@drawable/test_product_icon" />
+        android:src="@color/colorShimmer" />
 
-    <TextView
+    <View
         android:id="@+id/tv_topic_name"
         android:layout_width="76dp"
-        android:layout_height="wrap_content"
+        android:layout_height="15dp"
         android:layout_below="@id/img_topic"
         android:layout_marginStart="4dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="4dp"
-        android:gravity="center"
-        android:text="Gạo, bột, đồ khô"
-        android:textColor="@color/colorTextPrimary"
-        android:textSize="15sp" />
+        android:background="@color/colorShimmer" />
+
+    <View
+        android:layout_width="58dp"
+        android:layout_height="15dp"
+        android:layout_below="@id/tv_topic_name"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:background="@color/colorShimmer"
+        android:textSize="12sp" />
 
 
 </RelativeLayout>

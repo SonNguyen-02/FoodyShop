@@ -5,7 +5,9 @@ import androidx.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class OrderDetailModel {
+import java.io.Serializable;
+
+public class OrderDetailModel implements Serializable {
 
     @SerializedName("id")
     @Expose

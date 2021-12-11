@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/item_topic_height"
     android:background="@drawable/ripple_item_topic_ver"
-    android:padding="3dp">
+    android:padding="4dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/img_topic"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:elevation="5dp"
-        android:padding="5dp"
+        android:padding="4dp"
         android:src="@drawable/test_product_icon" />
 
     <TextView
