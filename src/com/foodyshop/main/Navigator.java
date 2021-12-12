@@ -2,6 +2,8 @@ package com.foodyshop.main;
 
 import com.foodyshop.controller.AddCategoryController;
 import com.foodyshop.controller.AddCategoryController.IOnAddSuccess;
+import com.foodyshop.controller.AddProductController;
+import com.foodyshop.controller.AddProductController.IOnInsertProductSuccess;
 import com.foodyshop.controller.AddStaffController;
 import com.foodyshop.controller.AddTopicController;
 import com.foodyshop.controller.AddTopicController.IOnInsertTopicSuccess;
@@ -83,7 +85,7 @@ public class Navigator {
     private static final String ADD_STAFF = ROOT_FOLDER + "AddStaff.fxml";
     private static final String EDIT_STAFF = ROOT_FOLDER + "EditStaff.fxml";
     private static final String EDIT_CUSTOMER_FORM = ROOT_FOLDER + "EditCustomerForm.fxml";
-    
+    private static final String ADD_PRODUCT_FORM = ROOT_FOLDER + "AddProductForm.fxml";
     // Khai báo di chuyển giữa các màn hình
     public void goToLoginUI() {
         redirectTo("Login", LOGIN_UI);
@@ -195,6 +197,11 @@ public class Navigator {
         showModal("Product Detail ", PRODUCTDETAIL_PAGE);
         ProductDetailController controller = fxLoader.getController();
         controller.initProductModel(product);
+    }
+    public void showAddProduct(IOnInsertProductSuccess mIOnInsertProductSuccess) {
+        showModal("Topic ", ADD_PRODUCT_FORM);
+        AddProductController controller = fxLoader.getController();
+        controller.initData(modalStage, mIOnInsertProductSuccess);
     }
     // </editor-fold> 
     private Navigator() {

@@ -65,9 +65,6 @@ public class ProductController implements Initializable {
     private TableColumn<ProductModel, String> tcStatus;
 
     @FXML
-    private TableColumn<ProductModel, ?> tcLK;
-
-    @FXML
     private Button btnAdd,btnEdit,btnDelete,btnProductDetail;
     
      @FXML
@@ -84,10 +81,16 @@ public class ProductController implements Initializable {
         tcCreated.setCellValueFactory(cellValue -> cellValue.getValue().getCreatedProperty());
         tcStatus.setCellValueFactory(cellValue -> cellValue.getValue().getStatusVal());
         tcImg.setCellValueFactory(cellValue -> cellValue.getValue().getImgView());
-        listProduct = ProductHelper.getAllCategory();
+        listProduct = ProductHelper.getAllProduct();
         tblProduct.setItems(listProduct);
         btnDelete.setOnMouseClicked(this::onClickDelete);
         btnProductDetail.setOnMouseClicked(this::onclickshowProduct_Detail);
+        btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddProduct(new AddProductController.IOnInsertProductSuccess() {
+            @Override
+            public void callback(ProductModel product) {
+                listProduct.add(0, product);
+            }
+        }));
         
         
         FilteredList<ProductModel> filteredData = new FilteredList<>(listProduct, b -> true);

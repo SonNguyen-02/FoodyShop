@@ -126,5 +126,9 @@ public class CategoryModel {
             this.statusVal.setValue(HIDDEN);
         }
     }
+    @Override
+    public String toString() {
+        return this.name.get();
+    }
 
 }
