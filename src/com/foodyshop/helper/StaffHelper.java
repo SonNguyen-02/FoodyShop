@@ -9,11 +9,13 @@ import com.foodyshop.database.DBConnection;
 import com.foodyshop.database.DBQuery;
 import com.foodyshop.database.DBQueryBuilder;
 import com.foodyshop.model.StaffModel;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -27,7 +29,6 @@ public class StaffHelper {
         StaffModel staff = null;
 
         try {
-//            String query = "SELECT * FROM fs_staff WHERE username=?";
             String sql = db.select().from("fs_staff").where("username", username).getCompiledSelect(true);
             System.out.println(sql);
             ResultSet rs = DBConnection.execSelect(sql);
@@ -38,7 +39,6 @@ public class StaffHelper {
                 String typeDb = rs.getString("type");
                 String statusDb = rs.getString("status");
 
-//                staff = new StaffModel(idDb, usernameDb, passwordDb, nameDb, typeDb, statusDb);
                 staff = new StaffModel(idDb, username, passwordDb, nameDb, nameDb, nameDb, typeDb, statusDb);
             }
         } finally {
@@ -72,30 +72,31 @@ public class StaffHelper {
         return listStaff;
     }
 
-    public static StaffModel insertStaff(StaffModel staffModel) {
+    public static StaffModel insertStaff(String username, String password, String name, String type) {
         String sql = db.insert("fs_staff")
-                .set("username", staffModel.getUsername())
-                .set("password", staffModel.getPassword())
-                .set("name", staffModel.getName())
-                .set("type", staffModel.getType())
+                .set("username", username)
+                .set("password", password)
+                .set("name", name)
+                .set("type", type)
                 .getCompiledInsert(true);
 
-        int username = DBConnection.execInsert(sql);
-        if (username > 0) {
+        int lastId = DBConnection.execInsert(sql);
+        if (lastId > 0) {
             try {
-                sql = db.select().from("fs_staff").where("username", String.valueOf(username)).getCompiledSelect(true);
+                sql = db.select().from("fs_staff").where("id", String.valueOf(lastId)).getCompiledSelect(true);
                 ResultSet rs = DBConnection.execSelect(sql);
                 if (rs.next()) {
-                   // staffModel.setId(lastId);
-                    staffModel.setUsername(rs.getString("username"));
-                    staffModel.setPassword(rs.getString("password"));
-                    staffModel.setName(rs.getString("name"));
-                    staffModel.setType(rs.getString("type"));
+                    StaffModel staffModel = new StaffModel();
+                    staffModel.setId(lastId);
+                    staffModel.setUsername(username);
+                    staffModel.setPassword(password);
+                    staffModel.setName(name);
+                    staffModel.setType(type);
                     return staffModel;
                 }
             } catch (SQLException ex) {
-               // Logger.getLogger(StaffHelper.class.getName()).log(Level.SEVERE, null, ex);
-               ex.printStackTrace();
+                // Logger.getLogger(StaffHelper.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
             } finally {
                 DBConnection.close();
             }
@@ -104,13 +105,44 @@ public class StaffHelper {
 
     }
 
-public static boolean updateStatusStaff(StaffModel staff){
-    String sql = db.update("fs_staff")
+    public static boolean updateStatusStaff(StaffModel staff) {
+        String sql = db.update("fs_staff")
                 .set("status", staff.getStatus())
                 .where("id", String.valueOf(staff.getId()))
                 .getCompiledUpdate(true);
         int n = DBConnection.execUpdate(sql);
         DBConnection.close();
-    return n >0;
-}
+        return n > 0;
+    }
+
+    public static boolean editStaff(StaffModel staffModel) {
+        String sql = db.update("fs_staff")
+                .set("username", staffModel.getUsername())
+                .set("password", staffModel.getPassword())
+                .set("name", staffModel.getName())
+                .set("type", staffModel.getType())
+                .where("id", String.valueOf(staffModel.getId()))
+                .getCompiledUpdate(true);
+        int result = DBConnection.execUpdate(sql);
+        if (result > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean delete(StaffModel staffModel) {
+        try {
+            String sql = "delete from fs_staff where id = ?";
+            PreparedStatement stm = DBConnection.getConnection().prepareStatement(sql);
+            stm.setInt(1, staffModel.getId());
+            if (stm.executeUpdate() > 0) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(StaffHelper.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBConnection.close();
+        }
+        return false;
+    }
 }

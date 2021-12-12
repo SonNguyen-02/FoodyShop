@@ -9,6 +9,7 @@ import com.foodyshop.main.Navigator;
 import com.foodyshop.model.StaffModel;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,6 +24,7 @@ import javafx.scene.control.TextField;
  * @author DELL
  */
 public class EditStaffController implements Initializable {
+    private ObservableList<StaffModel> listStaff;
     private StaffModel staff;
     @FXML
     private TextField txtUsername;
@@ -44,6 +46,10 @@ public class EditStaffController implements Initializable {
 
     public void setDataStaff(StaffModel staff){
         this.staff = staff;
+    }
+    public interface IOnEditStaffSuccess {
+
+        void callback();
     }
     
     @Override

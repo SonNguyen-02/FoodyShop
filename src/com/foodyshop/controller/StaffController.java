@@ -15,6 +15,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,6 +26,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseEvent;
 
 /**
  *
@@ -85,7 +87,7 @@ public class StaffController implements Initializable {
         try {
             listStaff.addAll(StaffHelper.getAllStaff());
             tvStaff.setItems(listStaff);
-            tcStt.setCellValueFactory(cellData -> cellData.getValue().getIdProperty());
+            tcStt.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tvStaff.getItems().indexOf(cellData.getValue()) + 1) + ""));
             tcUsername.setCellValueFactory(cellData -> cellData.getValue().getUsernameProperty());
             tcPassword.setCellValueFactory(cellData -> cellData.getValue().getPasswordProperty());
             tcName.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
@@ -94,25 +96,25 @@ public class StaffController implements Initializable {
             tcUpdated.setCellValueFactory(cellData -> cellData.getValue().getUpdatedProperty());
             tcStatus.setCellValueFactory(cellData -> cellData.getValue().getStatusProperty());
 
+//            btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddStaff(new AddStaffController().initCallback(mIOnAddStaffSuccess));
+            btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddStaff(new AddStaffController.IOnAddStaffSuccess() {
+                @Override
+                public void IOnAddStaffSuccess(StaffModel staffModel) {
+                    listStaff.add(0, staffModel);
+                }
+            }));
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        // btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddStaff());
+
     }
 
     @FXML
-    void onClickAdd(ActionEvent event) {
+    void onClickAdd(ActionEvent event) throws SQLException {
 //        String password = "123456";
 //        String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
 //        System.out.println();
-        btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddStaff());
-//        btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddStaff(new AddStaffController().IOnAddSuccess()
-//        {
-//            @Override
-//            public void onAddSuccess(StaffModel staff){
-//            listStaff.add(0, staff);
-//            }
-//        }));
 
     }
 
@@ -129,21 +131,22 @@ public class StaffController implements Initializable {
             alerts.setTitle("ERROR");
             alerts.setHeaderText("Do you want delete " + staffModel.getUsername());
             alerts.showAndWait().ifPresent(btn -> {
-                if (btn == ButtonType.OK) {
-                    //  else {
+                if (btn == ButtonType.OK) {         
+                    if (StaffHelper.delete(staffModel)) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("ERROR");
+                        alert.setHeaderText("Delete success!");
+                        alert.show();
+                        listStaff.remove(staffModel);
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("ERROR");
+                        alert.setHeaderText("Delete error");
+                        alert.show();
+                    }
 
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("ERROR");
-                    alert.setHeaderText("Delete success!");
-                    alert.show();
-                    listStaff.remove(staffModel);
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("ERROR");
-                    alert.setHeaderText("Delete error");
-                    alert.show();
                 }
-                // }
+              
 
             });
 

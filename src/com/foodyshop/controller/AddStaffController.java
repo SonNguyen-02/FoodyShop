@@ -5,11 +5,11 @@
  */
 package com.foodyshop.controller;
 
-import com.foodyshop.helper.StaffHelper;
 import com.foodyshop.main.Navigator;
 import com.foodyshop.model.StaffModel;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -25,6 +25,7 @@ import javafx.scene.control.TextField;
  */
 public class AddStaffController implements Initializable {
 
+    private ObservableList<StaffModel> listStaff;
     @FXML
     private TextField txtUsername;
 
@@ -45,19 +46,17 @@ public class AddStaffController implements Initializable {
 
     @FXML
     private Button btnCancel;
-    
-    private IOnAddSuccess mIOnAddSuccess;
 
+    private IOnAddStaffSuccess mIOnAddStaffSuccess;
 
-    public interface IOnAddSuccess {
+    public interface IOnAddStaffSuccess {
 
-        void onAddSuccess(StaffModel staff);
+        void IOnAddStaffSuccess(StaffModel staffModel);
     }
 
-    public void initCallback(IOnAddSuccess mIOnAddSuccess) {
-        this.mIOnAddSuccess = mIOnAddSuccess;
+    public void initCallback(IOnAddStaffSuccess mIOnAddStaffSuccess) {
+        this.mIOnAddStaffSuccess = mIOnAddStaffSuccess;
     }
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -85,11 +84,11 @@ public class AddStaffController implements Initializable {
     @FXML
     void onClickSubmit(ActionEvent event) {
         //StaffModel staff = StaffHelper.insertStaff(txtUsername.getText(),txtPassword.getText(),txtName.getText());
-        String userName = txtUsername.getText().trim();
+        String username = txtUsername.getText().trim();
         String password = txtPassword.getText().trim();
         String name = txtName.getText().trim();
 
-        if (userName.isEmpty()) {
+        if (username.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
             alert.setHeaderText("Please enter username!");
@@ -120,10 +119,10 @@ public class AddStaffController implements Initializable {
             });
         }
 
-        StaffModel staff = new StaffModel();
-        staff.setUsername(userName);
-        staff.setPassword(password);
-        staff.setName(name);
+//        StaffModel staff = new StaffModel();
+//        staff.setUsername(username);
+//        staff.setPassword(password);
+//        staff.setName(name);
     }
 
 }

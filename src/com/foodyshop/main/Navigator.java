@@ -5,6 +5,7 @@ import com.foodyshop.controller.AddCategoryController.IOnAddSuccess;
 import com.foodyshop.controller.AddProductController;
 import com.foodyshop.controller.AddProductController.IOnInsertProductSuccess;
 import com.foodyshop.controller.AddStaffController;
+import com.foodyshop.controller.AddStaffController.IOnAddStaffSuccess;
 import com.foodyshop.controller.AddTopicController;
 import com.foodyshop.controller.AddTopicController.IOnInsertTopicSuccess;
 import com.foodyshop.controller.CustomerDetailController;
@@ -172,10 +173,10 @@ public class Navigator {
         EditOrderController controller = fxLoader.getController();
         controller.setData(order,modalStage,mIOnUpdateOrderSuccess);
     }
-    public void showAddStaff() {
+    public void showAddStaff(IOnAddStaffSuccess mIOnAddStaffSuccess) {
         showModal("Add Staff ", ADD_STAFF);
         AddStaffController controller = fxLoader.getController();
-        //controller.initCallback(mIOnAddSuccess);
+        controller.initCallback(mIOnAddStaffSuccess);
     }
     public void showEditStaff() {
         showModal("Edit Staff ", EDIT_STAFF);
@@ -270,6 +271,8 @@ public class Navigator {
     public void setModalStage(Stage modalStage) {
         this.modalStage = modalStage;
     }
+
+    
 
     
 
