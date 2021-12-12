@@ -16,7 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 /**
@@ -35,11 +35,8 @@ public class AddStaffController implements Initializable {
     @FXML
     private TextField txtPassword;
 
-    @FXML
-    private ChoiceBox<String> cbType;
-
-    @FXML
-    private ChoiceBox<String> cbStatus;
+     @FXML
+    private ComboBox<String> cbType;
 
     @FXML
     private Button btnSubmit;
@@ -62,8 +59,6 @@ public class AddStaffController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         cbType.getItems().add("admin");
         cbType.getItems().add("staff");
-        cbStatus.getItems().add("lock");
-        cbStatus.getItems().add("unlock");
 
 //        btnSubmit.setOnMouseClicked(this::onClickSubmit);
 //        btnCancel.setOnMouseClicked(this::onClickCancel);
