@@ -9,7 +9,7 @@
         android:id="@+id/rl_title_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/ripple_title_order"
+        android:background="@drawable/ripple_while"
         android:padding="@dimen/space_view">
 
         <TextView
@@ -59,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@id/into_money_text"
-            android:text="Giá ship: "
+            android:text="@string/ship_price"
             android:textColor="@color/colorTextPrimary"
             android:textSize="16sp" />
 
@@ -90,7 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_ship_price"
             android:layout_toStartOf="@id/tv_total_money"
-            android:text="Thành tiền: "
+            android:text="@string/into_money"
             android:textColor="@color/colorTextPrimary"
             android:textSize="16sp" />
 
@@ -131,8 +131,8 @@
             android:layout_width="120dp"
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
-            android:background="@drawable/ripple_warning_rad_4"
-            android:text="Mua lại"
+            android:background="@drawable/ripple_red_corn_4"
+            android:text="@string/buy_again"
             android:textAllCaps="false"
             android:textColor="@color/white" />
 
@@ -149,8 +149,8 @@
             android:id="@+id/btn_cancel"
             android:layout_width="100dp"
             android:layout_height="40dp"
-            android:background="@drawable/ripple_warning_rad_4"
-            android:text="Hủy đơn"
+            android:background="@drawable/ripple_red_corn_4"
+            android:text="@string/cancel_order"
             android:textAllCaps="false"
             android:textColor="@color/white" />
 
@@ -159,7 +159,7 @@
             android:layout_width="120dp"
             android:layout_height="40dp"
             android:layout_marginStart="@dimen/space_view"
-            android:background="@drawable/ripple_info_rad_4"
+            android:background="@drawable/ripple_blue_corn_4"
             android:text="@string/confirm"
             android:textAllCaps="false"
             android:textColor="@color/white" />

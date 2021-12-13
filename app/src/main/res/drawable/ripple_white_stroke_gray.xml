@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="#4D000000">
-    <item android:drawable="@drawable/custom_bg_btn_amount" />
+    android:color="@color/colorRippleGrey">
+    <item android:drawable="@drawable/custom_bg_white_stroke_grey" />
 </ripple>

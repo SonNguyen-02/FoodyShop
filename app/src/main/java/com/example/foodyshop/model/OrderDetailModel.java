@@ -36,6 +36,10 @@ public class OrderDetailModel implements Serializable {
     @SerializedName("img")
     @Expose
     private String img;
+    @SerializedName("feedback")
+    @Expose
+    private FeedbackModel feedback;
+
     private boolean isChecked;
 
     public OrderDetailModel() {
@@ -121,6 +125,14 @@ public class OrderDetailModel implements Serializable {
 
     public void setImg(String img) {
         this.img = img;
+    }
+
+    public FeedbackModel getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(FeedbackModel feedback) {
+        this.feedback = feedback;
     }
 
     public boolean isChecked() {

@@ -35,7 +35,7 @@ public class AuthSuccessDialog {
         View view = LayoutInflater.from(activity).inflate(R.layout.dialog_auth_success, null);
         ImageView imgIcon = view.findViewById(R.id.img_icon);
         TextView tvMess = view.findViewById(R.id.tv_message);
-        Button btnOk = view.findViewById(R.id.btn_ok);
+        Button btnOk = view.findViewById(R.id.btn_confirm);
 
         imgIcon.setImageResource(imgRes);
         tvMess.setText(message);

@@ -154,7 +154,7 @@
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="8dp"
-                        android:background="@drawable/ripple_square_btn_warning"
+                        android:background="@drawable/ripple_orange"
                         android:text="@string/total_buy"
                         android:textAllCaps="false"
                         android:textColor="@color/white" />
@@ -173,7 +173,7 @@
                         style="@style/TextButton"
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
-                        android:background="@drawable/ripple_btn_amount"
+                        android:background="@drawable/ripple_white_stroke_gray"
                         android:text="@string/cancel"
                         android:textAllCaps="false"
                         android:textSize="15sp" />
@@ -182,7 +182,7 @@
                         android:id="@+id/btn_delete"
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
-                        android:background="@drawable/ripple_square_btn_warning"
+                        android:background="@drawable/ripple_orange"
                         android:text="@string/delete"
                         android:textAllCaps="false"
                         android:textColor="@color/white"

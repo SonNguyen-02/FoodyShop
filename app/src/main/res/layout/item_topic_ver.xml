@@ -3,7 +3,7 @@
     android:id="@+id/rl_item"
     android:layout_width="match_parent"
     android:layout_height="@dimen/item_topic_height"
-    android:background="@drawable/ripple_item_topic_ver"
+    android:background="@drawable/ripple_white_stroke_black_bot"
     android:padding="4dp">
 
     <de.hdodenhof.circleimageview.CircleImageView

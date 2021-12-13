@@ -45,6 +45,7 @@ public class DetailTopicActivity extends AppCompatActivity implements CategoryAd
 
     private TopicModel mTopic;
 
+    private RelativeLayout rlMainPage;
     private ImageView imgBack;
     private RelativeLayout rlFilter;
     private TextView tvSearch;
@@ -328,6 +329,7 @@ public class DetailTopicActivity extends AppCompatActivity implements CategoryAd
     }
 
     private void initUi() {
+        rlMainPage = findViewById(R.id.rl_main_page);
         imgBack = findViewById(R.id.img_back);
         rlFilter = findViewById(R.id.rl_filter);
         tvSearch = findViewById(R.id.tv_search);
@@ -372,9 +374,11 @@ public class DetailTopicActivity extends AppCompatActivity implements CategoryAd
         transaction.add(R.id.fl_main_layout, fragment);
         transaction.addToBackStack(name);
         transaction.commit();
+        new Handler().postDelayed(() -> rlMainPage.setVisibility(View.GONE), 300);
     }
 
     public void removeFragmentFromMainLayout() {
+        rlMainPage.setVisibility(View.VISIBLE);
         getSupportFragmentManager().popBackStack();
     }
 

@@ -127,6 +127,11 @@ public interface DataService {
                                         @Field(Const.KEY_REQUEST_STATUS) String requestStatus);
 
     @FormUrlEncoded
+    @POST("get_feedback_in_order")
+    Call<OrderModel> getFeedbackInOrder(@Field(Const.KEY_TOKEN) String token,
+                                        @Field(Const.KEY_ORDER) String orderJson);
+
+    @FormUrlEncoded
     @POST("send_order")
     Call<Respond> sendOrder(@Field(Const.KEY_TOKEN) String token,
                             @Field(Const.KEY_ORDER) String orderJson);

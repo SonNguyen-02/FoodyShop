@@ -1,8 +1,11 @@
 package com.example.foodyshop.config;
 
+import java.util.concurrent.TimeUnit;
+
 public class Const {
 
     public static final int TOAST_DEFAULT = 1500;
+    public static final long LIMIT_TIME_EDIT_DEL_FEEDBACK = TimeUnit.MINUTES.toMillis(30); // minutes
     // ít nhất 1 kí tự & 1 số & min length 8
     public static final String PASSWORD_REGEX = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
 
@@ -13,6 +16,7 @@ public class Const {
     public static final String KEY_CALLBACK = "key_callback";
     public static final String KEY_NEW_TASK = "key_new_task";
     public static final String KEY_SIGN_IN_OK = "key_sign_in_ok";
+    public static final String KEY_POSITION = "key_position";
 
     public static final String KEY_IS_CHECK_ALL = "key_is_check_all";
     public static final String KEY_TOTAL_MONEY = "key_total_money";

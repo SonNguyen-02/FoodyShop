@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.foodyshop.fragment.AccountFragment;
+import com.example.foodyshop.fragment.FavoriteFragment;
 import com.example.foodyshop.fragment.HomeFragment;
 import com.example.foodyshop.fragment.NotificationFragment;
 import com.example.foodyshop.fragment.OrderFragment;
@@ -19,11 +20,11 @@ public class HomeViewPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        switch (position){
+        switch (position) {
             case 1:
-                return new OrderFragment();
+                return new FavoriteFragment();
             case 2:
-                return new NotificationFragment();
+                return new OrderFragment();
             case 3:
                 return new AccountFragment();
             default:

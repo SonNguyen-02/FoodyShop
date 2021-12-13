@@ -54,7 +54,7 @@
             android:textColor="@color/colorTextPrice"
             android:textSize="13sp"
             android:textStyle="bold"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <LinearLayout
             android:id="@+id/rl_calc_box"

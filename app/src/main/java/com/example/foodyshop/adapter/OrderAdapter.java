@@ -34,13 +34,13 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     }
 
     public interface IInteractOrder {
-        void onClickTitle(OrderModel order);
+        void onClickTitle(int position, OrderModel order);
 
         void onClickBuyAgain(OrderModel order);
 
-        void onClickCancelOrder(OrderModel order);
+        void onClickCancelOrder(int position, OrderModel order);
 
-        void onClickConfirmOrder(OrderModel order);
+        void onClickConfirmOrder(int position, OrderModel order);
     }
 
     public List<OrderModel> getListOrder() {
@@ -54,7 +54,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         return new OrderViewHolder(view);
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint({"ClickableViewAccessibility", "SetTextI18n"})
     @Override
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
         OrderModel order = mListOrder.get(position);
@@ -65,14 +65,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         holder.tvTotalProduct.setText(MessageFormat.format(context.getString(R.string.total_product), order.getTotalProduct()));
         holder.tvTotalMoney.setText(Helper.PRICE_FORMAT.format(order.getTotalMoney()));
 
-        OrderDetailAdapter dtAdapter = new OrderDetailAdapter(context, order.getOrderDetails());
+        OrderDetailCollapseAdapter dtAdapter = new OrderDetailCollapseAdapter(context, order.getOrderDetails());
         holder.rcvOrderDetail.setAdapter(dtAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
         holder.rcvOrderDetail.setLayoutManager(layoutManager);
-        holder.rlTitleOrder.setOnClickListener(view -> {
-            mInteractOrder.onClickTitle(order);
-        });
-
+        holder.rlTitleOrder.setOnClickListener(view -> mInteractOrder.onClickTitle(holder.getAdapterPosition(), order));
 
         int status = order.getStatus();
         switch (status) {
@@ -81,7 +78,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                 holder.tvShipPrice.setText("Đang cập nhập");
                 holder.showCancelConfirmBox();
                 holder.btnConfirm.setVisibility(View.GONE);
-                holder.btnCancel.setOnClickListener(view -> mInteractOrder.onClickCancelOrder(order));
+                holder.btnCancel.setOnClickListener(view -> mInteractOrder.onClickCancelOrder(holder.getAdapterPosition(), order));
                 break;
             case 1:
                 holder.tvStatus.setText("Đã được xác nhận");
@@ -92,15 +89,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                 }
                 holder.showCancelConfirmBox();
                 holder.btnConfirm.setVisibility(View.GONE);
-                holder.btnCancel.setOnClickListener(view -> mInteractOrder.onClickCancelOrder(order));
+                holder.btnCancel.setOnClickListener(view -> mInteractOrder.onClickCancelOrder(holder.getAdapterPosition(), order));
                 break;
             case 2:
                 holder.tvStatus.setText("Chờ bạn xác nhận");
                 holder.tvShipPrice.setText(Helper.PRICE_FORMAT.format(order.getShipPrice()));
                 holder.showCancelConfirmBox();
                 holder.btnConfirm.setVisibility(View.VISIBLE);
-                holder.btnCancel.setOnClickListener(view -> mInteractOrder.onClickCancelOrder(order));
-                holder.btnConfirm.setOnClickListener(view -> mInteractOrder.onClickConfirmOrder(order));
+                holder.btnCancel.setOnClickListener(view -> mInteractOrder.onClickCancelOrder(holder.getAdapterPosition(), order));
+                holder.btnConfirm.setOnClickListener(view -> mInteractOrder.onClickConfirmOrder(holder.getAdapterPosition(), order));
                 break;
             case 3:
                 holder.tvStatus.setText("Đang xuất kho");

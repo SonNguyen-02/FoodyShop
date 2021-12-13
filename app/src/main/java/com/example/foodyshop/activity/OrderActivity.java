@@ -3,7 +3,6 @@ package com.example.foodyshop.activity;
 import static com.example.foodyshop.config.Const.KEY_IS_CHECK_ALL;
 import static com.example.foodyshop.config.Const.KEY_PHONE_CODE;
 import static com.example.foodyshop.config.Const.KEY_TOTAL_MONEY;
-import static com.example.foodyshop.config.Const.TOAST_DEFAULT;
 import static com.example.foodyshop.helper.Helper.PRICE_FORMAT;
 
 import androidx.annotation.NonNull;
@@ -13,18 +12,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.foodyshop.R;
@@ -42,9 +41,7 @@ import com.example.foodyshop.service.APIService;
 import com.google.gson.Gson;
 import com.hbb20.CountryCodePicker;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.List;
 
 import retrofit2.Call;
@@ -53,6 +50,7 @@ import retrofit2.Response;
 
 public class OrderActivity extends AppCompatActivity {
 
+    private RelativeLayout rlMainPage;
     private ImageView imgBack, imgCheck;
     private CountryCodePicker ccp;
     private EditText edtFullName, edtPhone, edtAddress, edtNote;
@@ -124,6 +122,7 @@ public class OrderActivity extends AppCompatActivity {
     }
 
     private void initUi() {
+        rlMainPage = findViewById(R.id.rl_main_page);
         imgBack = findViewById(R.id.img_back);
         imgCheck = findViewById(R.id.img_check);
         ccp = findViewById(R.id.country_code_picker);
@@ -227,8 +226,9 @@ public class OrderActivity extends AppCompatActivity {
                         isSendOrder = true;
                         order.setOrderCode(res.getMsg());
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.frame_order_root, new OrderSuccessFragment(order));
+                        transaction.replace(R.id.frame_root, new OrderSuccessFragment(order));
                         transaction.commit();
+                        rlMainPage.setVisibility(View.GONE);
                     } else {
                         ToastCustom.notice(getApplicationContext(), res.getMsg(), ToastCustom.ERROR).show();
                     }

@@ -5,7 +5,7 @@
     android:gravity="center"
     android:layout_gravity="center"
     android:minWidth="180dp"
-    android:background="@drawable/custom_bg_toast"
+    android:background="@drawable/custom_bg_black_trans_60_corn_12"
     android:orientation="vertical"
     android:padding="12dp">
 

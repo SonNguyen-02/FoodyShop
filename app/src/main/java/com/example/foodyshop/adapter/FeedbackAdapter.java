@@ -1,8 +1,9 @@
 package com.example.foodyshop.adapter;
 
+import static com.example.foodyshop.config.Const.LIMIT_TIME_EDIT_DEL_FEEDBACK;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class FeedbackAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -45,8 +47,8 @@ public class FeedbackAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.context = context;
         this.mListFeedback = mListFeedback;
         mIOnClickCallback = (IOnClickCallback) context;
-        formatFrom = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        formatTo = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+        formatFrom = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        formatTo = new SimpleDateFormat("dd/MM/yyyy HH:mm");
     }
 
     public interface IOnClickCallback {
@@ -144,7 +146,8 @@ public class FeedbackAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 viewHolder.tvCreated.setText(feedback.getCreated());
                 e.printStackTrace();
             }
-            if (Helper.isLogin(context) && Helper.getCurrentAccount().getId() == feedback.getCustomerId()) {
+            if (Helper.isLogin(context) && Helper.getCurrentAccount().getId() == feedback.getCustomerId()
+                    && System.currentTimeMillis() - feedback.getTime() < LIMIT_TIME_EDIT_DEL_FEEDBACK) {
                 viewHolder.tvEdit.setVisibility(View.VISIBLE);
                 viewHolder.tvDelete.setVisibility(View.VISIBLE);
                 viewHolder.tvEdit.setOnClickListener(v -> mIOnClickCallback.onClickEditFeedback(feedback));

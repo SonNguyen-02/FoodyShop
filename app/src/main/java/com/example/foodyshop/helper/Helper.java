@@ -9,6 +9,7 @@ import static com.example.foodyshop.config.Const.KEY_USER_OBJ;
 import static com.example.foodyshop.config.Const.KEY_USER_PREFERENCES;
 import static com.example.foodyshop.config.Const.TOAST_DEFAULT;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -32,10 +33,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Currency;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -86,18 +92,20 @@ public class Helper {
     @NonNull
     public static List<OrderDetailModel> convertJsonToListOrderDetail(String strJson) {
         List<OrderDetailModel> list = new ArrayList<>();
-        try {
-            JSONArray jsonArray = new JSONArray(strJson);
-            JSONObject jsonObject;
-            OrderDetailModel orderDetail;
-            Gson gson = new Gson();
-            for (int i = 0; i < jsonArray.length(); i++) {
-                jsonObject = jsonArray.getJSONObject(i);
-                orderDetail = gson.fromJson(jsonObject.toString(), OrderDetailModel.class);
-                list.add(orderDetail);
+        if (strJson != null && !strJson.isEmpty()) {
+            try {
+                JSONArray jsonArray = new JSONArray(strJson);
+                JSONObject jsonObject;
+                OrderDetailModel orderDetail;
+                Gson gson = new Gson();
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    jsonObject = jsonArray.getJSONObject(i);
+                    orderDetail = gson.fromJson(jsonObject.toString(), OrderDetailModel.class);
+                    list.add(orderDetail);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
         return list;
     }
@@ -298,5 +306,16 @@ public class Helper {
             return true;
         }
         return false;
+    }
+
+    public static long parseDate(String text) {
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.forLanguageTag("vi_VN"));
+        try {
+            return Objects.requireNonNull(dateFormat.parse(text)).getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 }

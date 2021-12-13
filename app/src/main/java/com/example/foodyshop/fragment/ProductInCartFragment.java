@@ -64,7 +64,7 @@ public class ProductInCartFragment extends Fragment implements ProductCartAdapte
     private Button btnBuy, btnDelete, btnCancel;
 
     private long lastClickItem;
-    private ProductCartAdapter adapter;
+    private ProductCartAdapter productCartAdapter;
     private List<OrderDetailModel> mListOrderDetail;
     private int mTotalMoney;
 
@@ -84,6 +84,7 @@ public class ProductInCartFragment extends Fragment implements ProductCartAdapte
                 }
             }
             mListOrderDetail.removeAll(tmpList);
+            productCartAdapter.notifyDataSetChanged();
             Helper.saveCart(requireContext(), mListOrderDetail);
             initViewAfterDelete();
             initBottomBox();
@@ -108,14 +109,14 @@ public class ProductInCartFragment extends Fragment implements ProductCartAdapte
 
         initBottomBox();
         initCbAll();
-        adapter = new ProductCartAdapter(requireContext(), mListOrderDetail, this);
-        rcvProductCart.setAdapter(adapter);
+        productCartAdapter = new ProductCartAdapter(requireContext(), mListOrderDetail, this);
+        rcvProductCart.setAdapter(productCartAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false);
         rcvProductCart.setLayoutManager(layoutManager);
 
         cbAll.setOnClickListener(view -> {
             boolean check = cbAll.isChecked();
-            adapter.setCheck(check);
+            productCartAdapter.setCheck(check);
             Helper.saveCart(requireContext(), mListOrderDetail);
             initBottomBox();
         });
@@ -194,13 +195,13 @@ public class ProductInCartFragment extends Fragment implements ProductCartAdapte
             ConfirmDialog dialog = new ConfirmDialog(requireActivity(), "Bạn có muốn xóa sạch giỏ hàng?", confirmDialog -> {
                 Helper.clearCart(requireContext());
                 mListOrderDetail = new ArrayList<>();
-                adapter.setmListOrderDetail(mListOrderDetail);
+                productCartAdapter.setListOrderDetail(mListOrderDetail);
                 rcvProductCart.setVisibility(View.GONE);
                 cbAll.setChecked(false);
                 initViewAfterDelete();
                 initBottomBox(0, 0);
                 confirmDialog.dismiss();
-                ToastCustom.notice(requireContext(), "Đã xóa sạch giỏ hàng.", ToastCustom.SUCCESS).show();
+                ToastCustom.notice(requireContext(), "Đã xóa sạch giỏ hàng", ToastCustom.SUCCESS).show();
             });
             dialog.show();
         } else {
@@ -213,14 +214,18 @@ public class ProductInCartFragment extends Fragment implements ProductCartAdapte
                 }
             }
             if (!hasCheck) {
-                ToastCustom.notice(requireContext(), "Hãy chọn một sản phẩm.", ToastCustom.INFO).show();
+                ToastCustom.notice(requireContext(), "Hãy chọn một sản phẩm!", ToastCustom.INFO).show();
             } else {
-                ToastCustom.notice(requireContext(), "Đã xóa " + tmlList.size() + " sản phẩm.", ToastCustom.SUCCESS).show();
-                mListOrderDetail.removeAll(tmlList);
-                adapter.setmListOrderDetail(mListOrderDetail);
-                Helper.saveCart(requireContext(), mListOrderDetail);
-                initViewAfterDelete();
-                initBottomBox();
+                ConfirmDialog dialog = new ConfirmDialog(requireActivity(), "Xác nhận xóa " + tmlList.size() + " sản phẩm khỏi giỏ hàng?", confirmDialog -> {
+                    mListOrderDetail.removeAll(tmlList);
+                    productCartAdapter.setListOrderDetail(mListOrderDetail);
+                    Helper.saveCart(requireContext(), mListOrderDetail);
+                    initViewAfterDelete();
+                    initBottomBox();
+                    confirmDialog.dismiss();
+                    ToastCustom.notice(requireContext(), "Đã xóa " + tmlList.size() + " sản phẩm", ToastCustom.SUCCESS).show();
+                });
+                dialog.show();
             }
         }
     }
@@ -235,13 +240,13 @@ public class ProductInCartFragment extends Fragment implements ProductCartAdapte
     }
 
     public void reLoadCart() {
-        if (adapter != null) {
+        if (productCartAdapter != null) {
             ((CartActivity) requireActivity()).getBtnEdit().setVisibility(View.VISIBLE);
             llEmptyCart.setVisibility(View.GONE);
             llClearEmptyCart.setVisibility(View.GONE);
             rlCart.setVisibility(View.VISIBLE);
             mListOrderDetail = Helper.getAllProductInCart(requireContext());
-            adapter.setmListOrderDetail(mListOrderDetail);
+            productCartAdapter.setListOrderDetail(mListOrderDetail);
             initBottomBox();
         }
     }
@@ -258,7 +263,7 @@ public class ProductInCartFragment extends Fragment implements ProductCartAdapte
         view.setEnabled(false);
         new Handler().postDelayed(() -> view.setEnabled(true), TOAST_DEFAULT);
         if (mTotalMoney == 0) {
-            ToastCustom.notice(requireContext(), "Hãy chọn một sản phẩm.", ToastCustom.INFO).show();
+            ToastCustom.notice(requireContext(), "Hãy chọn một sản phẩm", ToastCustom.INFO).show();
             return;
         }
         if (Helper.isLogin(requireContext())) {
@@ -353,10 +358,18 @@ public class ProductInCartFragment extends Fragment implements ProductCartAdapte
     }
 
     @Override
-    public void onDeleteItem() {
-        initViewAfterDelete();
-        Helper.saveCart(requireContext(), mListOrderDetail);
-        initBottomBox();
+    public void onDeleteItem(int position, OrderDetailModel orderDetail) {
+        String message = "Hãy xác nhận để xóa";
+        ConfirmDialog dialog = new ConfirmDialog(requireActivity(), message, confirmDialog -> {
+            confirmDialog.dismiss();
+            productCartAdapter.getListOrderDetail().remove(orderDetail);
+            productCartAdapter.notifyItemRemoved(position);
+            initViewAfterDelete();
+            Helper.saveCart(requireContext(), mListOrderDetail);
+            initBottomBox();
+            ToastCustom.notice(requireContext(), "Đã xóa 1 sản phẩm", ToastCustom.SUCCESS).show();
+        });
+        dialog.show();
     }
 
 }

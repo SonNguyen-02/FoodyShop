@@ -1,5 +1,6 @@
 package com.example.foodyshop.model;
 
+import com.example.foodyshop.helper.Helper;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -139,6 +140,10 @@ public class OrderModel implements Serializable {
 
     public void setOrderDetails(List<OrderDetailModel> orderDetails) {
         this.orderDetails = orderDetails;
+    }
+
+    public long getTime() {
+        return Helper.parseDate(created);
     }
 
     public int getTotalProduct() {

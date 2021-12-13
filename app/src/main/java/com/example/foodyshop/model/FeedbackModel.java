@@ -1,9 +1,12 @@
 package com.example.foodyshop.model;
 
+import com.example.foodyshop.helper.Helper;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class FeedbackModel {
+import java.io.Serializable;
+
+public class FeedbackModel implements Serializable {
 
     @SerializedName("id")
     @Expose
@@ -14,6 +17,9 @@ public class FeedbackModel {
     @SerializedName("product_id")
     @Expose
     private int productId;
+    @SerializedName("order_detail_id")
+    @Expose
+    private int orderDetailId;
     @SerializedName("customer_name")
     @Expose
     private String customerName;
@@ -51,6 +57,14 @@ public class FeedbackModel {
         this.productId = productId;
     }
 
+    public int getOrderDetailId() {
+        return orderDetailId;
+    }
+
+    public void setOrderDetailId(int orderDetailId) {
+        this.orderDetailId = orderDetailId;
+    }
+
     public String getCustomerName() {
         return customerName;
     }
@@ -83,4 +97,7 @@ public class FeedbackModel {
         this.created = created;
     }
 
+    public long getTime() {
+        return Helper.parseDate(created);
+    }
 }

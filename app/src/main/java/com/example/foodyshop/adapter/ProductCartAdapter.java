@@ -41,7 +41,11 @@ public class ProductCartAdapter extends RecyclerView.Adapter<ProductCartAdapter.
         this.mInteractItem = mInteractItem;
     }
 
-    public void setmListOrderDetail(List<OrderDetailModel> mListOrderDetail) {
+    public List<OrderDetailModel> getListOrderDetail() {
+        return mListOrderDetail;
+    }
+
+    public void setListOrderDetail(List<OrderDetailModel> mListOrderDetail) {
         this.mListOrderDetail = mListOrderDetail;
         notifyDataSetChanged();
     }
@@ -60,7 +64,7 @@ public class ProductCartAdapter extends RecyclerView.Adapter<ProductCartAdapter.
 
         void onAmountNumberChange(OrderDetailModel orderDetail, int amount);
 
-        void onDeleteItem();
+        void onDeleteItem(int position, OrderDetailModel orderDetail);
     }
 
     @NonNull
@@ -185,9 +189,7 @@ public class ProductCartAdapter extends RecyclerView.Adapter<ProductCartAdapter.
         });
 
         holder.llItemDelete.setOnClickListener(view -> {
-            mListOrderDetail.remove(orderDetail);
-            mInteractItem.onDeleteItem();
-            notifyItemRemoved(holder.getAdapterPosition());
+            mInteractItem.onDeleteItem(holder.getAdapterPosition(), orderDetail);
         });
 
     }

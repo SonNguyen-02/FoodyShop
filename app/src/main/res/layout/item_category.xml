@@ -3,7 +3,8 @@
     android:layout_width="@dimen/item_category_width"
     android:layout_height="@dimen/item_category_height"
     android:layout_margin="6dp"
-    android:background="@drawable/custom_bg_item_category">
+    android:padding="8dp"
+    android:background="@drawable/ripple_white_stroke_blue_corn_4">
 
     <TextView
         android:id="@+id/tv_category_name"

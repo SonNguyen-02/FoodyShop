@@ -1,7 +1,5 @@
 package com.example.foodyshop.adapter;
 
-import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,9 +44,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             return;
         }
         if (category.isChecked()) {
-            holder.itemView.setBackgroundResource(R.drawable.custom_bg_item_category_active);
+            holder.itemView.setBackgroundResource(R.drawable.custom_bg_white_stroke_green_corn_4);
         } else {
-            holder.itemView.setBackgroundResource(R.drawable.custom_bg_item_category);
+            holder.itemView.setBackgroundResource(R.drawable.ripple_white_stroke_blue_corn_4);
         }
         holder.tvName.setText(category.getName());
         holder.itemView.setOnClickListener(view -> {

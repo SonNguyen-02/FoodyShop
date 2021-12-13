@@ -16,15 +16,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.foodyshop.R;
 import com.example.foodyshop.model.OrderDetailModel;
 
-import java.util.Currency;
 import java.util.List;
 
-public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.OrderDetailViewHolder> {
+public class OrderDetailCollapseAdapter extends RecyclerView.Adapter<OrderDetailCollapseAdapter.OrderDetailViewHolder> {
 
     private final Context context;
     private final List<OrderDetailModel> mListOrderDetail;
 
-    public OrderDetailAdapter(Context context, List<OrderDetailModel> mListOrderDetail) {
+    public OrderDetailCollapseAdapter(Context context, List<OrderDetailModel> mListOrderDetail) {
         this.context = context;
         this.mListOrderDetail = mListOrderDetail;
     }
@@ -32,7 +31,7 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     @NonNull
     @Override
     public OrderDetailViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_order_detail, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_order_detail_collapse, parent, false);
         return new OrderDetailViewHolder(view);
     }
 

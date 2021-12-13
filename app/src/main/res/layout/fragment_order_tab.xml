@@ -24,7 +24,7 @@
                 android:layout_height="86dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="6dp"
-                android:background="@drawable/custom_bg_order_tab" />
+                android:background="@drawable/custom_bg_grey_circle" />
 
             <ImageView
                 android:layout_width="72dp"

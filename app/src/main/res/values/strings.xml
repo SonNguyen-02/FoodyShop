@@ -4,7 +4,7 @@
     <string name="menu_home">Home</string>
     <string name="menu_sale">Giảm giá</string>
     <string name="menu_order">Đơn hàng</string>
-    <string name="menu_notification">Thông báo</string>
+    <string name="menu_favorite">Yêu thích</string>
     <string name="menu_account">Tài khoản</string>
     <string name="title_topic">Danh mục sản phẩm</string>
     <string name="filter">Lọc</string>
@@ -41,16 +41,16 @@
     <string name="decrease">GIẢM</string>
     <string name="introduce_product">Giới thiệu sản phẩm</string>
     <string name="description_product">Ba rọi heo của thương hiệu CP đạt các tiêu chuẩn về an toàn thực phẩm, đảm bảo chất lượng, độ tươi ngon. Thịt heo mềm, vân nạc, mỡ rõ ràng nên rất phù hợp làm nguyên liệu để nấu thịt kho hột vịt, thịt nướng BBQ.</string>
-    <string name="feedback_product">Đánh giá sản phẩm</string>
+    <string name="feedback_title">Đánh giá sản phẩm</string>
     <string name="total_feedback">({0} đánh giá)</string>
     <string name="no_have_feedback">(Chưa có đánh giá)</string>
     <string name="add_feedback">Thêm đánh giá</string>
-    <string name="feedback">Đánh giá:</string>
-    <string name="hind_feedback">Mời anh/chị đánh giá về sản phẩm</string>
+    <string name="hind_feedback">Đánh giá về sản phẩm</string>
     <string name="add_to_cart">Thêm giỏ hàng</string>
     <string name="buy_now">Mua ngay</string>
     <string name="send_feedback">Gửi</string>
-    <string name="cancel_feedback">Hủy</string>
+    <string name="delete_feedback">Xóa đánh giá</string>
+    <string name="edit_feedback">Sửa đánh giá</string>
     <string name="see_more_feedback">Xem thêm {0} đánh giá</string>
 
     <string name="add_feed_success">Thêm đánh giá thành công</string>
@@ -70,6 +70,7 @@
 
     <string name="cart">Giỏ hàng</string>
     <string name="order">Đơn hàng</string>
+    <string name="order_detail">Chi tiết đơn hàng</string>
     <string name="discount">{0}%</string>
     <string name="total_buy">Mua hàng ({0})</string>
 
@@ -81,13 +82,21 @@
     <string name="full_name"><![CDATA[Họ & tên]]></string>
     <string name="address">Địa chỉ</string>
     <string name="phone">Số điện thoại</string>
-    <string name="note">Ghi chú</string>
+    <string name="note">Lưu ý</string>
     <string name="order_code">Mã đơn hàng</string>
     <string name="order_info">Thông tin đơn hàng</string>
     <string name="order_success">Đã đặt hàng thành công!</string>
     <string name="sub_order_success">Cảm ơn bạn đã đặt hàng tại shop!</string>
     <string name="code">Mã: {0}</string>
     <string name="total_product">{0} sản phẩm</string>
+    <string name="order_date">Đặt ngày</string>
+    <string name="ship_price">Giá ship: </string>
+    <string name="into_money">Thành tiền:</string>
+    <string name="cancel_order">Hủy đơn</string>
+    <string name="buy_again">Mua lại</string>
+    <string name="feedback_rule">Bài đánh giá chỉ được thay đổi trong <b>30 phút</b> tính từ khi tạo</string>
+    <string name="feedback_timer">Hết hạn thay đổi trong <b>{0}</b> phút</string>
+    <string name="feedback_timer_finish">Hết hạn thay đổi</string>
 
 
 </resources>

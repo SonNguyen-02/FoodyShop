@@ -208,18 +208,18 @@ public class MainActivity extends AppCompatActivity implements TopicAdapter.IOnc
             setSearchBarVisibility(id == R.id.menu_home);
             switch (id) {
                 case R.id.menu_home:
-                    mViewPager2.setCurrentItem(0);
+                    mViewPager2.setCurrentItem(0, false);
+                    break;
+                case R.id.menu_favorite:
+                    mViewPager2.setCurrentItem(1, false);
+                    tvTitle.setText(R.string.menu_favorite);
                     break;
                 case R.id.menu_order:
-                    mViewPager2.setCurrentItem(1);
+                    mViewPager2.setCurrentItem(2, false);
                     tvTitle.setText(R.string.menu_order);
                     break;
-                case R.id.menu_notification:
-                    mViewPager2.setCurrentItem(2);
-                    tvTitle.setText(R.string.menu_notification);
-                    break;
                 case R.id.menu_account:
-                    mViewPager2.setCurrentItem(3);
+                    mViewPager2.setCurrentItem(3, false);
                     tvTitle.setText(R.string.menu_account);
                     break;
             }
@@ -247,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements TopicAdapter.IOnc
             isBackPress = false;
             super.onBackPressed();
         } else {
-            ToastCustom.notice(this, "Nhấn back thêm lần nữa để thoát", ToastCustom.NONE).show();
+            ToastCustom.notice(this, "Nhấn back thêm lần nữa để thoát", ToastCustom.NONE, TOAST_DEFAULT).show();
             isBackPress = true;
         }
     }

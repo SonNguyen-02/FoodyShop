@@ -61,7 +61,7 @@ public class HomeFragment extends Fragment implements ProductAdapter.IOnclickPro
     private boolean isLoading;
     private boolean isLastPage;
     private int totalPage;
-    private int currentPage;
+    private int currentPage = 1;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -113,6 +113,9 @@ public class HomeFragment extends Fragment implements ProductAdapter.IOnclickPro
         APIService.getService().getAllTopic(JWT.createToken()).enqueue(new Callback<List<TopicModel>>() {
             @Override
             public void onResponse(@NonNull Call<List<TopicModel>> call, @NonNull Response<List<TopicModel>> response) {
+                if (getContext() == null) {
+                    return;
+                }
                 if (response.isSuccessful() && response.body() != null) {
                     mListTopic = response.body();
                     topicAdapter.setTopicModelList(mListTopic);
@@ -133,6 +136,9 @@ public class HomeFragment extends Fragment implements ProductAdapter.IOnclickPro
         APIService.getService().getPopularProduct(JWT.createToken()).enqueue(new Callback<List<ProductModel>>() {
             @Override
             public void onResponse(@NonNull Call<List<ProductModel>> call, @NonNull Response<List<ProductModel>> response) {
+                if (getContext() == null) {
+                    return;
+                }
                 if (response.isSuccessful() && response.body() != null) {
                     ProductAdapter adapter = new ProductAdapter(requireContext(), response.body(), false, HomeFragment.this);
                     rcvProductPopular.setAdapter(adapter);
@@ -158,6 +164,9 @@ public class HomeFragment extends Fragment implements ProductAdapter.IOnclickPro
         APIService.getService().getTotalPageSuggestProduct(JWT.createToken()).enqueue(new Callback<Integer>() {
             @Override
             public void onResponse(@NonNull Call<Integer> call, @NonNull Response<Integer> response) {
+                if (getContext() == null) {
+                    return;
+                }
                 if (response.isSuccessful() && response.body() != null) {
                     totalPage = response.body();
                     if (totalPage == 0) {
@@ -185,6 +194,9 @@ public class HomeFragment extends Fragment implements ProductAdapter.IOnclickPro
         APIService.getService().getSuggestProduct(JWT.createToken(), 1).enqueue(new Callback<List<ProductModel>>() {
             @Override
             public void onResponse(@NonNull Call<List<ProductModel>> call, @NonNull Response<List<ProductModel>> response) {
+                if (getContext() == null) {
+                    return;
+                }
                 if (response.isSuccessful() && response.body() != null) {
                     mSuggestProductAdapter = new ProductAdapter(requireContext(), response.body(), false, HomeFragment.this);
                     rcvProductSuggest.setAdapter(mSuggestProductAdapter);
@@ -216,6 +228,9 @@ public class HomeFragment extends Fragment implements ProductAdapter.IOnclickPro
 
             @Override
             public void onFailure(@NonNull Call<List<ProductModel>> call, @NonNull Throwable t) {
+                if (getContext() == null) {
+                    return;
+                }
                 ToastCustom.notice(requireContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.INFO).show();
             }
         });
@@ -225,6 +240,9 @@ public class HomeFragment extends Fragment implements ProductAdapter.IOnclickPro
         APIService.getService().getSuggestProduct(JWT.createToken(), currentPage).enqueue(new Callback<List<ProductModel>>() {
             @Override
             public void onResponse(@NonNull Call<List<ProductModel>> call, @NonNull Response<List<ProductModel>> response) {
+                if (getContext() == null) {
+                    return;
+                }
                 if (response.isSuccessful() && response.body() != null) {
                     mSuggestProductAdapter.addToListProduct(response.body());
                     isLoading = false;

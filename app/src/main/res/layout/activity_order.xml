@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frame_order_root"
+    android:id="@+id/frame_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -10,6 +10,7 @@
     android:focusableInTouchMode="true">
 
     <RelativeLayout
+        android:id="@+id/rl_main_page"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:ignore="UselessParent">
@@ -40,7 +41,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/ripple_circle_effect"
+                        android:background="@drawable/ripple_blue_circle"
                         android:padding="8dp"
                         android:src="@drawable/ic_arrow_back"
                         app:tint="@color/white"
@@ -101,7 +102,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="16dp"
-                        android:background="@drawable/custom_bg_edt_form"
+                        android:background="@drawable/custom_bg_white_stroke_grey_corn_12"
                         app:cardCornerRadius="@dimen/edt_btn_radius">
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -138,7 +139,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="@dimen/edt_mar_top"
                         android:layout_marginEnd="16dp"
-                        android:background="@drawable/custom_bg_edt_form"
+                        android:background="@drawable/custom_bg_white_stroke_grey_corn_12"
                         app:cardCornerRadius="@dimen/edt_btn_radius">
 
                         <RelativeLayout
@@ -193,7 +194,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="@dimen/edt_mar_top"
                         android:layout_marginEnd="16dp"
-                        android:background="@drawable/custom_bg_edt_form"
+                        android:background="@drawable/custom_bg_white_stroke_grey_corn_12"
                         app:cardCornerRadius="@dimen/edt_btn_radius">
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -246,7 +247,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="8dp"
-                        android:background="@drawable/custom_bg_edt_form"
+                        android:background="@drawable/custom_bg_white_stroke_grey_corn_12"
                         app:cardCornerRadius="@dimen/edt_btn_radius">
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -319,7 +320,7 @@
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
-                android:background="@drawable/ripple_square_btn_warning"
+                android:background="@drawable/ripple_orange"
                 android:text="@string/ordering"
                 android:textAllCaps="false"
                 android:textColor="@color/white" />

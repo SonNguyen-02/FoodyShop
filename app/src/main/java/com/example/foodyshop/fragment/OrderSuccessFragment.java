@@ -40,15 +40,9 @@ public class OrderSuccessFragment extends Fragment {
         tvAddress.setText(mOrder.getAddress());
         tvNote.setText(mOrder.getNote());
         tvTotalMoney.setText(PRICE_FORMAT.format(mOrder.getTotalMoney()));
-
-        btnBack.setOnClickListener(this::onClickBack);
+        btnBack.setOnClickListener(view -> requireActivity().onBackPressed());
 
         return view;
-    }
-
-    private void onClickBack(View view) {
-        requireActivity().setResult(Activity.RESULT_OK);
-        requireActivity().finish();
     }
 
     private void initUi() {

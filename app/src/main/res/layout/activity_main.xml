@@ -8,6 +8,7 @@
     tools:context=".activity.MainActivity">
 
     <RelativeLayout
+        android:id="@+id/rl_main_page"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:ignore="UselessParent">
@@ -36,7 +37,7 @@
                         android:id="@+id/img_menu_category"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:background="@drawable/ripple_circle_effect"
+                        android:background="@drawable/ripple_blue_circle"
                         android:padding="@dimen/space_view"
                         android:src="@drawable/ic_menu_song_line"
                         app:tint="@color/white"
@@ -65,14 +66,14 @@
                         android:layout_marginEnd="@dimen/space_view"
                         android:layout_toStartOf="@id/rl_cart"
                         android:layout_toEndOf="@id/img_menu_category"
-                        android:background="@drawable/custom_edt_search_home"
+                        android:background="@drawable/custom_bg_white_corn_2"
                         android:visibility="visible">
 
                         <ImageView
                             android:id="@+id/img_search_ic"
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:background="@color/white"
+                            android:background="@drawable/custom_bg_white_corn_2"
                             android:padding="5dp"
                             android:src="@drawable/ic_search"
                             app:tint="@android:color/darker_gray"
@@ -106,7 +107,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_alignParentEnd="true"
-                        android:background="@drawable/ripple_circle_effect">
+                        android:background="@drawable/ripple_blue_circle">
 
                         <ImageView
                             android:id="@+id/img_cart"
@@ -122,12 +123,12 @@
                             android:id="@+id/tv_indicator"
                             android:layout_width="18dp"
                             android:layout_height="18dp"
-                            android:textSize="10sp"
                             android:layout_alignParentEnd="true"
                             android:background="@drawable/custom_indicator_ic_cart"
                             android:gravity="center"
                             android:text="11"
                             android:textColor="@color/white"
+                            android:textSize="10sp"
                             tools:ignore="SmallSp" />
                     </RelativeLayout>
 

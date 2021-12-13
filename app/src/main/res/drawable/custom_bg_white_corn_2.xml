@@ -3,11 +3,6 @@
 
     <solid android:color="@color/white" />
 
-    <padding
-        android:bottom="3dp"
-        android:right="8dp"
-        android:top="3dp" />
-
     <corners android:radius="2dp" />
 
 </shape>

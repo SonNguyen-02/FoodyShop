@@ -34,7 +34,8 @@
                     android:layout_centerVertical="true"
                     android:padding="@dimen/space_view"
                     android:src="@drawable/ic_arrow_back"
-                    app:tint="@color/white" />
+                    app:tint="@color/white"
+                    tools:ignore="ContentDescription" />
 
                 <EditText
                     android:id="@+id/edt_search"
@@ -44,13 +45,14 @@
                     android:layout_marginStart="@dimen/space_view"
                     android:layout_marginEnd="@dimen/space_view"
                     android:layout_toEndOf="@id/img_back"
-                    android:background="@drawable/custom_edt_search_home"
+                    android:background="@drawable/custom_bg_white_corn_2"
                     android:hint="Search"
+                    android:inputType="text"
                     android:paddingStart="@dimen/space_view"
+                    android:paddingEnd="@dimen/space_view"
                     android:textColor="@color/black"
                     android:textColorHint="@android:color/darker_gray"
-                    android:textSize="14sp"
-                    tools:ignore="RtlSymmetry" />
+                    android:textSize="14sp" />
 
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>

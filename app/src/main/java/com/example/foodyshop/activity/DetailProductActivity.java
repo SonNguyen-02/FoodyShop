@@ -5,7 +5,7 @@ import static com.example.foodyshop.config.Const.KEY_FROM_CART;
 import static com.example.foodyshop.config.Const.KEY_PRODUCT;
 import static com.example.foodyshop.config.Const.KEY_RELOAD_CART;
 import static com.example.foodyshop.config.Const.KEY_SELECT_TAP_ALL;
-import static com.example.foodyshop.config.Const.TOAST_DEFAULT;
+import static com.example.foodyshop.config.Const.LIMIT_TIME_EDIT_DEL_FEEDBACK;
 import static com.example.foodyshop.helper.Helper.PRICE_FORMAT;
 
 import androidx.annotation.NonNull;
@@ -13,19 +13,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.foodyshop.R;
 import com.example.foodyshop.adapter.FeedbackAdapter;
@@ -41,27 +38,22 @@ import com.example.foodyshop.model.OrderDetailModel;
 import com.example.foodyshop.model.ProductModel;
 import com.example.foodyshop.model.Respond;
 import com.example.foodyshop.service.APIService;
-import com.google.gson.Gson;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 
 import java.text.MessageFormat;
-import java.text.NumberFormat;
-import java.util.Currency;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DetailProductActivity extends AppCompatActivity implements FeedbackDialog.IOnClickSend, FeedbackAdapter.IOnClickCallback {
+public class DetailProductActivity extends AppCompatActivity implements FeedbackAdapter.IOnClickCallback {
 
     private ProductModel mProduct;
-    private FeedbackDialog fDialog;
 
     private ImageView imgBack, imgCart, imgProduct;
     private TextView tvIndicator, tvProductName, tvPrice, tvPriceSale, tvDiscount, tvTotalFeedback;
     private ExpandableTextView tvDescription;
-    private Button btnAddFeedback;
 
     private RelativeLayout rlSale, rlCart;
     private LinearLayout llBottomBar, llAddToCart, llBuyNow;
@@ -130,15 +122,6 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
             totalPage = currentPage = 1;
             initTotalPage();
             initFeedbackData();
-            btnAddFeedback.setOnClickListener(v -> {
-                if (Helper.isLogin(getApplicationContext())) {
-                    Intent intent = new Intent(DetailProductActivity.this, SigninActivity.class);
-                    startActivity(intent);
-                    return;
-                }
-                fDialog = new FeedbackDialog(this);
-                fDialog.show();
-            });
             // init product
 //            Glide.with(this).load(mProduct.getImg()).placeholder(R.drawable.placeholder_img).into(imgProduct);
             imgProduct.setImageResource(R.drawable.test_product_detail);
@@ -182,7 +165,6 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
         tvDiscount = findViewById(R.id.tv_discount);
         tvDescription = findViewById(R.id.tv_description);
         tvTotalFeedback = findViewById(R.id.tv_total_feedback);
-        btnAddFeedback = findViewById(R.id.btn_add_feedback);
         rlSale = findViewById(R.id.rl_sale);
         rlCart = findViewById(R.id.rl_cart);
 
@@ -273,76 +255,6 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
     }
 
     @Override
-    public void onClickAddFeedback(@NonNull String content) {
-        if (content.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Hãy nhập đánh giá.", Toast.LENGTH_SHORT).show();
-            fDialog.focusEdt();
-        } else {
-            fDialog.dismiss();
-            LoadingDialog loadingDialog = new LoadingDialog(this);
-            loadingDialog.show();
-            String token = Helper.getTokenLogin(getApplicationContext());
-            FeedbackModel feedback = new FeedbackModel();
-            feedback.setCustomerId(Helper.getCurrentAccount().getId());
-            feedback.setProductId(mProduct.getId());
-            feedback.setContent(content);
-            Gson gson = new Gson();
-            String feedbackJson = gson.toJson(feedback);
-            APIService.getService().addFeedback(token, feedbackJson).enqueue(new Callback<FeedbackModel>() {
-                @Override
-                public void onResponse(@NonNull Call<FeedbackModel> call, @NonNull Response<FeedbackModel> response) {
-                    loadingDialog.dismiss();
-                    if (response.isSuccessful()) {
-                        tvTotalFeedback.setText(MessageFormat.format(getResources().getString(R.string.total_feedback), ++totalFeedback));
-                        mFeedbackAdapter.addFirst(response.body());
-                        ToastCustom.notice(getApplicationContext(), "Thêm đánh giá thành công!", ToastCustom.SUCCESS).show();
-                    } else {
-                        ToastCustom.notice(getApplicationContext(), "Thêm đánh giá thất bại", ToastCustom.ERROR).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<FeedbackModel> call, @NonNull Throwable t) {
-                    loadingDialog.dismiss();
-                    ToastCustom.notice(getApplicationContext(), "Thêm đánh giá thất bại", ToastCustom.ERROR).show();
-                }
-            });
-        }
-    }
-
-    @Override
-    public void onClickEditFeedback(FeedbackModel feedback, @NonNull String content) {
-        if (content.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Hãy nhập đánh giá.", Toast.LENGTH_SHORT).show();
-            fDialog.focusEdt();
-        } else {
-            fDialog.dismiss();
-            LoadingDialog loadingDialog = new LoadingDialog(this);
-            loadingDialog.show();
-            String token = Helper.getTokenLogin(getApplicationContext());
-            APIService.getService().editFeedback(token, feedback.getId(), content).enqueue(new Callback<Respond>() {
-                @Override
-                public void onResponse(@NonNull Call<Respond> call, @NonNull Response<Respond> response) {
-                    loadingDialog.dismiss();
-                    if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
-                        feedback.setContent(content);
-                        mFeedbackAdapter.reloadFeedback(feedback);
-                        ToastCustom.notice(getApplicationContext(), "Thay đổi thành công!", ToastCustom.SUCCESS).show();
-                    } else {
-                        ToastCustom.notice(getApplicationContext(), "Thay đổi thất bại! Vui lòng thử lại sau", ToastCustom.ERROR).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<Respond> call, @NonNull Throwable t) {
-                    loadingDialog.dismiss();
-                    ToastCustom.notice(getApplicationContext(), "Thay đổi thất bại! Vui lòng thử lại sau", ToastCustom.ERROR).show();
-                }
-            });
-        }
-    }
-
-    @Override
     public void onClickLoadMore() {
         currentPage++;
         APIService.getService().getAllFeedbackInProduct(JWT.createToken(), mProduct.getId(), mFeedbackAdapter.getSize()).enqueue(new Callback<List<FeedbackModel>>() {
@@ -365,12 +277,49 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
 
     @Override
     public void onClickEditFeedback(@NonNull FeedbackModel feedback) {
-        fDialog = new FeedbackDialog(this, feedback);
-        fDialog.show();
+        if (!Helper.isLogin(getApplicationContext()) || Helper.getCurrentAccount().getId() != feedback.getCustomerId() || System.currentTimeMillis() - feedback.getTime() >= LIMIT_TIME_EDIT_DEL_FEEDBACK) {
+            mFeedbackAdapter.reloadFeedback(feedback);
+            ToastCustom.notice(getApplicationContext(), "Hết hạn xửa đánh giá!", ToastCustom.ERROR).show();
+            return;
+        }
+        FeedbackDialog.editFeedback(this, feedback, (mFbDialog, content) -> {
+            if (content.isEmpty()) {
+                ToastCustom.notice(getApplicationContext(), "Hãy nhập đánh giá", ToastCustom.WARNING).show();
+            } else {
+                mFbDialog.dismiss();
+                LoadingDialog loadingDialog = new LoadingDialog(this);
+                loadingDialog.show();
+                String token = Helper.getTokenLogin(getApplicationContext());
+                APIService.getService().editFeedback(token, feedback.getId(), content).enqueue(new Callback<Respond>() {
+                    @Override
+                    public void onResponse(@NonNull Call<Respond> call, @NonNull Response<Respond> response) {
+                        loadingDialog.dismiss();
+                        if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
+                            feedback.setContent(content);
+                            mFeedbackAdapter.reloadFeedback(feedback);
+                            ToastCustom.notice(getApplicationContext(), "Thay đổi thành công!", ToastCustom.SUCCESS).show();
+                        } else {
+                            ToastCustom.notice(getApplicationContext(), "Thay đổi thất bại! Vui lòng thử lại sau", ToastCustom.ERROR).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<Respond> call, @NonNull Throwable t) {
+                        loadingDialog.dismiss();
+                        ToastCustom.notice(getApplicationContext(), "Thay đổi thất bại! Vui lòng thử lại sau", ToastCustom.ERROR).show();
+                    }
+                });
+            }
+        }).show();
     }
 
     @Override
     public void onClickDeleteFeedback(@NonNull FeedbackModel feedback) {
+        if (!Helper.isLogin(getApplicationContext()) || Helper.getCurrentAccount().getId() != feedback.getCustomerId() || System.currentTimeMillis() - feedback.getTime() >= LIMIT_TIME_EDIT_DEL_FEEDBACK) {
+            mFeedbackAdapter.reloadFeedback(feedback);
+            ToastCustom.notice(getApplicationContext(), "Hết hạn xửa đánh giá!", ToastCustom.ERROR).show();
+            return;
+        }
         String message = "Bạn có muốn xóa nhận xét này?";
         new ConfirmDialog(this, message, (confirmDialog) -> {
             confirmDialog.dismiss();

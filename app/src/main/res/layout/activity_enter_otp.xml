@@ -91,7 +91,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_margin="@dimen/card_mar_l_r"
-                        android:background="@drawable/custom_bg_edt_form"
+                        android:background="@drawable/custom_bg_white_stroke_grey_corn_12"
                         app:cardCornerRadius="@dimen/edt_btn_radius">
 
                         <EditText
@@ -115,7 +115,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_margin="@dimen/card_mar_l_r"
-                        android:background="@drawable/custom_bg_edt_form"
+                        android:background="@drawable/custom_bg_white_stroke_grey_corn_12"
                         app:cardCornerRadius="@dimen/edt_btn_radius">
 
                         <EditText
@@ -139,7 +139,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_margin="@dimen/card_mar_l_r"
-                        android:background="@drawable/custom_bg_edt_form"
+                        android:background="@drawable/custom_bg_white_stroke_grey_corn_12"
                         app:cardCornerRadius="@dimen/edt_btn_radius">
 
                         <EditText
@@ -163,7 +163,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_margin="@dimen/card_mar_l_r"
-                        android:background="@drawable/custom_bg_edt_form"
+                        android:background="@drawable/custom_bg_white_stroke_grey_corn_12"
                         app:cardCornerRadius="@dimen/edt_btn_radius">
 
                         <EditText
@@ -187,7 +187,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_margin="@dimen/card_mar_l_r"
-                        android:background="@drawable/custom_bg_edt_form"
+                        android:background="@drawable/custom_bg_white_stroke_grey_corn_12"
                         app:cardCornerRadius="@dimen/edt_btn_radius">
 
                         <EditText
@@ -211,7 +211,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_margin="@dimen/card_mar_l_r"
-                        android:background="@drawable/custom_bg_edt_form"
+                        android:background="@drawable/custom_bg_white_stroke_grey_corn_12"
                         app:cardCornerRadius="@dimen/edt_btn_radius">
 
                         <EditText

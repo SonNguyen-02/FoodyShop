@@ -33,7 +33,7 @@ public class ConfirmDialog {
         tvMessage.setText(message);
         Button btnCancel, btnOk;
         btnCancel = view.findViewById(R.id.btn_cancel);
-        btnOk = view.findViewById(R.id.btn_ok);
+        btnOk = view.findViewById(R.id.btn_confirm);
 
         btnCancel.setOnClickListener(v -> dismiss());
         btnOk.setOnClickListener(v -> mIOnClickConfirm.onClick(this));

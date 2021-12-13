@@ -66,7 +66,7 @@
                         android:layout_marginTop="1dp"
                         android:layout_marginEnd="1dp"
                         android:layout_marginBottom="1dp"
-                        app:srcCompat="@drawable/ic_plus"
+                        app:srcCompat="@drawable/ic_plus_20"
                         tools:ignore="ContentDescription" />
                 </RelativeLayout>
 
@@ -86,7 +86,7 @@
                     android:layout_marginStart="@dimen/card_mar_l_r"
                     android:layout_marginTop="@dimen/edt_mar_top"
                     android:layout_marginEnd="@dimen/card_mar_l_r"
-                    android:background="@drawable/custom_bg_edt_form"
+                    android:background="@drawable/custom_bg_white_stroke_grey_corn_12"
                     app:cardCornerRadius="@dimen/edt_btn_radius">
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -123,7 +123,7 @@
                     android:layout_marginStart="@dimen/card_mar_l_r"
                     android:layout_marginTop="@dimen/edt_mar_top"
                     android:layout_marginEnd="@dimen/card_mar_l_r"
-                    android:background="@drawable/custom_bg_edt_form"
+                    android:background="@drawable/custom_bg_white_stroke_grey_corn_12"
                     app:cardCornerRadius="@dimen/edt_btn_radius">
 
                     <RelativeLayout
@@ -178,7 +178,7 @@
                     android:layout_marginStart="@dimen/card_mar_l_r"
                     android:layout_marginTop="@dimen/edt_mar_top"
                     android:layout_marginEnd="@dimen/card_mar_l_r"
-                    android:background="@drawable/custom_bg_edt_form"
+                    android:background="@drawable/custom_bg_white_stroke_grey_corn_12"
                     app:cardCornerRadius="@dimen/edt_btn_radius">
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -214,7 +214,7 @@
                     android:layout_marginStart="@dimen/card_mar_l_r"
                     android:layout_marginTop="@dimen/edt_mar_top"
                     android:layout_marginEnd="@dimen/card_mar_l_r"
-                    android:background="@drawable/custom_bg_edt_form"
+                    android:background="@drawable/custom_bg_white_stroke_grey_corn_12"
                     app:cardCornerRadius="@dimen/edt_btn_radius">
 
                     <com.google.android.material.textfield.TextInputLayout
