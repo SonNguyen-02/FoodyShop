@@ -23,11 +23,15 @@ import javafx.collections.ObservableList;
  * @author X PC
  */
 public class ProductHelper {
-     private static DBQuery db = DBQueryBuilder.newDBQuery();
+
+    private static DBQuery db = DBQueryBuilder.newDBQuery();
 
     public static ObservableList<ProductModel> getAllProduct() {
         ObservableList<ProductModel> listProduct = FXCollections.observableArrayList();
-        String sql = db.select("pd.id,pd.name,pd.description,pd.price,pd.created,pd.status,pd.img,pd.img_detail,ct.name").from("fs_product pd").join("fs_category ct", "pd.category_id = ct.id").orderByDESC("id").getCompiledSelect(true);
+        String sql = db.select("pd.id,pd.name,pd.description,pd.price,pd.created,pd.status,pd.img,pd.img_detail,ct.name")
+                .from("fs_product pd").join("fs_category ct", "pd.category_id = ct.id")
+                .orderByDESC("id")
+                .getCompiledSelect(true);
         ResultSet rs = DBConnection.execSelect(sql);
         try {
             while (rs.next()) {
@@ -41,7 +45,7 @@ public class ProductHelper {
                 product.setStatus(rs.getInt("status"));
                 product.setImg(rs.getString("img"));
                 product.setImgDetail(rs.getString("img_detail"));
-                
+
                 listProduct.add(product);
             }
         } catch (SQLException e) {
@@ -51,8 +55,7 @@ public class ProductHelper {
         }
         return listProduct;
     }
-    
-    
+
     public static boolean delete(ProductModel product) {
         try {
             String sql = "delete from fs_product where id = ?";
@@ -68,8 +71,7 @@ public class ProductHelper {
         }
         return false;
     }
-    
-    
+
     public static boolean isCategoryHasLinkToProducts(CategoryModel category) {
 
         try {
@@ -86,5 +88,35 @@ public class ProductHelper {
         }
         return false;
 
+    }
+
+    public static ProductModel insertProduct(ProductModel product) {
+        String sql = db.insert("fs_product")
+                .set("category_id", String.valueOf(product.getCategoryId()))
+                .set("name", product.getName())
+                .set("price", product.getPrice().toString())
+                .set("description", product.getDescription())
+                .set("img", product.getImg())
+                .set("img_detail", product.getImgDetail())
+                .getCompiledInsert(true);
+
+        int lastId = DBConnection.execInsert(sql);
+        if (lastId > 0) {
+            try {
+                sql = db.select().from("fs_product").where("id", String.valueOf(lastId)).getCompiledSelect(true);
+                ResultSet rs = DBConnection.execSelect(sql);
+                if (rs.next()) {
+                    product.setId(lastId);
+                    product.setCreated(rs.getString("created"));
+                    product.setStatus(0);
+                    return product;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(CategoryHelper.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                DBConnection.close();
+            }
+        }
+        return null;
     }
 }

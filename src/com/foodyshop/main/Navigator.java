@@ -18,10 +18,12 @@ import com.foodyshop.controller.EditCustomerController.IOnUpdateCustomer;
 import com.foodyshop.controller.EditCategoryController.IOnEditCategorySuccess;
 import com.foodyshop.controller.EditOrderController;
 import com.foodyshop.controller.EditOrderController.IOnUpdateOrderSuccess;
+import com.foodyshop.controller.EditProductController;
+import com.foodyshop.controller.EditProductController.IOnUpdateProduct;
 import com.foodyshop.controller.EditStaffController;
 
 import com.foodyshop.controller.EditTopicController;
-import com.foodyshop.controller.EditTopicController.IOnUpdateSuccess;
+//import com.foodyshop.controller.EditTopicController.IOnUpdateSuccess;
 import com.foodyshop.controller.Order_DetailController;
 import com.foodyshop.controller.ProductDetailController;
 import com.foodyshop.controller.TestDemoController;
@@ -92,6 +94,7 @@ public class Navigator {
     private static final String ADD_SALE_FORM = ROOT_FOLDER + "AddSaleForm.fxml";
     
     private static final String ADD_PRODUCT_FORM = ROOT_FOLDER + "AddProductForm.fxml";
+    private static final String EDIT_PRODUCT_FORM = ROOT_FOLDER + "EditProductForm.fxml";
     // Khai báo di chuyển giữa các màn hình
     public void goToLoginUI() {
         redirectTo("Login", LOGIN_UI);
@@ -167,10 +170,10 @@ public class Navigator {
         controller.initData(modalStage, mIOnInsertTopicSuccess);
     }
 
-    public void showEditTopic(TopicModel topic, IOnUpdateSuccess mIOnUpdateSuccess) {
+    public void showEditTopic(TopicModel topic) {
         showModal("Topic ", EDIT_TOPIC_FORM);
         EditTopicController controller = fxLoader.getController();
-        controller.initData(modalStage, topic, mIOnUpdateSuccess);
+        controller.initData(modalStage, topic);
     }
     
     public void showEditOrder(OrderModel order,IOnUpdateOrderSuccess mIOnUpdateOrderSuccess) {
@@ -214,6 +217,11 @@ public class Navigator {
         showModal("Add Sale ", ADD_SALE_FORM);
         AddSaleController controller = fxLoader.getController();
         controller.initDataSale(sale,modalStage, mIOnInsertSaleSuccess);
+    }
+     public void showEditProduct(ProductModel Product,IOnUpdateProduct mIOnUpdateProduct) {
+        showModal("Edit Product ", EDIT_PRODUCT_FORM);
+        EditProductController controllerProduct = fxLoader.getController();
+        controllerProduct.initData(Product,modalStage,mIOnUpdateProduct);
     }
     
     // </editor-fold> 
