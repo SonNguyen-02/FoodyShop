@@ -60,10 +60,10 @@ public class StaffModel {
         updatedProperty = new SimpleStringProperty(updated);
         statusProperty = new SimpleStringProperty(status);
         
-        if(this.type==type){
-            this.typeProperty = new SimpleStringProperty(TYPE_ADMIN);
+        if(this.type.equals("0")){
+            this.typeProperty.set(TYPE_ADMIN);
         }else{
-            this.typeProperty = new SimpleStringProperty(TYPE_STAFF);
+            this.typeProperty.set(TYPE_STAFF);
         }
         
         if (this.status.equals("0")) {
@@ -166,9 +166,13 @@ public class StaffModel {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setType(String typeVal) {
         this.typeProperty.setValue(type);
+        if(typeVal.equals(TYPE_ADMIN)){
+            this.type = "0";
+        }else{
+            this.type = "1";
+        }
     }
 
     public String getStatus() {

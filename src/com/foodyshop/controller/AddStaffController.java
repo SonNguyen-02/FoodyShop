@@ -5,6 +5,7 @@
  */
 package com.foodyshop.controller;
 
+import com.foodyshop.helper.StaffHelper;
 import com.foodyshop.main.Navigator;
 import com.foodyshop.model.StaffModel;
 import java.net.URL;
@@ -103,16 +104,33 @@ public class AddStaffController implements Initializable {
             alert.setHeaderText("Please enter name!");
             alert.show();
             return;
-        } else {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Submit");
-            alert.setHeaderText("Do you want submit?");
-            alert.showAndWait().ifPresent(btnType -> {
-                if (btnType == ButtonType.OK) {
-                    Navigator.getInstance().getModalStage().close();
-                }
-            });
+       }  else {            
+            StaffModel staffModel = StaffHelper.insertStaff(txtUsername.getText(), txtPassword.getText(), txtName.getText(),cbType.getValue());        
+            if (staffModel != null) {
+                mIOnAddStaffSuccess.IOnAddStaffSuccess(staffModel);
+                Navigator.getInstance().getModalStage().close();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("SUCCESS");
+                alert.setHeaderText("Insert success");
+                alert.show();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("ERROR");
+                alert.setHeaderText("Insert false!");
+                alert.show();
+            }
         }
+//else {
+//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//            alert.setTitle("Submit");
+//            alert.setHeaderText("Do you want submit?");
+//            alert.showAndWait().ifPresent(btnType -> {
+//                if (btnType == ButtonType.OK) {
+//                    Navigator.getInstance().getModalStage().close();
+//                }
+//            });
+//        }
+        
 
 //        StaffModel staff = new StaffModel();
 //        staff.setUsername(username);

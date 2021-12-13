@@ -91,7 +91,7 @@ public class StaffHelper {
                     staffModel.setUsername(username);
                     staffModel.setPassword(password);
                     staffModel.setName(name);
-                    staffModel.setType(type);
+                    staffModel.setType("1");
                     return staffModel;
                 }
             } catch (SQLException ex) {
