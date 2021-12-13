@@ -21,6 +21,8 @@ import java.util.logging.Logger;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -28,6 +30,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
@@ -76,6 +79,9 @@ public class SaleController implements Initializable {
 
     @FXML
     private Button btnDelete, btnOnSale, btnDiscountEnd;
+    
+    @FXML
+    private TextField txtSearch;
 
     ObservableList<SaleModel> listSale = FXCollections.observableArrayList();
 
@@ -95,8 +101,8 @@ public class SaleController implements Initializable {
         btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddSale(sale, new AddSaleController.IOnInsertSaleSuccess() {
             @Override
             public void callback(SaleModel sale) {
+                sale.setImg(sale.getImg());
                 listSale.add(0, sale);
-                tblSale.refresh();
             }
         }));
         btnEdit.setOnMouseClicked(this::onClickEdit);
@@ -113,6 +119,38 @@ public class SaleController implements Initializable {
 
         listSale = SaleHelper.getAllSale();
         tblSale.setItems(listSale);
+
+        FilteredList<SaleModel> filteredData = new FilteredList<>(listSale, b -> true);
+        txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(SaleModel -> {
+
+                if (newValue.isEmpty() || newValue == null) {
+                    return true;
+                }
+
+                String searchKeyword = newValue.toLowerCase();
+
+                if (SaleModel.getProductName().toLowerCase().indexOf(searchKeyword) > -1) {
+                    return true;
+                } else if (SaleModel.getContent().toLowerCase().indexOf(searchKeyword) > -1) {
+                    return true;
+                } else if (SaleModel.getStart_date().toLowerCase().indexOf(searchKeyword) > -1) {
+                    return true;
+                } else if (SaleModel.getEnd_date().toLowerCase().indexOf(searchKeyword) > -1) {
+                    return true;
+                } else if (SaleModel.getDiscount().toString().indexOf(searchKeyword) > -1) {
+                    return true;
+                }  else {
+                    return false;
+                }
+            });
+        });
+
+        SortedList<SaleModel> sortedData = new SortedList<>(filteredData);
+
+        sortedData.comparatorProperty().bind(tblSale.comparatorProperty());
+
+        tblSale.setItems(sortedData);
     }
 
     private void onClickEdit(MouseEvent e) {
@@ -121,8 +159,9 @@ public class SaleController implements Initializable {
         if (isHasLink) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
-            alert.setHeaderText("Sale has link with any product you must delete product first");
+            alert.setHeaderText("Sale has link with any Order Detail you must delete Order Detail first");
             alert.show();
+            return;
         }
         if (sale != null) {
             Navigator.getInstance().getInstance().showEditSale();

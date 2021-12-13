@@ -68,14 +68,8 @@ public class EditTopicController implements Initializable {
     private ComboBox<String> cbStatus;
 
     private TopicModel mTopicModel;
-    
-    private IOnUpdateSuccess mIOnUpdateSuccess;
-    
-    public interface IOnUpdateSuccess{
-        void callback();
-    }
 
-    public void initData(Stage stage, TopicModel topic, IOnUpdateSuccess mIOnUpdateSuccess) {
+    public void initData(Stage stage, TopicModel topic) {
         this.stage = stage;
         mTopicModel = topic;
         txtName.setText(topic.getName());
@@ -85,7 +79,6 @@ public class EditTopicController implements Initializable {
         cbStatus.setItems(FXCollections.observableArrayList(TopicModel.SHOW, TopicModel.HIDDEN));
         cbStatus.setValue(topic.getStatusVal().get());
         
-        this.mIOnUpdateSuccess = mIOnUpdateSuccess;
     }
 
     @Override
@@ -158,7 +151,6 @@ public class EditTopicController implements Initializable {
                 alerts.setTitle("Success");
                 alerts.setHeaderText("Edit success!");
                 alerts.show();
-                mIOnUpdateSuccess.callback();
             } else {
                 Alert alerts = new Alert(Alert.AlertType.ERROR);
                 alerts.setTitle("Error");

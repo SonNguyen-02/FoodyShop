@@ -1,6 +1,7 @@
 package com.foodyshop.model;
 
 import static com.foodyshop.main.Config.IMG_AVATAR_DIR;
+import static com.foodyshop.main.Config.IMG_FOOD_DIR;
 import static com.foodyshop.main.Config.IMG_TOPIC_DIR;
 import com.foodyshop.main.Const;
 import static com.foodyshop.main.Const.PLACEHOLDER_NO_IMG_PATH;
@@ -49,8 +50,8 @@ public class CustomerModel {
         this.created = new SimpleStringProperty();
         statusVal = new SimpleStringProperty();
         genderVal = new SimpleStringProperty();
-        mImageView = new ImageView();
-        imgView = new SimpleObjectProperty<>(mImageView);
+        this.mImageView = new ImageView();
+        this.imgView = new SimpleObjectProperty<>(mImageView);
     }
 
     public int getId() {
@@ -131,19 +132,16 @@ public class CustomerModel {
 
     public void setImg(String img) {
         this.img = img;
-        String url = IMG_AVATAR_DIR + img;
-        Image image = new Image(url,100,100,false,true,true);
+        String url = IMG_FOOD_DIR + img;
+        Image image = new Image(url, 100, 100, false, true, true);
         mImageView.setImage(image);
-//        image.errorProperty().addListener((observable,olbValue,isErr)->({
-//    
-//    
-//        });
-//        image = new Image(url, 64, 64, false, true);
-//        if (!image.getException().getMessage().isEmpty()) {
-//            image = new Image("file:" + Const.PLACEHOLDER_USER_IMG_PATH, 100, 100, false, true);
-//        }
-//         
-//        this.imgView = new SimpleObjectProperty<>(new ImageView(image));
+        image.errorProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue){
+//                System.out.println(image.getException().getMessage());
+                mImageView.setImage(Const.NO_IMAGE_OBJ);
+            }
+        });
+      
     }
 
     public ObservableValue<ImageView> getImgView() {
@@ -205,5 +203,10 @@ public class CustomerModel {
         } else {
             this.status = 1;
         }
+    }
+    
+    @Override
+    public String toString() {
+        return this.name.get();
     }
 }

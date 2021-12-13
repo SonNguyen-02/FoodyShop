@@ -33,7 +33,7 @@ public class CategoryModel {
         this.topicName = new SimpleStringProperty();
     }
 
-    public Integer getId() {
+    public int getId() {
         return id.getValue();
     }
 

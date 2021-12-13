@@ -5,7 +5,9 @@
  */
 package com.foodyshop.model;
 
+import static com.foodyshop.main.Config.IMG_FOOD_DIR;
 import static com.foodyshop.main.Config.IMG_SALE_DIR;
+import com.foodyshop.main.Const;
 import java.time.LocalDate;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -29,6 +31,7 @@ public class SaleModel {
     private ObjectProperty<Integer> discount;
     private StringProperty content;
     private String img;
+    private ImageView mImageView;
     private ObservableValue<ImageView> imgView;
     private StringProperty start_date;
     private StringProperty end_date;
@@ -47,6 +50,8 @@ public class SaleModel {
         this.created = new SimpleStringProperty();
         this.productId = new SimpleObjectProperty<>();
         statusVal = new SimpleStringProperty();
+        this.mImageView = new ImageView();
+        this.imgView = new SimpleObjectProperty<>(mImageView);
     }
 
     public Integer getId() {
@@ -129,8 +134,15 @@ public class SaleModel {
     public void setImg(String img) {
         this.img = img;
         String url = IMG_SALE_DIR + img;
-        Image image = new Image(url, 80, 80, false, true, true);
-        this.imgView = new SimpleObjectProperty<>(new ImageView(image));
+        Image image = new Image(url, 100, 100, false, true, true);
+        mImageView.setImage(image);
+        image.errorProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue){
+                System.out.println(image.getException().getMessage());
+                mImageView.setImage(Const.NO_IMAGE_OBJ);
+            }
+        });
+      
     }
 
     public ObservableValue<ImageView> getImgView() {

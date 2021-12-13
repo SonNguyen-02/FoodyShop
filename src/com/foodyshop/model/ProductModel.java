@@ -7,6 +7,7 @@ package com.foodyshop.model;
 
 import com.foodyshop.database.DBConnection;
 import static com.foodyshop.main.Config.IMG_FOOD_DIR;
+import static com.foodyshop.main.Config.IMG_SALE_DIR;
 
 import com.foodyshop.main.Const;
 import java.sql.PreparedStatement;
@@ -31,6 +32,7 @@ public class ProductModel {
     public static final String SOLD_OUT = "Sold_out";
     private ObjectProperty<Integer> id;
     private StringProperty name;
+    private Integer categoryId;
     private StringProperty description;
     private ObjectProperty<Integer> price;
     private String imgDetail;
@@ -39,6 +41,7 @@ public class ProductModel {
     private StringProperty created;
     private StringProperty statusVal;
     private StringProperty categoryName;
+    private ImageView mImageView;
     private ObservableValue<ImageView> imgView;
 
 
@@ -50,8 +53,10 @@ public class ProductModel {
         this.price = new SimpleObjectProperty<>();
         this.created = new SimpleStringProperty();
         this.status = new SimpleObjectProperty<>();
-        statusVal = new SimpleStringProperty();
+        this.statusVal = new SimpleStringProperty();
         this.categoryName = new SimpleStringProperty();
+        this.mImageView = new ImageView();
+        this.imgView = new SimpleObjectProperty<>(mImageView);
     }
 
     public Integer getId() {
@@ -82,8 +87,7 @@ public class ProductModel {
     public String getCategoryName() {
         return categoryName.getValue();
     }
-   
-    
+ 
 //    public int getIdProperty() {
 //        return id;
 //    }
@@ -114,11 +118,8 @@ public class ProductModel {
     public StringProperty getStatusVal() {
         return statusVal;
     }
-   
-    
-
-
-    
+ 
+  
     public void setId(Integer id) {
         this.id.setValue(id);
     }
@@ -162,16 +163,15 @@ public class ProductModel {
     public void setImg(String img) {
         this.img = img;
         String url = IMG_FOOD_DIR + img;
-        Image image = null;
-
-//        image = new Image(url, 100, 100, false, true);
-//        tutu
-//        System.out.println(image.getException().toString());
-//        if (!image.getException().getMessage().isEmpty()) {
-            image = new Image("file:" + Const.PLACEHOLDER_NO_IMG_PATH, 100, 100, false, true, true);
-//        }
-        
-        this.imgView = new SimpleObjectProperty<>(new ImageView(image));
+        Image image = new Image(url, 100, 100, false, true, true);
+        mImageView.setImage(image);
+        image.errorProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue){
+//                System.out.println(image.getException().getMessage());
+                mImageView.setImage(Const.NO_IMAGE_OBJ);
+            }
+        });
+      
     }
     
     public ObservableValue<ImageView> getImgView() {
@@ -186,14 +186,24 @@ public class ProductModel {
 //        tutu
 //        System.out.println(image.getException().toString());
 //        if (!image.getException().getMessage().isEmpty()) {
-            image = new Image("file:" + Const.PLACEHOLDER_NO_IMG_PATH, 100, 100, false, true, true);
+//            image = new Image("file:" + Const.PLACEHOLDER_NO_IMG_PATH, 100, 100, false, true, true);
 //        }
         
-        this.imgView = new SimpleObjectProperty<>(new ImageView(image));      
+//        this.imgView = new SimpleObjectProperty<>(new ImageView(image));      
     }
     public ObservableValue<ImageView> getImgViewDetail() {
         return imgView;
     }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
+    }
+
+   
        
     @Override
     public String toString() {

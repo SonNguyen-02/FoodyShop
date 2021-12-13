@@ -6,6 +6,7 @@
 package com.foodyshop.model;
 
 import static com.foodyshop.main.Config.IMG_TOPIC_DIR;
+import com.foodyshop.main.Const;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -27,7 +28,7 @@ public class TopicModel {
     private StringProperty name;
     private String img;
     private int status;
-
+    private ImageView mImageView;
     private ObservableValue<ImageView> imgView;
     private StringProperty created;
     private StringProperty statusVal;
@@ -36,6 +37,8 @@ public class TopicModel {
         this.name = new SimpleStringProperty();
         this.created = new SimpleStringProperty();
         this.statusVal = new SimpleStringProperty();
+        mImageView = new ImageView();
+        imgView = new SimpleObjectProperty<>(mImageView);
     }
 
     public int getIdProperty() {
@@ -90,7 +93,14 @@ public class TopicModel {
         this.img = img;
         String url = IMG_TOPIC_DIR + img;
         Image image = new Image(url, 100, 100, false, true, true);
-        this.imgView = new SimpleObjectProperty<>(new ImageView(image));
+        mImageView.setImage(image);
+        image.errorProperty().addListener((observable, oldValue, isErr) -> {
+            if(isErr){
+                System.out.println(image.getException().getMessage());
+                mImageView.setImage(Const.NO_IMAGE_OBJ);
+            }
+        });
+        
     }
 
     public void setCreated(String created) {

@@ -58,6 +58,9 @@ public class CustomerController implements Initializable {
 
     @FXML
     private TableColumn<CustomerModel, String> tcCreated;
+    
+    @FXML
+    private TableColumn<CustomerModel, ImageView> tcImage;
 
     @FXML
     private TableColumn<CustomerModel, String> tcStatus;
@@ -96,6 +99,7 @@ public class CustomerController implements Initializable {
         tcDatebirth.setCellValueFactory(cellValue -> cellValue.getValue().getDatebirthProperty());
         tcAddress.setCellValueFactory(cellValue -> cellValue.getValue().getAddressProperty());
         tcCreated.setCellValueFactory(cellValue -> cellValue.getValue().getCreatedProperty());
+        tcImage.setCellValueFactory(cellValue -> cellValue.getValue().getImgView());
         tcStatus.setCellValueFactory(cellValue -> cellValue.getValue().getStatusVal());
 
         listCustomer = CustomerHelper.getAllCustomer();

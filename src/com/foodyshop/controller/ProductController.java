@@ -84,10 +84,12 @@ public class ProductController implements Initializable {
         listProduct = ProductHelper.getAllProduct();
         tblProduct.setItems(listProduct);
         btnDelete.setOnMouseClicked(this::onClickDelete);
+        btnEdit.setOnMouseClicked(this::onClickEdit);
         btnProductDetail.setOnMouseClicked(this::onclickshowProduct_Detail);
         btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddProduct(new AddProductController.IOnInsertProductSuccess() {
             @Override
             public void callback(ProductModel product) {
+                product.setImg(product.getImg());
                 listProduct.add(0, product);
             }
         }));
@@ -164,4 +166,22 @@ public class ProductController implements Initializable {
             alert.show();
         }
     }
+    private void onClickEdit(MouseEvent e) {
+        ProductModel product = tblProduct.getSelectionModel().getSelectedItem();
+        if (product != null) {
+            Navigator.getInstance().showEditProduct(product, new EditProductController.IOnUpdateProduct() {
+                @Override
+                public void callback() {
+                    tblProduct.refresh();
+                }
+            });
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Please choose category");
+            alert.show();
+        }
+    }
 }
+

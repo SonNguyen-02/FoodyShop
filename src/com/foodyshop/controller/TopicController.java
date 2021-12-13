@@ -92,12 +92,7 @@ public class TopicController implements Initializable {
     private void onClickEdit(MouseEvent e){
         TopicModel topic = tblTopic.getSelectionModel().getSelectedItem();
         if(topic != null){
-             Navigator.getInstance().showEditTopic(topic, new EditTopicController.IOnUpdateSuccess() {
-                @Override
-                public void callback() {
-                    tblTopic.refresh();
-                }
-            });
+             Navigator.getInstance().showEditTopic(topic);
         }else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
