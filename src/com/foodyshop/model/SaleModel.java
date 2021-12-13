@@ -5,10 +5,15 @@
  */
 package com.foodyshop.model;
 
+import static com.foodyshop.main.Config.IMG_SALE_DIR;
+import java.time.LocalDate;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  *
@@ -24,10 +29,12 @@ public class SaleModel {
     private ObjectProperty<Integer> discount;
     private StringProperty content;
     private String img;
+    private ObservableValue<ImageView> imgView;
     private StringProperty start_date;
     private StringProperty end_date;
     private StringProperty created;
     private int status;
+    private ObjectProperty<Integer> productId;
     private StringProperty statusVal;
 
     public SaleModel() {
@@ -38,13 +45,35 @@ public class SaleModel {
         this.start_date = new SimpleStringProperty();
         this.end_date = new SimpleStringProperty();
         this.created = new SimpleStringProperty();
+        this.productId = new SimpleObjectProperty<>();
         statusVal = new SimpleStringProperty();
     }
 
-     public Integer getId() {
+    public Integer getId() {
         return id.getValue();
     }
+
+    public Integer getProductId() {
+        return productId.getValue();
+    }
+
+    public ObjectProperty<Integer> getProductIdProperty() {
+        return productId;
+    }
+
+    public void setProductId(Integer productId) {
+        this.productId.setValue(productId);
+    }
+
+    public Integer getDiscount() {
+        return discount.getValue();
+    }
+
     
+    public String getContent() {
+        return content.getValue();
+    }
+
     public ObjectProperty<Integer> getIdProperty() {
         return id;
     }
@@ -59,6 +88,14 @@ public class SaleModel {
 
     public String getProductName() {
         return productName.getValue();
+    }
+
+    public String getStart_date() {
+        return start_date.getValue();
+    }
+    
+    public String getEnd_date() {
+        return end_date.getValue();
     }
     
     public void setProductName(String productName) {
@@ -88,9 +125,16 @@ public class SaleModel {
     public String getImg() {
         return img;
     }
-    
+
     public void setImg(String img) {
         this.img = img;
+        String url = IMG_SALE_DIR + img;
+        Image image = new Image(url, 80, 80, false, true, true);
+        this.imgView = new SimpleObjectProperty<>(new ImageView(image));
+    }
+
+    public ObservableValue<ImageView> getImgView() {
+        return imgView;
     }
 
     public StringProperty getStart_dateProperty() {
@@ -117,14 +161,14 @@ public class SaleModel {
         this.created.setValue(created);
     }
 
-     public int getStatus() {
+    public int getStatus() {
         return status;
     }
 
     public StringProperty getStatusVal() {
         return statusVal;
     }
-    
+
     public void setStatus(Integer status) {
         this.status = status;
         if (status == 0) {

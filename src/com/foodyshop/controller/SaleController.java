@@ -5,8 +5,10 @@
  */
 package com.foodyshop.controller;
 
+import com.foodyshop.controller.AddSaleController.IOnInsertSaleSuccess;
 import com.foodyshop.helper.SaleHelper;
 import com.foodyshop.main.Const;
+import com.foodyshop.main.Navigator;
 import com.foodyshop.main.UploadImageToApi;
 import com.foodyshop.model.Order_DetailModel;
 import com.foodyshop.model.SaleModel;
@@ -15,6 +17,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -24,6 +27,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -49,7 +53,7 @@ public class SaleController implements Initializable {
     private TableColumn<SaleModel, String> tcContent;
 
     @FXML
-    private TableColumn<SaleModel, String> tcImg;
+    private TableColumn<SaleModel, ImageView> tcImg;
 
     @FXML
     private TableColumn<SaleModel, String> tcStart;
@@ -82,12 +86,19 @@ public class SaleController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        SaleModel sale = new SaleModel();
         btnDelete.setOnMouseClicked(this::onClickDelete);
-
-        tcStt.setCellValueFactory(cellValue -> cellValue.getValue().getIdProperty());
+        btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddSale(sale, new AddSaleController.IOnInsertSaleSuccess() {
+            @Override
+            public void callback(SaleModel sale) {
+               listSale.add(0, sale);
+            }
+        }));
+        tcStt.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tblSale.getItems().indexOf(cellData.getValue()) + 1) + ""));
         tcProductName.setCellValueFactory(cellValue -> cellValue.getValue().getProductNameProperty());
         tcDiscount.setCellValueFactory(cellValue -> cellValue.getValue().getDiscountProperty());
         tcContent.setCellValueFactory(cellValue -> cellValue.getValue().getContentProperty());
+        tcImg.setCellValueFactory(cellValue -> cellValue.getValue().getImgView());
         tcStart.setCellValueFactory(cellValue -> cellValue.getValue().getStart_dateProperty());
         tcEnd.setCellValueFactory(cellValue -> cellValue.getValue().getEnd_dateProperty());
         tcCreated.setCellValueFactory(cellValue -> cellValue.getValue().getCreatedProperty());
@@ -97,6 +108,11 @@ public class SaleController implements Initializable {
         tblSale.setItems(listSale);
     }
 
+    private void onClickAdd(MouseEvent e){
+        SaleModel sale = tblSale.getSelectionModel().getSelectedItem();
+        
+    }
+    
     private void onClickDelete(MouseEvent e) {
         SaleModel sale = tblSale.getSelectionModel().getSelectedItem();
         //        Order_DetailModel OrderDetail = new Order_DetailModel();

@@ -2,6 +2,8 @@ package com.foodyshop.main;
 
 import com.foodyshop.controller.AddCategoryController;
 import com.foodyshop.controller.AddCategoryController.IOnAddSuccess;
+import com.foodyshop.controller.AddSaleController;
+import com.foodyshop.controller.AddSaleController.IOnInsertSaleSuccess;
 import com.foodyshop.controller.AddStaffController;
 import com.foodyshop.controller.AddTopicController;
 import com.foodyshop.controller.AddTopicController.IOnInsertTopicSuccess;
@@ -24,6 +26,7 @@ import com.foodyshop.model.CustomerModel;
 import com.foodyshop.model.FeedbackModel;
 import com.foodyshop.model.OrderModel;
 import com.foodyshop.model.Order_DetailModel;
+import com.foodyshop.model.SaleModel;
 import com.foodyshop.model.TopicModel;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -79,6 +82,7 @@ public class Navigator {
     private static final String ADD_STAFF = ROOT_FOLDER + "AddStaff.fxml";
     private static final String EDIT_STAFF = ROOT_FOLDER + "EditStaff.fxml";
     private static final String EDIT_CUSTOMER_FORM = ROOT_FOLDER + "EditCustomerForm.fxml";
+    private static final String ADD_SALE_FORM = ROOT_FOLDER + "AddSaleForm.fxml";
     
     // Khai báo di chuyển giữa các màn hình
     public void goToLoginUI() {
@@ -186,6 +190,13 @@ public class Navigator {
         CustomerDetailController controller = fxLoader.getController();
         controller.initCustomerModel(customer);
     }
+    
+     public void showAddSale(SaleModel sale,IOnInsertSaleSuccess mIOnInsertSaleSuccess) {
+        showModal("Add Sale ", ADD_SALE_FORM);
+        AddSaleController controller = fxLoader.getController();
+        controller.initDataSale(sale,modalStage, mIOnInsertSaleSuccess);
+    }
+    
     // </editor-fold> 
     private Navigator() {
     }

@@ -27,7 +27,7 @@ import javafx.scene.image.ImageView;
 public class ProductModel {
     public static final String STILL = "Still";
     public static final String SOLD_OUT = "Sold_out";
-    private int id;
+    private ObjectProperty<Integer> id;
     private StringProperty name;
     private StringProperty description;
     private ObjectProperty<Integer> price;
@@ -42,6 +42,7 @@ public class ProductModel {
 
 
     public ProductModel() {
+        this.id = new SimpleObjectProperty<>();
         this.name = new SimpleStringProperty();
         this.description = new SimpleStringProperty();
         this.price = new SimpleObjectProperty<>();
@@ -51,8 +52,8 @@ public class ProductModel {
         this.categoryName = new SimpleStringProperty();
     }
 
-    public int getId() {
-        return id;
+    public Integer getId() {
+        return id.getValue();
     }
     public String getName() {
         return name.getValue();
@@ -81,9 +82,9 @@ public class ProductModel {
     }
    
     
-    public int getIdProperty() {
-        return id;
-    }
+//    public int getIdProperty() {
+//        return id;
+//    }
     public StringProperty getNameProperty() {
         return name;
     }
@@ -116,8 +117,8 @@ public class ProductModel {
 
 
     
-    public void setId(int id) {
-        this.id = id;
+    public void setId(Integer id) {
+        this.id.setValue(id);
     }
     public void setName(String name) {
         this.name.setValue(name);
@@ -169,6 +170,11 @@ public class ProductModel {
     }
        public ObservableValue<ImageView> getImgView() {
         return imgView;
+    }
+       
+    @Override
+    public String toString() {
+        return this.name.get();
     }
 }
 
