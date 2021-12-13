@@ -42,9 +42,9 @@ import javafx.scene.text.TextAlignment;
 public class Order_DetailController implements Initializable {
 
     private OrderModel mOrder;
-    
+
     @FXML
-    private Label lbOrder_Code, lbTotalPrice, lbTotalProduct, lbName, lbPhone, lbAddress, lbFeedback, lbNote,lbContentSale,lbStart,lbEnd;
+    private Label lbOrder_Code, lbTotalPrice, lbTotalProduct, lbName, lbPhone, lbAddress, lbFeedback, lbNote, lbContentSale, lbStart, lbEnd;
 
     @FXML
     private TableView<Order_DetailModel> tblOrder_detail;
@@ -63,10 +63,10 @@ public class Order_DetailController implements Initializable {
 
     @FXML
     private TableColumn<Order_DetailModel, Integer> tcDiscount;
-    
+
     @FXML
     private Button btnCancel;
-     
+
     /**
      * Initializes the controller class.
      */
@@ -84,12 +84,12 @@ public class Order_DetailController implements Initializable {
         lbOrder_Code.setText(order.getOrderCode());
         listOrder_Detail = Order_DetailHelper.getAllOrder_Detail(order);
         tblOrder_detail.setItems(listOrder_Detail);
-        lbTotalProduct.setText(String.valueOf(listOrder_Detail.size())+"prd");
+        lbTotalProduct.setText(String.valueOf(listOrder_Detail.size()) + "prd");
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         btnCancel.setOnMouseClicked(this::onClickCancel);
         lbFeedback.setWrapText(true);
         lbFeedback.setTextAlignment(TextAlignment.JUSTIFY);
@@ -133,6 +133,7 @@ public class Order_DetailController implements Initializable {
             return row;
         });
     }
+
     private void onClickCancel(MouseEvent e) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Close");

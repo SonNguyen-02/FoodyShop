@@ -22,7 +22,7 @@ public class Const {
     public static final String TYPE_FOOD = "type_food";
     public static final String TYPE_TOPIC = "type_topic";
     public static final String TYPE_SALE = "type_sale";
-    
+    public static final String PLACEHOLDER_NO1_IMG_PATH = Paths.get(".").toAbsolutePath().getParent().toString() + "\\src\\public\\image\\main_layout\\placeholder_imgDetail.jpg";;
     public static final String PLACEHOLDER_NO_IMG_PATH = Paths.get(".").toAbsolutePath().getParent().toString() + "\\src\\public\\image\\main_layout\\placeholder_img.jpg";;
     public static final String PLACEHOLDER_USER_IMG_PATH = Paths.get(".").toAbsolutePath().getParent().toString() + "\\src\\public\\image\\main_layout\\placeholder_user.jpg";;
 }

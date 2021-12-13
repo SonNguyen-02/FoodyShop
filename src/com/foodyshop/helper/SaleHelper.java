@@ -94,7 +94,6 @@ public class SaleHelper {
                 .set("end_date", sale.getEnd_date())
                 .set("content", sale.getContent())
                 .set("img", sale.getImg())
-                .set("status", String.valueOf(sale.getStatus()))
                 .getCompiledInsert(true);
 
         int lastId = DBConnection.execInsert(sql);
@@ -104,7 +103,6 @@ public class SaleHelper {
                 ResultSet rs = DBConnection.execSelect(sql);
                 if (rs.next()) {
                     sale.setId(lastId);
-                    sale.setProductId(rs.getInt("product_id"));
                     sale.setCreated(rs.getString("created"));
                     sale.setStatus(0);
                     return sale;

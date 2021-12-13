@@ -76,15 +76,9 @@
           <RowConstraints maxHeight="81.22224426269531" minHeight="10.0" prefHeight="57.333343505859375" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="93.0" minHeight="10.0" prefHeight="50.666656494140625" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="69.33334350585938" minHeight="10.0" prefHeight="53.5555419921875" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="55.5555419921875" minHeight="10.0" prefHeight="48.4444580078125" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label prefHeight="32.0" prefWidth="134.0" text="Product Name:" GridPane.valignment="TOP">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label prefHeight="32.0" prefWidth="134.0" text="Status:" GridPane.rowIndex="5" GridPane.valignment="TOP">
                <font>
                   <Font size="20.0" />
                </font>
@@ -114,7 +108,6 @@
             <TextField fx:id="txtDiscount" prefHeight="40.0" prefWidth="293.0" style="-fx-background-color: #ffffff;" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" />
             <DatePicker fx:id="dpStartDate" nodeOrientation="LEFT_TO_RIGHT" prefHeight="35.0" prefWidth="199.0" style="-fx-background-color: #ffffff;" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="TOP" />
             <DatePicker fx:id="dpEndDate" nodeOrientation="LEFT_TO_RIGHT" prefHeight="35.0" prefWidth="199.0" style="-fx-background-color: #ffffff;" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="TOP" />
-            <ComboBox fx:id="cbStatus" prefHeight="42.0" prefWidth="320.0" style="-fx-background-color: #ffffff;" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP" />
          </children>
       </GridPane>
    </children>

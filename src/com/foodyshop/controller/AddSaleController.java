@@ -14,6 +14,7 @@ import com.foodyshop.main.UploadImageToApi;
 import com.foodyshop.model.ProductModel;
 import com.foodyshop.model.Respond;
 import com.foodyshop.model.SaleModel;
+import static com.sun.javafx.fxml.expression.Expression.add;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -76,9 +77,8 @@ public class AddSaleController implements Initializable {
     @FXML
     private DatePicker dpEndDate;
 
-    @FXML
-    private ComboBox<String> cbStatus;
-
+//    @FXML
+//    private ComboBox<String> cbStatus;
     private IOnInsertSaleSuccess mIOnInsertSaleSuccess;
 
     private SaleModel sale;
@@ -94,7 +94,7 @@ public class AddSaleController implements Initializable {
         this.stage = stage;
         this.mIOnInsertSaleSuccess = mIOnInsertSaleSuccess;
         this.sale = sale;
-        productList = ProductHelper.getAllCategory();
+        productList = ProductHelper.getAllProduct();
         if (productList != null && !productList.isEmpty()) {
             cbProductName.setItems(productList);
             for (ProductModel product : productList) {
@@ -104,8 +104,8 @@ public class AddSaleController implements Initializable {
                 }
             }
         }
-        cbStatus.setItems(FXCollections.observableArrayList(SaleModel.ON_SALE, SaleModel.DISCOUNT_END));
-        cbStatus.setValue(sale.getStatusVal().get());
+//        cbStatus.setItems(FXCollections.observableArrayList(SaleModel.ON_SALE, SaleModel.DISCOUNT_END));
+//        cbStatus.setValue(sale.getStatusVal().get());
     }
 
     @Override
@@ -145,6 +145,7 @@ public class AddSaleController implements Initializable {
         alert.setTitle("Error");
         if (product.isEmpty()) {
             cbProductName.requestFocus();
+            System.out.println(cbProductName.getValue().getId());
             alert.setHeaderText("Please Choose Product!!");
             alert.show();
             return;
@@ -184,12 +185,16 @@ public class AddSaleController implements Initializable {
             alert.show();
             return;
         }
+        System.out.println(Integer.parseInt(discount));
+        System.out.println(content);
+        System.out.println(cbProductName.getValue().getId());
+        System.out.println(dpStartDate.getValue());
+        System.out.println(dpEndDate.getValue());
         // call API
         try {
             Respond respond = UploadImageToApi.uploadImageToApi(imgSaleFile, Const.TYPE_SALE);
             if (respond.isSuccess()) {
                 SaleModel sale = new SaleModel();
-                sale.setStatusVal(cbStatus.getValue());
                 sale.setDiscount(Integer.parseInt(discount));
                 sale.setContent(content);
                 sale.setProductId(cbProductName.getValue().getId());
@@ -198,6 +203,7 @@ public class AddSaleController implements Initializable {
                 sale.setImg(respond.getMsg());
                 // Insert to database
                 sale = SaleHelper.insertSale(sale);
+
                 if (sale == null) {
                     alert.setHeaderText("Add false");
                     alert.show();
@@ -207,7 +213,9 @@ public class AddSaleController implements Initializable {
                     alerts.setTitle("Success");
                     alerts.setHeaderText("Add success!");
                     alerts.show();
+                    
                     mIOnInsertSaleSuccess.callback(sale);
+                    add(1,sale);
                 }
             } else {
                 Alert alerts = new Alert(Alert.AlertType.ERROR);

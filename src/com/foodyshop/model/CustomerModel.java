@@ -1,5 +1,6 @@
 package com.foodyshop.model;
 
+import static com.foodyshop.main.Config.IMG_AVATAR_DIR;
 import static com.foodyshop.main.Config.IMG_TOPIC_DIR;
 import com.foodyshop.main.Const;
 import static com.foodyshop.main.Const.PLACEHOLDER_NO_IMG_PATH;
@@ -127,7 +128,7 @@ public class CustomerModel {
 
     public void setImg(String img) {
         this.img = img;
-        String url = IMG_TOPIC_DIR + img;
+        String url = IMG_AVATAR_DIR + img;
         Image image = null;
 
         image = new Image(url, 64, 64, false, true);

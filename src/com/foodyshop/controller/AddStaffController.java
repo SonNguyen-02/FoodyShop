@@ -5,18 +5,18 @@
  */
 package com.foodyshop.controller;
 
-import com.foodyshop.helper.StaffHelper;
 import com.foodyshop.main.Navigator;
 import com.foodyshop.model.StaffModel;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 /**
@@ -25,6 +25,7 @@ import javafx.scene.control.TextField;
  */
 public class AddStaffController implements Initializable {
 
+    private ObservableList<StaffModel> listStaff;
     @FXML
     private TextField txtUsername;
 
@@ -34,37 +35,30 @@ public class AddStaffController implements Initializable {
     @FXML
     private TextField txtPassword;
 
-    @FXML
-    private ChoiceBox<String> cbType;
-
-    @FXML
-    private ChoiceBox<String> cbStatus;
+     @FXML
+    private ComboBox<String> cbType;
 
     @FXML
     private Button btnSubmit;
 
     @FXML
     private Button btnCancel;
-    
-    private IOnAddSuccess mIOnAddSuccess;
 
+    private IOnAddStaffSuccess mIOnAddStaffSuccess;
 
-    public interface IOnAddSuccess {
+    public interface IOnAddStaffSuccess {
 
-        void onAddSuccess(StaffModel staff);
+        void IOnAddStaffSuccess(StaffModel staffModel);
     }
 
-    public void initCallback(IOnAddSuccess mIOnAddSuccess) {
-        this.mIOnAddSuccess = mIOnAddSuccess;
+    public void initCallback(IOnAddStaffSuccess mIOnAddStaffSuccess) {
+        this.mIOnAddStaffSuccess = mIOnAddStaffSuccess;
     }
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         cbType.getItems().add("admin");
         cbType.getItems().add("staff");
-        cbStatus.getItems().add("lock");
-        cbStatus.getItems().add("unlock");
 
 //        btnSubmit.setOnMouseClicked(this::onClickSubmit);
 //        btnCancel.setOnMouseClicked(this::onClickCancel);
@@ -85,11 +79,11 @@ public class AddStaffController implements Initializable {
     @FXML
     void onClickSubmit(ActionEvent event) {
         //StaffModel staff = StaffHelper.insertStaff(txtUsername.getText(),txtPassword.getText(),txtName.getText());
-        String userName = txtUsername.getText().trim();
+        String username = txtUsername.getText().trim();
         String password = txtPassword.getText().trim();
         String name = txtName.getText().trim();
 
-        if (userName.isEmpty()) {
+        if (username.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
             alert.setHeaderText("Please enter username!");
@@ -120,10 +114,10 @@ public class AddStaffController implements Initializable {
             });
         }
 
-        StaffModel staff = new StaffModel();
-        staff.setUsername(userName);
-        staff.setPassword(password);
-        staff.setName(name);
+//        StaffModel staff = new StaffModel();
+//        staff.setUsername(username);
+//        staff.setPassword(password);
+//        staff.setName(name);
     }
 
 }

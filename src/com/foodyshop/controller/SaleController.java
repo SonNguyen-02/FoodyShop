@@ -92,6 +92,7 @@ public class SaleController implements Initializable {
             @Override
             public void callback(SaleModel sale) {
                listSale.add(0, sale);
+               tblSale.refresh();
             }
         }));
         tcStt.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tblSale.getItems().indexOf(cellData.getValue()) + 1) + ""));
@@ -108,11 +109,6 @@ public class SaleController implements Initializable {
         tblSale.setItems(listSale);
     }
 
-    private void onClickAdd(MouseEvent e){
-        SaleModel sale = tblSale.getSelectionModel().getSelectedItem();
-        
-    }
-    
     private void onClickDelete(MouseEvent e) {
         SaleModel sale = tblSale.getSelectionModel().getSelectedItem();
         //        Order_DetailModel OrderDetail = new Order_DetailModel();
