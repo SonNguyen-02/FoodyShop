@@ -12,17 +12,17 @@
       <TableView fx:id="tblSale" layoutX="19.0" layoutY="19.0" prefHeight="556.0" prefWidth="820.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="30.0">
          <columns>
             <TableColumn fx:id="tcStt" prefWidth="40.0" text="STT" />
-            <TableColumn fx:id="tcProductName" prefWidth="114.4444580078125" text="Product Name" />
-            <TableColumn fx:id="tcDiscount" prefWidth="62.333343505859375" style="-fx-padding: 0 5px;" text="Discount" />
-            <TableColumn fx:id="tcContent" prefWidth="115.66665649414062" text="Content" />
-            <TableColumn fx:id="tcImg" prefWidth="145.66668701171875" text="Image" />
-            <TableColumn fx:id="tcStart" prefWidth="90.11114501953125" text="Start date" />
-            <TableColumn fx:id="tcEnd" prefWidth="102.2222900390625" text="End date" />
-            <TableColumn fx:id="tcCreated" prefWidth="118.888916015625" text="Created" />
-            <TableColumn fx:id="tcStatus" prefWidth="98.111083984375" text="Status" />
+            <TableColumn fx:id="tcProductName" prefWidth="132.7777862548828" text="Product Name" />
+            <TableColumn fx:id="tcDiscount" prefWidth="78.00001525878906" style="-fx-padding: 0 5px;" text="Discount" />
+            <TableColumn fx:id="tcContent" prefWidth="107.111083984375" text="Content" />
+            <TableColumn fx:id="tcImg" minWidth="87.0" prefWidth="87.0" text="Image" />
+            <TableColumn fx:id="tcStart" prefWidth="91.66668701171875" text="Start date" />
+            <TableColumn fx:id="tcEnd" prefWidth="114.111083984375" text="End date" />
+            <TableColumn fx:id="tcCreated" prefWidth="104.44451904296875" text="Created" />
+            <TableColumn fx:id="tcStatus" prefWidth="119.3333740234375" text="Status" />
          </columns>
       </TableView>
-      <Button fx:id="btnAdd" layoutX="-33.0" layoutY="495.0" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #3499fb; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Add" textFill="WHITE" AnchorPane.rightAnchor="550.0" AnchorPane.topAnchor="600.0">
+      <Button fx:id="btnAdd" layoutX="-33.0" layoutY="495.0" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #3499fb; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Add" textFill="WHITE" AnchorPane.rightAnchor="380.0" AnchorPane.topAnchor="600.0">
          <font>
             <Font size="16.0" />
          </font>
@@ -30,7 +30,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnEdit" alignment="CENTER" layoutX="-36.0" layoutY="422.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #ed982d; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Edit" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="600.0">
+      <Button fx:id="btnEdit" alignment="CENTER" layoutX="-36.0" layoutY="422.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #FF9900; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Edit" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="600.0">
          <font>
             <Font size="16.0" />
          </font>
@@ -38,7 +38,23 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnDelete" layoutX="-23.0" layoutY="349.0" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #f54020; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Delete" textFill="WHITE" textOverrun="CLIP" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="600.0">
+      <Button fx:id="btnDelete" layoutX="-23.0" layoutY="349.0" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #f54020; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Delete" textFill="WHITE" textOverrun="CLIP" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="600.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="btnDiscountEnd" layoutX="180.0" layoutY="600.0" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #9966FF; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Discount End" textFill="WHITE" AnchorPane.leftAnchor="185.0" AnchorPane.topAnchor="600.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="btnOnSale" layoutX="58.0" layoutY="600.0" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #9966FF; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="On Sale" textFill="WHITE" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="600.0">
          <font>
             <Font size="16.0" />
          </font>

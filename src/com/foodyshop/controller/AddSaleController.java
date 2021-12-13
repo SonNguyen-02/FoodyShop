@@ -91,18 +91,14 @@ public class AddSaleController implements Initializable {
     }
 
     public void initDataSale(SaleModel sale, Stage stage, IOnInsertSaleSuccess mIOnInsertSaleSuccess) {
+        setDefaultImg(btnChooseFile, imgSale);
         this.stage = stage;
         this.mIOnInsertSaleSuccess = mIOnInsertSaleSuccess;
         this.sale = sale;
         productList = ProductHelper.getAllProduct();
         if (productList != null && !productList.isEmpty()) {
             cbProductName.setItems(productList);
-            for (ProductModel product : productList) {
-                if (product.getId() == sale.getProductId()) {
-                    cbProductName.setValue(product);
-                    break;
-                }
-            }
+            cbProductName.setValue(productList.get(0));
         }
 //        cbStatus.setItems(FXCollections.observableArrayList(SaleModel.ON_SALE, SaleModel.DISCOUNT_END));
 //        cbStatus.setValue(sale.getStatusVal().get());
@@ -140,19 +136,17 @@ public class AddSaleController implements Initializable {
     private void onClickSave(MouseEvent e) {
         String discount = txtDiscount.getText().trim();
         String content = txtContent.getText().trim();
-        ObservableList<ProductModel> product = cbProductName.getItems();
+        String regaxDiscount = "^[1-9]{1,2}$";
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
-        if (product.isEmpty()) {
-            cbProductName.requestFocus();
-            System.out.println(cbProductName.getValue().getId());
-            alert.setHeaderText("Please Choose Product!!");
-            alert.show();
-            return;
-        }
         if (discount.isEmpty()) {
             txtDiscount.requestFocus();
             alert.setHeaderText("Please enter Discount!!");
+            alert.show();
+            return;
+        }
+        if(!discount.matches(regaxDiscount)){
+            alert.setHeaderText("Please enter two or one number and different zero in Discount");
             alert.show();
             return;
         }
@@ -173,6 +167,18 @@ public class AddSaleController implements Initializable {
             alert.show();
             return;
         }
+        if(dpStartDate.getValue() == null){
+            dpStartDate.requestFocus();
+            alert.setHeaderText("Please Select Day!");
+            alert.show();
+            return;
+        }
+        if(dpEndDate.getValue() == null){
+            dpEndDate.requestFocus();
+            alert.setHeaderText("Please Select Day!");
+            alert.show();
+            return;
+        }
         if (dpStartDate.getValue().isAfter(LocalDate.now())) {
         } else {
             alert.setHeaderText("Date Start more than now!");
@@ -185,11 +191,6 @@ public class AddSaleController implements Initializable {
             alert.show();
             return;
         }
-        System.out.println(Integer.parseInt(discount));
-        System.out.println(content);
-        System.out.println(cbProductName.getValue().getId());
-        System.out.println(dpStartDate.getValue());
-        System.out.println(dpEndDate.getValue());
         // call API
         try {
             Respond respond = UploadImageToApi.uploadImageToApi(imgSaleFile, Const.TYPE_SALE);
@@ -198,6 +199,7 @@ public class AddSaleController implements Initializable {
                 sale.setDiscount(Integer.parseInt(discount));
                 sale.setContent(content);
                 sale.setProductId(cbProductName.getValue().getId());
+                sale.setProductName(cbProductName.getValue().getName());
                 sale.setStart_date(String.valueOf(dpStartDate.getValue()));
                 sale.setEnd_date(String.valueOf(dpEndDate.getValue()));
                 sale.setImg(respond.getMsg());
@@ -213,7 +215,6 @@ public class AddSaleController implements Initializable {
                     alerts.setTitle("Success");
                     alerts.setHeaderText("Add success!");
                     alerts.show();
-                    
                     mIOnInsertSaleSuccess.callback(sale);
                     add(1,sale);
                 }

@@ -34,6 +34,7 @@ public class CustomerModel {
     private StringProperty name;
     private String img;
     private int status;
+    private ImageView mImageView;
     private ObservableValue<ImageView> imgView;
     private StringProperty created;
     private StringProperty statusVal;
@@ -48,6 +49,8 @@ public class CustomerModel {
         this.created = new SimpleStringProperty();
         statusVal = new SimpleStringProperty();
         genderVal = new SimpleStringProperty();
+        mImageView = new ImageView();
+        imgView = new SimpleObjectProperty<>(mImageView);
     }
 
     public int getId() {
@@ -129,14 +132,18 @@ public class CustomerModel {
     public void setImg(String img) {
         this.img = img;
         String url = IMG_AVATAR_DIR + img;
-        Image image = null;
-
-        image = new Image(url, 64, 64, false, true);
-        if (!image.getException().getMessage().isEmpty()) {
-            image = new Image("file:" + Const.PLACEHOLDER_USER_IMG_PATH, 100, 100, false, true);
-        }
-         
-        this.imgView = new SimpleObjectProperty<>(new ImageView(image));
+        Image image = new Image(url,100,100,false,true,true);
+        mImageView.setImage(image);
+//        image.errorProperty().addListener((observable,olbValue,isErr)->({
+//    
+//    
+//        });
+//        image = new Image(url, 64, 64, false, true);
+//        if (!image.getException().getMessage().isEmpty()) {
+//            image = new Image("file:" + Const.PLACEHOLDER_USER_IMG_PATH, 100, 100, false, true);
+//        }
+//         
+//        this.imgView = new SimpleObjectProperty<>(new ImageView(image));
     }
 
     public ObservableValue<ImageView> getImgView() {

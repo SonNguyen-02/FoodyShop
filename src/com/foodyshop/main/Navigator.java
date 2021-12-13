@@ -78,7 +78,6 @@ public class Navigator {
     private static final String CUSTOMER_DETAIL = ROOT_FOLDER + "CustomerDetailPage.fxml";
     private static final String ACCOUNT_PAGE = ROOT_FOLDER + "Account.fxml";
     private static final String PRODUCTDETAIL_PAGE = ROOT_FOLDER + "ProductDetailPage.fxml";
-    
 
     // FORM
     private static final String ADD_CATEGORY_FORM = ROOT_FOLDER + "AddCategoryForm.fxml";
@@ -90,8 +89,10 @@ public class Navigator {
     private static final String EDIT_STAFF = ROOT_FOLDER + "EditStaff.fxml";
     private static final String EDIT_CUSTOMER_FORM = ROOT_FOLDER + "EditCustomerForm.fxml";
     private static final String ADD_SALE_FORM = ROOT_FOLDER + "AddSaleForm.fxml";
-    
+
     private static final String ADD_PRODUCT_FORM = ROOT_FOLDER + "AddProductForm.fxml";
+    private static final String EDIT_SALE_FORM = ROOT_FOLDER + "EditSaleForm.fxml";
+
     // Khai báo di chuyển giữa các màn hình
     public void goToLoginUI() {
         redirectTo("Login", LOGIN_UI);
@@ -129,19 +130,19 @@ public class Navigator {
     public void loadStaff(BorderPane borderPane) {
         borderPane.setCenter(getParent(STAFF_PAGE));
     }
-    
+
     public void loadSale(BorderPane borderPane) {
         borderPane.setCenter(getParent(SALE_PAGE));
     }
-    
-     public void loadProduct(BorderPane borderPane) {
+
+    public void loadProduct(BorderPane borderPane) {
         borderPane.setCenter(getParent(PRODUCT_PAGE));
     }
-     
-     public void loadAccount(BorderPane borderPane) {
+
+    public void loadAccount(BorderPane borderPane) {
         borderPane.setCenter(getParent(ACCOUNT_PAGE));
     }
-    
+
     // Show Modal
     public void showOrder_Detail(OrderModel order) {
         showModal("Order Detail", ORDER_DETAIL);
@@ -155,10 +156,10 @@ public class Navigator {
         controller.initCallback(mIOnAddSuccess);
     }
 
-    public void showEditCategory( CategoryModel category, IOnEditCategorySuccess mIOnEditCategorySuccess) {
+    public void showEditCategory(CategoryModel category, IOnEditCategorySuccess mIOnEditCategorySuccess) {
         showModal("Edit Category ", EDIT_CATEGORY_FORM);
         EditCategoryController controller = fxLoader.getController();
-        controller.setData(modalStage,category, mIOnEditCategorySuccess);
+        controller.setData(modalStage, category, mIOnEditCategorySuccess);
     }
 
     public void showAddTopic(IOnInsertTopicSuccess mIOnInsertTopicSuccess) {
@@ -172,50 +173,59 @@ public class Navigator {
         EditTopicController controller = fxLoader.getController();
         controller.initData(modalStage, topic, mIOnUpdateSuccess);
     }
-    
-    public void showEditOrder(OrderModel order,IOnUpdateOrderSuccess mIOnUpdateOrderSuccess) {
+
+    public void showEditOrder(OrderModel order, IOnUpdateOrderSuccess mIOnUpdateOrderSuccess) {
         showModal("Edit Order ", EDIT_ORDER_FORM);
         EditOrderController controller = fxLoader.getController();
-        controller.setData(order,modalStage,mIOnUpdateOrderSuccess);
+        controller.setData(order, modalStage, mIOnUpdateOrderSuccess);
     }
+
     public void showAddStaff(IOnAddStaffSuccess mIOnAddStaffSuccess) {
         showModal("Add Staff ", ADD_STAFF);
         AddStaffController controller = fxLoader.getController();
         controller.initCallback(mIOnAddStaffSuccess);
     }
+
     public void showEditStaff() {
         showModal("Edit Staff ", EDIT_STAFF);
         EditStaffController controller = fxLoader.getController();
     }
-    public void showEditCustomerForm(CustomerModel customer,IOnUpdateCustomer mIOnUpdateCustomer) {
+
+    public void showEditCustomerForm(CustomerModel customer, IOnUpdateCustomer mIOnUpdateCustomer) {
         showModal("Edit Customer ", EDIT_CUSTOMER_FORM);
         EditCustomerController controllerCustomer = fxLoader.getController();
-        controllerCustomer.initData(customer,modalStage,mIOnUpdateCustomer);
+        controllerCustomer.initData(customer, modalStage, mIOnUpdateCustomer);
     }
-    
+
     public void showCustomerDetail(CustomerModel customer) {
         showModal("Customer Detail ", CUSTOMER_DETAIL);
         CustomerDetailController controller = fxLoader.getController();
         controller.initCustomerModel(customer);
     }
-    
-     public void showProductDetail(ProductModel product) {
+
+    public void showProductDetail(ProductModel product) {
         showModal("Product Detail ", PRODUCTDETAIL_PAGE);
         ProductDetailController controller = fxLoader.getController();
         controller.initProductModel(product);
     }
+
     public void showAddProduct(IOnInsertProductSuccess mIOnInsertProductSuccess) {
         showModal("Topic ", ADD_PRODUCT_FORM);
         AddProductController controller = fxLoader.getController();
         controller.initData(modalStage, mIOnInsertProductSuccess);
     }
-    
-     public void showAddSale(SaleModel sale,IOnInsertSaleSuccess mIOnInsertSaleSuccess) {
+
+    public void showAddSale(SaleModel sale, IOnInsertSaleSuccess mIOnInsertSaleSuccess) {
         showModal("Add Sale ", ADD_SALE_FORM);
         AddSaleController controller = fxLoader.getController();
-        controller.initDataSale(sale,modalStage, mIOnInsertSaleSuccess);
+        controller.initDataSale(sale, modalStage, mIOnInsertSaleSuccess);
     }
-    
+
+    public void showEditSale() {
+        showModal("Edit Sale ", EDIT_SALE_FORM);
+//        AddSaleController controller = fxLoader.getController();
+//        controller.initDataSale(sale, modalStage, mIOnInsertSaleSuccess);
+    }
     // </editor-fold> 
     private Navigator() {
     }
@@ -284,9 +294,4 @@ public class Navigator {
         this.modalStage = modalStage;
     }
 
-    
-
-    
-
 }
-

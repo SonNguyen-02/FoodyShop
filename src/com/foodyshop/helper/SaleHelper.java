@@ -30,7 +30,7 @@ public class SaleHelper {
         ObservableList<SaleModel> listSale = FXCollections.observableArrayList();
         String sql = db.select("sl.product_id,sl.id,sl.discount,sl.content,sl.img,sl.start_date,sl.end_date,sl.created,sl.status,prd.name")
                 .from("fs_sale sl").join("fs_product prd", "sl.product_id = prd.id")
-                .orderByASC("id").getCompiledSelect(true);
+                .where("discount = 12").orderByDESC("id").getCompiledSelect(true);
         ResultSet rs = DBConnection.execSelect(sql);
         try {
             while (rs.next()) {
@@ -116,15 +116,13 @@ public class SaleHelper {
         return null;
     }
 
-    public static boolean updateSale(SaleModel saleModel) {
-        String sql = db.update("fs_topic")
-                //                .set("name", saleModel.getName())
-                //                .set("img", saleModel.getImg())
-                .set("status", String.valueOf(saleModel.getStatus()))
+    public static boolean updateStatusSale(SaleModel saleModel) {
+        String sql = db.update("fs_sale")
+                .set("status", String.valueOf(saleModel.getStatus()))    
                 .where("id", String.valueOf(saleModel.getId()))
                 .getCompiledUpdate(true);
-
         int result = DBConnection.execUpdate(sql);
+        DBConnection.close();
         if (result > 0) {
             return true;
         }

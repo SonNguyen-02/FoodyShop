@@ -165,8 +165,12 @@ public class SaleModel {
         return status;
     }
 
-    public StringProperty getStatusVal() {
+    public StringProperty getStatusValProperty() {
         return statusVal;
+    }
+    
+    public String getStatusVal() {
+        return statusVal.getValue();
     }
 
     public void setStatus(Integer status) {

@@ -14,6 +14,7 @@ import com.foodyshop.model.Order_DetailModel;
 import com.foodyshop.model.SaleModel;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -74,12 +75,13 @@ public class SaleController implements Initializable {
     private Button btnEdit;
 
     @FXML
-    private Button btnDelete;
+    private Button btnDelete, btnOnSale, btnDiscountEnd;
 
     ObservableList<SaleModel> listSale = FXCollections.observableArrayList();
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
@@ -88,13 +90,17 @@ public class SaleController implements Initializable {
         // TODO
         SaleModel sale = new SaleModel();
         btnDelete.setOnMouseClicked(this::onClickDelete);
+        btnOnSale.setOnMouseClicked(this::onClickOnSale);
+        btnDiscountEnd.setOnMouseClicked(this::onClickDiscountEnd);
         btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddSale(sale, new AddSaleController.IOnInsertSaleSuccess() {
             @Override
             public void callback(SaleModel sale) {
-               listSale.add(0, sale);
-               tblSale.refresh();
+                listSale.add(0, sale);
+                tblSale.refresh();
             }
         }));
+        btnEdit.setOnMouseClicked(this::onClickEdit);
+
         tcStt.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tblSale.getItems().indexOf(cellData.getValue()) + 1) + ""));
         tcProductName.setCellValueFactory(cellValue -> cellValue.getValue().getProductNameProperty());
         tcDiscount.setCellValueFactory(cellValue -> cellValue.getValue().getDiscountProperty());
@@ -103,10 +109,29 @@ public class SaleController implements Initializable {
         tcStart.setCellValueFactory(cellValue -> cellValue.getValue().getStart_dateProperty());
         tcEnd.setCellValueFactory(cellValue -> cellValue.getValue().getEnd_dateProperty());
         tcCreated.setCellValueFactory(cellValue -> cellValue.getValue().getCreatedProperty());
-        tcStatus.setCellValueFactory(cellValue -> cellValue.getValue().getStatusVal());
+        tcStatus.setCellValueFactory(cellValue -> cellValue.getValue().getStatusValProperty());
 
         listSale = SaleHelper.getAllSale();
         tblSale.setItems(listSale);
+    }
+
+    private void onClickEdit(MouseEvent e) {
+        SaleModel sale = tblSale.getSelectionModel().getSelectedItem();
+        boolean isHasLink = SaleHelper.isSaleHasLinkToOrderDetail(sale);
+        if (isHasLink) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Sale has link with any product you must delete product first");
+            alert.show();
+        }
+        if (sale != null) {
+            Navigator.getInstance().getInstance().showEditSale();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Please choose sale");
+            alert.show();
+        }
     }
 
     private void onClickDelete(MouseEvent e) {
@@ -119,7 +144,6 @@ public class SaleController implements Initializable {
             alerts.showAndWait().ifPresent(btn -> {
                 if (btn == ButtonType.OK) {
                     boolean isHasLink = SaleHelper.isSaleHasLinkToOrderDetail(sale);
-                    System.out.println(isHasLink);
                     if (isHasLink) {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("ERROR");
@@ -155,4 +179,71 @@ public class SaleController implements Initializable {
             alert.show();
         }
     }
+
+    void onClickOnSale(MouseEvent e) {
+        SaleModel sale = tblSale.getSelectionModel().getSelectedItem();
+        if (sale == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Please select one!");
+            alert.show();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirm");
+            alert.setHeaderText("Are you sure to sale this product?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                sale.setStatusVal(SaleModel.ON_SALE);
+                if (updStatus(sale)) {
+                    alert.setAlertType(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Success");
+                    alert.setHeaderText("Update success!");
+                    alert.show();
+                } else {
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Update false!");
+                    alert.show();
+                }
+            } else {
+            }
+
+        }
+    }
+
+    private void onClickDiscountEnd(MouseEvent e) {
+        SaleModel sale = tblSale.getSelectionModel().getSelectedItem();
+        if (sale == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Please select one!");
+            alert.show();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("confirm");
+            alert.setHeaderText("Are you sure to End Discount ?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                sale.setStatusVal(SaleModel.DISCOUNT_END);
+                if (updStatus(sale)) {
+                    alert.setAlertType(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Success");
+                    alert.setHeaderText("Update success!");
+                    alert.show();
+                } else {
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Update false!");
+                    alert.show();
+                }
+            } else {
+                System.out.println("Click Cancel");
+            }
+        }
+    }
+
+    private boolean updStatus(SaleModel saleModel) {
+        return SaleHelper.updateStatusSale(saleModel);
+    }
+
 }
