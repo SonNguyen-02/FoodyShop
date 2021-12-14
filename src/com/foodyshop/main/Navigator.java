@@ -20,6 +20,7 @@ import com.foodyshop.controller.EditOrderController;
 import com.foodyshop.controller.EditOrderController.IOnUpdateOrderSuccess;
 import com.foodyshop.controller.EditProductController;
 import com.foodyshop.controller.EditProductController.IOnUpdateProduct;
+import com.foodyshop.controller.EditSaleController;
 import com.foodyshop.controller.EditStaffController;
 
 import com.foodyshop.controller.EditTopicController;
@@ -224,10 +225,10 @@ public class Navigator {
         controller.initDataSale(sale, modalStage, mIOnInsertSaleSuccess);
     }
 
-    public void showEditSale() {
+    public void showEditSale(SaleModel sale) {
         showModal("Edit Sale ", EDIT_SALE_FORM);
-//        AddSaleController controller = fxLoader.getController();
-//        controller.initDataSale(sale, modalStage, mIOnInsertSaleSuccess);
+        EditSaleController controller = fxLoader.getController();
+        controller.initData(modalStage,sale);
     }
 
     public void showEditProduct(ProductModel Product, IOnUpdateProduct mIOnUpdateProduct) {

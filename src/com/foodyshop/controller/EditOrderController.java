@@ -91,7 +91,7 @@ public class EditOrderController implements Initializable {
 
     private void onclickSave(MouseEvent e) {
         String shipPrice = txtShipPrice.getText().trim();
-        String regaxShipPrice = "^[0-9]{1,11}$";
+        String regaxShipPrice = "[0-9]{1,10}$";
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         if (shipPrice.isEmpty()) {
@@ -101,7 +101,7 @@ public class EditOrderController implements Initializable {
             return;
         }
         if(!shipPrice.matches(regaxShipPrice)){
-            alert.setHeaderText("Please enter number");
+            alert.setHeaderText("Please enter number, limit 10 number");
             alert.show();
             return;
         }

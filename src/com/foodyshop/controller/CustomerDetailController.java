@@ -6,6 +6,8 @@
 package com.foodyshop.controller;
 
 import com.foodyshop.helper.CustomerDetailHelper;
+import static com.foodyshop.main.Config.IMG_AVATAR_DIR;
+import static com.foodyshop.main.Const.PLACEHOLDER_NO_IMG_PATH;
 import com.foodyshop.main.Navigator;
 import com.foodyshop.model.CustomerDetailModel;
 import com.foodyshop.model.CustomerModel;
@@ -23,6 +25,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -84,7 +87,11 @@ public class CustomerDetailController implements Initializable {
         lbCustomerName.setText(customer.getName());
         lbAddress.setText(customer.getAddress());
         lbPhone.setText(customer.getPhone());
-
+//        Image image = new Image(IMG_AVATAR_DIR + customer.getImg(), 80, 80, false, true, true);
+//        if(IMG_AVATAR_DIR != null){
+//            imgView.setImage(image);
+//        }
+        
         listCustomerDetail = CustomerDetailHelper.getAllCustomerDetail(customer);
         tblCustomerDetail.setItems(listCustomerDetail);
         lbTotalOrder.setText(String.valueOf(listCustomerDetail.size()) + " order");
@@ -96,6 +103,7 @@ public class CustomerDetailController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        setDefaultImg(imgView);
         btnCancel.setOnMouseClicked(this::onClickCancel);
         lbFeedback.setWrapText(true);
         lbFeedback.setTextAlignment(TextAlignment.JUSTIFY);
@@ -141,5 +149,9 @@ public class CustomerDetailController implements Initializable {
                 Navigator.getInstance().getModalStage().close();
             }
         });
+    }
+    
+     private void setDefaultImg(ImageView imgView) {
+        imgView.setImage(new Image("file:" + PLACEHOLDER_NO_IMG_PATH));
     }
 }

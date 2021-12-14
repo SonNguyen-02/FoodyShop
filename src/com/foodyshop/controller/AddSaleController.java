@@ -101,7 +101,7 @@ public class AddSaleController implements Initializable {
             cbProductName.setValue(productList.get(0));
         }
 //        cbStatus.setItems(FXCollections.observableArrayList(SaleModel.ON_SALE, SaleModel.DISCOUNT_END));
-//        cbStatus.setValue(sale.getStatusVal().get());
+//        cbStatus.setValue(sale.getStatusVal().get());s
     }
 
     @Override
@@ -216,7 +216,6 @@ public class AddSaleController implements Initializable {
                     alerts.setHeaderText("Add success!");
                     alerts.show();
                     mIOnInsertSaleSuccess.callback(sale);
-                    add(1,sale);
                 }
             } else {
                 Alert alerts = new Alert(Alert.AlertType.ERROR);

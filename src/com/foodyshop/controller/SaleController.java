@@ -164,7 +164,7 @@ public class SaleController implements Initializable {
             return;
         }
         if (sale != null) {
-            Navigator.getInstance().getInstance().showEditSale();
+            Navigator.getInstance().showEditSale(sale);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");

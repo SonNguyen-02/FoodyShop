@@ -78,7 +78,7 @@ public class Order_DetailController implements Initializable {
         String fomatter1 = formatter.format(order.getTotalMoney());
         lbName.setText(order.getName());
         lbPhone.setText(order.getPhone());
-//        lbNote.setText(order.getNote());
+        lbNote.setText(order.getNote());
         lbAddress.setText(order.getAddress());
         lbTotalPrice.setText(fomatter1 + " VNĐ");
         lbOrder_Code.setText(order.getOrderCode());

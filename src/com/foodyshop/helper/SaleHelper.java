@@ -30,7 +30,7 @@ public class SaleHelper {
         ObservableList<SaleModel> listSale = FXCollections.observableArrayList();
         String sql = db.select("sl.product_id,sl.id,sl.discount,sl.content,sl.img,sl.start_date,sl.end_date,sl.created,sl.status,prd.name")
                 .from("fs_sale sl").join("fs_product prd", "sl.product_id = prd.id")
-                .orderByDESC("id").getCompiledSelect(true);
+                .limit(20).orderByDESC("id").getCompiledSelect(true);
         ResultSet rs = DBConnection.execSelect(sql);
         try {
             while (rs.next()) {
