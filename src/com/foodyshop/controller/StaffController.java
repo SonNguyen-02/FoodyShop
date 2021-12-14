@@ -149,7 +149,12 @@ public class StaffController implements Initializable {
     void onClickEdit(ActionEvent event) {
         StaffModel staff = tvStaff.getSelectionModel().getSelectedItem();
         if (staff != null) {
-            btnEdit.setOnMouseClicked(e -> Navigator.getInstance().showEditStaff());
+            btnEdit.setOnMouseClicked(e -> Navigator.getInstance().showEditStaff(staff, new EditStaffController.IOnEditStaffSuccess() {
+                @Override
+                public void callback() {
+                 tvStaff.refresh();
+                }
+            }));
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");

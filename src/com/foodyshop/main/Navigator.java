@@ -21,6 +21,7 @@ import com.foodyshop.controller.EditOrderController.IOnUpdateOrderSuccess;
 import com.foodyshop.controller.EditProductController;
 import com.foodyshop.controller.EditSaleController;
 import com.foodyshop.controller.EditStaffController;
+import com.foodyshop.controller.EditStaffController.IOnEditStaffSuccess;
 
 import com.foodyshop.controller.EditTopicController;
 //import com.foodyshop.controller.EditTopicController.IOnUpdateSuccess;
@@ -190,9 +191,10 @@ public class Navigator {
         controller.initCallback(staff,modalStage,mIOnAddStaffSuccess);
     }
 
-    public void showEditStaff() {
-        showModal("Edit Staff ", EDIT_STAFF);
+    public void showEditStaff(StaffModel staff, IOnEditStaffSuccess mIOnEditStaffSuccess) {
+        showModal("Add Staff ", EDIT_STAFF);
         EditStaffController controller = fxLoader.getController();
+        controller.setDataStaff(modalStage, staff, mIOnEditStaffSuccess);
     }
 
     public void showEditCustomerForm(CustomerModel customer, IOnUpdateCustomer mIOnUpdateCustomer) {
