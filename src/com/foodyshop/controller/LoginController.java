@@ -83,7 +83,7 @@ public class LoginController implements Initializable {
         } else {
             if (BCrypt.checkpw(password, staff.getPassword())) {
                 // check account bi lock k
-                if(staff.getStatus().equals("0")){
+                if(staff.getStatusVal().equals("0")){
                     Navigator.getInstance().goToMainLayout();
                 }else{
                     Alert alert = new Alert(Alert.AlertType.ERROR);

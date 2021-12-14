@@ -5,7 +5,6 @@
  */
 package com.foodyshop.controller;
 
-import com.foodyshop.helper.BCrypt;
 import com.foodyshop.helper.StaffHelper;
 import com.foodyshop.main.Navigator;
 import com.foodyshop.model.StaffModel;
@@ -13,8 +12,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -56,9 +53,6 @@ public class StaffController implements Initializable {
     private TableColumn<StaffModel, String> tcCreated;
 
     @FXML
-    private TableColumn<StaffModel, String> tcUpdated;
-
-    @FXML
     private TableColumn<StaffModel, String> tcStatus;
 
     @FXML
@@ -83,23 +77,19 @@ public class StaffController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        StaffModel staff = new StaffModel();
+        // TO DO
         tcStt.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tvStaff.getItems().indexOf(cellData.getValue()) + 1) + ""));
         tcUsername.setCellValueFactory(cellData -> cellData.getValue().getUsernameProperty());
         tcPassword.setCellValueFactory(cellData -> cellData.getValue().getPasswordProperty());
         tcName.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
-        tcType.setCellValueFactory(cellData -> cellData.getValue().getTypeProperty());
+        tcType.setCellValueFactory(cellData -> cellData.getValue().getTypeVal());
         tcCreated.setCellValueFactory(cellData -> cellData.getValue().getCreatedProperty());
-        tcUpdated.setCellValueFactory(cellData -> cellData.getValue().getUpdatedProperty());
-        tcStatus.setCellValueFactory(cellData -> cellData.getValue().getStatusProperty());
-        try {
-            listStaff = StaffHelper.getAllStaff();
-        } catch (SQLException ex) {
-            Logger.getLogger(StaffController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        tcStatus.setCellValueFactory(cellData -> cellData.getValue().getStatusVal());
+        
+        listStaff = StaffHelper.getAllStaff();
         tvStaff.setItems(listStaff);
-//            btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddStaff(new AddStaffController().initCallback(mIOnAddStaffSuccess));
+        
+        StaffModel staff = new StaffModel();
         btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddStaff(staff, new AddStaffController.IOnAddStaffSuccess() {
             @Override
             public void IOnAddStaffSuccess(StaffModel staffModel) {
@@ -184,7 +174,7 @@ public class StaffController implements Initializable {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 System.out.println("Click Ok");
-                staffModel.setStatus(staffModel.STATUS_LOCK);
+                staffModel.setStatusVal(staffModel.STATUS_LOCK);
                 if (updStatusStaff(staffModel)) {
                     alert.setAlertType(Alert.AlertType.INFORMATION);
                     alert.setTitle("Success");
@@ -217,7 +207,7 @@ public class StaffController implements Initializable {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 System.out.println("Click Ok");
-                staffModel.setStatus(staffModel.STATUS_UNLOCK);
+                staffModel.setStatusVal(staffModel.STATUS_UNLOCK);
                 if (updStatusStaff(staffModel)) {
                     alert.setAlertType(Alert.AlertType.INFORMATION);
                     alert.setTitle("Success");

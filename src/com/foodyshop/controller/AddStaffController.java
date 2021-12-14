@@ -20,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
@@ -63,18 +64,18 @@ public class AddStaffController implements Initializable {
         mStaff = staff;
         this.stage = stage;
         cbType.setItems(FXCollections.observableArrayList(StaffModel.TYPE_ADMIN, StaffModel.TYPE_STAFF));
-        cbType.setValue(staff.getTypeProperty().get());
+        cbType.setValue(staff.getTypeVal().get());
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 //
-//        btnSubmit.setOnMouseClicked(this::onClickSubmit);
-//        btnCancel.setOnMouseClicked(this::onClickCancel);
+        btnSubmit.setOnMouseClicked(this::onClickSubmit);
+        btnCancel.setOnMouseClicked(this::onClickCancel);
     }
 
-    @FXML
-    void onClickCancel(ActionEvent event) {
+    
+    private void onClickCancel(MouseEvent e) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Close");
         alert.setHeaderText("Do you want close?");
@@ -85,9 +86,8 @@ public class AddStaffController implements Initializable {
         });
     }
 
-    @FXML
-    void onClickSubmit(ActionEvent event) {
-        //StaffModel staff = StaffHelper.insertStaff(txtUsername.getText(),txtPassword.getText(),txtName.getText());
+
+    private void onClickSubmit(MouseEvent e) {
         String username = txtUsername.getText().trim();
         String password = txtPassword.getText().trim();
         String name = txtName.getText().trim();
@@ -112,13 +112,12 @@ public class AddStaffController implements Initializable {
             alert.setHeaderText("Please enter name!");
             alert.show();
             return;
-        } else {
-//            StaffModel staffModel = StaffHelper.insertStaff(txtUsername.getText(), txtPassword.getText(), txtName.getText(), cbType.getValue());
+        }
                 StaffModel staff = new StaffModel();
                 staff.setUsername(username);
                 staff.setPassword(password);
                 staff.setName(name);
-                staff.setType(cbType.getValue());
+                staff.setTypeVal(cbType.getValue());
                 staff = StaffHelper.insertStaff(staff);
             if (staff != null) {
                 stage.close();
@@ -132,8 +131,7 @@ public class AddStaffController implements Initializable {
                 alert.setTitle("ERROR");
                 alert.setHeaderText("Insert false!");
                 alert.show();
-            }
-        }
+            }       
 //else {
 //            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 //            alert.setTitle("Submit");
@@ -150,5 +148,4 @@ public class AddStaffController implements Initializable {
 //        staff.setPassword(password);
 //        staff.setName(name);
     }
-
 }

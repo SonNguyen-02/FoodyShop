@@ -15,134 +15,60 @@ import javafx.beans.property.StringProperty;
  * @author DELL
  */
 public class StaffModel {
-    int id;
-    String username;
-    String password;
-    String name;
-    String created;
-    String updated;
-    String type;
-    String status;
-    
+  
     public static final String TYPE_ADMIN = "admin";
     public static final String TYPE_STAFF ="staff";
     public static final String STATUS_LOCK = "lock";
     public static final String STATUS_UNLOCK = "unlock";
     
-    private ObjectProperty<Integer> idProperty;
-    private StringProperty usernameProperty;
-    private StringProperty passwordProperty;
-    private StringProperty nameProperty;
-    private StringProperty typeProperty;
-    private StringProperty createdProperty;
-    private StringProperty updatedProperty;
-    private StringProperty statusProperty;
-    private int statusInt;
-    private int typeInt;        
-    
+    private int id;
+    private int status;
+    private int type;  
+    private StringProperty username;
+    private StringProperty password;
+    private StringProperty name;
+    private StringProperty typeVal;
+    private StringProperty created;
+    private StringProperty statusVal;
 
     public StaffModel() {
+        this.username = new SimpleStringProperty();
+        this.password = new SimpleStringProperty();
+        this.name = new SimpleStringProperty();
+        this.created = new SimpleStringProperty();
+        typeVal = new SimpleStringProperty();
+        statusVal = new SimpleStringProperty();
+    
     }
+          
+    
 
-    public StaffModel(int id, String username, String password, String name, String created, String updated, String type, String status) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.name = name;
-        this.created = created;
-        this.updated = updated;
-        this.type = type;
-        this.status = status;
-        
-        idProperty = new SimpleObjectProperty<>(id);
-        usernameProperty = new SimpleStringProperty(username);
-        passwordProperty = new SimpleStringProperty(password);
-        nameProperty = new SimpleStringProperty(name);
-        typeProperty = new SimpleStringProperty(type);
-        createdProperty = new SimpleStringProperty(created);
-        updatedProperty = new SimpleStringProperty(updated);
-        statusProperty = new SimpleStringProperty(status);
-        
-//        if(this.type.equals("0")){
-//            this.typeProperty.set(TYPE_ADMIN);
-//        }else{
-//            this.typeProperty.set(TYPE_STAFF);
-//        }
-//        
-//        if (this.status.equals("0")) {
-//            this.statusProperty.set(STATUS_UNLOCK);
-//        }else{
-//            this.statusProperty.set(STATUS_LOCK);
-//        }
-    }
 
-    public int getStatusInt() {
-        return statusInt;
-    }
-
-    public void setStatusInt(Integer statusInt) {
-        this.statusInt = statusInt;
-        if (statusInt == 0) {
-            this.statusProperty.setValue(STATUS_UNLOCK);
+    public void setTypeVal(String typeVal) {
+        this.typeVal.set(typeVal);
+        if(typeVal.equals(TYPE_ADMIN)){
+            this.type = 0;
         }else{
-            this.statusProperty.setValue(STATUS_LOCK);
+            this.type = 1;
         }
     }
 
-    public int getTypeInt() {
-        return typeInt;
-    }
-
-    public void setTypeInt(Integer typeInt) {
-        this.typeInt = typeInt;
-        if(typeInt == 0){
-            this.typeProperty.set(TYPE_ADMIN);
+    public void setStatusVal(String statusVal) {
+        this.statusVal.setValue(statusVal);
+        if(statusVal.equals(STATUS_UNLOCK)){
+            this.status = 0;
         }else{
-            this.typeProperty.set(TYPE_STAFF);
+            this.status = 1;
         }
     }
     
-    
-
-    public ObjectProperty<Integer> getIdProperty() {
-        return idProperty;
+    public StringProperty getStatusVal() {
+        return statusVal;
     }
 
-    public StringProperty getUsernameProperty() {
-        return usernameProperty;
+    public StringProperty getTypeVal() {
+        return typeVal;
     }
-
-    public StringProperty getPasswordProperty() {
-        return passwordProperty;
-    }
-
-    public StringProperty getNameProperty() {
-        return nameProperty;
-    }
-
-    public StringProperty getTypeProperty() {
-        return typeProperty;
-    }
-
-    public String getTypeVale() {
-        return typeProperty.getValue();
-    }
-
-    
-    public StringProperty getCreatedProperty() {
-        return createdProperty;
-    }
-
-    public StringProperty getUpdatedProperty() {
-        return updatedProperty;
-    }
-
-    public StringProperty getStatusProperty() {
-        return statusProperty;
-    }
-    
-    
-    
 
     public int getId() {
         return id;
@@ -150,78 +76,80 @@ public class StaffModel {
 
     public void setId(int id) {
         this.id = id;
-        this.idProperty.setValue(id);
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-        this.usernameProperty.setValue(username);
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-        this.passwordProperty.setValue(password);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-        this.nameProperty.setValue(name);
-    }
-
-    public String getCreated() {
-        return created;
-    }
-
-    public void setCreated(String created) {
-        this.created = created;
-        this.createdProperty.setValue(created);
-    }
-
-    public String getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(String updated) {
-        this.updated = updated;
-        this.updatedProperty.setValue(updated);
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String typeVal) {
-        this.typeProperty.set(typeVal);
-        if(typeVal.equals(TYPE_ADMIN)){
-            this.typeInt = 0;
-        }else{
-            this.typeInt = 1;
-        }
-    }
-
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String statusVal) {
-        this.statusProperty.setValue(status);
-        if(statusVal.equals(STATUS_UNLOCK)){
-            this.status ="0";
-        }else{
-            this.status = "1";
+    public void setStatus(Integer status) {
+        this.status = status;
+        if (status == 0) {
+            this.statusVal.setValue(STATUS_UNLOCK);
+        } else {
+            this.statusVal.setValue(STATUS_LOCK);
         }
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+        if (type == 0) {
+            this.statusVal.setValue(TYPE_ADMIN);
+        } else {
+            this.statusVal.setValue(TYPE_STAFF);
+        }
+    }
+
+    public StringProperty getUsernameProperty() {
+        return username;
+    }
+
+    public String getUsername() {
+        return username.getValue();
+    }
+    
+    public void setUsername(String username) {
+        this.username.setValue(username);
+    }
+
+    public StringProperty getPasswordProperty() {
+        return password;
+    }
+
+    public String getPassword() {
+        return password.getValue();
+    }
+    
+    public void setPassword(String password) {
+        this.password.setValue(password);
+    }
+
+    public StringProperty getNameProperty() {
+        return name;
+    }
+
+    public String getName() {
+        return name.getValue();
+    }
+    
+    public void setName(String name) {
+        this.name.setValue(name);
+    }
+
+    public StringProperty getCreatedProperty() {
+        return created;
+    }
+
+    public String getCreated() {
+        return created.getValue();
+    }
+    
+    public void setCreated(String created) {
+        this.created.setValue(created);
     }
 
    
