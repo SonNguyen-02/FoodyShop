@@ -29,14 +29,17 @@ public class StaffModel {
     public static final String STATUS_LOCK = "lock";
     public static final String STATUS_UNLOCK = "unlock";
     
-    ObjectProperty<Integer> idProperty;
-    StringProperty usernameProperty;
-    StringProperty passwordProperty;
-    StringProperty nameProperty;
-    StringProperty typeProperty;
-    StringProperty createdProperty;
-    StringProperty updatedProperty;
-    StringProperty statusProperty;
+    private ObjectProperty<Integer> idProperty;
+    private StringProperty usernameProperty;
+    private StringProperty passwordProperty;
+    private StringProperty nameProperty;
+    private StringProperty typeProperty;
+    private StringProperty createdProperty;
+    private StringProperty updatedProperty;
+    private StringProperty statusProperty;
+    private int statusInt;
+    private int typeInt;        
+    
 
     public StaffModel() {
     }
@@ -60,18 +63,46 @@ public class StaffModel {
         updatedProperty = new SimpleStringProperty(updated);
         statusProperty = new SimpleStringProperty(status);
         
-        if(this.type==type){
-            this.typeProperty = new SimpleStringProperty(TYPE_ADMIN);
+//        if(this.type.equals("0")){
+//            this.typeProperty.set(TYPE_ADMIN);
+//        }else{
+//            this.typeProperty.set(TYPE_STAFF);
+//        }
+//        
+//        if (this.status.equals("0")) {
+//            this.statusProperty.set(STATUS_UNLOCK);
+//        }else{
+//            this.statusProperty.set(STATUS_LOCK);
+//        }
+    }
+
+    public int getStatusInt() {
+        return statusInt;
+    }
+
+    public void setStatusInt(Integer statusInt) {
+        this.statusInt = statusInt;
+        if (statusInt == 0) {
+            this.statusProperty.setValue(STATUS_UNLOCK);
         }else{
-            this.typeProperty = new SimpleStringProperty(TYPE_STAFF);
-        }
-        
-        if (this.status.equals("0")) {
-            this.statusProperty.set(STATUS_UNLOCK);
-        }else{
-            this.statusProperty.set(STATUS_LOCK);
+            this.statusProperty.setValue(STATUS_LOCK);
         }
     }
+
+    public int getTypeInt() {
+        return typeInt;
+    }
+
+    public void setTypeInt(Integer typeInt) {
+        this.typeInt = typeInt;
+        if(typeInt == 0){
+            this.typeProperty.set(TYPE_ADMIN);
+        }else{
+            this.typeProperty.set(TYPE_STAFF);
+        }
+    }
+    
+    
 
     public ObjectProperty<Integer> getIdProperty() {
         return idProperty;
@@ -93,6 +124,11 @@ public class StaffModel {
         return typeProperty;
     }
 
+    public String getTypeVale() {
+        return typeProperty.getValue();
+    }
+
+    
     public StringProperty getCreatedProperty() {
         return createdProperty;
     }
@@ -166,9 +202,13 @@ public class StaffModel {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-        this.typeProperty.setValue(type);
+    public void setType(String typeVal) {
+        this.typeProperty.set(typeVal);
+        if(typeVal.equals(TYPE_ADMIN)){
+            this.typeInt = 0;
+        }else{
+            this.typeInt = 1;
+        }
     }
 
     public String getStatus() {

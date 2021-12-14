@@ -35,6 +35,7 @@ import com.foodyshop.model.OrderModel;
 import com.foodyshop.model.Order_DetailModel;
 import com.foodyshop.model.SaleModel;
 import com.foodyshop.model.ProductModel;
+import com.foodyshop.model.StaffModel;
 import com.foodyshop.model.TopicModel;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -184,10 +185,10 @@ public class Navigator {
         controller.setData(order, modalStage, mIOnUpdateOrderSuccess);
     }
 
-    public void showAddStaff(IOnAddStaffSuccess mIOnAddStaffSuccess) {
+    public void showAddStaff(StaffModel staff, IOnAddStaffSuccess mIOnAddStaffSuccess) {
         showModal("Add Staff ", ADD_STAFF);
         AddStaffController controller = fxLoader.getController();
-        controller.initCallback(mIOnAddStaffSuccess);
+        controller.initCallback(staff,modalStage,mIOnAddStaffSuccess);
     }
 
     public void showEditStaff() {
