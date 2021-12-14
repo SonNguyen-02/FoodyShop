@@ -169,13 +169,7 @@ public class ProductController implements Initializable {
     private void onClickEdit(MouseEvent e) {
         ProductModel product = tblProduct.getSelectionModel().getSelectedItem();
         if (product != null) {
-            Navigator.getInstance().showEditProduct(product, new EditProductController.IOnUpdateProduct() {
-                @Override
-                public void callback() {
-                    tblProduct.refresh();
-                }
-            });
-
+            Navigator.getInstance().showEditProduct(product);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");

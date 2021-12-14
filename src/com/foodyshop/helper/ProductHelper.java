@@ -119,4 +119,21 @@ public class ProductHelper {
         }
         return null;
     }
+    public static boolean updateProduct(ProductModel productModel){
+        String sql = db.update("fs_product")  
+                .set("category_id", String.valueOf(productModel.getCategoryId()))
+                .set("name", productModel.getName())
+                .set("price", productModel.getPrice().toString())
+                .set("description", productModel.getDescription())
+                .set("img", productModel.getImg())
+                .set("img_detail", productModel.getImgDetail())
+                .set("status", String.valueOf(productModel.getStatus()))
+                .where("id", String.valueOf(productModel.getId()))
+                .getCompiledUpdate(true);      
+        int result = DBConnection.execUpdate(sql);
+        if(result > 0){
+            return true;
+        }
+        return false;
+    }
 }
