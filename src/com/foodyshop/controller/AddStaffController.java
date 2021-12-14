@@ -10,6 +10,7 @@ import com.foodyshop.main.Navigator;
 import com.foodyshop.model.StaffModel;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  *
@@ -36,7 +38,7 @@ public class AddStaffController implements Initializable {
     @FXML
     private TextField txtPassword;
 
-     @FXML
+    @FXML
     private ComboBox<String> cbType;
 
     @FXML
@@ -47,20 +49,26 @@ public class AddStaffController implements Initializable {
 
     private IOnAddStaffSuccess mIOnAddStaffSuccess;
 
+    private Stage stage;
+
+    private StaffModel mStaff;
+
     public interface IOnAddStaffSuccess {
 
-        void IOnAddStaffSuccess(StaffModel staffModel);
+        void IOnAddStaffSuccess(StaffModel staff);
     }
 
-    public void initCallback(IOnAddStaffSuccess mIOnAddStaffSuccess) {
+    public void initCallback(StaffModel staff, Stage stage, IOnAddStaffSuccess mIOnAddStaffSuccess) {
         this.mIOnAddStaffSuccess = mIOnAddStaffSuccess;
+        mStaff = staff;
+        this.stage = stage;
+        cbType.setItems(FXCollections.observableArrayList(StaffModel.TYPE_ADMIN, StaffModel.TYPE_STAFF));
+        cbType.setValue(staff.getTypeProperty().get());
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        cbType.getItems().add("admin");
-        cbType.getItems().add("staff");
-
+//
 //        btnSubmit.setOnMouseClicked(this::onClickSubmit);
 //        btnCancel.setOnMouseClicked(this::onClickCancel);
     }
@@ -104,15 +112,21 @@ public class AddStaffController implements Initializable {
             alert.setHeaderText("Please enter name!");
             alert.show();
             return;
-       }  else {            
-            StaffModel staffModel = StaffHelper.insertStaff(txtUsername.getText(), txtPassword.getText(), txtName.getText(),cbType.getValue());        
-            if (staffModel != null) {
-                mIOnAddStaffSuccess.IOnAddStaffSuccess(staffModel);
-                Navigator.getInstance().getModalStage().close();
+        } else {
+//            StaffModel staffModel = StaffHelper.insertStaff(txtUsername.getText(), txtPassword.getText(), txtName.getText(), cbType.getValue());
+                StaffModel staff = new StaffModel();
+                staff.setUsername(username);
+                staff.setPassword(password);
+                staff.setName(name);
+                staff.setType(cbType.getValue());
+                staff = StaffHelper.insertStaff(staff);
+            if (staff != null) {
+                stage.close();
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("SUCCESS");
+                alert.setTitle("Sucess");
                 alert.setHeaderText("Insert success");
                 alert.show();
+                mIOnAddStaffSuccess.IOnAddStaffSuccess(staff);
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("ERROR");
@@ -130,7 +144,6 @@ public class AddStaffController implements Initializable {
 //                }
 //            });
 //        }
-        
 
 //        StaffModel staff = new StaffModel();
 //        staff.setUsername(username);

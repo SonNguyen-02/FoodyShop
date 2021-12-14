@@ -83,31 +83,29 @@ public class StaffController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        listStaff = FXCollections.observableArrayList();
+
+        StaffModel staff = new StaffModel();
+        tcStt.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tvStaff.getItems().indexOf(cellData.getValue()) + 1) + ""));
+        tcUsername.setCellValueFactory(cellData -> cellData.getValue().getUsernameProperty());
+        tcPassword.setCellValueFactory(cellData -> cellData.getValue().getPasswordProperty());
+        tcName.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
+        tcType.setCellValueFactory(cellData -> cellData.getValue().getTypeProperty());
+        tcCreated.setCellValueFactory(cellData -> cellData.getValue().getCreatedProperty());
+        tcUpdated.setCellValueFactory(cellData -> cellData.getValue().getUpdatedProperty());
+        tcStatus.setCellValueFactory(cellData -> cellData.getValue().getStatusProperty());
         try {
-            listStaff.addAll(StaffHelper.getAllStaff());
-            tvStaff.setItems(listStaff);
-            tcStt.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tvStaff.getItems().indexOf(cellData.getValue()) + 1) + ""));
-            tcUsername.setCellValueFactory(cellData -> cellData.getValue().getUsernameProperty());
-            tcPassword.setCellValueFactory(cellData -> cellData.getValue().getPasswordProperty());
-            tcName.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
-            tcType.setCellValueFactory(cellData -> cellData.getValue().getTypeProperty());
-            tcCreated.setCellValueFactory(cellData -> cellData.getValue().getCreatedProperty());
-            tcUpdated.setCellValueFactory(cellData -> cellData.getValue().getUpdatedProperty());
-            tcStatus.setCellValueFactory(cellData -> cellData.getValue().getStatusProperty());
-
-//            btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddStaff(new AddStaffController().initCallback(mIOnAddStaffSuccess));
-            btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddStaff(new AddStaffController.IOnAddStaffSuccess() {
-                @Override
-                public void IOnAddStaffSuccess(StaffModel staffModel) {
-                    listStaff.add(0, staffModel);
-                }
-            }));
-
+            listStaff = StaffHelper.getAllStaff();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(StaffController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        tvStaff.setItems(listStaff);
+//            btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddStaff(new AddStaffController().initCallback(mIOnAddStaffSuccess));
+        btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddStaff(staff, new AddStaffController.IOnAddStaffSuccess() {
+            @Override
+            public void IOnAddStaffSuccess(StaffModel staffModel) {
+                listStaff.add(0, staffModel);
+            }
+        }));
     }
 
     @FXML
@@ -131,7 +129,7 @@ public class StaffController implements Initializable {
             alerts.setTitle("ERROR");
             alerts.setHeaderText("Do you want delete " + staffModel.getUsername());
             alerts.showAndWait().ifPresent(btn -> {
-                if (btn == ButtonType.OK) {         
+                if (btn == ButtonType.OK) {
                     if (StaffHelper.delete(staffModel)) {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("ERROR");
@@ -146,7 +144,6 @@ public class StaffController implements Initializable {
                     }
 
                 }
-              
 
             });
 

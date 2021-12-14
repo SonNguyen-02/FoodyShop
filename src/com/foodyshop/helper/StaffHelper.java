@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -48,8 +50,8 @@ public class StaffHelper {
 
     }
 
-    public static List<StaffModel> getAllStaff() throws SQLException {
-        List<StaffModel> listStaff = new ArrayList<>();
+    public static ObservableList<StaffModel> getAllStaff() throws SQLException {
+        ObservableList<StaffModel> listStaff = FXCollections.observableArrayList();
         try {
             String query = "SELECT * FROM `fs_staff`";
             ResultSet rs = DBConnection.execSelect(query);
@@ -72,12 +74,12 @@ public class StaffHelper {
         return listStaff;
     }
 
-    public static StaffModel insertStaff(String username, String password, String name, String type) {
+    public static StaffModel insertStaff(StaffModel staff) {
         String sql = db.insert("fs_staff")
-                .set("username", username)
-                .set("password", password)
-                .set("name", name)
-                .set("type", type)
+                .set("username", staff.getUsername())
+                .set("password", staff.getPassword())
+                .set("name", staff.getName())
+                .set("type", String.valueOf(staff.getType()))
                 .getCompiledInsert(true);
 
         int lastId = DBConnection.execInsert(sql);
@@ -86,17 +88,16 @@ public class StaffHelper {
                 sql = db.select().from("fs_staff").where("id", String.valueOf(lastId)).getCompiledSelect(true);
                 ResultSet rs = DBConnection.execSelect(sql);
                 if (rs.next()) {
-                    StaffModel staffModel = new StaffModel();
-                    staffModel.setId(lastId);
-                    staffModel.setUsername(username);
-                    staffModel.setPassword(password);
-                    staffModel.setName(name);
-                    staffModel.setType("1");
-                    return staffModel;
+
+                    staff.setCreated(rs.getString("created"));
+                    staff.setId(lastId);
+                    staff.setTypeInt(1);
+                    staff.setStatusInt(0);
+                    return staff;
                 }
             } catch (SQLException ex) {
-                // Logger.getLogger(StaffHelper.class.getName()).log(Level.SEVERE, null, ex);
-                ex.printStackTrace();
+                Logger.getLogger(StaffHelper.class.getName()).log(Level.SEVERE, null, ex);
+//                ex.printStackTrace();
             } finally {
                 DBConnection.close();
             }
