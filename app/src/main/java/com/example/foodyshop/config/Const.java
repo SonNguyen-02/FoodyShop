@@ -36,6 +36,8 @@ public class Const {
     // ======== Retrofit api key ======== \\
     public static final String KEY_TOKEN = "token";
 
+    public static final String KEY_DATA_USER = "data_user";
+    public static final String KEY_AVATAR_USER = "avatar_user";
     public static final String KEY_NAME = "name";
     public static final String KEY_PHONE = "phone";
 

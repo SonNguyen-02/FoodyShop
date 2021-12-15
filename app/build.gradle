@@ -81,4 +81,10 @@ dependencies {
 //     blur img
 //    implementation 'jp.wasabeef:picasso-transformations:2.2.1'
 
+    // permission user
+    implementation 'io.github.ParkSangGwon:tedpermission-normal:3.3.0'
+    // img picker
+    implementation 'gun0912.ted:tedbottompicker:2.0.1'
+
+    implementation 'com.github.yalantis:ucrop:2.2.6-native'
 }

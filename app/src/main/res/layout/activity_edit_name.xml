@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical"
-    tools:context=".activity.CartActivity">
+    android:background="@color/md_grey_100"
+    android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
@@ -30,8 +29,8 @@
                     android:id="@+id/img_back"
                     android:layout_width="@dimen/tool_bar_icon_size"
                     android:layout_height="@dimen/tool_bar_icon_size"
-                    android:layout_margin="@dimen/tool_bar_icon_margin"
                     android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/tool_bar_icon_margin"
                     android:background="@drawable/ripple_blue_circle"
                     android:padding="@dimen/tool_bar_icon_padding"
                     android:src="@drawable/ic_arrow_back"
@@ -43,43 +42,63 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/space_view"
-                    android:layout_marginEnd="@dimen/space_view"
+                    android:layout_toStartOf="@id/tv_save"
                     android:layout_toEndOf="@id/img_back"
-                    android:text="@string/cart"
+                    android:text="@string/edit_name"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
 
-                <Button
-                    android:id="@+id/btn_edit"
-                    style="@style/TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <TextView
+                    android:id="@+id/tv_save"
+                    android:layout_width="@dimen/tool_bar_icon_size"
+                    android:layout_height="@dimen/tool_bar_icon_size"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/space_view"
-                    android:text="@string/edit"
+                    android:layout_margin="@dimen/tool_bar_icon_margin"
+                    android:background="@drawable/ripple_blue_circle"
+                    android:gravity="center"
+                    android:text="@string/save"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:visibility="visible"
-                    tools:ignore="RelativeOverlap" />
+                    android:textSize="16sp"
+                    app:tint="@color/white" />
 
             </RelativeLayout>
 
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout_cart"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabSelectedTextColor="@color/colorTextAccent" />
+        android:layout_marginStart="@dimen/space_view"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="@dimen/space_view"
+        android:background="@drawable/custom_bg_white_corn_4"
+        android:gravity="center"
+        app:endIconMode="clear_text"
+        app:hintEnabled="false">
 
-    <include layout="@layout/divider" />
+        <EditText
+            android:id="@+id/edt_fullname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:hint="@string/full_name"
+            android:inputType="text"
+            android:minWidth="@dimen/edt_form_width"
+            android:minHeight="@dimen/edt_min_height"
+            android:paddingStart="@dimen/edt_pad_start"
+            android:paddingEnd="0dp"
+            android:singleLine="true"
+            tools:ignore="Autofill" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pager2_cart"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_view"
+        android:layout_marginTop="@dimen/space_view"
+        android:text="50 characters only" />
 
 </LinearLayout>

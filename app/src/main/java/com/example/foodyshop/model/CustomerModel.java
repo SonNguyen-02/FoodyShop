@@ -1,11 +1,27 @@
 package com.example.foodyshop.model;
 
-import androidx.annotation.NonNull;
+import android.content.Context;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.example.foodyshop.R;
+import com.example.foodyshop.config.Config;
+import com.example.foodyshop.helper.Helper;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CustomerModel {
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+public class CustomerModel implements Serializable {
+
+    public static final int MALE = 0;
+    public static final int FEMALE = 1;
+    public static final int OTHER = 2;
 
     @SerializedName("id")
     @Expose
@@ -18,7 +34,7 @@ public class CustomerModel {
     private String name;
     @SerializedName("gender")
     @Expose
-    private int gender;
+    private Integer gender;
     @SerializedName("datebirth")
     @Expose
     private String datebirth;
@@ -56,11 +72,11 @@ public class CustomerModel {
         this.name = name;
     }
 
-    public int getGender() {
+    public Integer getGender() {
         return gender;
     }
 
-    public void setGender(int gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
     }
 
@@ -81,7 +97,7 @@ public class CustomerModel {
     }
 
     public String getImg() {
-        return img;
+        return Config.IMG_AVATAR_DIR + img;
     }
 
     public void setImg(String img) {
@@ -94,6 +110,32 @@ public class CustomerModel {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public boolean isHasData(int lastGender) {
+        return (name != null && !name.isEmpty()) || (gender != null && gender != lastGender) || (datebirth != null && !datebirth.isEmpty()) || (address != null && !address.isEmpty());
+    }
+
+    public String getPhoneHide() {
+        return phone.substring(1, phone.length() - 3).replaceAll("\\d", "*") + phone.substring(phone.length() - 3);
+    }
+
+    public String getGenderString(Context context) {
+        if (gender == MALE) {
+            return context.getString(R.string.male);
+        }
+        if (gender == FEMALE) {
+            return context.getString(R.string.female);
+        }
+        return context.getString(R.string.other);
+    }
+
+    public String getDateBirthLocal() {
+        if (datebirth == null || datebirth.isEmpty()) {
+            return "00/00/0000";
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.forLanguageTag("vi_VN"));
+        return dateFormat.format(new Date(Helper.parseDate(datebirth)));
     }
 
     @NonNull

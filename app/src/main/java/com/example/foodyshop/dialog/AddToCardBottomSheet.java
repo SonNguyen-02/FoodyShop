@@ -1,7 +1,6 @@
 package com.example.foodyshop.dialog;
 
 import static com.example.foodyshop.config.Const.KEY_PRODUCT;
-import static com.example.foodyshop.config.Const.TOAST_DEFAULT;
 import static com.example.foodyshop.helper.Helper.PRICE_FORMAT;
 
 import android.app.Dialog;
@@ -30,7 +29,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.Objects;
 
-public class AddToCardBottomSheetDialogFragment extends BottomSheetDialogFragment {
+public class AddToCardBottomSheet extends BottomSheetDialogFragment {
 
     private ProductModel mProduct;
     private ImageView imgProduct, imgMinus, imgPlus;
@@ -39,7 +38,7 @@ public class AddToCardBottomSheetDialogFragment extends BottomSheetDialogFragmen
     private Button btnAddToCart;
     private final IOnClickAddToCart mIOnClickAddToCart;
 
-    public AddToCardBottomSheetDialogFragment(IOnClickAddToCart mIOnClickAddToCart) {
+    private AddToCardBottomSheet(IOnClickAddToCart mIOnClickAddToCart) {
         this.mIOnClickAddToCart = mIOnClickAddToCart;
     }
 
@@ -48,12 +47,12 @@ public class AddToCardBottomSheetDialogFragment extends BottomSheetDialogFragmen
     }
 
     @NonNull
-    public static AddToCardBottomSheetDialogFragment newInstant(ProductModel product, IOnClickAddToCart mIOnClickAddToCart) {
-        AddToCardBottomSheetDialogFragment addToCardBottomSheetDialogFragment = new AddToCardBottomSheetDialogFragment(mIOnClickAddToCart);
+    public static AddToCardBottomSheet newInstant(ProductModel product, IOnClickAddToCart mIOnClickAddToCart) {
+        AddToCardBottomSheet addToCardBottomSheet = new AddToCardBottomSheet(mIOnClickAddToCart);
         Bundle bundle = new Bundle();
         bundle.putSerializable(KEY_PRODUCT, product);
-        addToCardBottomSheetDialogFragment.setArguments(bundle);
-        return addToCardBottomSheetDialogFragment;
+        addToCardBottomSheet.setArguments(bundle);
+        return addToCardBottomSheet;
     }
 
     @Override

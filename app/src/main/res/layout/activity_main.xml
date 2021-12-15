@@ -30,15 +30,16 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/space_view">
+                    android:layout_height="match_parent">
 
                     <ImageView
                         android:id="@+id/img_menu_category"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="@dimen/tool_bar_icon_size"
+                        android:layout_height="@dimen/tool_bar_icon_size"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="@dimen/tool_bar_icon_margin"
                         android:background="@drawable/ripple_blue_circle"
-                        android:padding="@dimen/space_view"
+                        android:padding="@dimen/tool_bar_icon_padding"
                         android:src="@drawable/ic_menu_song_line"
                         app:tint="@color/white"
                         tools:ignore="ContentDescription" />
@@ -48,8 +49,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/space_view"
-                        android:layout_marginEnd="@dimen/space_view"
                         android:layout_toStartOf="@id/img_search"
                         android:layout_toEndOf="@id/img_menu_category"
                         android:text="@string/app_name"
@@ -62,8 +61,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="36dp"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/space_view"
-                        android:layout_marginEnd="@dimen/space_view"
                         android:layout_toStartOf="@id/rl_cart"
                         android:layout_toEndOf="@id/img_menu_category"
                         android:background="@drawable/custom_bg_white_corn_2"
@@ -92,11 +89,13 @@
 
                     <ImageView
                         android:id="@+id/img_search"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginEnd="@dimen/space_view"
+                        android:layout_width="@dimen/tool_bar_icon_size"
+                        android:layout_height="@dimen/tool_bar_icon_size"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="@dimen/tool_bar_icon_margin"
                         android:layout_toStartOf="@id/rl_cart"
-                        android:padding="@dimen/space_view"
+                        android:background="@drawable/ripple_blue_circle"
+                        android:padding="@dimen/tool_bar_icon_padding"
                         android:src="@drawable/ic_search"
                         android:visibility="gone"
                         app:tint="@color/white"
@@ -104,18 +103,19 @@
 
                     <RelativeLayout
                         android:id="@+id/rl_cart"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="@dimen/tool_bar_icon_size"
+                        android:layout_height="@dimen/tool_bar_icon_size"
                         android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="@dimen/tool_bar_icon_margin"
                         android:background="@drawable/ripple_blue_circle">
 
                         <ImageView
                             android:id="@+id/img_cart"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:padding="4dp"
+                            android:layout_width="@dimen/tool_bar_icon_size"
+                            android:layout_height="@dimen/tool_bar_icon_size"
+                            android:padding="6dp"
                             android:src="@drawable/ic_cart"
-                            android:translationX="-3dp"
                             app:tint="@color/white"
                             tools:ignore="ContentDescription" />
 
@@ -124,6 +124,8 @@
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:layout_alignParentEnd="true"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginEnd="2dp"
                             android:background="@drawable/custom_indicator_ic_cart"
                             android:gravity="center"
                             android:text="11"

@@ -195,7 +195,7 @@ public class FeedbackFragment extends Fragment {
     public void onClickDeleteFeedback(View view) {
         FeedbackModel feedback = orderDetail.getFeedback();
         String message = "Bạn có muốn xóa nhận xét này?";
-        new ConfirmDialog(mOrderDetailActivity, message, (confirmDialog) -> {
+        ConfirmDialog.newInstance(mOrderDetailActivity, message, (confirmDialog) -> {
             confirmDialog.dismiss();
             LoadingDialog loadingDialog = new LoadingDialog(mOrderDetailActivity);
             loadingDialog.show();

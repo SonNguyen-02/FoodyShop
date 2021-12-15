@@ -82,6 +82,9 @@
     <string name="full_name"><![CDATA[Họ & tên]]></string>
     <string name="address">Địa chỉ</string>
     <string name="phone">Số điện thoại</string>
+    <string name="name">Tên</string>
+    <string name="gender">Giới tính</string>
+    <string name="date_birth">Ngày sinh</string>
     <string name="note">Lưu ý</string>
     <string name="order_code">Mã đơn hàng</string>
     <string name="order_info">Thông tin đơn hàng</string>
@@ -97,6 +100,23 @@
     <string name="feedback_rule">Bài đánh giá chỉ được thay đổi trong <b>30 phút</b> tính từ khi tạo</string>
     <string name="feedback_timer">Hết hạn thay đổi trong <b>{0}</b> phút</string>
     <string name="feedback_timer_finish">Hết hạn thay đổi</string>
+
+    <string name="card_my_account">Thiết lập tài khoản</string>
+    <string name="card_notification">Thông báo</string>
+    <string name="card_setting">Cài đặt</string>
+    <string name="card_help_center">Trung tâm trợ giúp</string>
+    <string name="card_logout">Đăng xuất</string>
+    <string name="card_login">Đăng nhập</string>
+    <string name="guest_user">Guest User</string>
+
+    <string name="show_avatar">Xem ảnh đại diện</string>
+    <string name="change_avatar">Thay đổi đại diện</string>
+    <string name="close_bottom_sheet">Hủy</string>
+    <string name="edit_name">Sửa tên</string>
+    <string name="save">Lưu</string>
+    <string name="male">Nam</string>
+    <string name="female">Nữ</string>
+    <string name="other">Khác</string>
 
 
 </resources>

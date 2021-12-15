@@ -195,7 +195,7 @@ public class OrderActivity extends AppCompatActivity {
             return;
         }
 
-        ConfirmDialog cfDialog = new ConfirmDialog(this, "Xác nhận đặt hàng?", confirmDialog -> {
+        ConfirmDialog.newInstance(this, "Xác nhận đặt hàng?", confirmDialog -> {
             confirmDialog.dismiss();
             OrderModel order = new OrderModel();
             order.setName(name);
@@ -205,8 +205,8 @@ public class OrderActivity extends AppCompatActivity {
             order.setTotalMoney(mTotalMoney);
             order.setOrderDetails(mListOrderDetailChoose);
             sendOrder(order);
-        });
-        cfDialog.show();
+        }).show();
+
     }
 
     private void sendOrder(@NonNull OrderModel order) {

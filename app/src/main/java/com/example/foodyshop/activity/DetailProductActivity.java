@@ -26,7 +26,7 @@ import android.widget.TextView;
 
 import com.example.foodyshop.R;
 import com.example.foodyshop.adapter.FeedbackAdapter;
-import com.example.foodyshop.dialog.AddToCardBottomSheetDialogFragment;
+import com.example.foodyshop.dialog.AddToCardBottomSheet;
 import com.example.foodyshop.dialog.ConfirmDialog;
 import com.example.foodyshop.dialog.FeedbackDialog;
 import com.example.foodyshop.dialog.LoadingDialog;
@@ -94,7 +94,7 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
                 }
 
                 llAddToCart.setOnClickListener(v -> {
-                    AddToCardBottomSheetDialogFragment sheetDialogFragment = AddToCardBottomSheetDialogFragment.newInstant(mProduct, amount -> {
+                    AddToCardBottomSheet sheetDialogFragment = AddToCardBottomSheet.newInstant(mProduct, amount -> {
                         OrderDetailModel orderDetail = new OrderDetailModel(mProduct, amount);
                         Helper.addProductToCart(getApplicationContext(), orderDetail);
                         initRlCart();
@@ -179,10 +179,8 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
         if (totalCart > 0) {
             tvIndicator.setVisibility(View.VISIBLE);
             tvIndicator.setText(String.valueOf(totalCart));
-            imgCart.setTranslationX(-3f);
         } else {
             tvIndicator.setVisibility(View.GONE);
-            imgCart.setTranslationX(0);
         }
     }
 
@@ -321,7 +319,7 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
             return;
         }
         String message = "Bạn có muốn xóa nhận xét này?";
-        new ConfirmDialog(this, message, (confirmDialog) -> {
+        ConfirmDialog.newInstance(this, message, (confirmDialog) -> {
             confirmDialog.dismiss();
             LoadingDialog loadingDialog = new LoadingDialog(DetailProductActivity.this);
             loadingDialog.show();

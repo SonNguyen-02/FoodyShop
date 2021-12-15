@@ -2,12 +2,17 @@ package com.example.foodyshop.dialog;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.example.foodyshop.R;
+
+import org.jetbrains.annotations.Contract;
 
 public class ConfirmDialog {
 
@@ -16,10 +21,16 @@ public class ConfirmDialog {
     private final String message;
     private final IOnClickConfirm mIOnClickConfirm;
 
-    public ConfirmDialog(Activity activity, String message, IOnClickConfirm mIOnClickConfirm) {
+    private ConfirmDialog(Activity activity, String message, IOnClickConfirm mIOnClickConfirm) {
         this.activity = activity;
         this.message = message;
         this.mIOnClickConfirm = mIOnClickConfirm;
+    }
+
+    @NonNull
+    @Contract(value = "_, _, _ -> new", pure = true)
+    public static ConfirmDialog newInstance(Activity activity, String message, IOnClickConfirm mIOnClickConfirm) {
+        return new ConfirmDialog(activity, message, mIOnClickConfirm);
     }
 
     public interface IOnClickConfirm {

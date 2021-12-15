@@ -23,15 +23,16 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/space_view">
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:id="@+id/img_back"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="@dimen/tool_bar_icon_size"
+                    android:layout_height="@dimen/tool_bar_icon_size"
                     android:background="@drawable/ripple_blue_circle"
-                    android:padding="10dp"
+                    android:padding="@dimen/tool_bar_icon_padding"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/tool_bar_icon_margin"
                     android:src="@drawable/ic_cancel"
                     app:tint="@color/white"
                     tools:ignore="ContentDescription" />

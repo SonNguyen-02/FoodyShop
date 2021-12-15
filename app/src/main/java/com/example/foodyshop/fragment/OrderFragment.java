@@ -55,8 +55,8 @@ public class OrderFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_order, container, false);
-        if (Helper.getUserInfo(requireContext()) != null) {
-            lastUserId = Helper.getUserInfo(requireContext()).getId();
+        if (Helper.getCurrentAccount() != null) {
+            lastUserId = Helper.getCurrentAccount().getId();
         }
         initUi();
         initPage();
@@ -100,8 +100,8 @@ public class OrderFragment extends Fragment {
         llOopsLogin.setVisibility(View.GONE);
         llOrder.setVisibility(View.VISIBLE);
         if (mViewPager2.getAdapter() != null) {
-            if (lastUserId > 0 && lastUserId != Helper.getUserInfo(requireContext()).getId()) {
-                lastUserId = Helper.getUserInfo(requireContext()).getId();
+            if (lastUserId > 0 && lastUserId != Helper.getCurrentAccount().getId()) {
+                lastUserId = Helper.getCurrentAccount().getId();
                 mViewPager2.setCurrentItem(0);
             }
             return;

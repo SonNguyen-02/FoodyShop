@@ -11,11 +11,15 @@ import com.example.foodyshop.model.TopicModel;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public interface DataService {
 
@@ -46,6 +50,22 @@ public interface DataService {
     @FormUrlEncoded
     @POST("get_user_info")
     Call<CustomerModel> getUserInfo(@Field(Const.KEY_TOKEN) String token);
+
+    @FormUrlEncoded
+    @POST("change_user_info")
+    Call<Respond> changeUserInfo(@Field(Const.KEY_TOKEN) String token,
+                                 @Field(Const.KEY_DATA_USER) String userDataJson);
+
+    @Multipart
+    @POST("change_user_info")
+    Call<Respond> changeUserInfo(@Part(Const.KEY_TOKEN) RequestBody requestToken,
+                                 @Part(Const.KEY_DATA_USER) RequestBody requestUserData,
+                                 @Part MultipartBody.Part multipartAvatar);
+
+    @Multipart
+    @POST("change_user_avatar")
+    Call<Respond> changeUserAvatar(@Part(Const.KEY_TOKEN) RequestBody token,
+                                   @Part MultipartBody.Part multipartAvatar);
 
 
 //    =========== Data =============

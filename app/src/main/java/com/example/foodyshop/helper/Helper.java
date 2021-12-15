@@ -309,8 +309,11 @@ public class Helper {
     }
 
     public static long parseDate(String text) {
-        @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.forLanguageTag("vi_VN"));
+        String format = "yyyy-MM-dd HH:mm:ss";
+        if (text != null && text.length() == 10) {
+            format = "yyyy-MM-dd";
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.forLanguageTag("vi_VN"));
         try {
             return Objects.requireNonNull(dateFormat.parse(text)).getTime();
         } catch (ParseException e) {

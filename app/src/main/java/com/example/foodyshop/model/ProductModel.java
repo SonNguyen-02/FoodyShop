@@ -1,15 +1,12 @@
 package com.example.foodyshop.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.example.foodyshop.config.Config;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class ProductModel implements Serializable, Parcelable {
+public class ProductModel implements Serializable {
 
     @SerializedName("id")
     @Expose
@@ -130,13 +127,4 @@ public class ProductModel implements Serializable, Parcelable {
         }
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-
-    }
 }

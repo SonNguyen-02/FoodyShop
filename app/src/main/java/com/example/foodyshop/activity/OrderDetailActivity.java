@@ -232,7 +232,7 @@ public class OrderDetailActivity extends AppCompatActivity implements OrderDetai
 
     public void cancelOrder() {
         String message = "Nhấn xác nhận để hủy đơn hàng " + mOrder.getOrderCode();
-        ConfirmDialog dialog = new ConfirmDialog(this, message, confirmDialog -> {
+        ConfirmDialog.newInstance(this, message, confirmDialog -> {
             confirmDialog.dismiss();
             LoadingDialog loadingDialog = new LoadingDialog(this);
             loadingDialog.show();
@@ -261,13 +261,13 @@ public class OrderDetailActivity extends AppCompatActivity implements OrderDetai
                     ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.INFO).show();
                 }
             });
-        });
-        dialog.show();
+        }).show();
+
     }
 
     public void confirmOrder() {
         String message = "Xác nhận giao hàng với giá ship " + Helper.PRICE_FORMAT.format(mOrder.getShipPrice());
-        ConfirmDialog dialog = new ConfirmDialog(this, message, confirmDialog -> {
+        ConfirmDialog.newInstance(this, message, confirmDialog -> {
             confirmDialog.dismiss();
             LoadingDialog loadingDialog = new LoadingDialog(this);
             loadingDialog.show();
@@ -296,8 +296,7 @@ public class OrderDetailActivity extends AppCompatActivity implements OrderDetai
                     ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.INFO).show();
                 }
             });
-        });
-        dialog.show();
+        }).show();
     }
 
     @Override

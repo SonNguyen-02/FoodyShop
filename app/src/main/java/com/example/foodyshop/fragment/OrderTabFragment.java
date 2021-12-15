@@ -99,7 +99,7 @@ public class OrderTabFragment extends Fragment implements OrderAdapter.IInteract
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_order_tab, container, false);
-        lastUserId = Helper.getUserInfo(requireContext()).getId();
+        lastUserId = Helper.getCurrentAccount().getId();
         mOrderPosition = -1;
         initUi();
         initDataOrder();
@@ -109,9 +109,9 @@ public class OrderTabFragment extends Fragment implements OrderAdapter.IInteract
     @Override
     public void onResume() {
         super.onResume();
-        if (lastUserId > 0 && Helper.getUserInfo(requireContext()) != null && lastUserId != Helper.getUserInfo(requireContext()).getId()) {
+        if (lastUserId > 0 && Helper.getCurrentAccount() != null && lastUserId != Helper.getCurrentAccount().getId()) {
             showTapEmpty();
-            lastUserId = Helper.getUserInfo(requireContext()).getId();
+            lastUserId = Helper.getCurrentAccount().getId();
             initDataOrder();
         }
     }
@@ -188,7 +188,7 @@ public class OrderTabFragment extends Fragment implements OrderAdapter.IInteract
     @Override
     public void onClickCancelOrder(int position, @NonNull OrderModel order) {
         String message = "Nhấn xác nhận để hủy đơn hàng " + order.getOrderCode();
-        ConfirmDialog dialog = new ConfirmDialog(requireActivity(), message, confirmDialog -> {
+        ConfirmDialog.newInstance(requireActivity(), message, confirmDialog -> {
             confirmDialog.dismiss();
             LoadingDialog loadingDialog = new LoadingDialog(requireActivity());
             loadingDialog.show();
@@ -217,14 +217,13 @@ public class OrderTabFragment extends Fragment implements OrderAdapter.IInteract
                     ToastCustom.notice(requireContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.INFO).show();
                 }
             });
-        });
-        dialog.show();
+        }).show();
     }
 
     @Override
     public void onClickConfirmOrder(int position, @NonNull OrderModel order) {
         String message = "Xác nhận giao hàng với giá ship " + Helper.PRICE_FORMAT.format(order.getShipPrice());
-        ConfirmDialog dialog = new ConfirmDialog(requireActivity(), message, confirmDialog -> {
+        ConfirmDialog.newInstance(requireActivity(), message, confirmDialog -> {
             confirmDialog.dismiss();
             LoadingDialog loadingDialog = new LoadingDialog(requireActivity());
             loadingDialog.show();
@@ -253,8 +252,7 @@ public class OrderTabFragment extends Fragment implements OrderAdapter.IInteract
                     ToastCustom.notice(requireContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.INFO).show();
                 }
             });
-        });
-        dialog.show();
+        }).show();
     }
 
     private void removeOrder(int position) {

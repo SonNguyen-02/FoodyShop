@@ -31,4 +31,10 @@
     <dimen name="edt_pad_start">10dp</dimen>
     <dimen name="edt_draw_pad">12dp</dimen>
 
+    <!-- tool bar -->
+    <dimen name="tool_bar_icon_size">44dp</dimen>
+    <dimen name="tool_bar_icon_margin">5dp</dimen>
+    <dimen name="tool_bar_icon_padding">10dp</dimen>
+
+
 </resources>

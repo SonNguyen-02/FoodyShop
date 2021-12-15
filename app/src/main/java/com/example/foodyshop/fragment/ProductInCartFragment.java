@@ -192,7 +192,7 @@ public class ProductInCartFragment extends Fragment implements ProductCartAdapte
             return;
         }
         if (cbAll.isChecked()) {
-            ConfirmDialog dialog = new ConfirmDialog(requireActivity(), "Bạn có muốn xóa sạch giỏ hàng?", confirmDialog -> {
+            ConfirmDialog.newInstance(requireActivity(), "Bạn có muốn xóa sạch giỏ hàng?", confirmDialog -> {
                 Helper.clearCart(requireContext());
                 mListOrderDetail = new ArrayList<>();
                 productCartAdapter.setListOrderDetail(mListOrderDetail);
@@ -202,8 +202,7 @@ public class ProductInCartFragment extends Fragment implements ProductCartAdapte
                 initBottomBox(0, 0);
                 confirmDialog.dismiss();
                 ToastCustom.notice(requireContext(), "Đã xóa sạch giỏ hàng", ToastCustom.SUCCESS).show();
-            });
-            dialog.show();
+            }).show();
         } else {
             boolean hasCheck = false;
             List<OrderDetailModel> tmlList = new ArrayList<>();
@@ -216,7 +215,7 @@ public class ProductInCartFragment extends Fragment implements ProductCartAdapte
             if (!hasCheck) {
                 ToastCustom.notice(requireContext(), "Hãy chọn một sản phẩm!", ToastCustom.INFO).show();
             } else {
-                ConfirmDialog dialog = new ConfirmDialog(requireActivity(), "Xác nhận xóa " + tmlList.size() + " sản phẩm khỏi giỏ hàng?", confirmDialog -> {
+                ConfirmDialog.newInstance(requireActivity(), "Xác nhận xóa " + tmlList.size() + " sản phẩm khỏi giỏ hàng?", confirmDialog -> {
                     mListOrderDetail.removeAll(tmlList);
                     productCartAdapter.setListOrderDetail(mListOrderDetail);
                     Helper.saveCart(requireContext(), mListOrderDetail);
@@ -224,8 +223,7 @@ public class ProductInCartFragment extends Fragment implements ProductCartAdapte
                     initBottomBox();
                     confirmDialog.dismiss();
                     ToastCustom.notice(requireContext(), "Đã xóa " + tmlList.size() + " sản phẩm", ToastCustom.SUCCESS).show();
-                });
-                dialog.show();
+                }).show();
             }
         }
     }
@@ -360,7 +358,7 @@ public class ProductInCartFragment extends Fragment implements ProductCartAdapte
     @Override
     public void onDeleteItem(int position, OrderDetailModel orderDetail) {
         String message = "Hãy xác nhận để xóa";
-        ConfirmDialog dialog = new ConfirmDialog(requireActivity(), message, confirmDialog -> {
+        ConfirmDialog.newInstance(requireActivity(), message, confirmDialog -> {
             confirmDialog.dismiss();
             productCartAdapter.getListOrderDetail().remove(orderDetail);
             productCartAdapter.notifyItemRemoved(position);
@@ -368,8 +366,7 @@ public class ProductInCartFragment extends Fragment implements ProductCartAdapte
             Helper.saveCart(requireContext(), mListOrderDetail);
             initBottomBox();
             ToastCustom.notice(requireContext(), "Đã xóa 1 sản phẩm", ToastCustom.SUCCESS).show();
-        });
-        dialog.show();
+        }).show();
     }
 
 }

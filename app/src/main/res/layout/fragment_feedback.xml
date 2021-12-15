@@ -25,18 +25,16 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingStart="@dimen/space_view"
-                android:paddingEnd="@dimen/space_view">
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:id="@+id/img_back"
-                    style="@style/TextButton"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="@dimen/tool_bar_icon_size"
+                    android:layout_height="@dimen/tool_bar_icon_size"
                     android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/tool_bar_icon_margin"
                     android:background="@drawable/ripple_blue_circle"
-                    android:padding="8dp"
+                    android:padding="@dimen/tool_bar_icon_padding"
                     android:src="@drawable/ic_arrow_back"
                     app:tint="@color/white"
                     tools:ignore="ContentDescription" />
@@ -46,8 +44,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/space_view"
-                    android:layout_marginEnd="@dimen/space_view"
                     android:layout_toEndOf="@id/img_back"
                     android:text="@string/feedback_title"
                     android:textColor="@color/white"

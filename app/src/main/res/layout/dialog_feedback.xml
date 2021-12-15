@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="@drawable/custom_bg__yellow_corn_topleft_16_topright_16">
+        android:background="@drawable/custom_bg_yellow_corn_topleft_16_topright_16">
 
         <TextView
             android:layout_width="wrap_content"
