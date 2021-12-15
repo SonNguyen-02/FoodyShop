@@ -16,13 +16,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import sun.plugin.javascript.navig4.Navigator;
+import com.foodyshop.main.Navigator;
+import com.foodyshop.model.StaffModel;
+import javafx.collections.ObservableList;
 
 /**
  *
  * @author DELL
  */
 public class AccountController implements Initializable{
+    private ObservableList<StaffModel> listStaff;
+    private StaffModel staff;
      @FXML
     private AnchorPane aPaneAccount;
     
@@ -36,7 +40,7 @@ public class AccountController implements Initializable{
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-      
+      //btnChangePassword.setOnMouseClicked(e -> com.foodyshop.main.Navigator.getInstance().showChangePasswordAccount(staff));
     }
     
 
@@ -46,7 +50,22 @@ public class AccountController implements Initializable{
 
     @FXML
     void onClickChangePassword(ActionEvent event) {
-
+ //StaffModel staff = tvStaff.getSelectionModel().getSelectedItem();
+//        if (staff != null) {
+            btnChangePassword.setOnMouseClicked(e -> Navigator.getInstance().showChangePasswordAccount(staff));
+//.showEditStaff(staff, new EditStaffController.IOnEditStaffSuccess()
+//{
+//                @Override
+//                public void callback() {
+//                 tvStaff.refresh();
+//                }
+//            }));
+//        } else {
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("ERROR");
+//            alert.setHeaderText("Please choose staff!");
+//            alert.show();
+//        }
     }
 
     @FXML
