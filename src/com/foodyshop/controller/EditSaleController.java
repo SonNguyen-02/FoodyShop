@@ -30,10 +30,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -44,7 +46,6 @@ import javafx.stage.Stage;
  */
 public class EditSaleController implements Initializable {
 
-    
     @FXML
     private Button btnSave;
 
@@ -58,12 +59,12 @@ public class EditSaleController implements Initializable {
     private ImageView imgSale;
 
     private File imgSaleFile;
-    
+
     @FXML
     private ComboBox<ProductModel> cbProductName;
 
     @FXML
-    private TextField txtContent;
+    private TextArea txtContent;
 
     @FXML
     private TextField txtDiscount;
@@ -73,36 +74,34 @@ public class EditSaleController implements Initializable {
 
     @FXML
     private DatePicker dpEndDate;
-    
+
     private SaleModel mSaleModel;
-    
+
     private Stage stage;
-    
+
     private ObservableList<ProductModel> productList;
 
     public void initData(Stage stage, SaleModel sale) {
         this.stage = stage;
         mSaleModel = sale;
-//        txtName.setText(topic.getName());
-
+        setDefaultImg(btnChooseFile, imgSale);
+        
         Image image = new Image(IMG_SALE_DIR + sale.getImg(), 300, 300, false, true, true);
         imgSale.setImage(image);
         txtContent.setText(sale.getContent());
         txtDiscount.setText(sale.getDiscount().toString());
         dpStartDate.setValue(LocalDate.parse(sale.getStart_date()));
-        dpEndDate.setValue(LocalDate.parse(sale.getEnd_date()));
-        
+        dpEndDate.setValue(LocalDate.parse(sale.getEnd_date()));      
         productList = ProductHelper.getAllProduct();
         if (productList != null && !productList.isEmpty()) {
-            cbProductName.setItems(productList);    
-            for (ProductModel product : productList) {                           
-                if(product.getId() == sale.getProductId()){
+            cbProductName.setItems(productList);
+            for (ProductModel product : productList) {
+                if (product.getId() == sale.getProductIdInt()) {
                     cbProductName.setValue(product);
-//                    cbProductName.setItems(productList);
                     break;
                 }
             }
-        }       
+        }
     }
 
     /**
@@ -115,10 +114,9 @@ public class EditSaleController implements Initializable {
         btnSave.setOnMouseClicked(this::onClickSave);
         btnCancel.setOnMouseClicked(this::onClickCancel);
         btnChooseFile.setOnMouseClicked(this::onClickChooseFile);
-    }    
-    
-    
-     private void onClickChooseFile(MouseEvent e) {
+    }
+
+    private void onClickChooseFile(MouseEvent e) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose image to upload");
         File fileChoose = fileChooser.showOpenDialog(stage);
@@ -152,7 +150,7 @@ public class EditSaleController implements Initializable {
             alert.show();
             return;
         }
-        if(!discount.matches(regaxDiscount)){
+        if (!discount.matches(regaxDiscount)) {
             alert.setHeaderText("Please enter two or one number and different zero in Discount");
             alert.show();
             return;
@@ -163,26 +161,18 @@ public class EditSaleController implements Initializable {
             alert.show();
             return;
         }
-        if (imgSaleFile == null) {
+        if (imgSale == null) {
             alert.setHeaderText("Please choose a file img");
             alert.show();
             return;
         }
-        if (imgSaleFile != null) {
-            if (!isImage(imgSaleFile.getName())) {
-                setDefaultImg(btnChooseFile, imgSale);
-                alert.setHeaderText("File isn't image!");
-                alert.show();
-                return;
-            }
-        }
-        if(dpStartDate.getValue() == null){
+        if (dpStartDate.getValue() == null) {
             dpStartDate.requestFocus();
             alert.setHeaderText("Please Select Day!");
             alert.show();
             return;
         }
-        if(dpEndDate.getValue() == null){
+        if (dpEndDate.getValue() == null) {
             dpEndDate.requestFocus();
             alert.setHeaderText("Please Select Day!");
             alert.show();
@@ -201,7 +191,11 @@ public class EditSaleController implements Initializable {
             return;
         }
         try {
-//            mSaleModel.setName(name);
+            mSaleModel.setProductId(cbProductName.getValue().getId());
+            mSaleModel.setDiscount(Integer.parseInt(discount));
+            mSaleModel.setContent(content);
+            mSaleModel.setStart_date(String.valueOf(dpStartDate.getValue()));
+            mSaleModel.setEnd_date(String.valueOf(dpEndDate.getValue()));
             if (imgSaleFile != null) {
                 // call API
                 Respond respond = UploadImageToApi.uploadImageToApi(imgSaleFile, Const.TYPE_SALE, mSaleModel.getImg());

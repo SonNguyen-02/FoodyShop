@@ -31,6 +31,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -66,7 +67,7 @@ public class AddSaleController implements Initializable {
     private ComboBox<ProductModel> cbProductName;
 
     @FXML
-    private TextField txtContent;
+    private TextArea txtContent;
 
     @FXML
     private TextField txtDiscount;
@@ -77,8 +78,6 @@ public class AddSaleController implements Initializable {
     @FXML
     private DatePicker dpEndDate;
 
-//    @FXML
-//    private ComboBox<String> cbStatus;
     private IOnInsertSaleSuccess mIOnInsertSaleSuccess;
 
     private SaleModel sale;
@@ -100,8 +99,6 @@ public class AddSaleController implements Initializable {
             cbProductName.setItems(productList);
             cbProductName.setValue(productList.get(0));
         }
-//        cbStatus.setItems(FXCollections.observableArrayList(SaleModel.ON_SALE, SaleModel.DISCOUNT_END));
-//        cbStatus.setValue(sale.getStatusVal().get());s
     }
 
     @Override
@@ -145,7 +142,7 @@ public class AddSaleController implements Initializable {
             alert.show();
             return;
         }
-        if(!discount.matches(regaxDiscount)){
+        if (!discount.matches(regaxDiscount)) {
             alert.setHeaderText("Please enter two or one number and different zero in Discount");
             alert.show();
             return;
@@ -167,13 +164,13 @@ public class AddSaleController implements Initializable {
             alert.show();
             return;
         }
-        if(dpStartDate.getValue() == null){
+        if (dpStartDate.getValue() == null) {
             dpStartDate.requestFocus();
             alert.setHeaderText("Please Select Day!");
             alert.show();
             return;
         }
-        if(dpEndDate.getValue() == null){
+        if (dpEndDate.getValue() == null) {
             dpEndDate.requestFocus();
             alert.setHeaderText("Please Select Day!");
             alert.show();

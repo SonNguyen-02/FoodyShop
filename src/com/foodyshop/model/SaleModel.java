@@ -38,6 +38,7 @@ public class SaleModel {
     private StringProperty created;
     private int status;
     private ObjectProperty<Integer> productId;
+    private int productIdInt;
     private StringProperty statusVal;
 
     public SaleModel() {
@@ -54,6 +55,15 @@ public class SaleModel {
         this.imgView = new SimpleObjectProperty<>(mImageView);
     }
 
+    public int getProductIdInt() {
+        return productIdInt;
+    }
+
+    public void setProductIdInt(Integer productIdInt) {
+        this.productIdInt = productIdInt;
+    }
+
+    
     public Integer getId() {
         return id.getValue();
     }
