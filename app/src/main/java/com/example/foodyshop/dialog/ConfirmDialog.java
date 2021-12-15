@@ -42,12 +42,12 @@ public class ConfirmDialog {
         View view = LayoutInflater.from(activity).inflate(R.layout.dialog_confirm, null);
         TextView tvMessage = view.findViewById(R.id.tv_message);
         tvMessage.setText(message);
-        Button btnCancel, btnOk;
+        Button btnCancel, btnConfirm;
         btnCancel = view.findViewById(R.id.btn_cancel);
-        btnOk = view.findViewById(R.id.btn_confirm);
+        btnConfirm = view.findViewById(R.id.btn_confirm);
 
         btnCancel.setOnClickListener(v -> dismiss());
-        btnOk.setOnClickListener(v -> mIOnClickConfirm.onClick(this));
+        btnConfirm.setOnClickListener(v -> mIOnClickConfirm.onClick(this));
 
         builder.setView(view);
         builder.setCancelable(true);

@@ -78,27 +78,41 @@ public interface DataService {
     @POST("get_total_page_product_in_topic")
     Call<Integer> getTotalPageProductInTopic(@Field(Const.KEY_TOKEN) String token,
                                              @Field(Const.KEY_TOPIC_ID) int topicId,
-                                             @Field(Const.KEY_IS_SALE) boolean isSale);
+                                             @Field(Const.KEY_IS_SALE) boolean isSale,
+                                             @Field(Const.KEY_MIN_PRICE) int minPrice,
+                                             @Field(Const.KEY_MAX_PRICE) int maxPrice,
+                                             @Field(Const.KEY_SEARCH) String search);
 
     @FormUrlEncoded
     @POST("get_all_product_in_topic")
     Call<List<ProductModel>> getAllProductInTopic(@Field(Const.KEY_TOKEN) String token,
                                                   @Field(Const.KEY_TOPIC_ID) int topicId,
                                                   @Field(Const.KEY_CURRENT_PAGE) int currentPage,
-                                                  @Field(Const.KEY_IS_SALE) boolean isSale);
+                                                  @Field(Const.KEY_IS_SALE) boolean isSale,
+                                                  @Field(Const.KEY_MIN_PRICE) int minPrice,
+                                                  @Field(Const.KEY_MAX_PRICE) int maxPrice,
+                                                  @Field(Const.KEY_SEARCH) String search,
+                                                  @Field(Const.KEY_ORDER_PRICE) String orderSort);
 
     @FormUrlEncoded
     @POST("get_total_page_product_in_category")
     Call<Integer> getTotalPageProductInCategory(@Field(Const.KEY_TOKEN) String token,
                                                 @Field(Const.KEY_CATEGORY_ID) int categoryId,
-                                                @Field(Const.KEY_IS_SALE) boolean isSale);
+                                                @Field(Const.KEY_IS_SALE) boolean isSale,
+                                                @Field(Const.KEY_MIN_PRICE) int minPrice,
+                                                @Field(Const.KEY_MAX_PRICE) int maxPrice,
+                                                @Field(Const.KEY_SEARCH) String search);
 
     @FormUrlEncoded
     @POST("get_all_product_in_category")
     Call<List<ProductModel>> getAllProductInCategory(@Field(Const.KEY_TOKEN) String token,
                                                      @Field(Const.KEY_CATEGORY_ID) int categoryId,
                                                      @Field(Const.KEY_CURRENT_PAGE) int currentPage,
-                                                     @Field(Const.KEY_IS_SALE) boolean isSale);
+                                                     @Field(Const.KEY_IS_SALE) boolean isSale,
+                                                     @Field(Const.KEY_MIN_PRICE) int minPrice,
+                                                     @Field(Const.KEY_MAX_PRICE) int maxPrice,
+                                                     @Field(Const.KEY_SEARCH) String search,
+                                                     @Field(Const.KEY_ORDER_PRICE) String orderSort);
 
     @FormUrlEncoded
     @POST("get_detail_product")
@@ -138,6 +152,21 @@ public interface DataService {
     Call<List<ProductModel>> getSuggestProduct(@Field(Const.KEY_TOKEN) String token,
                                                @Field(Const.KEY_CURRENT_PAGE) int currentPage);
 
+    @FormUrlEncoded
+    @POST("get_total_page_search_product")
+    Call<Integer> getTotalPageSearchProduct(@Field(Const.KEY_TOKEN) String token,
+                                            @Field(Const.KEY_MIN_PRICE) int minPrice,
+                                            @Field(Const.KEY_MAX_PRICE) int maxPrice,
+                                            @Field(Const.KEY_SEARCH) String search);
+
+    @FormUrlEncoded
+    @POST("get_search_product")
+    Call<List<ProductModel>> getSearchProduct(@Field(Const.KEY_TOKEN) String token,
+                                              @Field(Const.KEY_CURRENT_PAGE) int currentPage,
+                                              @Field(Const.KEY_MIN_PRICE) int minPrice,
+                                              @Field(Const.KEY_MAX_PRICE) int maxPrice,
+                                              @Field(Const.KEY_SEARCH) String search,
+                                              @Field(Const.KEY_ORDER_PRICE) String orderSort);
 
     //    =========== Order =============
 

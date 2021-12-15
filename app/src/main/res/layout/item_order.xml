@@ -9,7 +9,7 @@
         android:id="@+id/rl_title_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/ripple_while"
+        android:background="@drawable/ripple_white"
         android:padding="@dimen/space_view">
 
         <TextView

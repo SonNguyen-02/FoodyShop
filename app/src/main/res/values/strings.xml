@@ -59,6 +59,7 @@
     <string name="delete">Xóa</string>
     <string name="confirm">Xác nhận</string>
     <string name="cancel">Hủy</string>
+    <string name="close">Đóng</string>
     <string name="back">Quay lại</string>
 
     <string name="change_password_success">Đổi mật khẩu thành công!</string>
@@ -113,10 +114,21 @@
     <string name="change_avatar">Thay đổi đại diện</string>
     <string name="close_bottom_sheet">Hủy</string>
     <string name="edit_name">Sửa tên</string>
+    <string name="edit_address">Sửa địa chỉ</string>
     <string name="save">Lưu</string>
     <string name="male">Nam</string>
     <string name="female">Nữ</string>
     <string name="other">Khác</string>
+
+    <string name="normal">Normal</string>
+    <string name="asc">Asc</string>
+    <string name="desc">Desc</string>
+    <string name="apply">Apply</string>
+    <string name="clear">Clear</string>
+
+    <string name="result_for">Kết quả search cho <b>\"{0}\"</b></string>
+    <string name="show_all">Xem tất cả</string>
+    <string name="no_result_for">Không tìm thấy kết quả \nkhớp với <b>\"{0}\"</b></string>
 
 
 </resources>

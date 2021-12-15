@@ -313,6 +313,7 @@ public class Helper {
         if (text != null && text.length() == 10) {
             format = "yyyy-MM-dd";
         }
+        Log.e("ddd", "parseDate: format " + format);
         SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.forLanguageTag("vi_VN"));
         try {
             return Objects.requireNonNull(dateFormat.parse(text)).getTime();

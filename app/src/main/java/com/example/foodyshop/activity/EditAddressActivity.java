@@ -1,41 +1,39 @@
 package com.example.foodyshop.activity;
 
-import static com.example.foodyshop.config.Const.KEY_DATA_USER;
+import static com.example.foodyshop.config.Const.KEY_ADDRESS;
 import static com.example.foodyshop.config.Const.KEY_NAME;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.foodyshop.R;
 import com.example.foodyshop.dialog.ConfirmDialog;
 import com.example.foodyshop.dialog.ToastCustom;
 import com.example.foodyshop.helper.Helper;
-import com.example.foodyshop.model.CustomerModel;
 
-public class EditNameActivity extends AppCompatActivity {
+public class EditAddressActivity extends AppCompatActivity {
 
-    private String fullName;
-    private EditText edtFullname;
+    private String address;
+    private EditText edtAddress;
     private long lastClickSave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_name);
+        setContentView(R.layout.activity_edit_address);
 
         ImageView imgBack = findViewById(R.id.img_back);
         TextView tvSave = findViewById(R.id.tv_save);
-        edtFullname = findViewById(R.id.edt_fullname);
-        fullName = getIntent().getStringExtra(KEY_NAME);
-        if (fullName != null) {
-            edtFullname.setText(fullName);
-            edtFullname.requestFocus(fullName.length());
+        edtAddress = findViewById(R.id.edt_address);
+        address = getIntent().getStringExtra(KEY_ADDRESS);
+        if (address != null) {
+            edtAddress.setText(address);
+            edtAddress.requestFocus(address.length());
             Helper.showKeyboard(this);
         }
         tvSave.setOnClickListener(v -> {
@@ -43,13 +41,13 @@ public class EditNameActivity extends AppCompatActivity {
                 return;
             }
             lastClickSave = System.currentTimeMillis();
-            String name = edtFullname.getText().toString().trim();
-            if (name.isEmpty()) {
-                ToastCustom.notice(getApplicationContext(), "Tên không được bỏ trống!", ToastCustom.WARNING).show();
+            String newAddress = edtAddress.getText().toString().trim();
+            if (newAddress.isEmpty()) {
+                ToastCustom.notice(getApplicationContext(), "Địa chỉ không được bỏ trống!", ToastCustom.WARNING).show();
                 return;
             }
             Intent intent = new Intent();
-            intent.putExtra(KEY_NAME, name);
+            intent.putExtra(KEY_ADDRESS, newAddress);
             setResult(RESULT_OK, intent);
             finish();
         });
@@ -58,9 +56,9 @@ public class EditNameActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Helper.hideKeyboard(this, edtFullname);
-        String name = edtFullname.getText().toString().trim();
-        if (!name.equals(fullName)) {
+        Helper.hideKeyboard(this, edtAddress);
+        String address = edtAddress.getText().toString().trim();
+        if (!address.equals(this.address)) {
             ConfirmDialog.newInstance(this, "Hủy thay đổi?", confirmDialog -> {
                 confirmDialog.dismiss();
                 super.onBackPressed();

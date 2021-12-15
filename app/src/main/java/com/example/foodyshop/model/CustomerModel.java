@@ -72,11 +72,11 @@ public class CustomerModel implements Serializable {
         this.name = name;
     }
 
-    public Integer getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(Integer gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 
@@ -112,8 +112,11 @@ public class CustomerModel implements Serializable {
         this.status = status;
     }
 
-    public boolean isHasData(int lastGender) {
-        return (name != null && !name.isEmpty()) || (gender != null && gender != lastGender) || (datebirth != null && !datebirth.isEmpty()) || (address != null && !address.isEmpty());
+    public boolean isNotMatch(CustomerModel matchObj) {
+        return (name != null && !name.isEmpty() && !name.equals(matchObj.getName()))
+                || (gender != null && gender != matchObj.getGender())
+                || (datebirth != null && !datebirth.isEmpty() && !datebirth.equals(matchObj.getDatebirth()))
+                || (address != null && !address.isEmpty() && !address.equals(matchObj.getAddress()));
     }
 
     public String getPhoneHide() {

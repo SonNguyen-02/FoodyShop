@@ -14,6 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
+            android:name=".activity.SearchActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.EditAddressActivity"
+            android:exported="true" />
+        <activity
             android:name=".activity.EditNameActivity"
             android:exported="true" />
         <activity
@@ -22,7 +28,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".activity.MyAccountActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".activity.OrderDetailActivity"
             android:exported="true" />

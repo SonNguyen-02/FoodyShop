@@ -1,5 +1,6 @@
 package com.example.foodyshop.activity;
 
+import static com.example.foodyshop.config.Const.KEY_ADDRESS;
 import static com.example.foodyshop.config.Const.KEY_NAME;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -10,15 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,6 +26,7 @@ import com.example.foodyshop.R;
 import com.example.foodyshop.config.Const;
 import com.example.foodyshop.dialog.ChooseGenderDialog;
 import com.example.foodyshop.dialog.ConfirmDialog;
+import com.example.foodyshop.dialog.DatePickerSpinnerDialog;
 import com.example.foodyshop.dialog.LoadingDialog;
 import com.example.foodyshop.dialog.ShowOrChangeAvatarBottomSheet;
 import com.example.foodyshop.dialog.ToastCustom;
@@ -43,7 +41,6 @@ import com.gun0912.tedpermission.normal.TedPermission;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
@@ -72,13 +69,14 @@ public class MyAccountActivity extends AppCompatActivity {
                     Intent intent = result.getData();
                     if (intent != null) {
                         String name = intent.getStringExtra(KEY_NAME);
-                        if (name.equals(Helper.getCurrentAccount().getName())) {
-                            mUserData.setName("");
-                        } else {
+                        if (name != null && !name.isEmpty()) {
                             mUserData.setName(name);
-                        }
-                        if (!name.isEmpty()) {
                             tvCustomerName.setText(name);
+                        }
+                        String address = intent.getStringExtra(KEY_ADDRESS);
+                        if (address != null && !address.isEmpty()) {
+                            mUserData.setAddress(address);
+                            tvAddress.setText(address);
                         }
                     }
                 }
@@ -159,6 +157,35 @@ public class MyAccountActivity extends AppCompatActivity {
             }).show();
         });
 
+
+        rlDateBirth.setOnClickListener(view -> {
+            String defaultDate = mUserData.getDatebirth();
+            if (defaultDate == null) {
+                defaultDate = Helper.getCurrentAccount().getDatebirth();
+            }
+            Log.e("ddd", "onCreate: " + defaultDate);
+            DatePickerSpinnerDialog.newInstance(this, (datePicker, year, month, day) -> {
+                String days = (day > 9 ? String.valueOf(day) : "0" + day);
+                String months = (month > 9 ? String.valueOf(month) : "0" + month);
+                String date = year + "-" + months + "-" + days;
+                Log.e("ddd", "onCreate: date " + date);
+
+                String dateBirthLocal = days + "/" + months + "/" + year;
+                mUserData.setDatebirth(date);
+                tvDateBirth.setText(dateBirthLocal);
+                datePicker.dismiss();
+            }, defaultDate).show();
+        });
+
+        rlAddress.setOnClickListener(view -> {
+            Intent intent = new Intent(this, EditAddressActivity.class);
+            String defAdress = mUserData.getAddress();
+            if (defAdress == null || defAdress.isEmpty()) {
+                defAdress = Helper.getCurrentAccount().getAddress();
+            }
+            intent.putExtra(KEY_ADDRESS, defAdress);
+            mActivityResultLauncher.launch(intent);
+        });
     }
 
     private void initUi() {
@@ -270,7 +297,7 @@ public class MyAccountActivity extends AppCompatActivity {
             return;
         }
         lastClickSave = System.currentTimeMillis();
-        if (mUserData.isHasData(Helper.getCurrentAccount().getGender()) || mUri != null) {
+        if (mUserData.isNotMatch(Helper.getCurrentAccount()) || mUri != null) {
             LoadingDialog dialog = new LoadingDialog(this);
             dialog.show();
             Gson gson = new Gson();
@@ -347,7 +374,7 @@ public class MyAccountActivity extends AppCompatActivity {
             getSupportFragmentManager().popBackStack();
             return;
         }
-        if (mUserData.isHasData(Helper.getCurrentAccount().getGender()) || mUri != null) {
+        if (mUserData.isNotMatch(Helper.getCurrentAccount()) || mUri != null) {
             ConfirmDialog.newInstance(this, "Hủy thay đổi?", confirmDialog -> {
                 confirmDialog.dismiss();
                 finish();

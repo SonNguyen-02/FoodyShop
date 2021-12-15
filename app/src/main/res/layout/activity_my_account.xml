@@ -137,7 +137,7 @@
                     android:id="@+id/rl_customer_name"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:background="@drawable/ripple_while">
+                    android:background="@drawable/ripple_white">
 
                     <TextView
                         android:layout_width="100dp"
@@ -185,7 +185,7 @@
                     android:id="@+id/rl_phone"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:background="@drawable/ripple_while">
+                    android:background="@drawable/ripple_white">
 
                     <TextView
                         android:layout_width="100dp"
@@ -238,7 +238,7 @@
                     android:id="@+id/rl_gender"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:background="@drawable/ripple_while">
+                    android:background="@drawable/ripple_white">
 
                     <TextView
                         android:layout_width="100dp"
@@ -286,7 +286,7 @@
                     android:id="@+id/rl_date_birth"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:background="@drawable/ripple_while">
+                    android:background="@drawable/ripple_white">
 
                     <TextView
                         android:layout_width="100dp"
@@ -334,7 +334,7 @@
                     android:id="@+id/rl_address"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:background="@drawable/ripple_while">
+                    android:background="@drawable/ripple_white">
 
                     <TextView
                         android:layout_width="100dp"

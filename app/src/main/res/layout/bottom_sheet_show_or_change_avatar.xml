@@ -25,7 +25,7 @@
         android:id="@+id/ll_show_avatar"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:background="@drawable/ripple_while"
+        android:background="@drawable/ripple_white"
         android:gravity="center_vertical">
 
         <androidx.cardview.widget.CardView
@@ -58,7 +58,7 @@
         android:id="@+id/ll_change_avatar"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:background="@drawable/ripple_while"
+        android:background="@drawable/ripple_white"
         android:gravity="center_vertical">
 
         <androidx.cardview.widget.CardView
@@ -92,7 +92,7 @@
         android:id="@+id/ll_close"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:background="@drawable/ripple_while"
+        android:background="@drawable/ripple_white"
         android:gravity="center_vertical">
 
         <androidx.cardview.widget.CardView
@@ -107,7 +107,7 @@
                 android:layout_height="46dp"
                 android:background="@color/md_grey_200"
                 android:padding="12dp"
-                android:src="@drawable/ic_clear"
+                android:src="@drawable/ic_clear_text"
                 app:tint="@color/black"
                 tools:ignore="ContentDescription" />
         </androidx.cardview.widget.CardView>

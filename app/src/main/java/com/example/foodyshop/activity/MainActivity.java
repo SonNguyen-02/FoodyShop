@@ -1,5 +1,6 @@
 package com.example.foodyshop.activity;
 
+import static com.example.foodyshop.config.Const.KEY_SEARCH;
 import static com.example.foodyshop.config.Const.KEY_TOPIC;
 import static com.example.foodyshop.config.Const.TOAST_DEFAULT;
 
@@ -38,7 +39,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements TopicAdapter.IOnclickTopicItem {
+public class MainActivity extends AppCompatActivity implements TopicAdapter.IOnclickTopicItem, SearchFragment.IOnClickShowALl {
 
     public static final int TOTAL_ITEM_PRODUCT = 2;
     public static int HEIGHT_DEVICE;
@@ -103,8 +104,8 @@ public class MainActivity extends AppCompatActivity implements TopicAdapter.IOnc
 //            }
 //        });
 
-        rlSearch.setOnClickListener(view -> addFragmentToMainLayout(new SearchFragment(), SearchFragment.class.getName()));
-        imgSearch.setOnClickListener(view -> addFragmentToMainLayout(new SearchFragment(), SearchFragment.class.getName()));
+        rlSearch.setOnClickListener(view -> addFragmentToMainLayout(SearchFragment.newInstance(this), SearchFragment.class.getName()));
+        imgSearch.setOnClickListener(view -> addFragmentToMainLayout(SearchFragment.newInstance(this), SearchFragment.class.getName()));
         imgMenu.setOnClickListener(view -> addFragmentToMainLayout(mTopicFragment, TopicFragment.class.getName()));
         rlCart.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), CartActivity.class);
@@ -232,6 +233,15 @@ public class MainActivity extends AppCompatActivity implements TopicAdapter.IOnc
         Intent intent = new Intent(this, DetailTopicActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(KEY_TOPIC, topic);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClickShowAll(String search) {
+        Intent intent = new Intent(this, SearchActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(KEY_SEARCH, search);
         intent.putExtras(bundle);
         startActivity(intent);
     }

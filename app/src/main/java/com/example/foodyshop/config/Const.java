@@ -40,6 +40,7 @@ public class Const {
     public static final String KEY_AVATAR_USER = "avatar_user";
     public static final String KEY_NAME = "name";
     public static final String KEY_PHONE = "phone";
+    public static final String KEY_ADDRESS = "address";
 
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_NEW_PASSWORD = "new_password";
@@ -58,6 +59,10 @@ public class Const {
     public static final String KEY_CONTENT = "content";
 
     public static final String KEY_CURRENT_PAGE = "current_page";
+    public static final String KEY_MIN_PRICE = "min_price";
+    public static final String KEY_MAX_PRICE = "max_price";
+    public static final String KEY_SEARCH = "search";
+    public static final String KEY_ORDER_PRICE = "order_price";
     public static final String KEY_OFFSET = "offset";
     public static final String KEY_IS_SALE = "is_sale";
 

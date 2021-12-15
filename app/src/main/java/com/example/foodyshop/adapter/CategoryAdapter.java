@@ -17,7 +17,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     private final List<CategoryModel> mListCategory;
     private final IOnclickCategoryItem mIOnclickCategoryItem;
-    private View currentCategory;
     private int lastCheckPos;
 
     public CategoryAdapter(IOnclickCategoryItem listener, List<CategoryModel> mListCategory) {
@@ -28,6 +27,17 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     public interface IOnclickCategoryItem {
         void onclickCategoryItem(CategoryModel category);
+    }
+
+    public CategoryModel getCurrentItem() {
+        if (lastCheckPos >= 0 && mListCategory != null && lastCheckPos < mListCategory.size()) {
+            return mListCategory.get(lastCheckPos);
+        }
+        return null;
+    }
+
+    public int getLastCheckPos() {
+        return lastCheckPos;
     }
 
     @NonNull

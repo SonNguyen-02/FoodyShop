@@ -44,7 +44,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@id/tv_save"
                     android:layout_toEndOf="@id/img_back"
-                    android:text="@string/edit_name"
+                    android:text="@string/edit_address"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
 
@@ -79,20 +79,22 @@
         app:hintEnabled="false">
 
         <EditText
-            android:id="@+id/edt_fullname"
+            android:id="@+id/edt_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@android:color/transparent"
-            android:hint="@string/full_name"
-            android:inputType="text"
-            android:maxLength="50"
+            android:gravity="start"
+            android:hint="@string/address"
+            android:maxLength="255"
+            android:maxLines="6"
             android:minWidth="@dimen/edt_form_width"
             android:minHeight="@dimen/edt_min_height"
+            android:minLines="4"
             android:paddingStart="@dimen/edt_pad_start"
-            android:paddingEnd="0dp"
-            android:singleLine="true"
-            tools:ignore="Autofill" />
+            android:paddingTop="8dp"
+            android:paddingEnd="@dimen/edt_pad_start"
+            tools:ignore="Autofill,TextFields" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -100,6 +102,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/space_view"
         android:layout_marginTop="@dimen/space_view"
-        android:text="50 characters only" />
+        android:text="150 characters only" />
 
 </LinearLayout>

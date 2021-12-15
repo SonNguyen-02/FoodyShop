@@ -8,7 +8,6 @@
     tools:context=".activity.MainActivity">
 
     <RelativeLayout
-        android:id="@+id/rl_main_page"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:ignore="UselessParent">
@@ -63,14 +62,14 @@
                         android:layout_centerVertical="true"
                         android:layout_toStartOf="@id/rl_cart"
                         android:layout_toEndOf="@id/img_menu_category"
-                        android:background="@drawable/custom_bg_white_corn_2"
+                        android:background="@drawable/custom_bg_white_corn_4"
                         android:visibility="visible">
 
                         <ImageView
                             android:id="@+id/img_search_ic"
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:background="@drawable/custom_bg_white_corn_2"
+                            android:background="@drawable/custom_bg_white_corn_4"
                             android:padding="5dp"
                             android:src="@drawable/ic_search"
                             app:tint="@android:color/darker_gray"
