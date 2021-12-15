@@ -5,10 +5,13 @@
  */
 package com.foodyshop.controller;
 
+import com.foodyshop.helper.StaffHelper;
 import com.foodyshop.main.Navigator;
+import com.foodyshop.model.Respond;
 import com.foodyshop.model.StaffModel;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,14 +21,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  *
  * @author DELL
  */
 public class EditStaffController implements Initializable {
+
     private ObservableList<StaffModel> listStaff;
     private StaffModel staff;
+    private IOnEditStaffSuccess mIOnEditStaffSuccess;
+    private Stage stage;
+
     @FXML
     private TextField txtUsername;
 
@@ -43,15 +51,23 @@ public class EditStaffController implements Initializable {
 
     @FXML
     private Button btnCancel;
-
-    public void setDataStaff(StaffModel staff){
+    
+    public void setDataStaff(Stage stage, StaffModel staff, IOnEditStaffSuccess mIOnEditStaffSuccess) {
+        this.stage = stage;
         this.staff = staff;
+        txtUsername.setText(staff.getUsername());
+        txtPassword.setText(staff.getPassword());
+        txtName.setText(staff.getName());
+        cbType.setItems(FXCollections.observableArrayList(StaffModel.TYPE_ADMIN,StaffModel.TYPE_STAFF));
+        cbType.setValue(staff.getTypeVal().get());
+        this.mIOnEditStaffSuccess = this.mIOnEditStaffSuccess;
     }
+
     public interface IOnEditStaffSuccess {
 
         void callback();
     }
-    
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -71,6 +87,35 @@ public class EditStaffController implements Initializable {
 
     @FXML
     void onClickSubmit(ActionEvent event) {
+        String username = txtUsername.getText().trim();
+        String password = txtPassword.getText().trim();
+        String name = txtName.getText().trim();
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        if (name.isEmpty()) {
+            txtName.requestFocus();
+            alert.setHeaderText("Please enter name");
+            alert.show();
+            return;
+        }
+        staff.setUsername(username);
+        staff.setPassword(password);
+        staff.setName(name);
+        staff.setTypeVal(cbType.getValue());
+        boolean result = StaffHelper.editStaff(staff);
+        if (result) {
+            Alert alerts = new Alert(Alert.AlertType.INFORMATION);
+            alerts.setTitle("Success");
+            alerts.setHeaderText("Edit success!");
+            alerts.show();
+            mIOnEditStaffSuccess.callback();
+            Navigator.getInstance().getModalStage().close();
+        } else {
+            Alert alerts = new Alert(Alert.AlertType.ERROR);
+            alerts.setTitle("Error");
+            alerts.setHeaderText("Edit false");
+            alerts.show();
+        }
 
     }
 

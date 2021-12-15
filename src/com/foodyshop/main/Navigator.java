@@ -19,9 +19,9 @@ import com.foodyshop.controller.EditCategoryController.IOnEditCategorySuccess;
 import com.foodyshop.controller.EditOrderController;
 import com.foodyshop.controller.EditOrderController.IOnUpdateOrderSuccess;
 import com.foodyshop.controller.EditProductController;
-import com.foodyshop.controller.EditProductController.IOnUpdateProduct;
 import com.foodyshop.controller.EditSaleController;
 import com.foodyshop.controller.EditStaffController;
+import com.foodyshop.controller.EditStaffController.IOnEditStaffSuccess;
 
 import com.foodyshop.controller.EditTopicController;
 //import com.foodyshop.controller.EditTopicController.IOnUpdateSuccess;
@@ -191,9 +191,10 @@ public class Navigator {
         controller.initCallback(staff,modalStage,mIOnAddStaffSuccess);
     }
 
-    public void showEditStaff() {
-        showModal("Edit Staff ", EDIT_STAFF);
+    public void showEditStaff(StaffModel staff, IOnEditStaffSuccess mIOnEditStaffSuccess) {
+        showModal("Add Staff ", EDIT_STAFF);
         EditStaffController controller = fxLoader.getController();
+        controller.setDataStaff(modalStage, staff, mIOnEditStaffSuccess);
     }
 
     public void showEditCustomerForm(CustomerModel customer, IOnUpdateCustomer mIOnUpdateCustomer) {
@@ -232,10 +233,10 @@ public class Navigator {
         controller.initData(modalStage,sale);
     }
 
-    public void showEditProduct(ProductModel Product, IOnUpdateProduct mIOnUpdateProduct) {
+    public void showEditProduct(ProductModel Product) {
         showModal("Edit Product ", EDIT_PRODUCT_FORM);
         EditProductController controllerProduct = fxLoader.getController();
-        controllerProduct.initData(Product, modalStage, mIOnUpdateProduct);
+        controllerProduct.initData(Product, modalStage);
     }
 
     // </editor-fold> 

@@ -180,10 +180,8 @@ public class AddProductController implements Initializable {
         String name = txtName.getText().trim();
         String price = txtPrice.getText().trim();
         String description = txtDescription.getText().trim();
-        ObservableList<CategoryModel> mListCate = cbCategory.getItems();
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
-
         if (name.isEmpty()) {
             txtName.requestFocus();
             alert.setHeaderText("Please enter name!!");

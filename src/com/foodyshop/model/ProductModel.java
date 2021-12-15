@@ -29,7 +29,7 @@ import javafx.scene.image.ImageView;
  */
 public class ProductModel {
     public static final String STILL = "Still";
-    public static final String SOLD_OUT = "Sold_out";
+    public static final String SOLDOUT = "Sold_out";
     private ObjectProperty<Integer> id;
     private StringProperty name;
     private Integer categoryId;
@@ -157,7 +157,7 @@ public class ProductModel {
         if (status == 0) {
             this.statusVal.setValue(STILL);
         } else {
-            this.statusVal.setValue(SOLD_OUT);
+            this.statusVal.setValue(SOLDOUT);
         }
     }
     public void setImg(String img) {
