@@ -136,9 +136,9 @@ public class SaleModel {
         String url = IMG_SALE_DIR + img;
         Image image = new Image(url, 100, 100, false, true, true);
         mImageView.setImage(image);
-        image.errorProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue){
-                System.out.println(image.getException().getMessage());
+        image.errorProperty().addListener((observable, oldValue, isErr) -> {
+            if(isErr){
+//                System.out.println(image.getException().getMessage());
                 mImageView.setImage(Const.NO_IMAGE_OBJ);
             }
         });
@@ -201,5 +201,10 @@ public class SaleModel {
         } else {
             this.status = 1;
         }
+    }
+    
+     @Override
+    public String toString() {
+        return this.productName.get();
     }
 }

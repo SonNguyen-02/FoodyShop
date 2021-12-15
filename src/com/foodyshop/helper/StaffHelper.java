@@ -33,7 +33,6 @@ public class StaffHelper {
             while (rs.next()) {
                 StaffModel staff = new StaffModel();
                 staff.setId(rs.getInt("id"));
-                System.out.println(rs.getInt("id"));
                 staff.setUsername(rs.getString("username"));
                 staff.setPassword(rs.getString("password"));
                 staff.setName(rs.getString("name"));
