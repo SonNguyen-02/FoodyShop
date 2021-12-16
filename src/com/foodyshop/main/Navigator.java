@@ -97,6 +97,8 @@ public class Navigator {
     private static final String ADD_PRODUCT_FORM = ROOT_FOLDER + "AddProductForm.fxml";
     private static final String EDIT_PRODUCT_FORM = ROOT_FOLDER + "EditProductForm.fxml";
     private static final String EDIT_SALE_FORM = ROOT_FOLDER + "EditSaleForm.fxml";
+    
+    private static final String CHANGE_PASSWORD_ACCOUNT = ROOT_FOLDER + "ChangePasswordAccount.fxml";
 
     // Khai báo di chuyển giữa các màn hình
     public void goToLoginUI() {
@@ -237,6 +239,12 @@ public class Navigator {
         showModal("Edit Product ", EDIT_PRODUCT_FORM);
         EditProductController controllerProduct = fxLoader.getController();
         controllerProduct.initData(Product, modalStage);
+    }
+    
+    public void showChangePasswordAccount(StaffModel staff) {
+        showModal("ChangePasswordAccount ", CHANGE_PASSWORD_ACCOUNT);
+        //AddStaffController controller = fxLoader.getController();
+        
     }
 
     // </editor-fold> 
