@@ -151,6 +151,7 @@ public class EditTopicController implements Initializable {
                 alerts.setTitle("Success");
                 alerts.setHeaderText("Edit success!");
                 alerts.show();
+                Navigator.getInstance().getModalStage().close();
             } else {
                 Alert alerts = new Alert(Alert.AlertType.ERROR);
                 alerts.setTitle("Error");

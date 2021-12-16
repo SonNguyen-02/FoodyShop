@@ -12,13 +12,13 @@ package com.foodyshop.main;
 public class Config {
 
     // for database
-    public static final String HOSTNAME = "foodyshop.tk";
-    public static final String USERNAME = "sonnctvk_foody_shop";
-    public static final String PASSWORD = "VItGY{a7]0CIRDz{VQ";
-    public static final String DATABASE = "sonnctvk_foody_shop";
-    
+    public static final String HOSTNAME = "foodyshopp.tk";
+    public static final String USERNAME = "rqmmlfrm_foody_shop";
+    public static final String PASSWORD = "T3@VQEfwSgv6CHG";
+    public static final String DATABASE = "rqmmlfrm_foody_shop";
+
     // for api
-    public static final String BASE_URL = "https://foodyshop.tk/FoodyShop/";
+    public static final String BASE_URL = "https://foodyshopp.tk/FoodyShop/";
 //    public static final String BASE_URL = "https://foodyshop.000webhostapp.com/FoodyShop/";
 //    public static final String BASE_URL = "http://localhost/FoodyShop/";
     public static final String BASE_API = BASE_URL + "api/";
