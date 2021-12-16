@@ -87,10 +87,10 @@ public class CustomerDetailController implements Initializable {
         lbCustomerName.setText(customer.getName());
         lbAddress.setText(customer.getAddress());
         lbPhone.setText(customer.getPhone());
-//        Image image = new Image(IMG_AVATAR_DIR + customer.getImg(), 80, 80, false, true, true);
-//        if(IMG_AVATAR_DIR != null){
-//            imgView.setImage(image);
-//        }
+        Image image = new Image(IMG_AVATAR_DIR + customer.getImg(), 80, 80, false, true, true);
+        if(IMG_AVATAR_DIR != null){
+            imgView.setImage(image);
+        }
         
         listCustomerDetail = CustomerDetailHelper.getAllCustomerDetail(customer);
         tblCustomerDetail.setItems(listCustomerDetail);
