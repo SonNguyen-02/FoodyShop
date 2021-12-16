@@ -96,10 +96,10 @@ public class AddProductController implements Initializable {
         categoryList = CategoryHelper.getAllCategory();
         if (categoryList != null && !categoryList.isEmpty()) {
             cbCategory.setItems(categoryList);
-            cbCategory.setValue(categoryList.get(0));
+            cbCategory.setValue(categoryList.get(20));
         }
     }
-
+//
     private void onClickCancel(MouseEvent e) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Close");
