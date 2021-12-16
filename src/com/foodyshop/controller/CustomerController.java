@@ -11,6 +11,7 @@ import com.foodyshop.model.CustomerModel;
 import java.net.URL;
 import java.util.ResourceBundle;
 import com.foodyshop.controller.EditCustomerController;
+import com.foodyshop.main.CurrentAccount;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -58,7 +59,7 @@ public class CustomerController implements Initializable {
 
     @FXML
     private TableColumn<CustomerModel, String> tcCreated;
-    
+
     @FXML
     private TableColumn<CustomerModel, ImageView> tcImage;
 
@@ -89,9 +90,13 @@ public class CustomerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        btnEditStatus.setOnMouseClicked(this::onclickShowEditCustomer);
+        if (CurrentAccount.getInstance().isStaff()) {
+            btnEditStatus.setVisible(false);
+        } else {
+            btnEditStatus.setOnMouseClicked(this::onclickShowEditCustomer);            
+        }
         btnCustomerDetail.setOnMouseClicked(this::onclickShowCustomerDetail);
-
+        
         tcStt.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tblCustomer.getItems().indexOf(cellData.getValue()) + 1) + ""));
         tcPhone.setCellValueFactory(cellValue -> cellValue.getValue().getPhoneProperty());
         tcName.setCellValueFactory(cellValue -> cellValue.getValue().getNameProperty());

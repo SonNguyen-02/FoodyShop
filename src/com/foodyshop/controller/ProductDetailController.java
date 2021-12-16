@@ -5,6 +5,7 @@
  */
 package com.foodyshop.controller;
 
+import static com.foodyshop.main.Config.IMG_FOOD_DIR;
 import com.foodyshop.main.Navigator;
 import com.foodyshop.model.ProductModel;
 import java.net.URL;
@@ -17,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.TextAlignment;
@@ -38,7 +40,7 @@ public class ProductDetailController implements Initializable {
     private Label lbPrice;
 
     @FXML
-    private Label lbCreated,lbDescription;
+    private Label lbCreated, lbDescription;
 
     @FXML
     private ImageView imgDetail;
@@ -47,14 +49,17 @@ public class ProductDetailController implements Initializable {
     private Button btnCancel;
 
     private ProductModel mProduct;
+
     public void initProductModel(ProductModel product) {
-        mProduct= product;
+        mProduct = product;
         lbName.setText(product.getName());
         lbCategory.setText(product.getCategoryName());
         lbCreated.setText(product.getCreated());
         lbDescription.setText(product.getDescription());
-        lbPrice.setText(product.getPrice().toString()+"  VNĐ");
-        
+        lbPrice.setText(product.getPrice().toString() + "  VNĐ");
+
+        Image imageDetail = new Image(IMG_FOOD_DIR + product.getImgDetail(), 256, 192, false, true, true);
+        imgDetail.setImage(imageDetail);
     }
 
     @Override
@@ -62,7 +67,7 @@ public class ProductDetailController implements Initializable {
         btnCancel.setOnMouseClicked(this::onClickCancel);
         lbDescription.setWrapText(true);
         lbDescription.setTextAlignment(TextAlignment.JUSTIFY);
-        
+
     }
 
     private void onClickCancel(MouseEvent e) {

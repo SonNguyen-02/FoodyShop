@@ -6,6 +6,7 @@
 package com.foodyshop.controller;
 
 import com.foodyshop.helper.OrderHelper;
+import com.foodyshop.main.CurrentAccount;
 import com.foodyshop.main.Navigator;
 import com.foodyshop.model.OrderModel;
 import java.net.URL;
@@ -68,9 +69,6 @@ public class OrderController implements Initializable {
     private Button btnEditStatus;
 
     @FXML
-    private Button btnEditPrice;
-
-    @FXML
     private Button btnOrder_detail;
 
     @FXML
@@ -86,9 +84,13 @@ public class OrderController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        btnEditStatus.setOnMouseClicked(this::onclickShowEditOrder);
+        if (CurrentAccount.getInstance().isStaff()) {
+            btnEditStatus.setVisible(false);
+        } else {
+            btnEditStatus.setOnMouseClicked(this::onclickShowEditOrder);
+        }
         btnOrder_detail.setOnMouseClicked(this::onclickShowOrderDetail);
-
+        
         tcId.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tblOrder.getItems().indexOf(cellData.getValue()) + 1) + ""));
         tcOrder_code.setCellValueFactory(cellValue -> cellValue.getValue().getOrderCodeProperty());
         tcName.setCellValueFactory(cellValue -> cellValue.getValue().getNameProperty());
