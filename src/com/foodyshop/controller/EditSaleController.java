@@ -84,14 +84,14 @@ public class EditSaleController implements Initializable {
     public void initData(Stage stage, SaleModel sale) {
         this.stage = stage;
         mSaleModel = sale;
-        setDefaultImg(btnChooseFile, imgSale);
-        
+
         Image image = new Image(IMG_SALE_DIR + sale.getImg(), 300, 300, false, true, true);
         imgSale.setImage(image);
+
         txtContent.setText(sale.getContent());
         txtDiscount.setText(sale.getDiscount().toString());
         dpStartDate.setValue(LocalDate.parse(sale.getStart_date()));
-        dpEndDate.setValue(LocalDate.parse(sale.getEnd_date()));      
+        dpEndDate.setValue(LocalDate.parse(sale.getEnd_date()));
         productList = ProductHelper.getAllProduct();
         if (productList != null && !productList.isEmpty()) {
             cbProductName.setItems(productList);
@@ -209,7 +209,7 @@ public class EditSaleController implements Initializable {
                     alerts.show();
                     return;
                 }
-            }
+            }          
             boolean resutl = SaleHelper.updateSale(mSaleModel);
             if (resutl) {
                 stage.close();

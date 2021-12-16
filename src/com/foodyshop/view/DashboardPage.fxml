@@ -1,11 +1,161 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.DashboardController">
-    
-</AnchorPane>
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="914.0" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox layoutY="102.0" prefHeight="100.0" prefWidth="913.0" spacing="28.0">
+         <children>
+            <Pane fx:id="pane_111" layoutX="10.0" prefHeight="85.0" prefWidth="330.0" styleClass="pane_1" stylesheets="@style.css">
+               <children>
+                  <ImageView fitHeight="35.0" fitWidth="49.0" layoutX="15.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../public/image/main_layout/sale_icon.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="lbTop11" layoutX="73.0" layoutY="19.0" styleClass="lbTop" stylesheets="@style.css" text="Total Delivered" />
+                  <Label fx:id="lbTotalDeliver" layoutX="73.0" layoutY="54.0" styleClass="lbBot" stylesheets="@style.css" text="0VNĐ" />
+               </children>
+               <HBox.margin>
+                  <Insets left="25.0" />
+               </HBox.margin>
+            </Pane>
+            <Pane fx:id="pane_11" prefHeight="85.0" prefWidth="330.0" styleClass="pane_2" stylesheets="@style.css">
+               <children>
+                  <ImageView fitHeight="34.0" fitWidth="49.0" layoutX="15.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../public/image/main_layout/card.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="lbTop1" layoutX="73.0" layoutY="19.0" styleClass="lbTop" stylesheets="@style.css" text="Order Number:" />
+                  <Label fx:id="lbBot1" layoutX="73.0" layoutY="54.0" styleClass="lbBot" stylesheets="@style.css" text="Order Product:" />
+                  <Label fx:id="lbOrderProduct" layoutX="192.0" layoutY="54.0" styleClass="lbBot" stylesheets="@style.css" text="0" />
+                  <Label fx:id="lbOrderNumber" layoutX="192.0" layoutY="19.0" styleClass="lbBot" stylesheets="@style.css" text="0" />
+               </children>
+            </Pane>
+            <Pane fx:id="pane_1" prefHeight="85.0" prefWidth="330.0" styleClass="pane_3" stylesheets="@style.css">
+               <children>
+                  <ImageView fitHeight="33.0" fitWidth="49.0" layoutX="15.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../public/image/main_layout/cancel.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="lbTop" layoutX="73.0" layoutY="19.0" styleClass="lbTop" stylesheets="@style.css" text="Order Cancel" />
+                  <Label fx:id="lbOrderCancel" layoutX="73.0" layoutY="54.0" styleClass="lbBot" stylesheets="@style.css" text="0" />
+               </children>
+               <HBox.margin>
+                  <Insets right="25.0" />
+               </HBox.margin>
+            </Pane>
+         </children>
+      </HBox>
+      <HBox layoutY="279.0" prefHeight="186.0" prefWidth="913.0" spacing="28.0">
+         <children>
+            <Pane fx:id="pane_info" prefHeight="150.0" prefWidth="330.0" styleClass="pane_info" stylesheets="@style.css">
+               <children>
+                  <Pane fx:id="pane_title" prefHeight="53.0" prefWidth="268.0" styleClass="pane_title" stylesheets="@style.css">
+                     <children>
+                        <Label layoutX="73.0" layoutY="18.0" styleClass="lbTop" stylesheets="@style.css" text="Activity" />
+                        <ImageView fitHeight="36.0" fitWidth="46.0" layoutX="20.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../public/image/main_layout/activity.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <VBox layoutX="15.0" layoutY="64.0" prefHeight="100.0" prefWidth="117.0" spacing="20.0">
+                     <children>
+                        <Label fx:id="lbBotInfor" styleClass="lbBotInfor" stylesheets="@style.css" text="Order Success" />
+                        <Label fx:id="lbBotInfor1" styleClass="lbBotInfor" stylesheets="@style.css" text="Order Wait" />
+                        <Label fx:id="lbBotInfor2" styleClass="lbBotInfor" stylesheets="@style.css" text="Order Cancel" />
+                     </children>
+                  </VBox>
+                  <VBox layoutX="240.0" layoutY="64.0" prefHeight="93.0" prefWidth="27.0" spacing="20.0">
+                     <children>
+                        <Label fx:id="lbOrderSuccess" styleClass="lbBot" stylesheets="@style.css" text="0" />
+                        <Label fx:id="lbOrderWait" styleClass="lbBot" stylesheets="@style.css" text="0" />
+                        <Label fx:id="lbOrderCancel" styleClass="lbBot" stylesheets="@style.css" text="0" />
+                     </children>
+                  </VBox>
+               </children>
+               <HBox.margin>
+                  <Insets left="25.0" />
+               </HBox.margin>
+            </Pane>
+            <Pane fx:id="pane_info1" prefHeight="150.0" prefWidth="330.0" styleClass="pane_info2" stylesheets="@style.css">
+               <children>
+                  <Pane fx:id="pane_title1" prefHeight="53.0" prefWidth="268.0" styleClass="pane_title2" stylesheets="@style.css">
+                     <children>
+                        <ImageView fitHeight="36.0" fitWidth="46.0" layoutX="20.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../public/image/main_layout/event.png" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="73.0" layoutY="15.0" styleClass="lbTop" stylesheets="@style.css" text="Sale Information" />
+                     </children>
+                  </Pane>
+                  <VBox layoutX="15.0" layoutY="64.0" prefHeight="93.0" prefWidth="136.0" spacing="20.0">
+                     <children>
+                        <Label fx:id="lbBotInfor1" styleClass="lbBotInfor" stylesheets="@style.css" text="Sale left" />
+                        <Label fx:id="lbBotInfor12" styleClass="lbBotInfor" stylesheets="@style.css" text="Sale is almost end" />
+                        <Label fx:id="lbSaleEnd" styleClass="lbBotInfor" stylesheets="@style.css" text="Sale  has ended" />
+                     </children>
+                  </VBox>
+                  <VBox layoutX="240.0" layoutY="64.0" prefHeight="93.0" prefWidth="27.0" spacing="20.0">
+                     <children>
+                        <Label fx:id="lbSaleLeft" styleClass="lbBot" stylesheets="@style.css" text="0" />
+                        <Label fx:id="lbSalealEnd" styleClass="lbBot" stylesheets="@style.css" text="0" />
+                        <Label fx:id="lbBot1112" styleClass="lbBot" stylesheets="@style.css" text="0" />
+                     </children>
+                  </VBox>
+               </children>
+            </Pane>
+            <Pane fx:id="pane_info2" prefHeight="150.0" prefWidth="330.0" styleClass="pane_info3" stylesheets="@style.css">
+               <children>
+                  <Pane fx:id="pane_title2" prefHeight="53.0" prefWidth="268.0" styleClass="pane_title3" stylesheets="@style.css">
+                     <children>
+                        <ImageView fitHeight="36.0" fitWidth="46.0" layoutX="20.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../public/image/main_layout/news.png" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="73.0" layoutY="17.0" styleClass="lbTop" stylesheets="@style.css" text="New" />
+                     </children>
+                  </Pane>
+                  <VBox layoutX="15.0" layoutY="64.0" prefHeight="93.0" prefWidth="135.0" spacing="20.0">
+                     <children>
+                        <Label fx:id="lbBotInfor12" styleClass="lbBotInfor" stylesheets="@style.css" text="Order" />
+                        <Label fx:id="lbBotInfor121" styleClass="lbBotInfor" stylesheets="@style.css" text="Member" />
+                        <Label fx:id="lbBotInfor221" prefHeight="20.0" prefWidth="135.0" styleClass="lbBotInfor" stylesheets="@style.css" text="Feedback/Contact" />
+                     </children>
+                  </VBox>
+                  <VBox layoutX="240.0" layoutY="64.0" prefHeight="93.0" prefWidth="27.0" spacing="20.0">
+                     <children>
+                        <Label fx:id="lbOrder" layoutX="1.0" styleClass="lbBot" stylesheets="@style.css" text="0">
+                           <padding>
+                              <Insets left="16.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="lbMember" layoutX="1.0" styleClass="lbBot" stylesheets="@style.css" text="0">
+                           <padding>
+                              <Insets left="16.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="lbContact" styleClass="lbBot" stylesheets="@style.css" text="0/0" />
+                     </children>
+                  </VBox>
+               </children>
+               <HBox.margin>
+                  <Insets right="25.0" />
+               </HBox.margin>
+            </Pane>
+         </children>
+      </HBox>
+   </children>
+</Pane>

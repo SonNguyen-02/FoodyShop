@@ -1,0 +1,91 @@
+.root{
+    -fx-background-color: #D9E3F0;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);
+    -fx-border-radius: 10px;
+    -fx-border-width: 2px 2px 2px 2px;
+    -fx-background-radius:10px;
+    -fx-border-color:linear-gradient(#4568DC, #B06AB3);
+}
+.pane_1{
+    -fx-background-color: #9abc32;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);
+    -fx-border-radius: 5px;
+    -fx-border-width: 2px 2px 2px 2px;
+    -fx-background-radius:5px;
+    -fx-border-style: solid;
+    -fx-border-color:#9abc32;
+}
+.pane_2{
+    -fx-background-color: #00CCFF;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);
+    -fx-border-radius: 5px;
+    -fx-border-width: 2px 2px 2px 2px;
+    -fx-background-radius:5px;
+    -fx-border-style: solid;
+    -fx-border-color:#00CCFF;
+}
+.pane_3{
+    -fx-background-color: #FFC125;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);
+    -fx-border-radius: 5px;
+    -fx-border-width: 2px 2px 2px 2px;
+    -fx-background-radius:5px;
+    -fx-border-style: solid;
+    -fx-border-color:#FFC125;
+}
+.lbTop{
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+.lbBot{
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+
+}
+.pane_info{
+    -fx-background-color: white;
+    -fx-border-radius: 0px;
+    -fx-background-radius:0px;
+    -fx-border-style: solid;
+    -fx-border-color:#9abc32;
+}
+.pane_info2{
+    -fx-background-color: white;
+    -fx-border-radius: 0px;
+    -fx-background-radius:0px;
+    -fx-border-style: solid;
+    -fx-border-color:#00CCFF;
+}
+.pane_info3{
+    -fx-background-color: white;
+    -fx-border-radius: 0px;
+    -fx-background-radius:0px;
+    -fx-border-style: solid;
+    -fx-border-color:#FFC125;
+}
+.pane_title{
+    -fx-background-color: #c3e6cb;
+    -fx-border-radius: 0px;
+    -fx-background-radius:1px;  
+    -fx-border-style: solid;
+    -fx-border-color:#9abc32;
+}
+.pane_title2{
+    -fx-background-color: #d1ecf1;
+    -fx-border-radius: 0px;
+    -fx-background-radius:1px;  
+    -fx-border-style: solid;
+    -fx-border-color:#00CCFF;
+}
+.pane_title3{
+    -fx-background-color: #fff3cd;
+    -fx-border-radius: 0px;
+    -fx-background-radius:1px;  
+    -fx-border-style: solid;
+    -fx-border-color:#FFC125;
+}
+.lbBotInfor{
+    -fx-font-size: 16px;
+    
+}
+
