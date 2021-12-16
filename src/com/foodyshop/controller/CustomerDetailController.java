@@ -6,11 +6,14 @@
 package com.foodyshop.controller;
 
 import com.foodyshop.helper.CustomerDetailHelper;
+import com.foodyshop.helper.OrderHelper;
 import static com.foodyshop.main.Config.IMG_AVATAR_DIR;
+import com.foodyshop.main.Const;
 import static com.foodyshop.main.Const.PLACEHOLDER_NO_IMG_PATH;
 import com.foodyshop.main.Navigator;
 import com.foodyshop.model.CustomerDetailModel;
 import com.foodyshop.model.CustomerModel;
+import com.foodyshop.model.OrderModel;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -39,22 +42,22 @@ import javafx.scene.text.TextAlignment;
 public class CustomerDetailController implements Initializable {
 
     @FXML
-    private TableView<CustomerDetailModel> tblCustomerDetail;
+    private TableView<OrderModel> tblCustomerDetail;
 
     @FXML
-    private TableColumn<CustomerDetailModel, Integer> tcStt;
+    private TableColumn<OrderModel, Integer> tcStt;
 
     @FXML
-    private TableColumn<CustomerDetailModel, String> tcOrderCode;
+    private TableColumn<OrderModel, String> tcOrderCode;
 
     @FXML
-    private TableColumn<CustomerDetailModel, Integer> tcTotalPrice;
+    private TableColumn<OrderModel, Integer> tcTotalPrice;
 
     @FXML
-    private TableColumn<CustomerDetailModel, String> tcCreated;
+    private TableColumn<OrderModel, String> tcCreated;
 
     @FXML
-    private TableColumn<CustomerDetailModel, String> tcStatusOrder;
+    private TableColumn<OrderModel, String> tcStatusOrder;
 
     @FXML
     private ImageView imgView;
@@ -73,28 +76,33 @@ public class CustomerDetailController implements Initializable {
 
     @FXML
     private Label lbTotalOrder;
-    
+
     @FXML
     private Button btnCancel;
 
-
     private CustomerModel mCustomer;
 
-    ObservableList<CustomerDetailModel> listCustomerDetail = FXCollections.observableArrayList();
+    ObservableList<OrderModel> listOrder = FXCollections.observableArrayList();
 
     public void initCustomerModel(CustomerModel customer) {
         mCustomer = customer;
         lbCustomerName.setText(customer.getName());
         lbAddress.setText(customer.getAddress());
         lbPhone.setText(customer.getPhone());
-//        Image image = new Image(IMG_AVATAR_DIR + customer.getImg(), 80, 80, false, true, true);
-//        if(IMG_AVATAR_DIR != null){
-//            imgView.setImage(image);
-//        }
-        
-        listCustomerDetail = CustomerDetailHelper.getAllCustomerDetail(customer);
-        tblCustomerDetail.setItems(listCustomerDetail);
-        lbTotalOrder.setText(String.valueOf(listCustomerDetail.size()) + " order");
+
+        String url = IMG_AVATAR_DIR + mCustomer.getImg();
+        Image image = new Image(url, 80, 80, false, true, true);
+        imgView.setImage(image);
+        image.errorProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+//                System.out.println(image.getException().getMessage());
+                imgView.setImage(Const.NO_IMAGE_OBJ);
+            }
+        });
+
+        listOrder = OrderHelper.getListOrderByCustomer(customer);
+        tblCustomerDetail.setItems(listOrder);
+        lbTotalOrder.setText(String.valueOf(listOrder.size()) + " order");
     }
 
     /**
@@ -103,18 +111,17 @@ public class CustomerDetailController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        setDefaultImg(imgView);
         btnCancel.setOnMouseClicked(this::onClickCancel);
-        lbFeedback.setWrapText(true);
-        lbFeedback.setTextAlignment(TextAlignment.JUSTIFY);
+//        lbFeedback.setWrapText(true);
+//        lbFeedback.setTextAlignment(TextAlignment.JUSTIFY);
         tcStt.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tblCustomerDetail.getItems().indexOf(cellData.getValue()) + 1) + ""));
-        tcOrderCode.setCellValueFactory(cellValue -> cellValue.getValue().getOrderCode());
-        tcTotalPrice.setCellValueFactory(cellValue -> cellValue.getValue().getTotalMoney());
-        tcCreated.setCellValueFactory(cellValue -> cellValue.getValue().getCreated());
+        tcOrderCode.setCellValueFactory(cellValue -> cellValue.getValue().getOrderCodeProperty());
+        tcTotalPrice.setCellValueFactory(cellValue -> cellValue.getValue().getTotalMoneyProperty());
+        tcCreated.setCellValueFactory(cellValue -> cellValue.getValue().getCreatedProperty());
         tcStatusOrder.setCellValueFactory(cellValue -> cellValue.getValue().getStatusVal());
 
         tblCustomerDetail.setRowFactory(v -> {
-            final TableRow<CustomerDetailModel> row = new TableRow<>();
+            final TableRow<OrderModel> row = new TableRow<>();
             row.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
                 final int index = row.getIndex();
                 if (e.getButton().equals(MouseButton.PRIMARY) && index >= 0 && index < tblCustomerDetail.getItems().size()) {
@@ -123,7 +130,7 @@ public class CustomerDetailController implements Initializable {
 //                        return;
 //                    }
                     if (e.getClickCount() == 1) {
-                        lbFeedback.setText(row.getItem().getContent());
+//                        lbFeedback.setText(row.getItem().getContent());
                         lbNote.setText(row.getItem().getNote());
                     }
                 }
@@ -132,7 +139,7 @@ public class CustomerDetailController implements Initializable {
                 final int index = row.getIndex();
                 if (index < 0 || index >= tblCustomerDetail.getItems().size()) {
                     tblCustomerDetail.getSelectionModel().clearSelection();
-                    lbFeedback.setText("Choose one!");
+//                    lbFeedback.setText("Choose one!");
                     lbNote.setText("");
                     event.consume();
                 }
@@ -140,6 +147,7 @@ public class CustomerDetailController implements Initializable {
             return row;
         });
     }
+
     private void onClickCancel(MouseEvent e) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Close");
@@ -150,8 +158,5 @@ public class CustomerDetailController implements Initializable {
             }
         });
     }
-    
-     private void setDefaultImg(ImageView imgView) {
-        imgView.setImage(new Image("file:" + PLACEHOLDER_NO_IMG_PATH));
-    }
+
 }

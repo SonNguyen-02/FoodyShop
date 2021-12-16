@@ -7,6 +7,7 @@ package com.foodyshop.controller;
 
 import com.foodyshop.helper.ProductHelper;
 import com.foodyshop.helper.SaleHelper;
+import static com.foodyshop.main.Config.IMG_AVATAR_DIR;
 import static com.foodyshop.main.Config.IMG_SALE_DIR;
 import com.foodyshop.main.Const;
 import static com.foodyshop.main.Const.PLACEHOLDER_NO_IMG_PATH;
@@ -57,6 +58,8 @@ public class EditSaleController implements Initializable {
 
     @FXML
     private ImageView imgSale;
+    
+    private Image mImageDefault;
 
     private File imgSaleFile;
 
@@ -84,9 +87,18 @@ public class EditSaleController implements Initializable {
     public void initData(Stage stage, SaleModel sale) {
         this.stage = stage;
         mSaleModel = sale;
-
-        Image image = new Image(IMG_SALE_DIR + sale.getImg(), 300, 300, false, true, true);
-        imgSale.setImage(image);
+   
+        
+        String url = IMG_SALE_DIR + mSaleModel.getImg();
+        mImageDefault = new Image(url, 230, 230, false, true, true);
+        imgSale.setImage(mImageDefault);
+        mImageDefault.errorProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+//                System.out.println(image.getException().getMessage());
+                mImageDefault = new Image("file:" + PLACEHOLDER_NO_IMG_PATH);
+                imgSale.setImage(mImageDefault);
+            }
+        });
 
         txtContent.setText(sale.getContent());
         txtDiscount.setText(sale.getDiscount().toString());
@@ -103,14 +115,10 @@ public class EditSaleController implements Initializable {
             }
         }
     }
-
-    /**
-     * Initializes the controller class.
-     */
+ 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        setDefaultImg(btnChooseFile, imgSale);
         btnSave.setOnMouseClicked(this::onClickSave);
         btnCancel.setOnMouseClicked(this::onClickCancel);
         btnChooseFile.setOnMouseClicked(this::onClickChooseFile);
@@ -190,6 +198,14 @@ public class EditSaleController implements Initializable {
             alert.show();
             return;
         }
+        if (imgSaleFile != null) {
+            if (!isImage(imgSaleFile.getName())) {
+                setDefaultImg(btnChooseFile, imgSale);
+                alert.setHeaderText("File isn't image!");
+                alert.show();
+                return;
+            }
+        }
         try {
             mSaleModel.setProductId(cbProductName.getValue().getId());
             mSaleModel.setDiscount(Integer.parseInt(discount));
@@ -201,15 +217,8 @@ public class EditSaleController implements Initializable {
                 Respond respond = UploadImageToApi.uploadImageToApi(imgSaleFile, Const.TYPE_SALE, mSaleModel.getImg());
                 if (respond.isSuccess()) {
                     mSaleModel.setImg(respond.getMsg());
-                    // Update to database
-                } else {
-                    Alert alerts = new Alert(Alert.AlertType.ERROR);
-                    alerts.setTitle("Error");
-                    alerts.setHeaderText("Add false");
-                    alerts.show();
-                    return;
                 }
-            }          
+            }
             boolean resutl = SaleHelper.updateSale(mSaleModel);
             if (resutl) {
                 stage.close();
@@ -256,7 +265,7 @@ public class EditSaleController implements Initializable {
 
     private void setDefaultImg(Button btnChoose, ImageView imgView) {
         btnChoose.setText("Choose files");
-        imgView.setImage(new Image("file:" + PLACEHOLDER_NO_IMG_PATH));
+        imgView.setImage(mImageDefault);
     }
 
 }

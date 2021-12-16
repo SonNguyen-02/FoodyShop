@@ -223,10 +223,10 @@ public class Navigator {
         controller.initData(modalStage, mIOnInsertProductSuccess);
     }
 
-    public void showAddSale(SaleModel sale, IOnInsertSaleSuccess mIOnInsertSaleSuccess) {
+    public void showAddSale(IOnInsertSaleSuccess mIOnInsertSaleSuccess) {
         showModal("Add Sale ", ADD_SALE_FORM);
         AddSaleController controller = fxLoader.getController();
-        controller.initDataSale(sale, modalStage, mIOnInsertSaleSuccess);
+        controller.initDataSale(modalStage, mIOnInsertSaleSuccess);
     }
 
     public void showEditSale(SaleModel sale) {

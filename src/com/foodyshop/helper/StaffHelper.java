@@ -58,13 +58,13 @@ public class StaffHelper {
             System.out.println(sql);
             ResultSet rs = DBConnection.execSelect(sql);
             if (rs.next()) {
-                int idDb = rs.getInt("id");
-                String passwordDb = rs.getString("password");
-                String nameDb = rs.getString("name");
-                String typeDb = rs.getString("type");
-                String statusDb = rs.getString("status");
-
-//               staff = new StaffModel(idDb,passwordDb,nameDb,typeDb,statusDb);
+                staff = new StaffModel();
+                staff.setId(rs.getInt("id"));
+                staff.setUsername(username);
+                staff.setName(rs.getString("name"));
+                staff.setPassword(rs.getString("password"));
+                staff.setType(rs.getInt("type")); 
+                staff.setStatus(rs.getInt("status"));
             }
         } finally {
             DBConnection.close();

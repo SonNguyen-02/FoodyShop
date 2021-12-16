@@ -20,8 +20,12 @@ public class App extends Application {
     public void start(Stage primaryStage) throws Exception {
         Navigator.getInstance().setPrimaryStage(primaryStage);
 
-        Navigator.getInstance().goToMainLayout();
-//        Navigator.getInstance().goToLoginUI();
+        // username admin@gmail.com
+        // username staff@gmail.com
+        // password azz123456
+//        Navigator.getInstance().goToMainLayout();
+//        System.out.println(BCrypt.hashpw("azz123456", BCrypt.gensalt()));
+        Navigator.getInstance().goToLoginUI();
 
     }
 

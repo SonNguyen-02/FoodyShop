@@ -28,7 +28,7 @@ public class ProductHelper {
 
     public static ObservableList<ProductModel> getAllProduct() {
         ObservableList<ProductModel> listProduct = FXCollections.observableArrayList();
-        String sql = db.select("pd.id,pd.name,pd.description,pd.price,pd.created,pd.status,pd.img,pd.img_detail,ct.name")
+        String sql = db.select("pd.id,pd.category_id,pd.name,pd.description,pd.price,pd.created,pd.status,pd.img,pd.img_detail,ct.name")
                 .from("fs_product pd").join("fs_category ct", "pd.category_id = ct.id")
                 .orderByDESC("id")
                 .getCompiledSelect(true);
@@ -37,6 +37,7 @@ public class ProductHelper {
             while (rs.next()) {
                 ProductModel product = new ProductModel();
                 product.setId(rs.getInt("id"));
+                product.setCategoryId(rs.getInt("category_id"));
                 product.setCategoryName(rs.getString("ct.name"));
                 product.setDescription(rs.getString("description"));
                 product.setPrice(rs.getInt("price"));

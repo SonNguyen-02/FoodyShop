@@ -132,7 +132,7 @@ public class CustomerModel {
 
     public void setImg(String img) {
         this.img = img;
-        String url = IMG_FOOD_DIR + img;
+        String url = IMG_AVATAR_DIR + img;
         Image image = new Image(url, 100, 100, false, true, true);
         mImageView.setImage(image);
         image.errorProperty().addListener((observable, oldValue, newValue) -> {

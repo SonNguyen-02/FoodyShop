@@ -45,10 +45,11 @@ import javafx.stage.Stage;
  * @author X PC
  */
 public class EditProductController implements Initializable {
+
     private Stage stage;
     private File imgProductFile;
     private File imgDetailProductFile;
-     @FXML
+    @FXML
     private ComboBox<CategoryModel> cbCategory;
 
     @FXML
@@ -71,22 +72,19 @@ public class EditProductController implements Initializable {
 
     @FXML
     private Button btnCancel;
-    
-     @FXML
+
+    @FXML
     private ComboBox<String> cbStatus;
-     
+
     private ProductModel mProductModel;
     private ObservableList<CategoryModel> categoryList;
-    
 
- 
-     public void initData(ProductModel product,Stage stage) {
+    public void initData(ProductModel product, Stage stage) {
         this.stage = stage;
         mProductModel = product;
         txtName.setText(product.getName());
         txtPrice.setText(product.getPrice().toString());
         txtDescription.setText(product.getDescription());
-        
 
         Image image = new Image(IMG_FOOD_DIR + product.getImg(), 100, 100, false, true, true);
         Image imageDetail = new Image(IMG_FOOD_DIR + product.getImgDetail(), 256, 192, false, true, true);
@@ -94,9 +92,9 @@ public class EditProductController implements Initializable {
         imgDetail.setImage(imageDetail);
         categoryList = CategoryHelper.getAllCategory();
         if (categoryList != null && !categoryList.isEmpty()) {
-            cbCategory.setItems(categoryList);           
-            for (CategoryModel category : categoryList) {                           
-                if(category.getId() == product.getCategoryId()){
+            cbCategory.setItems(categoryList);
+            for (CategoryModel category : categoryList) {
+                if (category.getId() == product.getCategoryId()) {
                     cbCategory.setValue(category);
                     break;
                 }
@@ -104,9 +102,9 @@ public class EditProductController implements Initializable {
         }
         cbStatus.setItems(FXCollections.observableArrayList(ProductModel.STILL, ProductModel.SOLDOUT));
         cbStatus.setValue(product.getStatusVal().get());
-        
 
     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setDefaultImg();
@@ -115,10 +113,10 @@ public class EditProductController implements Initializable {
         imgDetail.setOnMouseClicked(this::onClickImgDetail);
         btnCancel.setOnMouseClicked(this::onClickCancel);
         btnSave.setOnMouseClicked(this::onClickSave);
-    }  
-    
-    private void onClickCancel(MouseEvent e){
-         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    }
+
+    private void onClickCancel(MouseEvent e) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Close");
         alert.setHeaderText("Do you want close?");
         alert.showAndWait().ifPresent(btnType -> {
@@ -128,6 +126,7 @@ public class EditProductController implements Initializable {
         });
 
     }
+
     private boolean isImage(String name) {
         int index = name.lastIndexOf(".");
         if (!name.endsWith(".") && index != -1) {
@@ -141,6 +140,7 @@ public class EditProductController implements Initializable {
         }
         return false;
     }
+
     private void setDefaultImg() {
         img.setImage(new Image("file:" + PLACEHOLDER_NO_IMG_PATH));
     }
@@ -148,7 +148,7 @@ public class EditProductController implements Initializable {
     private void setDefaultImgDetail() {
         imgDetail.setImage(new Image("file:" + PLACEHOLDER_NO1_IMG_PATH));
     }
-    
+
     private void onClickImg(MouseEvent e) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose image to upload");
@@ -170,8 +170,8 @@ public class EditProductController implements Initializable {
         }
 
     }
-    
-     private void onClickImgDetail(MouseEvent e) {
+
+    private void onClickImgDetail(MouseEvent e) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose image to upload");
         File fileChoose = fileChooser.showOpenDialog(stage);
@@ -191,7 +191,7 @@ public class EditProductController implements Initializable {
             setDefaultImgDetail();
         }
     }
-    
+
     private void onClickSave(MouseEvent e) {
         String name = txtName.getText().trim();
         String price = txtPrice.getText().trim();
@@ -223,49 +223,40 @@ public class EditProductController implements Initializable {
             alert.show();
             return;
         }
-        if (imgProductFile == null) {
-            alert.setHeaderText("Please choose a file img");
-            alert.show();
-            return;
+        if (imgProductFile != null) {
+            if (!isImage(imgProductFile.getName())) {
+                setDefaultImg();
+                alert.setHeaderText("File isn't image!");
+                alert.show();
+                return;
+            }
         }
-        if (!isImage(imgProductFile.getName())) {
-            setDefaultImg();
-            alert.setHeaderText("File isn't image!");
-            alert.show();
-            return;
+
+        if (imgDetailProductFile != null) {
+            if (!isImage(imgDetailProductFile.getName())) {
+                setDefaultImgDetail();
+                alert.setHeaderText("File isn't image!");
+                alert.show();
+                return;
+            }
         }
-        if (imgDetailProductFile == null) {
-            alert.setHeaderText("Please choose a file img");
-            alert.show();
-            return;
-        }
-        if (!isImage(imgDetailProductFile.getName())) {
-            setDefaultImgDetail();
-            alert.setHeaderText("File isn't image!");
-            alert.show();
-            return;
-        }
-       try {
+
+        try {
             mProductModel.setName(name);
             mProductModel.setCategoryId(cbCategory.getValue().getId());
             mProductModel.setCategoryName(cbCategory.getValue().getName());
             mProductModel.setPrice(Integer.parseInt(price));
             mProductModel.setDescription(description);
-            if (imgProductFile != null && imgDetailProductFile != null) {
-                // call API
+            if (imgProductFile != null) {
                 Respond norImgRespond = UploadImageToApi.uploadImageToApi(imgProductFile, Const.TYPE_FOOD, mProductModel.getImg());
-                Respond desImgRespond = UploadImageToApi.uploadImageToApi(imgDetailProductFile, Const.TYPE_FOOD,mProductModel.getImgDetail());
-
-                if (norImgRespond.isSuccess() &&desImgRespond.isSuccess() ) {
+                if (norImgRespond.isSuccess()) {
                     mProductModel.setImg(norImgRespond.getMsg());
-                     mProductModel.setImg(desImgRespond.getMsg());
-                    // Update to database
-                } else {
-                    Alert alerts = new Alert(Alert.AlertType.ERROR);
-                    alerts.setTitle("Error");
-                    alerts.setHeaderText("Add false");
-                    alerts.show();
-                    return;
+                }
+            }
+            if (imgDetailProductFile != null) {
+                Respond desImgRespond = UploadImageToApi.uploadImageToApi(imgDetailProductFile, Const.TYPE_FOOD, mProductModel.getImgDetail());
+                if (desImgRespond.isSuccess()) {
+                    mProductModel.setImgDetail(desImgRespond.getMsg());
                 }
             }
             boolean resutl = ProductHelper.updateProduct(mProductModel);
@@ -285,8 +276,5 @@ public class EditProductController implements Initializable {
             Logger.getLogger(TestDemoController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-
-   }
+    }
 }
-    
-
