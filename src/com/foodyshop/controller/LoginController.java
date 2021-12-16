@@ -7,6 +7,7 @@ package com.foodyshop.controller;
 
 import com.foodyshop.helper.BCrypt;
 import com.foodyshop.helper.StaffHelper;
+import com.foodyshop.main.CurrentAccount;
 import com.foodyshop.main.Navigator;
 import com.foodyshop.model.StaffModel;
 import java.net.URL;
@@ -83,9 +84,10 @@ public class LoginController implements Initializable {
         } else {
             if (BCrypt.checkpw(password, staff.getPassword())) {
                 // check account bi lock k
-                if(staff.getStatusVal().equals("0")){
+                if (staff.getStatus() == 0) {
+                    CurrentAccount.getInstance().setStaff(staff);
                     Navigator.getInstance().goToMainLayout();
-                }else{
+                } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
                     alert.setContentText("Your account is locked!");

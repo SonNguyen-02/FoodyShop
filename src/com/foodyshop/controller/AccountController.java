@@ -5,6 +5,7 @@
  */
 package com.foodyshop.controller;
 
+import com.foodyshop.main.CurrentAccount;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -76,8 +77,8 @@ public class AccountController implements Initializable{
         alert.setContentText("Do you want to save before exiting?");
         Optional<ButtonType> result = alert.showAndWait();
         if(result.get() == ButtonType.OK){
-            stage = (Stage) aPaneAccount.getScene().getWindow();
-            stage.close();
+            CurrentAccount.getInstance().setStaff(null);
+            Navigator.getInstance().goToLoginUI();
         }
         
         

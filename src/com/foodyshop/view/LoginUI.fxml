@@ -9,11 +9,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="495.0" prefWidth="748.0" style="-fx-background-color: #7B4C93B0;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.LoginController">
+<AnchorPane id="AnchorPane" prefHeight="495.0" prefWidth="748.0" style="-fx-background-color: #7B4C93B0;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.LoginController">
 
    <children>
       <AnchorPane layoutX="353.0" layoutY="33.0" prefHeight="438.0" prefWidth="381.0" style="-fx-background-color: #7B4C93BA;">
          <children>
+            <TextField fx:id="txtEmail" layoutX="114.0" layoutY="187.0" prefHeight="39.0" prefWidth="243.0" style="-fx-background-radius: 70; -fx-background-color: #D7C9E0;" />
             <PasswordField fx:id="passPassword" layoutX="114.0" layoutY="261.0" prefHeight="39.0" prefWidth="243.0" style="-fx-background-radius: 70; -fx-background-color: #D7C9E0;" />
             <Button fx:id="btnSignin" layoutX="28.0" layoutY="349.0" mnemonicParsing="false" onAction="#onClickSignIn" prefHeight="46.0" prefWidth="326.0" style="-fx-background-color: #6C3F83; -fx-background-radius: 70;" text="Sign In" textFill="#e2e2eb">
                <font>
@@ -30,7 +31,6 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="txtEmail" layoutX="114.0" layoutY="187.0" prefHeight="39.0" prefWidth="243.0" style="-fx-background-radius: 70; -fx-background-color: #D7C9E0;" />
             <Label layoutX="135.0" layoutY="118.0" prefHeight="35.0" prefWidth="86.0" text="Sign In" textFill="#dddde1">
                <font>
                   <Font name="System Bold" size="24.0" />

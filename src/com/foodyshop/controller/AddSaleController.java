@@ -80,8 +80,6 @@ public class AddSaleController implements Initializable {
 
     private IOnInsertSaleSuccess mIOnInsertSaleSuccess;
 
-    private SaleModel sale;
-
     private ObservableList<ProductModel> productList;
 
     public interface IOnInsertSaleSuccess {
@@ -89,11 +87,10 @@ public class AddSaleController implements Initializable {
         void callback(SaleModel sale);
     }
 
-    public void initDataSale(SaleModel sale, Stage stage, IOnInsertSaleSuccess mIOnInsertSaleSuccess) {
+    public void initDataSale(Stage stage, IOnInsertSaleSuccess mIOnInsertSaleSuccess) {
         setDefaultImg(btnChooseFile, imgSale);
         this.stage = stage;
         this.mIOnInsertSaleSuccess = mIOnInsertSaleSuccess;
-        this.sale = sale;
         productList = ProductHelper.getAllProduct();
         if (productList != null && !productList.isEmpty()) {
             cbProductName.setItems(productList);

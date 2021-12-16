@@ -8,6 +8,7 @@ package com.foodyshop.controller;
 import com.foodyshop.controller.AddSaleController.IOnInsertSaleSuccess;
 import com.foodyshop.helper.SaleHelper;
 import com.foodyshop.main.Const;
+import com.foodyshop.main.CurrentAccount;
 import com.foodyshop.main.Navigator;
 import com.foodyshop.main.UploadImageToApi;
 import com.foodyshop.model.Order_DetailModel;
@@ -79,7 +80,7 @@ public class SaleController implements Initializable {
 
     @FXML
     private Button btnDelete, btnOnSale, btnDiscountEnd;
-    
+
     @FXML
     private TextField txtSearch;
 
@@ -94,18 +95,26 @@ public class SaleController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        SaleModel sale = new SaleModel();
-        btnDelete.setOnMouseClicked(this::onClickDelete);
-        btnOnSale.setOnMouseClicked(this::onClickOnSale);
-        btnDiscountEnd.setOnMouseClicked(this::onClickDiscountEnd);
-        btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddSale(sale, new AddSaleController.IOnInsertSaleSuccess() {
-            @Override
-            public void callback(SaleModel sale) {
-                sale.setImg(sale.getImg());
-                listSale.add(0, sale);
-            }
-        }));
-        btnEdit.setOnMouseClicked(this::onClickEdit);
+        if (CurrentAccount.getInstance().isStaff()) {
+            btnAdd.setVisible(false);
+            btnEdit.setVisible(false);
+            btnDelete.setVisible(false);
+            btnOnSale.setVisible(false);
+            btnDiscountEnd.setVisible(false);
+        } else {
+            btnDelete.setOnMouseClicked(this::onClickDelete);
+            btnOnSale.setOnMouseClicked(this::onClickOnSale);
+            btnDiscountEnd.setOnMouseClicked(this::onClickDiscountEnd);
+            btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddSale(new AddSaleController.IOnInsertSaleSuccess() {
+                @Override
+                public void callback(SaleModel sale) {
+                    sale.setImg(sale.getImg());
+                    listSale.add(0, sale);
+                }
+            }));
+            btnEdit.setOnMouseClicked(this::onClickEdit);
+
+        }
 
         tcStt.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tblSale.getItems().indexOf(cellData.getValue()) + 1) + ""));
         tcProductName.setCellValueFactory(cellValue -> cellValue.getValue().getProductNameProperty());
@@ -140,7 +149,7 @@ public class SaleController implements Initializable {
                     return true;
                 } else if (SaleModel.getDiscount().toString().indexOf(searchKeyword) > -1) {
                     return true;
-                }  else {
+                } else {
                     return false;
                 }
             });
@@ -178,7 +187,7 @@ public class SaleController implements Initializable {
         //        Order_DetailModel OrderDetail = new Order_DetailModel();
         if (sale != null) {
             Alert alerts = new Alert(Alert.AlertType.CONFIRMATION);
-            alerts.setTitle("ERROR");
+            alerts.setTitle("CONFIRM");
             alerts.setHeaderText("Do you want delete sale of product " + sale.getProductName());
             alerts.showAndWait().ifPresent(btn -> {
                 if (btn == ButtonType.OK) {
@@ -190,9 +199,8 @@ public class SaleController implements Initializable {
                         alert.show();
                     } else {
                         try {
-                            UploadImageToApi.removeImageFromApi(Const.TYPE_TOPIC, sale.getImg());
-
                             if (SaleHelper.deleteSale(sale)) {
+                                UploadImageToApi.removeImageFromApi(Const.TYPE_SALE, sale.getImg());
                                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                                 alert.setTitle("ERROR");
                                 alert.setHeaderText("Delete success!");
