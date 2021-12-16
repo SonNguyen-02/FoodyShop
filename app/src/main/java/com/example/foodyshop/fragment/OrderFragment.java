@@ -67,7 +67,6 @@ public class OrderFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("ddd", "onResume: Oder fragment");
         if (isCreate) {
             isCreate = false;
             return;

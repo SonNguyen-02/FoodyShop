@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.foodyshop.R;
 import com.example.foodyshop.activity.MainActivity;
 import com.example.foodyshop.model.ProductModel;
@@ -87,8 +88,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             layoutParams.width = itemLength;
             holder.imgProduct.getLayoutParams().height = itemLength;
         }
-
-        holder.imgProduct.setImageResource(R.drawable.test_product_icon);
+        Glide.with(context).load(product.getImg())
+                .placeholder(R.drawable.test_product_icon)
+                .error(R.drawable.test_product_icon)
+                .into(holder.imgProduct);
         holder.tvName.setText(product.getName());
         holder.tvPriceSale.setText(PRICE_FORMAT.format(product.getPriceSale()));
         if (product.getDiscount() != null) {

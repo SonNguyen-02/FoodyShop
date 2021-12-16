@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.foodyshop.R;
 import com.example.foodyshop.model.OrderDetailModel;
 
@@ -42,7 +43,10 @@ public class ProductOrderAdapter extends RecyclerView.Adapter<ProductOrderAdapte
         if (orderDetail == null) {
             return;
         }
-        holder.imgProduct.setImageResource(R.drawable.test_product_icon);
+        Glide.with(context).load(orderDetail.getImg())
+                .placeholder(R.drawable.test_product_icon)
+                .error(R.drawable.test_product_icon)
+                .into(holder.imgProduct);
         holder.tvName.setText(orderDetail.getName());
         holder.tvPrice.setText(PRICE_FORMAT.format(orderDetail.getPrice()));
         holder.tvAmount.setText(String.valueOf(orderDetail.getAmount()));

@@ -1,5 +1,7 @@
 package com.example.foodyshop.model;
 
+import static com.example.foodyshop.config.Config.IMG_AVATAR_DIR;
+
 import com.example.foodyshop.helper.Helper;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -74,7 +76,7 @@ public class FeedbackModel implements Serializable {
     }
 
     public String getCustomerImg() {
-        return customerImg;
+        return IMG_AVATAR_DIR + customerImg;
     }
 
     public void setCustomerImg(String customerImg) {

@@ -309,15 +309,15 @@ public class Helper {
     }
 
     public static long parseDate(String text) {
+        text = text == null ? "" : text;
         String format = "yyyy-MM-dd HH:mm:ss";
-        if (text != null && text.length() == 10) {
+        if (text.length() == 10) {
             format = "yyyy-MM-dd";
         }
-        Log.e("ddd", "parseDate: format " + format);
         SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.forLanguageTag("vi_VN"));
         try {
             return Objects.requireNonNull(dateFormat.parse(text)).getTime();
-        } catch (ParseException e) {
+        } catch (ParseException | NullPointerException e) {
             e.printStackTrace();
             return 0;
         }

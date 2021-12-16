@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment implements ProductAdapter.IOnclickPro
     private ShimmerFrameLayout sflHome;
     private LinearLayout llHome;
     private RecyclerView rcvTopic, rcvProductPopular, rcvProductSuggest;
-    private RelativeLayout rlSuggest, rlLoading;
+    private RelativeLayout rlPopular, rlSuggest, rlLoading;
 
     private MainActivity mMainActivity;
     private List<TopicModel> mListTopic;
@@ -91,6 +91,7 @@ public class HomeFragment extends Fragment implements ProductAdapter.IOnclickPro
         rcvTopic = view.findViewById(R.id.rcv_topic);
         rcvProductPopular = view.findViewById(R.id.rcv_product_popular);
         rcvProductSuggest = view.findViewById(R.id.rcv_product_suggest);
+        rlPopular = view.findViewById(R.id.rl_popular);
         rlSuggest = view.findViewById(R.id.rl_suggest);
         rlLoading = view.findViewById(R.id.rl_loading);
     }
@@ -140,6 +141,12 @@ public class HomeFragment extends Fragment implements ProductAdapter.IOnclickPro
                     return;
                 }
                 if (response.isSuccessful() && response.body() != null) {
+                    if (response.body().isEmpty()) {
+                        rlPopular.setVisibility(View.GONE);
+                        isLoadPrdPopularSuccess = true;
+                        return;
+                    }
+                    rlPopular.setVisibility(View.VISIBLE);
                     ProductAdapter adapter = new ProductAdapter(requireContext(), response.body(), false, HomeFragment.this);
                     rcvProductPopular.setAdapter(adapter);
                     rcvProductPopular.setFocusable(false);
@@ -263,7 +270,9 @@ public class HomeFragment extends Fragment implements ProductAdapter.IOnclickPro
     private void startShimmer() {
         llHome.setVisibility(View.GONE);
         sflHome.setVisibility(View.VISIBLE);
-        sflHome.startShimmer();
+        if (!sflHome.isShimmerStarted()) {
+            sflHome.startShimmer();
+        }
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -279,7 +288,9 @@ public class HomeFragment extends Fragment implements ProductAdapter.IOnclickPro
     }
 
     private void stopShimmer() {
-        sflHome.stopShimmer();
+        if (sflHome.isShimmerStarted()) {
+            sflHome.stopShimmer();
+        }
         sflHome.setVisibility(View.GONE);
         llHome.setVisibility(View.VISIBLE);
     }

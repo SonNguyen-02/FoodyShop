@@ -45,8 +45,7 @@ public class MainActivity extends AppCompatActivity implements TopicAdapter.IOnc
     public static int HEIGHT_DEVICE;
     public static int WIDTH_DEVICE;
 
-
-    private ImageView imgMenu, imgSearch, imgCart;
+    private ImageView imgMenu, imgSearch;
     private TextView tvTitle, tvIndicator;
     private RelativeLayout rlSearch, rlCart;
     private ViewPager2 mViewPager2;
@@ -55,9 +54,9 @@ public class MainActivity extends AppCompatActivity implements TopicAdapter.IOnc
 
     private List<TopicModel> mListTopic;
 
+    private long lastAddFragment;
     private boolean isBackPress;
     private boolean isInit;
-//    private boolean isClickBottomNav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements TopicAdapter.IOnc
         setContentView(R.layout.activity_main);
         if (Helper.isLogin(getApplicationContext())) {
             Helper.setCurrentAccount(Helper.getUserInfo(getApplicationContext()));
-            Log.e("ddd", "onCreate: " + Helper.getCurrentAccount());
         }
         isInit = true;
         initUi();
@@ -75,34 +73,6 @@ public class MainActivity extends AppCompatActivity implements TopicAdapter.IOnc
         HomeViewPagerAdapter adapter = new HomeViewPagerAdapter(this);
         mViewPager2.setAdapter(adapter);
         mViewPager2.setUserInputEnabled(false);
-//        mViewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-//            @Override
-//            public void onPageSelected(int position) {
-//                super.onPageSelected(position);
-//                if(isClickBottomNav){
-//                    isClickBottomNav = false;
-//                    return;
-//                }
-//                setSearchBarVisibility(position == 0);
-//                switch (position) {
-//                    case 0:
-//                        mBottomNavigationView.getMenu().findItem(R.id.menu_home).setChecked(true);
-//                        break;
-//                    case 1:
-//                        mBottomNavigationView.getMenu().findItem(R.id.menu_order).setChecked(true);
-//                        tvTitle.setText(R.string.menu_order);
-//                        break;
-//                    case 2:
-//                        mBottomNavigationView.getMenu().findItem(R.id.menu_notification).setChecked(true);
-//                        tvTitle.setText(R.string.menu_notification);
-//                        break;
-//                    case 3:
-//                        mBottomNavigationView.getMenu().findItem(R.id.menu_account).setChecked(true);
-//                        tvTitle.setText(R.string.menu_account);
-//                        break;
-//                }
-//            }
-//        });
 
         rlSearch.setOnClickListener(view -> addFragmentToMainLayout(SearchFragment.newInstance(this), SearchFragment.class.getName()));
         imgSearch.setOnClickListener(view -> addFragmentToMainLayout(SearchFragment.newInstance(this), SearchFragment.class.getName()));
@@ -111,13 +81,13 @@ public class MainActivity extends AppCompatActivity implements TopicAdapter.IOnc
             Intent intent = new Intent(getApplicationContext(), CartActivity.class);
             startActivity(intent);
         });
-
         initRlCart();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        isBackPress = false;
         if (isInit) {
             isInit = false;
             return;
@@ -132,7 +102,6 @@ public class MainActivity extends AppCompatActivity implements TopicAdapter.IOnc
         WIDTH_DEVICE = metrics.widthPixels;
         imgMenu = findViewById(R.id.img_menu_category);
         imgSearch = findViewById(R.id.img_search);
-        imgCart = findViewById(R.id.img_cart);
         tvTitle = findViewById(R.id.tv_title);
         tvIndicator = findViewById(R.id.tv_indicator);
         rlSearch = findViewById(R.id.rl_search);
@@ -146,14 +115,16 @@ public class MainActivity extends AppCompatActivity implements TopicAdapter.IOnc
         if (totalCart > 0) {
             tvIndicator.setVisibility(View.VISIBLE);
             tvIndicator.setText(String.valueOf(totalCart));
-            imgCart.setTranslationX(-3f);
         } else {
             tvIndicator.setVisibility(View.GONE);
-            imgCart.setTranslationX(0);
         }
     }
 
     private void addFragmentToMainLayout(Fragment fragment, String name) {
+        if (System.currentTimeMillis() - lastAddFragment < 1000) {
+            return;
+        }
+        lastAddFragment = System.currentTimeMillis();
         isBackPress = false;
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.anim_fade_in, R.anim.anim_left_out, R.anim.anim_right_in, R.anim.anim_fade_out);
@@ -204,7 +175,6 @@ public class MainActivity extends AppCompatActivity implements TopicAdapter.IOnc
     private boolean onItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id != mBottomNavigationView.getSelectedItemId()) {
-//            isClickBottomNav = true;
             isBackPress = false;
             setSearchBarVisibility(id == R.id.menu_home);
             switch (id) {

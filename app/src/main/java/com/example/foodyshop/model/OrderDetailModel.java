@@ -1,5 +1,7 @@
 package com.example.foodyshop.model;
 
+import static com.example.foodyshop.config.Config.IMG_FOOD_DIR;
+
 import androidx.annotation.NonNull;
 
 import com.google.gson.annotations.Expose;
@@ -120,7 +122,7 @@ public class OrderDetailModel implements Serializable {
     }
 
     public String getImg() {
-        return img;
+        return IMG_FOOD_DIR + img;
     }
 
     public void setImg(String img) {

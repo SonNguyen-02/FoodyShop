@@ -31,8 +31,8 @@ public class AccountFragment extends Fragment {
     private View view;
     private ImageView imgAvatar;
     private TextView tvCustomerName;
-    private CardView cardMyAccount, cardNotification;
-    private RelativeLayout rlHeader, rlMyAccount, rlNotification, rlSetting, rlHelpCenter, rlLogout, rlLogin;
+    private CardView cardNotification;
+    private RelativeLayout rlMyAccount, rlNotification, rlSetting, rlHelpCenter, rlLogout, rlLogin;
     private boolean isCreate;
 
     @Nullable
@@ -58,9 +58,7 @@ public class AccountFragment extends Fragment {
     private void initUi() {
         imgAvatar = view.findViewById(R.id.img_avatar);
         tvCustomerName = view.findViewById(R.id.tv_customer_name);
-        cardMyAccount = view.findViewById(R.id.card_my_account);
         cardNotification = view.findViewById(R.id.card_notification);
-        rlHeader = view.findViewById(R.id.rl_header);
         rlMyAccount = view.findViewById(R.id.rl_my_account);
         rlNotification = view.findViewById(R.id.rl_notification);
         rlSetting = view.findViewById(R.id.rl_setting);
@@ -73,7 +71,6 @@ public class AccountFragment extends Fragment {
         if (Helper.isLogin(requireContext())) {
             rlLogin.setVisibility(View.GONE);
             rlLogout.setVisibility(View.VISIBLE);
-            cardMyAccount.setVisibility(View.VISIBLE);
             cardNotification.setVisibility(View.VISIBLE);
 
             CustomerModel mAccount = Helper.getCurrentAccount();
@@ -83,11 +80,6 @@ public class AccountFragment extends Fragment {
                     .error(R.drawable.placeholder_user).into(imgAvatar);
 
             tvCustomerName.setText(mAccount.getName());
-
-            rlHeader.setOnClickListener(view -> {
-                Intent intent = new Intent(requireContext(), MyAccountActivity.class);
-                startActivity(intent);
-            });
 
             rlMyAccount.setOnClickListener(view -> {
                 Intent intent = new Intent(requireContext(), MyAccountActivity.class);
@@ -112,20 +104,18 @@ public class AccountFragment extends Fragment {
         } else {
             rlLogin.setVisibility(View.VISIBLE);
             rlLogout.setVisibility(View.GONE);
-            cardMyAccount.setVisibility(View.GONE);
             cardNotification.setVisibility(View.GONE);
 
             imgAvatar.setImageResource(R.drawable.placeholder_user);
             tvCustomerName.setText(R.string.guest_user);
 
-            rlHeader.setOnClickListener(view -> {
+            rlMyAccount.setOnClickListener(view -> {
                 goToLogin();
             });
 
             rlLogin.setOnClickListener(view -> {
                 goToLogin();
             });
-
         }
 
         rlSetting.setOnClickListener(view -> {

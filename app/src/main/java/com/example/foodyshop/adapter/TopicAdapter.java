@@ -63,7 +63,7 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicViewHol
         }
         holder.tvName.setText(topicModel.getName());
         holder.rlItem.setOnClickListener(view -> mIOnclickTopicItem.onclickTopicItem(topicModel));
-        Glide.with(context).load(topicModel.getImg()).placeholder(R.drawable.placeholder_img).into(holder.imgTopic);
+        Glide.with(context).load(topicModel.getImg()).placeholder(R.drawable.placeholder_img).error(R.drawable.placeholder_img).into(holder.imgTopic);
     }
 
     @Override

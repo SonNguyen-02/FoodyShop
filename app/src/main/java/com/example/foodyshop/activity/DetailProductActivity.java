@@ -24,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.foodyshop.R;
 import com.example.foodyshop.adapter.FeedbackAdapter;
 import com.example.foodyshop.dialog.AddToCardBottomSheet;
@@ -51,7 +52,7 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
 
     private ProductModel mProduct;
 
-    private ImageView imgBack, imgCart, imgProduct;
+    private ImageView imgBack, imgProduct;
     private TextView tvIndicator, tvProductName, tvPrice, tvPriceSale, tvDiscount, tvTotalFeedback;
     private ExpandableTextView tvDescription;
 
@@ -123,8 +124,10 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
             initTotalPage();
             initFeedbackData();
             // init product
-//            Glide.with(this).load(mProduct.getImg()).placeholder(R.drawable.placeholder_img).into(imgProduct);
-            imgProduct.setImageResource(R.drawable.test_product_detail);
+            Glide.with(this).load(mProduct.getImgDetail())
+                    .placeholder(R.drawable.gif_loading)
+                    .error(R.drawable.test_product_detail)
+                    .into(imgProduct);
             tvProductName.setText(mProduct.getName());
             tvDescription.setText(mProduct.getDescription());
 
@@ -156,7 +159,6 @@ public class DetailProductActivity extends AppCompatActivity implements Feedback
 
     private void initUi() {
         imgBack = findViewById(R.id.img_back);
-        imgCart = findViewById(R.id.img_cart);
         imgProduct = findViewById(R.id.img_product);
         tvIndicator = findViewById(R.id.tv_indicator);
         tvProductName = findViewById(R.id.tv_product_name);

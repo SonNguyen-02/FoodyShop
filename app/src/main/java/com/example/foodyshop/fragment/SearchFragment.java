@@ -113,7 +113,7 @@ public class SearchFragment extends Fragment implements ProductAdapter.IOnclickP
                 edtSearch.requestFocus();
                 ToastCustom.notice(requireContext(), "Hãy nhập để tìm kiếm!", ToastCustom.INFO).show();
             } else {
-                if (this.search.equals(search)) {
+                if (this.search != null && this.search.equals(search)) {
                     return;
                 }
                 this.search = search;

@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -40,8 +41,6 @@ import com.example.foodyshop.service.APIService;
 import com.example.foodyshop.service.DataService;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -273,6 +272,24 @@ public class DetailTopicActivity extends AppCompatActivity implements CategoryAd
         rcvCategory.setLayoutManager(layoutManager);
     }
 
+    private final ViewTreeObserver.OnScrollChangedListener scrollListener = () -> {
+        if (isLoading || isLastPage) {
+            return;
+        }
+        if (scrollView.getChildAt(0).getBottom() <= (scrollView.getHeight() + scrollView.getScrollY())) {
+            //scroll view is at bottom
+            Log.e("ddd", "loadMoreItem: ");
+            isLoading = true;
+            currentPage++;
+            CategoryModel category = mCategoryAdapter.getCurrentItem();
+            if (category.getId() == -1) {
+                loadNextPage();
+            } else {
+                loadNextPage(category);
+            }
+        }
+    };
+
     // All category
     private void initProductData(boolean isFirst) {
         APIService.getService().getAllProductInTopic(JWT.createToken(), mTopic.getId(), 1, false, mFilter.getMinPrice(), mFilter.getMaxPrice(), search, mFilter.getOrderPrice()).enqueue(new Callback<List<ProductModel>>() {
@@ -299,18 +316,9 @@ public class DetailTopicActivity extends AppCompatActivity implements CategoryAd
                     rcvProduct.setLayoutManager(layoutManager);
 
                     // set on scroll botom load more data
-                    scrollView.getViewTreeObserver().addOnScrollChangedListener(() -> {
-                        if (isLoading || isLastPage) {
-                            return;
-                        }
-                        if (scrollView.getChildAt(0).getBottom() <= (scrollView.getHeight() + scrollView.getScrollY())) {
-                            //scroll view is at bottom
-                            Log.e("ddd", "loadMoreItem: ");
-                            isLoading = true;
-                            currentPage++;
-                            loadNextPage();
-                        }
-                    });
+                    scrollView.getViewTreeObserver().addOnScrollChangedListener(scrollListener);
+                } else {
+                    scrollView.getViewTreeObserver().removeOnScrollChangedListener(scrollListener);
                 }
             }
 
@@ -390,18 +398,9 @@ public class DetailTopicActivity extends AppCompatActivity implements CategoryAd
                     rcvProduct.setLayoutManager(layoutManager);
 
                     // set on scroll botom load more data
-                    scrollView.getViewTreeObserver().addOnScrollChangedListener(() -> {
-                        if (isLoading || isLastPage) {
-                            return;
-                        }
-                        if (scrollView.getChildAt(0).getBottom() <= (scrollView.getHeight() + scrollView.getScrollY())) {
-                            //scroll view is at bottom
-                            Log.e("ddd", "loadMoreItem: ");
-                            isLoading = true;
-                            currentPage++;
-                            loadNextPage(mCategory);
-                        }
-                    });
+                    scrollView.getViewTreeObserver().addOnScrollChangedListener(scrollListener);
+                } else {
+                    scrollView.getViewTreeObserver().removeOnScrollChangedListener(scrollListener);
                 }
             }
 
@@ -418,10 +417,10 @@ public class DetailTopicActivity extends AppCompatActivity implements CategoryAd
 
             @Override
             public void onResponse(@NonNull Call<Integer> call, @NonNull Response<Integer> response) {
-                Log.e("ddd", "onResponse: " + currentPoint + " : " + currentPointLoad);
                 if (response.isSuccessful() && response.body() != null) {
                     if (currentPoint == currentPointLoad) {
                         totalPage = response.body();
+                        Log.e("ddd", "onResponse: TotalPage: " + totalPage);
                         if (totalPage == 0) {
                             isLastPage = true;
                             rlLoading.setVisibility(View.GONE);

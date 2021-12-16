@@ -84,22 +84,6 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="@dimen/item_product_width"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/space_view"
-                        android:background="@color/colorShimmer"
-                        android:textSize="16sp" />
-
-                    <include layout="@layout/shimmer_rcv_product_grid" />
-
-                </LinearLayout>
-
             </LinearLayout>
 
         </com.facebook.shimmer.ShimmerFrameLayout>
@@ -137,6 +121,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rl_popular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"

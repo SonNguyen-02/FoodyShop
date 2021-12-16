@@ -182,7 +182,7 @@ public class EnterOtpActivity extends AppCompatActivity {
             EditText currentView = (EditText) view;
             int action = keyEvent.getAction();
             int code = keyEvent.getKeyCode();
-            Log.e("ddd", "onKey: Action " + action + " code: " + code);
+//            Log.e("ddd", "onKey: Action " + action + " code: " + code);
             if (action == KeyEvent.ACTION_DOWN && code >= KeyEvent.KEYCODE_0 && code <= KeyEvent.KEYCODE_9) {
                 if (currentView.getText().toString().trim().isEmpty()) {
                     currentView.setText(String.valueOf(code - 7));
@@ -216,7 +216,6 @@ public class EnterOtpActivity extends AppCompatActivity {
         @Override
         public void onTextChanged(@NonNull CharSequence charSequence, int i, int i1, int i2) {
             String s = charSequence.toString();
-            Log.e("ddd", "onTextChanged: " + s);
             if (!s.isEmpty()) {
                 new Handler().postDelayed(() -> {
                     if (!s.matches("\\d")) {

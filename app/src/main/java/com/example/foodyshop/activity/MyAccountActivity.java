@@ -61,7 +61,7 @@ public class MyAccountActivity extends AppCompatActivity {
     private TextView tvCustomerName, tvPhone, tvGender, tvDateBirth, tvAddress;
     private Uri mUri;
     private CustomerModel mUserData;
-    private long lastClickSave;
+    private long lastTimeClick;
 
     private final ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -136,6 +136,10 @@ public class MyAccountActivity extends AppCompatActivity {
         });
 
         rlCustomerName.setOnClickListener(view -> {
+            if (System.currentTimeMillis() - lastTimeClick < 1000) {
+                return;
+            }
+            lastTimeClick = System.currentTimeMillis();
             Intent intent = new Intent(this, EditNameActivity.class);
             String name = mUserData.getName();
             if (name == null || name.isEmpty()) {
@@ -146,10 +150,18 @@ public class MyAccountActivity extends AppCompatActivity {
         });
 
         rlPhone.setOnClickListener(view -> {
+            if (System.currentTimeMillis() - lastTimeClick < 1500) {
+                return;
+            }
+            lastTimeClick = System.currentTimeMillis();
             ToastCustom.notice(this, "Hiện tại chưa thể cập nhập\nsố điện thoại", ToastCustom.WARNING).show();
         });
 
         rlGender.setOnClickListener(view -> {
+            if (System.currentTimeMillis() - lastTimeClick < 1000) {
+                return;
+            }
+            lastTimeClick = System.currentTimeMillis();
             ChooseGenderDialog.newInstance(this, (dialog, typeChoose) -> {
                 dialog.dismiss();
                 mUserData.setGender(typeChoose);
@@ -159,16 +171,18 @@ public class MyAccountActivity extends AppCompatActivity {
 
 
         rlDateBirth.setOnClickListener(view -> {
+            if (System.currentTimeMillis() - lastTimeClick < 1000) {
+                return;
+            }
+            lastTimeClick = System.currentTimeMillis();
             String defaultDate = mUserData.getDatebirth();
             if (defaultDate == null) {
                 defaultDate = Helper.getCurrentAccount().getDatebirth();
             }
-            Log.e("ddd", "onCreate: " + defaultDate);
             DatePickerSpinnerDialog.newInstance(this, (datePicker, year, month, day) -> {
                 String days = (day > 9 ? String.valueOf(day) : "0" + day);
                 String months = (month > 9 ? String.valueOf(month) : "0" + month);
                 String date = year + "-" + months + "-" + days;
-                Log.e("ddd", "onCreate: date " + date);
 
                 String dateBirthLocal = days + "/" + months + "/" + year;
                 mUserData.setDatebirth(date);
@@ -283,20 +297,19 @@ public class MyAccountActivity extends AppCompatActivity {
             File file = new File(realPath);
             if (file.exists()) {
                 if (file.delete()) {
-                    Log.e("ddd", "releaseCacheUri: clear cache");
+                    Log.e("ddd", "releaseCacheUri: clear cache " + file.getName());
                 }
             }
-//            Log.e("ddd", "releaseCacheUri: " + mUri.getPath());
             deleteFile(mUri.getPath().substring(mUri.getPath().lastIndexOf("/") + 1));
             mUri = null;
         }
     }
 
     private void saveUserInfo() {
-        if (System.currentTimeMillis() - lastClickSave < 1000) {
+        if (System.currentTimeMillis() - lastTimeClick < 1000) {
             return;
         }
-        lastClickSave = System.currentTimeMillis();
+        lastTimeClick = System.currentTimeMillis();
         if (mUserData.isNotMatch(Helper.getCurrentAccount()) || mUri != null) {
             LoadingDialog dialog = new LoadingDialog(this);
             dialog.show();
@@ -323,7 +336,6 @@ public class MyAccountActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(@NonNull Call<Respond> call, @NonNull Throwable t) {
-                        Log.e("ddd", "onFailure: top");
                         dialog.dismiss();
                         ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.INFO).show();
                     }

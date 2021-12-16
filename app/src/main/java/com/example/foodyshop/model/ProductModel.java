@@ -1,5 +1,7 @@
 package com.example.foodyshop.model;
 
+import static com.example.foodyshop.config.Config.IMG_FOOD_DIR;
+
 import com.example.foodyshop.config.Config;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -96,7 +98,7 @@ public class ProductModel implements Serializable {
     }
 
     public String getImg() {
-        return Config.IMG_FOOD_DIR + img;
+        return IMG_FOOD_DIR + img;
     }
 
     public void setImg(String img) {
@@ -104,7 +106,7 @@ public class ProductModel implements Serializable {
     }
 
     public String getImgDetail() {
-        return imgDetail;
+        return IMG_FOOD_DIR + imgDetail;
     }
 
     public void setImgDetail(String imgDetail) {

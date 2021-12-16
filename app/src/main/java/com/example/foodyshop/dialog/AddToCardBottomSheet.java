@@ -21,6 +21,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
 import com.example.foodyshop.R;
 import com.example.foodyshop.model.ProductModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -96,8 +97,10 @@ public class AddToCardBottomSheet extends BottomSheetDialogFragment {
         if (mProduct == null) {
             return;
         }
-//            Glide.with(this).load(mProduct.getImg()).placeholder(R.drawable.placeholder_img).into(imgProduct);
-        imgProduct.setImageResource(R.drawable.test_product_icon);
+        Glide.with(this).load(mProduct.getImg())
+                .placeholder(R.drawable.test_product_icon)
+                .error(R.drawable.test_product_icon)
+                .into(imgProduct);
         tvProductName.setText(mProduct.getName());
         tvPriceSale.setText(PRICE_FORMAT.format(mProduct.getPriceSale()));
         if (mProduct.getDiscount() != null) {
@@ -118,7 +121,6 @@ public class AddToCardBottomSheet extends BottomSheetDialogFragment {
                 String regex = "^[1-9][0-9]{0,2}$";
                 new Handler().postDelayed(() -> {
                     if (charSequence.toString().matches(regex)) {
-                        Log.e("ddd", "beforeTextChanged OK: " + charSequence);
                         int amount = Integer.parseInt(charSequence.toString());
                         if (amount == 1) {
                             imgMinus.setEnabled(false);
@@ -140,7 +142,6 @@ public class AddToCardBottomSheet extends BottomSheetDialogFragment {
                         if (charSequence.toString().trim().length() != 0) {
                             edtAmount.setText("1");
                             edtAmount.requestFocus(1);
-                            Log.e("ddd", "beforeTextChanged FA: " + charSequence);
                         } else {
                             imgMinus.setAlpha(0.5f);
                             imgMinus.setEnabled(false);

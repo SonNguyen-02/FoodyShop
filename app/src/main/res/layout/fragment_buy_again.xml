@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nested_scroll"
     android:layout_width="match_parent"
@@ -14,28 +15,30 @@
             android:id="@+id/ll_oops_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="32dp"
             android:visibility="visible">
 
-
-            <ImageView
-                android:layout_width="85dp"
-                android:layout_height="85dp"
-                android:layout_marginEnd="8sp"
-                android:src="@drawable/oops_login"
-                tools:ignore="ContentDescription" />
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/image_on_startup"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_margin="30dp"
+                android:scaleType="centerInside"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/lottie_login" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:text="Bạn cần phải đăng nhập để xem lịch sử mua hàng"
                 android:textAlignment="center"
                 android:textColor="@color/colorTextPrimary"
-                android:textSize="16sp" />
+                android:textSize="17sp" />
 
             <Button
                 android:id="@+id/btn_go_to_login"
@@ -100,10 +103,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@id/rcv_product_bought"
+                    android:layout_marginTop="32dp"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="16dp"
-                    android:layout_marginTop="32dp"
                     android:visibility="gone">
 
                     <ImageView

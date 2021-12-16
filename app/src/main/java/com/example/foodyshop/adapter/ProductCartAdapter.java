@@ -20,6 +20,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.example.foodyshop.R;
@@ -82,7 +83,10 @@ public class ProductCartAdapter extends RecyclerView.Adapter<ProductCartAdapter.
         }
         mViewBinderHelper.bind(holder.mSwipeRevealLayout, String.valueOf(orderDetail.getId()));
         mViewBinderHelper.closeLayout(String.valueOf(orderDetail.getId()));
-        holder.imgProduct.setImageResource(R.drawable.test_product_icon);
+        Glide.with(context).load(orderDetail.getImg())
+                .placeholder(R.drawable.test_product_icon)
+                .error(R.drawable.test_product_icon)
+                .into(holder.imgProduct);
         holder.tvName.setText(orderDetail.getName());
         holder.tvPriceSale.setText(PRICE_FORMAT.format(orderDetail.getPriceSale()));
         holder.edtAmount.setText(String.valueOf(orderDetail.getAmount()));
@@ -135,7 +139,6 @@ public class ProductCartAdapter extends RecyclerView.Adapter<ProductCartAdapter.
                         isNotMatch = false;
                         return;
                     }
-//                    Log.e("ddd", "beforeTextChanged OK: " + charSequence);
                     int amount = Integer.parseInt(charSequence.toString());
                     holder.initAmount(amount);
                     mInteractItem.onAmountNumberChange(orderDetail, amount);
@@ -151,7 +154,6 @@ public class ProductCartAdapter extends RecyclerView.Adapter<ProductCartAdapter.
                         holder.initAmount(amount);
                         mInteractItem.onAmountNumberChange(orderDetail, amount);
                     }, 100);
-//                    Log.e("ddd", "beforeTextChanged FA: " + charSequence);
                 }
             }
 
@@ -164,7 +166,6 @@ public class ProductCartAdapter extends RecyclerView.Adapter<ProductCartAdapter.
             if (b) {
                 ((EditText) view).addTextChangedListener(textWatcher);
             } else {
-                Log.e("ddd", "onBindViewHolder: remove");
                 ((EditText) view).removeTextChangedListener(textWatcher);
             }
         });

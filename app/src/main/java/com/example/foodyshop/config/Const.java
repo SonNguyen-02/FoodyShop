@@ -13,10 +13,8 @@ public class Const {
     public static final String KEY_USER_OBJ = "key_user_obj";
     public static final String KEY_USER_CART = "key_user_cart";
     public static final String KEY_TOKEN_LOGIN = "key_token_login";
-    public static final String KEY_CALLBACK = "key_callback";
     public static final String KEY_NEW_TASK = "key_new_task";
     public static final String KEY_SIGN_IN_OK = "key_sign_in_ok";
-    public static final String KEY_POSITION = "key_position";
 
     public static final String KEY_IS_CHECK_ALL = "key_is_check_all";
     public static final String KEY_TOTAL_MONEY = "key_total_money";
