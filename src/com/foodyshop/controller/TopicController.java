@@ -8,6 +8,7 @@ package com.foodyshop.controller;
 import com.foodyshop.helper.CategoryHelper;
 import com.foodyshop.helper.TopicHelper;
 import com.foodyshop.main.Const;
+import com.foodyshop.main.CurrentAccount;
 import com.foodyshop.main.Navigator;
 import com.foodyshop.main.UploadImageToApi;
 import com.foodyshop.model.TopicModel;
@@ -78,6 +79,11 @@ public class TopicController implements Initializable {
         listTopic = TopicHelper.getAllTopic();
 
         tblTopic.setItems(listTopic);
+        if (CurrentAccount.getInstance().isStaff()) {
+            btnAdd.setVisible(false);
+            btnEdit.setVisible(false);
+            btnDelete.setVisible(false);
+        }else{   
         btnDelete.setOnMouseClicked(this::onClickDelete);
         btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddTopic(new AddTopicController.IOnInsertTopicSuccess() {
             @Override
@@ -85,8 +91,8 @@ public class TopicController implements Initializable {
                 listTopic.add(0, topic);
             }
         }));
-        
         btnEdit.setOnMouseClicked(this::onClickEdit);
+        }
     }
 
     private void onClickEdit(MouseEvent e){

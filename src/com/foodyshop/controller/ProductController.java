@@ -9,6 +9,7 @@ import com.foodyshop.helper.OrderHelper;
 import com.foodyshop.helper.Order_DetailHelper;
 import com.foodyshop.helper.ProductHelper;
 import com.foodyshop.main.Const;
+import com.foodyshop.main.CurrentAccount;
 import com.foodyshop.main.Navigator;
 import com.foodyshop.main.UploadImageToApi;
 import com.foodyshop.model.ProductModel;
@@ -89,9 +90,14 @@ public class ProductController implements Initializable {
         tcImg.setCellValueFactory(cellValue -> cellValue.getValue().getImgView());
         listProduct = ProductHelper.getAllProduct();
         tblProduct.setItems(listProduct);
-        btnDelete.setOnMouseClicked(this::onClickDelete);
-        btnEdit.setOnMouseClicked(this::onClickEdit);
         btnProductDetail.setOnMouseClicked(this::onclickshowProduct_Detail);
+        if (CurrentAccount.getInstance().isStaff()) {
+            btnAdd.setVisible(false);
+            btnEdit.setVisible(false);
+            btnDelete.setVisible(false);
+        }else{   
+        btnDelete.setOnMouseClicked(this::onClickDelete);
+        btnEdit.setOnMouseClicked(this::onClickEdit);      
         btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddProduct(new AddProductController.IOnInsertProductSuccess() {
             @Override
             public void callback(ProductModel product) {
@@ -99,7 +105,7 @@ public class ProductController implements Initializable {
                 listProduct.add(0, product);
             }
         }));
-
+                    }       
         FilteredList<ProductModel> filteredData = new FilteredList<>(listProduct, b -> true);
         txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(ProductModel -> {
