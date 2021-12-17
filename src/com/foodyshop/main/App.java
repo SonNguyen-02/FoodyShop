@@ -25,8 +25,8 @@ public class App extends Application {
         // password azz123456
      //   Navigator.getInstance().goToMainLayout();
 //        System.out.println(BCrypt.hashpw("azz123456", BCrypt.gensalt()));
-        Navigator.getInstance().goToLoginUI();
-
+  Navigator.getInstance().goToLoginUI();
+//
     }
 
     /**
