@@ -86,7 +86,7 @@ public class EditProductController implements Initializable {
         txtPrice.setText(product.getPrice().toString());
         txtDescription.setText(product.getDescription());
 
-        Image image = new Image(IMG_FOOD_DIR + product.getImg(), 100, 100, false, true, true);
+        Image image = new Image(IMG_FOOD_DIR + product.getImg(), 192, 192, false, true, true);
         Image imageDetail = new Image(IMG_FOOD_DIR + product.getImgDetail(), 256, 192, false, true, true);
         img.setImage(image);
         imgDetail.setImage(imageDetail);
@@ -196,6 +196,7 @@ public class EditProductController implements Initializable {
         String name = txtName.getText().trim();
         String price = txtPrice.getText().trim();
         String description = txtDescription.getText().trim();
+        String status = cbStatus.getValue();
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         if (name.isEmpty()) {
@@ -247,6 +248,7 @@ public class EditProductController implements Initializable {
             mProductModel.setCategoryName(cbCategory.getValue().getName());
             mProductModel.setPrice(Integer.parseInt(price));
             mProductModel.setDescription(description);
+            mProductModel.setStatusVal(status);
             if (imgProductFile != null) {
                 Respond norImgRespond = UploadImageToApi.uploadImageToApi(imgProductFile, Const.TYPE_FOOD, mProductModel.getImg());
                 if (norImgRespond.isSuccess()) {
