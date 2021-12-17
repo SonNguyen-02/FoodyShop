@@ -2,6 +2,7 @@ package com.foodyshop.controller;
 
 import com.foodyshop.helper.CategoryHelper;
 import com.foodyshop.helper.ProductHelper;
+import com.foodyshop.main.CurrentAccount;
 import com.foodyshop.main.Navigator;
 import com.foodyshop.model.CategoryModel;
 import java.net.URL;
@@ -65,15 +66,20 @@ public class CategoryController implements Initializable {
         tcStatus.setCellValueFactory(cellValue -> cellValue.getValue().getStatusVal());
         listCategory = CategoryHelper.getAllCategory();
         tblCategory.setItems(listCategory);
+        if (CurrentAccount.getInstance().isStaff()) {
+            btnAdd.setVisible(false);
+            btnEdit.setVisible(false);
+            btnDelete.setVisible(false);
+        }else{   
         btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddCategory(new AddCategoryController.IOnAddSuccess() {
             @Override
             public void onAddSuccess(CategoryModel categoryModel) {
                 listCategory.add(0, categoryModel);
             }
-        }));
+        }));       
         btnDelete.setOnMouseClicked(this::onClickDelete);
         btnEdit.setOnMouseClicked(this::onClickEdit);
-
+        }
     }
 
     private void onClickDelete(MouseEvent e) {

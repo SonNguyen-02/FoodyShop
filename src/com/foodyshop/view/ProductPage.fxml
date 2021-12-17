@@ -16,12 +16,12 @@
       <TableView fx:id="tblProduct" layoutY="-2.0" prefHeight="524.0" prefWidth="888.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="100.0">
         <columns>
           <TableColumn fx:id="tcStt" prefWidth="46.0" text="STT" />
-          <TableColumn fx:id="tcName" prefWidth="204.0" text="name" />
-            <TableColumn fx:id="tcCateName" minWidth="0.0" prefWidth="190.0" text="category name" />
-            <TableColumn fx:id="tcPrice" prefWidth="133.0" text="price" />
+          <TableColumn fx:id="tcName" prefWidth="193.0" text="name" />
+            <TableColumn fx:id="tcCateName" minWidth="0.0" prefWidth="182.0" text="category name" />
+            <TableColumn fx:id="tcPrice" prefWidth="142.0" text="price" />
             <TableColumn fx:id="tcImg" prefWidth="100.0" text="img" />
-            <TableColumn fx:id="tcCreated" minWidth="0.0" prefWidth="157.0" text="created" />
-            <TableColumn fx:id="tcStatus" minWidth="0.0" prefWidth="57.0" text="status" />
+            <TableColumn fx:id="tcCreated" minWidth="0.0" prefWidth="135.0" text="created" />
+            <TableColumn fx:id="tcStatus" minWidth="0.0" prefWidth="85.0" text="status" />
         </columns>
       </TableView>
       <HBox alignment="CENTER" layoutY="633.0" prefHeight="67.0" prefWidth="920.0">
