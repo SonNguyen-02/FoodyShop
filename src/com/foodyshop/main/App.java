@@ -23,10 +23,10 @@ public class App extends Application {
         // username admin@gmail.com
         // username staff@gmail.com
         // password azz123456
-//        Navigator.getInstance().goToMainLayout();
+     //   Navigator.getInstance().goToMainLayout();
 //        System.out.println(BCrypt.hashpw("azz123456", BCrypt.gensalt()));
-        Navigator.getInstance().goToLoginUI();
-
+  Navigator.getInstance().goToLoginUI();
+//
     }
 
     /**
