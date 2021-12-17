@@ -31,29 +31,30 @@ public class Order_DetailHelper {
     public static ObservableList<Order_DetailModel> getAllOrder_Detail(OrderModel order) {
        
         ObservableList<Order_DetailModel> listOrder_Detail = FXCollections.observableArrayList();
-        
         try {
-            String sql = "SELECT odt.id,odt.number,odt.price,odt.discount, prd.name,fb.content,sl.content,sl.start_date,sl.end_date "
-                    + "FROM fs_order_detail odt JOIN fs_product prd on odt.product_id = prd.id "
-                    + "JOIN fs_sale sl on odt.sale_id = sl.id "
-                    + "LEFT JOIN fs_feedback fb on odt.id = fb.order_detail_id where odt.order_id = ?";
-            
-            PreparedStatement stm = DBConnection.getConnection().prepareStatement(sql);
-            stm.setInt(1, order.getId());
-            ResultSet rs = stm.executeQuery();
+            String sql = db.select("odt.id,odt.number,odt.price,odt.discount, prd.name,fb.content as feedback,sl.content,sl.start_date,sl.end_date")
+                    .from("fs_order_detail odt")
+                    .join("fs_product prd", "odt.product_id = prd.id")
+                    .join("fs_sale sl", "odt.sale_id = sl.id", "LEFT")
+                    .join("fs_feedback fb", "odt.id = fb.order_detail_id", "LEFT")
+                    .where("order_id", String.valueOf(order.getId()))
+                    .getCompiledSelect(true);
+
+            ResultSet rs = DBConnection.execSelect(sql);
 
             while (rs.next()) {
                 Order_DetailModel order_detail = new Order_DetailModel();
                 order_detail.setId(rs.getInt("id"));
                 order_detail.setProduct_name(rs.getString("name"));
-                order_detail.setContent(rs.getString("fb.content"));
-                order_detail.setContentSale(rs.getString("sl.content"));
+                order_detail.setContent(rs.getString("feedback"));
+                order_detail.setContentSale(rs.getString("content"));
                 order_detail.setStartDate(rs.getString("start_date"));
                 order_detail.setEndDate(rs.getString("end_date"));
                 order_detail.setNumber(rs.getInt("number"));
                 order_detail.setPrice(rs.getInt("price"));
                 order_detail.setDiscount(rs.getInt("discount"));
                 listOrder_Detail.add(order_detail);
+                System.out.println(order_detail.getPrice());
             }
 
         } catch (SQLException ex) {
