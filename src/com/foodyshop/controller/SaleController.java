@@ -168,7 +168,7 @@ public class SaleController implements Initializable {
         if (isHasLink) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
-            alert.setHeaderText("Sale has link with any Order Detail you must delete Order Detail first");
+            alert.setHeaderText("Can't Delete!!");
             alert.show();
             return;
         }
@@ -195,7 +195,7 @@ public class SaleController implements Initializable {
                     if (isHasLink) {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("ERROR");
-                        alert.setHeaderText("Sale has link with any product you must delete product first");
+                        alert.setHeaderText("Can't Delete!");
                         alert.show();
                     } else {
                         try {

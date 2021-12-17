@@ -96,7 +96,7 @@ public class AddProductController implements Initializable {
         categoryList = CategoryHelper.getAllCategory();
         if (categoryList != null && !categoryList.isEmpty()) {
             cbCategory.setItems(categoryList);
-            cbCategory.setValue(categoryList.get(20));
+            cbCategory.setValue(categoryList.get(0));
         }
     }
 //
