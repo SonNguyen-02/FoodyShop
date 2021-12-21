@@ -3,11 +3,16 @@ package com.example.foodyshop.activity;
 import static com.example.foodyshop.config.Const.KEY_DATA_USER;
 import static com.example.foodyshop.config.Const.KEY_NAME;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -51,6 +56,9 @@ public class EditNameActivity extends AppCompatActivity {
             Intent intent = new Intent();
             intent.putExtra(KEY_NAME, name);
             setResult(RESULT_OK, intent);
+            if (isKeyboardOpen(edtFullname)) {
+                Helper.hideKeyboard(getApplicationContext(), edtFullname);
+            }
             finish();
         });
         imgBack.setOnClickListener(view -> onBackPressed());
@@ -68,5 +76,19 @@ public class EditNameActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    private boolean isKeyboardOpen(@NonNull View view) {
+        Rect visibleBounds = new Rect();
+        view.getRootView().getWindowVisibleDisplayFrame(visibleBounds);
+        int heightDiff = view.getRootView().getHeight() - visibleBounds.height();
+        int marginOfError = Math.round(convertDpToPx(50F));
+        return heightDiff > marginOfError;
+    }
+
+    private float convertDpToPx(Float dp) {
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, metrics);
     }
 }

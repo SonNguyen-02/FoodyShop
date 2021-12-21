@@ -52,6 +52,7 @@
     <string name="delete_feedback">Xóa đánh giá</string>
     <string name="edit_feedback">Sửa đánh giá</string>
     <string name="see_more_feedback">Xem thêm {0} đánh giá</string>
+    <string name="see_more_product">Xem thêm {0} sản phẩm</string>
 
     <string name="add_feed_success">Thêm đánh giá thành công</string>
 

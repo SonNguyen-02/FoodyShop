@@ -42,6 +42,7 @@ import com.google.gson.Gson;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,7 +58,7 @@ public class OrderDetailActivity extends AppCompatActivity implements OrderDetai
 
     private ImageView imgBack;
     private NestedScrollView scrollView;
-    private RelativeLayout rlMainPage, rlLoading;
+    private RelativeLayout rlLoading;
 
     private TextView tvFullname, tvPhone, tvAddress, tvNote, tvDateCreate, tvOrderCode, tvShipPrice, tvTotalProduct, tvTotalMoney;
     private Button btnBuyAgain, btnCancel, btnConfirm;
@@ -101,7 +102,6 @@ public class OrderDetailActivity extends AppCompatActivity implements OrderDetai
     private void initUi() {
         imgBack = findViewById(R.id.img_back);
         scrollView = findViewById(R.id.nested_scroll);
-        rlMainPage = findViewById(R.id.rl_main_page);
         rlLoading = findViewById(R.id.rl_loading);
 
         tvFullname = findViewById(R.id.tv_fullname);
@@ -129,8 +129,7 @@ public class OrderDetailActivity extends AppCompatActivity implements OrderDetai
         tvPhone.setText(mOrder.getPhone());
         tvAddress.setText(mOrder.getAddress());
         tvNote.setText(mOrder.getNote());
-        @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm: dd/MM/yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm: dd/MM/yyyy", Locale.forLanguageTag("vi_VN"));
         tvDateCreate.setText(dateFormat.format(new Date(parseDate(mOrder.getCreated()))));
         tvOrderCode.setText(mOrder.getOrderCode());
         tvTotalProduct.setText(MessageFormat.format("Tổng " + getString(R.string.total_product), mOrder.getTotalProduct()));
@@ -347,7 +346,6 @@ public class OrderDetailActivity extends AppCompatActivity implements OrderDetai
         transaction.add(R.id.frame_root, new FeedbackFragment(position, orderDetail));
         transaction.addToBackStack(FeedbackFragment.class.getSimpleName());
         transaction.commit();
-        new Handler().postDelayed(() -> rlMainPage.setVisibility(View.GONE), 300);
     }
 
     public void updateItemOrderDetail(int position, FeedbackModel feedback) {
@@ -367,7 +365,6 @@ public class OrderDetailActivity extends AppCompatActivity implements OrderDetai
             finish();
         } else {
             if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-                rlMainPage.setVisibility(View.VISIBLE);
                 getSupportFragmentManager().popBackStack();
             } else {
                 super.onBackPressed();

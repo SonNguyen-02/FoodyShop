@@ -82,7 +82,10 @@ public class EnterOtpActivity extends AppCompatActivity {
         setUpOTPInputs();
         initSendOtp();
         btnVerify.setOnClickListener(v -> verifyCode());
-        btnResendOtp.setOnClickListener(v -> resendOtp());
+        btnResendOtp.setOnClickListener(v -> {
+            btnResendOtp.setEnabled(false);
+            resendOtp();
+        });
     }
 
     private void getDataIntent() {
@@ -155,6 +158,7 @@ public class EnterOtpActivity extends AppCompatActivity {
                 if (timer == 0) {
                     tvResendOtp.setVisibility(View.GONE);
                     btnResendOtp.setVisibility(View.VISIBLE);
+                    btnResendOtp.setEnabled(true);
                     return;
                 }
                 tvResendOtp.setText(MessageFormat.format("Resend OTP ({0}s)", timer--));
@@ -265,6 +269,14 @@ public class EnterOtpActivity extends AppCompatActivity {
     }
 
     private void resendOtp() {
+        String message = "Đang gửi lại OTP . . .";
+        LoadingDialog dialog = new LoadingDialog(this, message);
+        dialog.show();
+        new Handler().postDelayed(() -> {
+            initSendOtp();
+            dialog.dismiss();
+        }, 2000);
+
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
                         .setPhoneNumber(mPhoneNumber)       // Phone number to verify
@@ -280,19 +292,16 @@ public class EnterOtpActivity extends AppCompatActivity {
 
                             @Override
                             public void onVerificationFailed(@NonNull FirebaseException e) {
-                                initSendOtp();
                                 Toast.makeText(EnterOtpActivity.this, "Verification False", Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
                             public void onCodeSent(@NonNull String verificationId, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                                 super.onCodeSent(verificationId, forceResendingToken);
-                                initSendOtp();
                                 mVerificationId = verificationId;
                                 mForceResendingToken = forceResendingToken;
                             }
-                        })
-                        .build();
+                        }).build();
         PhoneAuthProvider.verifyPhoneNumber(options);
     }
 
@@ -303,7 +312,7 @@ public class EnterOtpActivity extends AppCompatActivity {
                         // Sign in success, update UI with the signed-in user's information
                         Log.e("ddd", "signInWithCredential:success");
 
-                        FirebaseUser user = task.getResult().getUser();
+                        //FirebaseUser user = task.getResult().getUser();
                         // Update UI
                         onVerifySuccess();
                     } else {

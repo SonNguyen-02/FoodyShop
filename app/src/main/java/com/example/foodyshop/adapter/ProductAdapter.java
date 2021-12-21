@@ -88,7 +88,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             layoutParams.width = itemLength;
             holder.imgProduct.getLayoutParams().height = itemLength;
         }
-        Glide.with(context).load(product.getImg())
+        Glide.with(context).load(product.getImgDir())
                 .placeholder(R.drawable.test_product_icon)
                 .error(R.drawable.test_product_icon)
                 .into(holder.imgProduct);

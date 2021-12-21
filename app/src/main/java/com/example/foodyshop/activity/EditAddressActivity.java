@@ -4,11 +4,16 @@ import static com.example.foodyshop.config.Const.KEY_ADDRESS;
 import static com.example.foodyshop.config.Const.KEY_NAME;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.foodyshop.R;
@@ -49,6 +54,9 @@ public class EditAddressActivity extends AppCompatActivity {
             Intent intent = new Intent();
             intent.putExtra(KEY_ADDRESS, newAddress);
             setResult(RESULT_OK, intent);
+            if (isKeyboardOpen(edtAddress)) {
+                Helper.hideKeyboard(getApplicationContext(), edtAddress);
+            }
             finish();
         });
         imgBack.setOnClickListener(view -> onBackPressed());
@@ -65,6 +73,21 @@ public class EditAddressActivity extends AppCompatActivity {
             }).show();
         } else {
             super.onBackPressed();
+
         }
+    }
+
+    private boolean isKeyboardOpen(@NonNull View view) {
+        Rect visibleBounds = new Rect();
+        view.getRootView().getWindowVisibleDisplayFrame(visibleBounds);
+        int heightDiff = view.getRootView().getHeight() - visibleBounds.height();
+        int marginOfError = Math.round(convertDpToPx(50F));
+        return heightDiff > marginOfError;
+    }
+
+    private float convertDpToPx(Float dp) {
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, metrics);
     }
 }

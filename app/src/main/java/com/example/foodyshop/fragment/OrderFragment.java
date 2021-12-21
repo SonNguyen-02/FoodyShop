@@ -27,7 +27,8 @@ import com.example.foodyshop.transformer.ZoomOutPageTransformer;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 public class OrderFragment extends Fragment {
 
@@ -38,6 +39,8 @@ public class OrderFragment extends Fragment {
     private Button btnGotoLogin;
     private boolean isCreate;
     private int lastUserId;
+
+    private ArrayList<Boolean> mPagesRefreshStatus;
 
     private final ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         if (result.getResultCode() == Activity.RESULT_OK) {
@@ -50,6 +53,13 @@ public class OrderFragment extends Fragment {
             }
         }
     });
+
+    public interface IPageRefreshStatus {
+
+        void setPageRefreshStatus(int position, boolean isRefresh);
+
+        boolean getPageRefreshStatus(int position);
+    }
 
     @Nullable
     @Override
@@ -102,45 +112,73 @@ public class OrderFragment extends Fragment {
             if (lastUserId > 0 && lastUserId != Helper.getCurrentAccount().getId()) {
                 lastUserId = Helper.getCurrentAccount().getId();
                 mViewPager2.setCurrentItem(0);
+                return;
+            }
+            if (mPagesRefreshStatus != null) {
+                for (int i = 0; i < mPagesRefreshStatus.size(); i++) {
+                    mPagesRefreshStatus.set(i, true);
+                }
+                mViewPager2.setCurrentItem(mViewPager2.getCurrentItem());
             }
             return;
         }
 
-        OrderViewPagerAdapter adapter = new OrderViewPagerAdapter(requireActivity());
+        mPagesRefreshStatus = new ArrayList<>();
+
+        OrderViewPagerAdapter adapter = new OrderViewPagerAdapter(requireActivity(), new IPageRefreshStatus() {
+            @Override
+            public void setPageRefreshStatus(int position, boolean isRefresh) {
+                if (mPagesRefreshStatus != null) {
+                    mPagesRefreshStatus.set(position, isRefresh);
+                }
+            }
+
+            @Override
+            public boolean getPageRefreshStatus(int position) {
+                if (mPagesRefreshStatus != null && mPagesRefreshStatus.size() > position) {
+                    return mPagesRefreshStatus.get(position);
+                }
+                return false;
+            }
+        });
         mViewPager2.setAdapter(adapter);
         mViewPager2.setOffscreenPageLimit(1);
         mViewPager2.setPageTransformer(new ZoomOutPageTransformer());
+
         new TabLayoutMediator(mTabLayout, mViewPager2, (tab, position) -> {
+            TAB tabPage;
             switch (position) {
-                case 0:
-                    tab.setText(TAB.WAIT_AD_CONFIRM.tabName);
-                    break;
                 case 1:
-                    tab.setText(TAB.AD_CONFIRMED.tabName);
+                    tabPage = TAB.AD_ACCEPT;
                     break;
                 case 2:
-                    tab.setText(TAB.WAIT_CUS_CONFIRM.tabName);
+                    tabPage = TAB.WAIT_CUS_CONFIRM;
                     break;
                 case 3:
-                    tab.setText(TAB.CUS_CONFIRMED.tabName);
+                    tabPage = TAB.CUS_CONFIRMED;
                     break;
                 case 4:
-                    tab.setText(TAB.SHIPPING.tabName);
+                    tabPage = TAB.SHIPPING;
                     break;
                 case 6:
-                    tab.setText(TAB.ORD_CANCEL.tabName);
+                    tabPage = TAB.ORD_CANCEL;
                     break;
                 case 5:
+                    tabPage = TAB.ORD_DELIVERED;
+                    break;
+                case 0:
                 default:
-                    tab.setText(TAB.ORD_DELIVERED.tabName);
+                    tabPage = TAB.WAIT_AD_CONFIRM;
                     break;
             }
+            tab.setText(tabPage.tabName);
+            mPagesRefreshStatus.add(false);
         }).attach();
     }
 
     public enum TAB {
         WAIT_AD_CONFIRM(0, "Chờ xác nhận", "0"),
-        AD_CONFIRMED(1, "Shop đã xác nhận", "1"),
+        AD_ACCEPT(1, "Shop đã tiếp nhận", "1"),
         WAIT_CUS_CONFIRM(2, "Chờ xác nhận lại", "2"),
         CUS_CONFIRMED(3, "Bạn đã xác nhận", "3"),
         SHIPPING(4, "Đang giao", "4"),

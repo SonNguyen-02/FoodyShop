@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,8 +58,13 @@ public class OrderTabFragment extends Fragment implements OrderAdapter.IInteract
     private RelativeLayout rlLoading;
     private RecyclerView rcvOrder;
     private OrderAdapter mOrderAdapter;
+    private boolean isCreate;
+    private long lastTimeInPage;
     private int lastUserId;
+
+
     private int mOrderPosition;
+    private final OrderFragment.IPageRefreshStatus mIPageRefreshStatus;
     private IOnUpdatedOrder mIOnUpdatedOrder;
 
     ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -80,12 +86,14 @@ public class OrderTabFragment extends Fragment implements OrderAdapter.IInteract
         }
     });
 
-    public OrderTabFragment(OrderFragment.TAB tab) {
+    public OrderTabFragment(OrderFragment.TAB tab, OrderFragment.IPageRefreshStatus mIPageRefreshStatus) {
         this.tab = tab;
+        this.mIPageRefreshStatus = mIPageRefreshStatus;
     }
 
-    public OrderTabFragment(OrderFragment.TAB tab, IOnUpdatedOrder mIOnUpdatedOrder) {
+    public OrderTabFragment(OrderFragment.TAB tab, OrderFragment.IPageRefreshStatus mIPageRefreshStatus, IOnUpdatedOrder mIOnUpdatedOrder) {
         this.tab = tab;
+        this.mIPageRefreshStatus = mIPageRefreshStatus;
         this.mIOnUpdatedOrder = mIOnUpdatedOrder;
     }
 
@@ -100,20 +108,41 @@ public class OrderTabFragment extends Fragment implements OrderAdapter.IInteract
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_order_tab, container, false);
         lastUserId = Helper.getCurrentAccount().getId();
+        isCreate = true;
         mOrderPosition = -1;
         initUi();
-        initDataOrder();
+        initDataOrder(false);
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        if (isCreate) {
+            mIPageRefreshStatus.setPageRefreshStatus(tab.getIndex(), false);
+            isCreate = false;
+            return;
+        }
         if (lastUserId > 0 && Helper.getCurrentAccount() != null && lastUserId != Helper.getCurrentAccount().getId()) {
             showTapEmpty();
             lastUserId = Helper.getCurrentAccount().getId();
-            initDataOrder();
+            mIPageRefreshStatus.setPageRefreshStatus(tab.getIndex(), false);
+            initDataOrder(false);
+            return;
         }
+
+        if (mIPageRefreshStatus.getPageRefreshStatus(tab.getIndex())) {
+            mIPageRefreshStatus.setPageRefreshStatus(tab.getIndex(), false);
+            if (System.currentTimeMillis() - lastTimeInPage > TimeUnit.SECONDS.toMillis(15)) {
+                initDataOrder(true);
+            }
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        lastTimeInPage = System.currentTimeMillis();
     }
 
     private void initUi() {
@@ -123,10 +152,12 @@ public class OrderTabFragment extends Fragment implements OrderAdapter.IInteract
         rcvOrder = view.findViewById(R.id.rcv_order);
     }
 
-    private void initDataOrder() {
-        rlLoading.setVisibility(View.VISIBLE);
-        llOrder.setVisibility(View.GONE);
-        llNoHaveData.setVisibility(View.GONE);
+    private void initDataOrder(boolean inBackground) {
+        if (!inBackground) {
+            rlLoading.setVisibility(View.VISIBLE);
+            llOrder.setVisibility(View.GONE);
+            llNoHaveData.setVisibility(View.GONE);
+        }
         if (tab != null) {
             APIService.getService().getListOrder(Helper.getTokenLogin(requireContext()), tab.getRequestStatus()).enqueue(new Callback<List<OrderModel>>() {
                 @Override
@@ -135,13 +166,15 @@ public class OrderTabFragment extends Fragment implements OrderAdapter.IInteract
                         return;
                     }
                     if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
-                        rlLoading.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.anim_fade_out));
-                        llNoHaveData.setVisibility(View.GONE);
-                        new Handler().postDelayed(() -> {
-                            rlLoading.setVisibility(View.GONE);
-                            llOrder.setVisibility(View.VISIBLE);
-                            llOrder.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.anim_fade_in));
-                        }, 200);
+                        if (!inBackground) {
+                            rlLoading.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.anim_fade_out));
+                            llNoHaveData.setVisibility(View.GONE);
+                            new Handler().postDelayed(() -> {
+                                rlLoading.setVisibility(View.GONE);
+                                llOrder.setVisibility(View.VISIBLE);
+                                llOrder.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.anim_fade_in));
+                            }, 200);
+                        }
                         mOrderAdapter = new OrderAdapter(requireContext(), response.body(), OrderTabFragment.this);
                         rcvOrder.setAdapter(mOrderAdapter);
                         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false);

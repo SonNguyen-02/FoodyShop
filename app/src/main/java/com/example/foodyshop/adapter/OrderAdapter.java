@@ -65,13 +65,17 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         holder.tvTotalProduct.setText(MessageFormat.format(context.getString(R.string.total_product), order.getTotalProduct()));
         holder.tvTotalMoney.setText(Helper.PRICE_FORMAT.format(order.getTotalMoney()));
 
-        OrderDetailCollapseAdapter dtAdapter = new OrderDetailCollapseAdapter(context, order.getOrderDetails());
+        int status = order.getStatus();
+        boolean collapseMax = status == -1 || status == -2 || status == 5;
+        OrderDetailCollapseAdapter dtAdapter = new OrderDetailCollapseAdapter(context, order.getOrderDetails(), collapseMax);
+        if (collapseMax) {
+            dtAdapter.setIOnClickSeeMore(() -> mInteractOrder.onClickTitle(holder.getAdapterPosition(), order));
+        }
         holder.rcvOrderDetail.setAdapter(dtAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
         holder.rcvOrderDetail.setLayoutManager(layoutManager);
         holder.rlTitleOrder.setOnClickListener(view -> mInteractOrder.onClickTitle(holder.getAdapterPosition(), order));
 
-        int status = order.getStatus();
         switch (status) {
             case 0:
                 holder.tvStatus.setText("Chờ shop xác nhận");
@@ -102,16 +106,12 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             case 3:
                 holder.tvStatus.setText("Đang xuất kho");
                 holder.tvShipPrice.setText(Helper.PRICE_FORMAT.format(order.getShipPrice()));
-                holder.showBuyAgainBox();
-                holder.tvMixMessage.setVisibility(View.GONE);
-                holder.btnBuyAgain.setOnClickListener(view -> mInteractOrder.onClickBuyAgain(order));
+                holder.hideAllBox();
                 break;
             case 4:
                 holder.tvStatus.setText("Đang giao hàng");
                 holder.tvShipPrice.setText(Helper.PRICE_FORMAT.format(order.getShipPrice()));
-                holder.showBuyAgainBox();
-                holder.tvMixMessage.setVisibility(View.GONE);
-                holder.btnBuyAgain.setOnClickListener(view -> mInteractOrder.onClickBuyAgain(order));
+                holder.hideAllBox();
                 break;
             case -1:
                 holder.tvStatus.setText("Đã hủy");
@@ -188,6 +188,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         public void showCancelConfirmBox() {
             rlBuyAgain.setVisibility(View.GONE);
             llCancelConfOrder.setVisibility(View.VISIBLE);
+        }
+
+        public void hideAllBox() {
+            rlBuyAgain.setVisibility(View.GONE);
+            llCancelConfOrder.setVisibility(View.GONE);
         }
     }
 }

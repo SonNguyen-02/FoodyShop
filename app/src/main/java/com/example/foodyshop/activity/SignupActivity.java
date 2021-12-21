@@ -244,7 +244,7 @@ public class SignupActivity extends AppCompatActivity {
                         // Sign in success, update UI with the signed-in user's information
                         Log.e("ddd", "signInWithCredential:success");
 
-                        FirebaseUser user = task.getResult().getUser();
+                        //FirebaseUser user = task.getResult().getUser();
                         // Update UI
                         signUp();
                     } else {

@@ -10,7 +10,6 @@
     android:focusableInTouchMode="true">
 
     <RelativeLayout
-        android:id="@+id/rl_main_page"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:ignore="UselessParent">
@@ -60,7 +59,8 @@
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nested_scroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/divider"
@@ -275,7 +275,7 @@
                 </LinearLayout>
             </RelativeLayout>
 
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
         <View
             android:id="@+id/divider"

@@ -7,6 +7,7 @@ import static com.example.foodyshop.helper.Helper.PRICE_FORMAT;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,7 +51,6 @@ import retrofit2.Response;
 
 public class OrderActivity extends AppCompatActivity {
 
-    private RelativeLayout rlMainPage;
     private ImageView imgBack, imgCheck;
     private CountryCodePicker ccp;
     private EditText edtFullName, edtPhone, edtAddress, edtNote;
@@ -122,7 +122,6 @@ public class OrderActivity extends AppCompatActivity {
     }
 
     private void initUi() {
-        rlMainPage = findViewById(R.id.rl_main_page);
         imgBack = findViewById(R.id.img_back);
         imgCheck = findViewById(R.id.img_check);
         ccp = findViewById(R.id.country_code_picker);
@@ -228,7 +227,6 @@ public class OrderActivity extends AppCompatActivity {
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.frame_root, new OrderSuccessFragment(order));
                         transaction.commit();
-                        rlMainPage.setVisibility(View.GONE);
                     } else {
                         ToastCustom.notice(getApplicationContext(), res.getMsg(), ToastCustom.ERROR).show();
                     }

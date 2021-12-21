@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -97,7 +96,7 @@ public class AddToCardBottomSheet extends BottomSheetDialogFragment {
         if (mProduct == null) {
             return;
         }
-        Glide.with(this).load(mProduct.getImg())
+        Glide.with(this).load(mProduct.getImgDir())
                 .placeholder(R.drawable.test_product_icon)
                 .error(R.drawable.test_product_icon)
                 .into(imgProduct);

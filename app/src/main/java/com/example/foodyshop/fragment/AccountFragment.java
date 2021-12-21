@@ -23,6 +23,7 @@ import com.example.foodyshop.activity.MainActivity;
 import com.example.foodyshop.activity.MyAccountActivity;
 import com.example.foodyshop.activity.SigninActivity;
 import com.example.foodyshop.dialog.ConfirmDialog;
+import com.example.foodyshop.dialog.ToastCustom;
 import com.example.foodyshop.helper.Helper;
 import com.example.foodyshop.model.CustomerModel;
 
@@ -87,7 +88,7 @@ public class AccountFragment extends Fragment {
             });
 
             rlNotification.setOnClickListener(view -> {
-
+                ToastCustom.notice(requireContext(), "Hiện tại tính năng đang được phát triển!", ToastCustom.WARNING).show();
             });
 
             rlLogout.setOnClickListener(view -> {
@@ -119,11 +120,11 @@ public class AccountFragment extends Fragment {
         }
 
         rlSetting.setOnClickListener(view -> {
-
+            ToastCustom.notice(requireContext(), "Hiện tại tính năng đang được phát triển!", ToastCustom.WARNING).show();
         });
 
         rlHelpCenter.setOnClickListener(view -> {
-
+            ToastCustom.notice(requireContext(), "Hiện tại tính năng đang được phát triển!", ToastCustom.WARNING).show();
         });
     }
 

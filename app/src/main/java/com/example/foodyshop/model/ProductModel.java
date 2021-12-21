@@ -97,8 +97,12 @@ public class ProductModel implements Serializable {
         this.discount = discount;
     }
 
-    public String getImg() {
+    public String getImgDir() {
         return IMG_FOOD_DIR + img;
+    }
+
+    public String getImg() {
+        return img;
     }
 
     public void setImg(String img) {

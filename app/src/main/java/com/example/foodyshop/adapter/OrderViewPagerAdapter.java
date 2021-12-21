@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.example.foodyshop.fragment.OrderFragment;
 import com.example.foodyshop.fragment.OrderTabFragment;
 import com.example.foodyshop.model.OrderModel;
 
@@ -14,11 +15,13 @@ public class OrderViewPagerAdapter extends FragmentStateAdapter implements Order
 
     private final OrderTabFragment tabCustomerConfirmed;
     private final OrderTabFragment tabOrderCancel;
+    private final IPageRefreshStatus mIPageRefreshStatus;
 
-    public OrderViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
+    public OrderViewPagerAdapter(@NonNull FragmentActivity fragmentActivity, IPageRefreshStatus mIPageRefreshStatus) {
         super(fragmentActivity);
-        tabCustomerConfirmed = new OrderTabFragment(TAB.CUS_CONFIRMED);
-        tabOrderCancel = new OrderTabFragment(TAB.ORD_CANCEL);
+        this.mIPageRefreshStatus = mIPageRefreshStatus;
+        tabCustomerConfirmed = new OrderTabFragment(TAB.CUS_CONFIRMED, mIPageRefreshStatus);
+        tabOrderCancel = new OrderTabFragment(TAB.ORD_CANCEL, mIPageRefreshStatus);
     }
 
     @NonNull
@@ -26,20 +29,20 @@ public class OrderViewPagerAdapter extends FragmentStateAdapter implements Order
     public Fragment createFragment(int position) {
         switch (position) {
             case 1:
-                return new OrderTabFragment(TAB.AD_CONFIRMED, this);
+                return new OrderTabFragment(TAB.AD_ACCEPT, mIPageRefreshStatus, this);
             case 2:
-                return new OrderTabFragment(TAB.WAIT_CUS_CONFIRM, this);
+                return new OrderTabFragment(TAB.WAIT_CUS_CONFIRM, mIPageRefreshStatus, this);
             case 3:
                 return tabCustomerConfirmed;
             case 4:
-                return new OrderTabFragment(TAB.SHIPPING);
+                return new OrderTabFragment(TAB.SHIPPING, mIPageRefreshStatus);
             case 5:
-                return new OrderTabFragment(TAB.ORD_DELIVERED);
+                return new OrderTabFragment(TAB.ORD_DELIVERED, mIPageRefreshStatus);
             case 6:
                 return tabOrderCancel;
             case 0:
             default:
-                return new OrderTabFragment(TAB.WAIT_AD_CONFIRM, this);
+                return new OrderTabFragment(TAB.WAIT_AD_CONFIRM, mIPageRefreshStatus, this);
         }
     }
 

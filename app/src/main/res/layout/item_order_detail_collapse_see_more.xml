@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingStart="4dp"
+    android:paddingEnd="4dp">
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/md_grey_200" />
+
+    <TextView
+        android:id="@+id/tv_see_more"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider"
+        android:layout_centerInParent="true"
+        android:background="@drawable/ripple_white"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="16dp"
+        android:text="@string/see_more_product"
+        android:textAlignment="center"
+        android:textColor="@color/colorTextAccent"
+        android:textSize="14sp" />
+
+
+</RelativeLayout>
