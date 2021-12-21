@@ -84,6 +84,7 @@
     <string name="full_name"><![CDATA[Họ & tên]]></string>
     <string name="address">Địa chỉ</string>
     <string name="phone">Số điện thoại</string>
+    <string name="password">Mật khẩu</string>
     <string name="name">Tên</string>
     <string name="gender">Giới tính</string>
     <string name="date_birth">Ngày sinh</string>
@@ -116,6 +117,10 @@
     <string name="close_bottom_sheet">Hủy</string>
     <string name="edit_name">Sửa tên</string>
     <string name="edit_address">Sửa địa chỉ</string>
+    <string name="change_password">Đổi mật khẩu</string>
+    <string name="current_password">Nhập mật khẩu hiện tại</string>
+    <string name="enter_new_password">Nhập mật khẩu mới</string>
+    <string name="reenter_new_password">Nhập lại mật khẩu mới</string>
     <string name="save">Lưu</string>
     <string name="male">Nam</string>
     <string name="female">Nữ</string>

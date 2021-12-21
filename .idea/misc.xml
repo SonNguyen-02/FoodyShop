@@ -30,6 +30,7 @@
         <entry key="..\:/All_File_Learn/Java/Android/FoodyShop/app/src/main/res/drawable/custom_bg_white_corn_4.xml" value="0.3769230769230769" />
         <entry key="..\:/All_File_Learn/Java/Android/FoodyShop/app/src/main/res/drawable/custom_bg_white_corn_topleft_16_topright_16.xml" value="0.3769230769230769" />
         <entry key="..\:/All_File_Learn/Java/Android/FoodyShop/app/src/main/res/drawable/custom_bg_white_corner_12_stroke_1.xml" value="0.3828125" />
+        <entry key="..\:/All_File_Learn/Java/Android/FoodyShop/app/src/main/res/drawable/custom_bg_white_stroke_grey_corn4.xml" value="0.3828125" />
         <entry key="..\:/All_File_Learn/Java/Android/FoodyShop/app/src/main/res/drawable/custom_edt_feedback.xml" value="0.33" />
         <entry key="..\:/All_File_Learn/Java/Android/FoodyShop/app/src/main/res/drawable/custom_edt_info_order.xml" value="0.3828125" />
         <entry key="..\:/All_File_Learn/Java/Android/FoodyShop/app/src/main/res/drawable/custom_edt_search_home.xml" value="0.3828125" />
@@ -90,6 +91,7 @@
         <entry key="..\:/All_File_Learn/Java/Android/FoodyShop/app/src/main/res/layout/activity_detail_topic.xml" value="0.33" />
         <entry key="..\:/All_File_Learn/Java/Android/FoodyShop/app/src/main/res/layout/activity_edit_address.xml" value="0.33" />
         <entry key="..\:/All_File_Learn/Java/Android/FoodyShop/app/src/main/res/layout/activity_edit_name.xml" value="0.36666666666666664" />
+        <entry key="..\:/All_File_Learn/Java/Android/FoodyShop/app/src/main/res/layout/activity_edit_password.xml" value="0.36666666666666664" />
         <entry key="..\:/All_File_Learn/Java/Android/FoodyShop/app/src/main/res/layout/activity_enter_otp.xml" value="0.33" />
         <entry key="..\:/All_File_Learn/Java/Android/FoodyShop/app/src/main/res/layout/activity_enter_password.xml" value="0.36666666666666664" />
         <entry key="..\:/All_File_Learn/Java/Android/FoodyShop/app/src/main/res/layout/activity_forgot_password.xml" value="0.25" />

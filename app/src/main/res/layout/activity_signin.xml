@@ -122,7 +122,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         app:hintEnabled="false"
-                        app:passwordToggleEnabled="true">
+                        app:passwordToggleEnabled="true"
+                        app:passwordToggleTint="@color/md_deep_orange_500">
 
                         <EditText
                             android:id="@+id/edt_password"

@@ -20,9 +20,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
         android:fillViewport="true"
-        android:fitsSystemWindows="true"
-        android:orientation="vertical"
-        tools:context="in.insideandroid.template.LoginActivity">
+        android:fitsSystemWindows="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -93,8 +91,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        app:hintEnabled="false"
-                        app:endIconMode="clear_text">
+                        app:endIconMode="clear_text"
+                        app:hintEnabled="false">
 
                         <EditText
                             android:id="@+id/edt_fullname"
@@ -186,7 +184,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         app:hintEnabled="false"
-                        app:passwordToggleEnabled="true">
+                        app:passwordToggleEnabled="true"
+                        app:passwordToggleTint="@color/md_deep_orange_500">
 
                         <EditText
                             android:id="@+id/edt_password"
@@ -222,7 +221,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         app:hintEnabled="false"
-                        app:passwordToggleEnabled="true">
+                        app:passwordToggleEnabled="true"
+                        app:passwordToggleTint="@color/md_deep_orange_500">
 
                         <EditText
                             android:id="@+id/edt_confirm_password"

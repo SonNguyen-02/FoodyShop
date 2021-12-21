@@ -30,6 +30,20 @@ public interface DataService {
     Call<Respond> login(@Field(Const.KEY_TOKEN) String token);
 
     @FormUrlEncoded
+    @POST("check_account_exists")
+    Call<Respond> checkAccountExists(@Field(Const.KEY_TOKEN) String token);
+
+    @FormUrlEncoded
+    @POST("register")
+    Call<Respond> register(@Field(Const.KEY_TOKEN) String token);
+
+    @FormUrlEncoded
+    @POST("change_password")
+    Call<Respond> changePassword(@Field(Const.KEY_TOKEN) String token,
+                                 @Field(Const.KEY_OLD_PASSWORD) String oldPassword,
+                                 @Field(Const.KEY_NEW_PASSWORD) String newPassword);
+
+    @FormUrlEncoded
     @POST("forgot_password")
     Call<Respond> forgotPassword(@Field(Const.KEY_TOKEN) String token);
 
@@ -38,14 +52,6 @@ public interface DataService {
     @POST("change_password_otp")
     Call<Respond> changePasswordOTP(@Field(Const.KEY_TOKEN) String token,
                                     @Field(Const.KEY_NEW_PASSWORD) String newPassword);
-
-    @FormUrlEncoded
-    @POST("check_account_exists")
-    Call<Respond> checkAccountExists(@Field(Const.KEY_TOKEN) String token);
-
-    @FormUrlEncoded
-    @POST("register")
-    Call<Respond> register(@Field(Const.KEY_TOKEN) String token);
 
     @FormUrlEncoded
     @POST("get_user_info")

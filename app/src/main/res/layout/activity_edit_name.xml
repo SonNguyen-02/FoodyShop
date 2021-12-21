@@ -57,6 +57,7 @@
                     android:layout_margin="@dimen/tool_bar_icon_margin"
                     android:background="@drawable/ripple_blue_circle"
                     android:gravity="center"
+                    android:maxLength="50"
                     android:text="@string/save"
                     android:textColor="@color/white"
                     android:textSize="16sp"
@@ -70,10 +71,10 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_view"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="26dp"
-        android:layout_marginEnd="@dimen/space_view"
-        android:background="@drawable/custom_bg_white_corn_4"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/custom_bg_white_stroke_grey_corn_4"
         android:gravity="center"
         app:endIconMode="clear_text"
         app:hintEnabled="false">
@@ -98,7 +99,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_view"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="@dimen/space_view"
         android:text="50 characters only" />
 

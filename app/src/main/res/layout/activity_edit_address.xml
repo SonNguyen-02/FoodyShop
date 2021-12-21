@@ -70,10 +70,10 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_view"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="26dp"
-        android:layout_marginEnd="@dimen/space_view"
-        android:background="@drawable/custom_bg_white_corn_4"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/custom_bg_white_stroke_grey_corn_4"
         android:gravity="center"
         app:endIconMode="clear_text"
         app:hintEnabled="false">
@@ -86,7 +86,7 @@
             android:background="@android:color/transparent"
             android:gravity="start"
             android:hint="@string/address"
-            android:maxLength="255"
+            android:maxLength="150"
             android:maxLines="6"
             android:minWidth="@dimen/edt_form_width"
             android:minHeight="@dimen/edt_min_height"
@@ -100,7 +100,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_view"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="@dimen/space_view"
         android:text="150 characters only" />
 

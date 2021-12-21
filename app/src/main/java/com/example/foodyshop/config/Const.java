@@ -41,6 +41,7 @@ public class Const {
     public static final String KEY_ADDRESS = "address";
 
     public static final String KEY_PASSWORD = "password";
+    public static final String KEY_OLD_PASSWORD = "old_password";
     public static final String KEY_NEW_PASSWORD = "new_password";
 
     public static final String KEY_TOPIC_ID = "topic_id";

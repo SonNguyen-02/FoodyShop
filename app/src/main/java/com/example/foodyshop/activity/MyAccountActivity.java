@@ -57,7 +57,7 @@ import retrofit2.Response;
 public class MyAccountActivity extends AppCompatActivity {
 
     private ImageView imgBack, imgSave, imgAvatar;
-    private RelativeLayout rlAvatar, rlCustomerName, rlPhone, rlGender, rlDateBirth, rlAddress;
+    private RelativeLayout rlAvatar, rlCustomerName, rlPhone, rlPassword, rlGender, rlDateBirth, rlAddress;
     private TextView tvCustomerName, tvPhone, tvGender, tvDateBirth, tvAddress;
     private Uri mUri;
     private CustomerModel mUserData;
@@ -157,6 +157,11 @@ public class MyAccountActivity extends AppCompatActivity {
             ToastCustom.notice(this, "Hiện tại chưa thể cập nhập\nsố điện thoại", ToastCustom.WARNING).show();
         });
 
+        rlPassword.setOnClickListener(view -> {
+            Intent intent = new Intent(this, EditPasswordActivity.class);
+            startActivity(intent);
+        });
+
         rlGender.setOnClickListener(view -> {
             if (System.currentTimeMillis() - lastTimeClick < 1000) {
                 return;
@@ -209,6 +214,7 @@ public class MyAccountActivity extends AppCompatActivity {
         rlAvatar = findViewById(R.id.rl_avatar);
         rlCustomerName = findViewById(R.id.rl_customer_name);
         rlPhone = findViewById(R.id.rl_phone);
+        rlPassword = findViewById(R.id.rl_password);
         rlGender = findViewById(R.id.rl_gender);
         rlDateBirth = findViewById(R.id.rl_date_birth);
         rlAddress = findViewById(R.id.rl_address);
