@@ -102,18 +102,11 @@ public class SaleController implements Initializable {
             btnOnSale.setVisible(false);
             btnDiscountEnd.setVisible(false);
         } else {
+            btnEdit.setOnMouseClicked(this::onClickEdit);
             btnDelete.setOnMouseClicked(this::onClickDelete);
             btnOnSale.setOnMouseClicked(this::onClickOnSale);
             btnDiscountEnd.setOnMouseClicked(this::onClickDiscountEnd);
-            btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddSale(new AddSaleController.IOnInsertSaleSuccess() {
-                @Override
-                public void callback(SaleModel sale) {
-                    sale.setImg(sale.getImg());
-                    listSale.add(0, sale);
-                }
-            }));
-            btnEdit.setOnMouseClicked(this::onClickEdit);
-
+            btnAdd.setOnMouseClicked(this::onClickAdd);
         }
 
         tcStt.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tblSale.getItems().indexOf(cellData.getValue()) + 1) + ""));
@@ -145,11 +138,7 @@ public class SaleController implements Initializable {
                     return true;
                 } else if (SaleModel.getStart_date().toLowerCase().indexOf(searchKeyword) > -1) {
                     return true;
-                } else if (SaleModel.getEnd_date().toLowerCase().indexOf(searchKeyword) > -1) {
-                    return true;
-                } else if (SaleModel.getDiscount().toString().indexOf(searchKeyword) > -1) {
-                    return true;
-                } else {
+                }else {
                     return false;
                 }
             });
@@ -162,13 +151,23 @@ public class SaleController implements Initializable {
         tblSale.setItems(sortedData);
     }
 
+    private void onClickAdd(MouseEvent e){
+        Navigator.getInstance().showAddSale(new AddSaleController.IOnInsertSaleSuccess() {
+            @Override
+            public void callback(SaleModel sale) {
+                sale.setImg(sale.getImg());
+                listSale.add(0, sale);
+            }
+        });
+    }
+    
     private void onClickEdit(MouseEvent e) {
         SaleModel sale = tblSale.getSelectionModel().getSelectedItem();
         boolean isHasLink = SaleHelper.isSaleHasLinkToOrderDetail(sale);
         if (isHasLink) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
-            alert.setHeaderText("Can't Delete!!");
+            alert.setHeaderText("Can't Edit Sale has link with order!!");
             alert.show();
             return;
         }
@@ -195,14 +194,14 @@ public class SaleController implements Initializable {
                     if (isHasLink) {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("ERROR");
-                        alert.setHeaderText("Can't Delete!");
+                        alert.setHeaderText("Can't Delete Sale has link with order!");
                         alert.show();
                     } else {
                         try {
                             if (SaleHelper.deleteSale(sale)) {
                                 UploadImageToApi.removeImageFromApi(Const.TYPE_SALE, sale.getImg());
                                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                                alert.setTitle("ERROR");
+                                alert.setTitle("Success");
                                 alert.setHeaderText("Delete success!");
                                 alert.show();
                                 listSale.remove(sale);

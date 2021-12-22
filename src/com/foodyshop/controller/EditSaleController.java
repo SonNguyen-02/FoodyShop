@@ -31,6 +31,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -77,6 +78,9 @@ public class EditSaleController implements Initializable {
 
     @FXML
     private DatePicker dpEndDate;
+    
+    @FXML
+    private Label lbProductName;
 
     private SaleModel mSaleModel;
 
@@ -104,16 +108,7 @@ public class EditSaleController implements Initializable {
         txtDiscount.setText(sale.getDiscount().toString());
         dpStartDate.setValue(LocalDate.parse(sale.getStart_date()));
         dpEndDate.setValue(LocalDate.parse(sale.getEnd_date()));
-        productList = ProductHelper.getAllProduct();
-        if (productList != null && !productList.isEmpty()) {
-            cbProductName.setItems(productList);
-            for (ProductModel product : productList) {
-                if (product.getId() == sale.getProductIdInt()) {
-                    cbProductName.setValue(product);
-                    break;
-                }
-            }
-        }
+        lbProductName.setText(sale.getProductName());        
     }
  
     @Override
@@ -149,7 +144,7 @@ public class EditSaleController implements Initializable {
     private void onClickSave(MouseEvent e) {
         String discount = txtDiscount.getText().trim();
         String content = txtContent.getText().trim();
-        String regaxDiscount = "^[1-9]{1,2}$";
+        String regaxDiscount = "^[^0][0-9]{0,1}$";
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         if (discount.isEmpty()) {
@@ -159,7 +154,7 @@ public class EditSaleController implements Initializable {
             return;
         }
         if (!discount.matches(regaxDiscount)) {
-            alert.setHeaderText("Please enter two or one number and different zero in Discount");
+            alert.setHeaderText("Please enter two or one number and different zero before!");
             alert.show();
             return;
         }
@@ -207,7 +202,6 @@ public class EditSaleController implements Initializable {
             }
         }
         try {
-            mSaleModel.setProductId(cbProductName.getValue().getId());
             mSaleModel.setDiscount(Integer.parseInt(discount));
             mSaleModel.setContent(content);
             mSaleModel.setStart_date(String.valueOf(dpStartDate.getValue()));

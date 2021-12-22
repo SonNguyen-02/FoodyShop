@@ -69,7 +69,7 @@ public class OrderController implements Initializable {
     private Button btnEditStatus;
 
     @FXML
-    private Button btnOrder_detail;
+    private Button btnOrder_detail,btnSuccess,btnShipping,btnReceive,btnCancel;
 
     @FXML
     private TextField txtSearch;
@@ -116,15 +116,11 @@ public class OrderController implements Initializable {
 
                 if (OrderModel.getName().toLowerCase().indexOf(searchKeyword) > -1) {
                     return true;
-                } else if (OrderModel.getName().toLowerCase().indexOf(searchKeyword) > -1) {
-                    return true;
                 } else if (OrderModel.getOrderCode().toLowerCase().indexOf(searchKeyword) > -1) {
                     return true;
                 } else if (OrderModel.getAddress().toLowerCase().indexOf(searchKeyword) > -1) {
                     return true;
                 } else if (OrderModel.getPhone().toLowerCase().indexOf(searchKeyword) > -1) {
-                    return true;
-                } else if (OrderModel.getNote().toLowerCase().indexOf(searchKeyword) > -1) {
                     return true;
                 } else if (OrderModel.getTotalMoney().toString().indexOf(searchKeyword) > -1) {
                     return true;

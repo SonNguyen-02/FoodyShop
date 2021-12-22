@@ -6,21 +6,12 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.OrderController">
    <children>
-      <Button fx:id="btnOrder_detail" layoutX="759.0" layoutY="605.0" minHeight="40.0" minWidth="140.0" mnemonicParsing="false" style="-fx-background-color: #FF6633; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); -fx-cursor: hand;" text="Order Detail" textFill="#f6f6f6" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="606.0">
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnEditStatus" layoutX="400.0" layoutY="679.0" minHeight="40.0" minWidth="120.0" mnemonicParsing="false" style="-fx-background-color: #3499fb; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); -fx-cursor: hand;" text="Edit Order" textFill="WHITE" AnchorPane.rightAnchor="420.0" AnchorPane.topAnchor="606.0">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Button>
-      <TableView fx:id="tblOrder" layoutX="9.0" layoutY="77.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="518.0" prefWidth="888.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="77.0">
+      <TableView fx:id="tblOrder" layoutX="9.0" layoutY="77.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="518.0" prefWidth="888.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="70.0">
          <columns>
             <TableColumn fx:id="tcId" prefWidth="59.0" text="STT" />
             <TableColumn fx:id="tcOrder_code" prefWidth="120.11112976074219" text="Order_code" />
@@ -31,7 +22,7 @@
             <TableColumn fx:id="tcShip_price" prefWidth="73.111083984375" text="Ship_price" />
             <TableColumn fx:id="tcTotal_money" prefWidth="85.888916015625" text="Total_money" />
             <TableColumn fx:id="tcCreated" prefWidth="78.66668701171875" text="Created" />
-            <TableColumn fx:id="tcStatus" minWidth="0.0" prefWidth="128.33331298828125" text="Status" />
+            <TableColumn fx:id="tcStatus" minWidth="0.0" prefWidth="95.22216796875" text="Status" />
          </columns>
       </TableView>
       <Label layoutX="15.0" layoutY="105.0" text="Search:" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="25.0">
@@ -40,5 +31,39 @@
          </font>
       </Label>
       <TextField fx:id="txtSearch" layoutX="118.0" layoutY="94.0" prefHeight="38.0" prefWidth="452.0" AnchorPane.topAnchor="20.0" />
+      <HBox layoutX="86.0" layoutY="610.0" spacing="20.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="602.0">
+         <children>
+            <Button fx:id="btnEditStatus" minHeight="40.0" minWidth="120.0" mnemonicParsing="false" style="-fx-background-color: #9966FF; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); -fx-cursor: hand;" text="Edit Ship Price" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnCancel" minHeight="40.0" minWidth="120.0" mnemonicParsing="false" style="-fx-background-color: #9966FF; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); -fx-cursor: hand;" text="Cancel" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnReceive" minHeight="40.0" minWidth="120.0" mnemonicParsing="false" style="-fx-background-color: #9966FF; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); -fx-cursor: hand;" text="Receive Orders" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnShipping" minHeight="40.0" minWidth="120.0" mnemonicParsing="false" style="-fx-background-color: #9966FF; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); -fx-cursor: hand;" text="Shipping" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnSuccess" minHeight="40.0" minWidth="120.0" mnemonicParsing="false" style="-fx-background-color: #9966FF; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); -fx-cursor: hand;" text="Successful Delivery" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnOrder_detail" minHeight="40.0" minWidth="140.0" mnemonicParsing="false" style="-fx-background-color: #FF6633; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); -fx-cursor: hand;" text="Order Detail" textFill="#f6f6f6">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -12,7 +13,7 @@
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.CustomerController">
    <children>
-      <TableView fx:id="tblCustomer" layoutX="19.0" layoutY="81.0" prefHeight="519.0" prefWidth="888.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="81.0">
+      <TableView fx:id="tblCustomer" layoutX="19.0" layoutY="81.0" prefHeight="519.0" prefWidth="888.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="75.0">
          <columns>
             <TableColumn fx:id="tcStt" prefWidth="55.66668701171875" text="STT" />
             <TableColumn fx:id="tcPhone" prefWidth="119.77778625488281" text="Phone" />
@@ -25,19 +26,30 @@
             <TableColumn fx:id="tcStatus" minWidth="0.0" prefWidth="90.33331298828125" text="Status" />
          </columns>
       </TableView>
-      <HBox layoutX="360.0" layoutY="624.0" prefHeight="42.0" prefWidth="450.0" AnchorPane.rightAnchor="85.0" AnchorPane.topAnchor="609.0">
+      <HBox layoutX="47.0" layoutY="606.0" spacing="76.0" AnchorPane.leftAnchor="255.0" AnchorPane.topAnchor="606.0">
          <children>
-            <Button fx:id="btnEditStatus" minHeight="40.0" minWidth="120.0" mnemonicParsing="false" style="-fx-background-color: #3499fb; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); -fx-cursor: hand;" text="Edit Status" textFill="WHITE">
+            <Button fx:id="btnUnclock" minHeight="40.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #9966FF; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Unclock" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="btnLock" minHeight="40.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #9966FF; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Lock" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <Button fx:id="btnCustomerDetail" minHeight="40.0" minWidth="144.0" mnemonicParsing="false" style="-fx-background-color: #FF6633; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); -fx-cursor: hand;" text="Customer Detail" textFill="#f6f6f6">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
                <HBox.margin>
-                  <Insets left="223.0" />
+                  <Insets left="116.0" />
                </HBox.margin>
             </Button>
          </children>

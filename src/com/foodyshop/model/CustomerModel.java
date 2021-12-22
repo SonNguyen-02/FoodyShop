@@ -138,7 +138,7 @@ public class CustomerModel {
         image.errorProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue){
 //                System.out.println(image.getException().getMessage());
-                mImageView.setImage(Const.NO_IMAGE_OBJ);
+                mImageView.setImage(Const.NO_IMAGE_USER);
             }
         });
       

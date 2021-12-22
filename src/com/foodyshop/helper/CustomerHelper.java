@@ -54,6 +54,7 @@ public class CustomerHelper {
                 .where("id", String.valueOf(customerModel.getId()))
                 .getCompiledUpdate(true);      
         int result = DBConnection.execUpdate(sql);
+        DBConnection.close();
         if(result > 0){
             return true;
         }

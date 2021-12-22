@@ -133,7 +133,6 @@ public class SaleHelper {
     
     public static boolean updateSale(SaleModel saleModel) {
         String sql = db.update("fs_sale")   
-                .set("product_id", String.valueOf(saleModel.getProductId()))
                 .set("discount", String.valueOf(saleModel.getDiscount()))
                 .set("start_date", saleModel.getStart_date())
                 .set("end_date", saleModel.getEnd_date())

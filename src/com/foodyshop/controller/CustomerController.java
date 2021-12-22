@@ -12,6 +12,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import com.foodyshop.controller.EditCustomerController;
 import com.foodyshop.main.CurrentAccount;
+import java.util.Optional;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,6 +22,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -73,7 +75,7 @@ public class CustomerController implements Initializable {
     private Button btnCustomerDetail;
 
     @FXML
-    private Button btnEditStatus;
+    private Button btnEditStatus,btnLock,btnUnclock;
 
     public void setData(CustomerModel customer) {
         mCustomer = customer;
@@ -91,9 +93,11 @@ public class CustomerController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         if (CurrentAccount.getInstance().isStaff()) {
-            btnEditStatus.setVisible(false);
+            btnUnclock.setVisible(false);
+            btnLock.setVisible(false);
         } else {
-            btnEditStatus.setOnMouseClicked(this::onclickShowEditCustomer);            
+            btnUnclock.setOnMouseClicked(this::onClickUnClock);
+            btnLock.setOnMouseClicked(this::onClickLock);                        
         }
         btnCustomerDetail.setOnMouseClicked(this::onclickShowCustomerDetail);
         
@@ -124,10 +128,6 @@ public class CustomerController implements Initializable {
                     return true;
                 } else if (CustomerModel.getPhone().toLowerCase().indexOf(searchKeyword) > -1) {
                     return true;
-                } else if (CustomerModel.getAddress().toLowerCase().indexOf(searchKeyword) > -1) {
-                    return true;
-                } else if (CustomerModel.getDatebirth().toLowerCase().indexOf(searchKeyword) > -1) {
-                    return true;
                 } else {
                     return false;
                 }
@@ -140,22 +140,72 @@ public class CustomerController implements Initializable {
 
         tblCustomer.setItems(sortedData);
     }
-
-    private void onclickShowEditCustomer(MouseEvent e) {
+    
+     void onClickUnClock(MouseEvent e) {
         CustomerModel customer = tblCustomer.getSelectionModel().getSelectedItem();
-        if (customer != null) {
-            Navigator.getInstance().showEditCustomerForm(customer, new EditCustomerController.IOnUpdateCustomer() {
-                @Override
-                public void callback() {
-                    tblCustomer.refresh();
-                }
-            });
-        } else {
+        if (customer == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setHeaderText("You Must choose!!!");
+            alert.setHeaderText("Please select one!");
             alert.show();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirm");
+            alert.setHeaderText("Are you sure to Unclock Customer ?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                customer.setStatusVal(CustomerModel.UNLOCK);
+                if (updStatus(customer)) {
+                    alert.setAlertType(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Success");
+                    alert.setHeaderText("Update success!");
+                    alert.show();
+                } else {
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Update false!");
+                    alert.show();
+                }
+            } else {
+                System.out.println("Click Cancel");
+            }
+
         }
+    }
+
+    private void onClickLock(MouseEvent e) {
+        CustomerModel customer = tblCustomer.getSelectionModel().getSelectedItem();
+        if (customer == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Please select one!");
+            alert.show();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("confirm");
+            alert.setHeaderText("Are you sure to Lock Customer ?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                customer.setStatusVal(CustomerModel.LOCK);
+                if (updStatus(customer)) {
+                    alert.setAlertType(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Success");
+                    alert.setHeaderText("Update success!");
+                    alert.show();
+                } else {
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Update false!");
+                    alert.show();
+                }
+            } else {
+                System.out.println("Click Cancel");
+            }
+        }
+    }
+
+    private boolean updStatus(CustomerModel customerModel) {
+        return CustomerHelper.updateCustomer(customerModel);
     }
 
     private void onclickShowCustomerDetail(MouseEvent e) {
