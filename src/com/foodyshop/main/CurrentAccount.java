@@ -38,4 +38,8 @@ public class CurrentAccount {
     public boolean isStaff(){
         return staff.getType() == 1;
     }
+    
+    public boolean isCurrentAccount(int id){
+        return staff.getId() == id;
+    }
 }

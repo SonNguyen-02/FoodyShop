@@ -11,6 +11,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -55,22 +56,20 @@ public class FeedbackController implements Initializable {
     @FXML
     private TableColumn<FeedbackModel, String> tcStatus;
 
-    @FXML
-    private Button btnShow;
-
-    @FXML
-    private Button btnHidden;
+//    @FXML
+//    private Button btnShow;
+//
+//    @FXML
+//    private Button btnHidden;
 
     ObservableList<FeedbackModel> listFeedback;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        listFeedback = FXCollections.observableArrayList();
-        tvFeedback.setItems(listFeedback);
-        tcID.setCellValueFactory(cellData -> cellData.getValue().getIDproperty());
-        tcCustomerID.setCellValueFactory(cellData -> cellData.getValue().getCustomerIDProperty());
-        tcProductID.setCellValueFactory(cellData -> cellData.getValue().getProductIDProperty());
+        tcID.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tvFeedback.getItems().indexOf(cellData.getValue()) + 1) + ""));
+        tcCustomerID.setCellValueFactory(cellData -> cellData.getValue().getCustomerNameProperty());
+        tcProductID.setCellValueFactory(cellData -> cellData.getValue().getProductNameProperty());
         tcOrderDetailID.setCellValueFactory(cellData -> cellData.getValue().getOrderDetailIDproperty());
         tcContent.setCellValueFactory(cellData -> cellData.getValue().getContentProperty());
         tcCreated.setCellValueFactory(cellData -> cellData.getValue().getCreatedProperty());
@@ -79,6 +78,7 @@ public class FeedbackController implements Initializable {
 
         try {
             listFeedback = FeedbackHelper.showAllFeedback();
+            tvFeedback.setItems(listFeedback);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -99,7 +99,7 @@ public class FeedbackController implements Initializable {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 System.out.println("Click Ok");
-                fbmodel.setStatus(FeedbackModel.STATUS_HIDDEN);
+                fbmodel.setStatusVal(FeedbackModel.STATUS_HIDDEN);
                 if(updStatus(fbmodel)){
                     alert.setAlertType(Alert.AlertType.INFORMATION);
                     alert.setTitle("Success");
@@ -134,7 +134,7 @@ public class FeedbackController implements Initializable {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 System.out.println("Click Ok");
-                fbmodel.setStatus(FeedbackModel.STATUS_SHOW);
+                fbmodel.setStatusVal(FeedbackModel.STATUS_SHOW);
                 if(updStatus(fbmodel)){
                     alert.setAlertType(Alert.AlertType.INFORMATION);
                     alert.setTitle("Success");

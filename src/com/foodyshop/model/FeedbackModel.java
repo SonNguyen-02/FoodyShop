@@ -42,6 +42,18 @@ public class FeedbackModel {
     public static final String STATUS_HIDDEN = "hidden";
 
     public FeedbackModel() {
+        
+        IDproperty = new SimpleObjectProperty<>(ID);
+        customerIDProperty = new SimpleStringProperty(customerID);
+        productIDProperty = new SimpleStringProperty(productID);
+        orderDetailIDproperty = new SimpleObjectProperty<>(orderDetailID);
+        contentProperty = new SimpleStringProperty(content);
+        createdProperty = new SimpleStringProperty(created);
+        updatedProperty = new SimpleStringProperty(updated);
+        statusProperty = new SimpleStringProperty();
+        customerNameProperty = new SimpleStringProperty();
+        productNameProperty = new SimpleStringProperty();
+        
     }
 
     public FeedbackModel(int ID, String customerID, String productID, int orderDetailID, String content,String created, String updated, String status, String customerName, String productName) {
@@ -56,16 +68,6 @@ public class FeedbackModel {
         this.customerName = customerName;
         this.productName = productName;
 
-        IDproperty = new SimpleObjectProperty<>(ID);
-        customerIDProperty = new SimpleStringProperty(customerID);
-        productIDProperty = new SimpleStringProperty(productID);
-        orderDetailIDproperty = new SimpleObjectProperty<>(orderDetailID);
-        contentProperty = new SimpleStringProperty(content);
-        createdProperty = new SimpleStringProperty(created);
-        updatedProperty = new SimpleStringProperty(updated);
-        statusProperty = new SimpleStringProperty();
-        customerNameProperty = new SimpleStringProperty();
-        productNameProperty = new SimpleStringProperty();
 
         if (this.status.equals("0")) {
             this.statusProperty.set(STATUS_SHOW);
@@ -200,8 +202,16 @@ public class FeedbackModel {
         this.productNameProperty.setValue(productName);
     }
 
+    public void setStatus(String status) {
+        this.status = status;
+        if (this.status.equals("0")) {
+            this.statusProperty.set(STATUS_SHOW);
+        }else{
+            this.statusProperty.set(STATUS_HIDDEN);
+        }
+    }
     
-    public void setStatus(String statusVal) {
+    public void setStatusVal(String statusVal) {
         this.statusProperty.setValue(statusVal);
         if(statusVal.equals(STATUS_SHOW)){
             this.status = "0";

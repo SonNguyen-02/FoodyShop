@@ -19,14 +19,17 @@ public class Const {
     public static final String KEY_BASE64_IMAGE = "base64_image";
     public static final String KEY_LAST_IMG_NAME = "last_img_name";
     public static final String KEY_IMG_NAME = "img_name";
-    
+
     public static final String TYPE_FOOD = "type_food";
     public static final String TYPE_TOPIC = "type_topic";
     public static final String TYPE_SALE = "type_sale";
     public static final String PLACEHOLDER_NO1_IMG_PATH = Paths.get(".").toAbsolutePath().getParent().toString() + "\\src\\public\\image\\main_layout\\placeholder_imgDetail.jpg";
     public static final String PLACEHOLDER_NO_IMG_PATH = Paths.get(".").toAbsolutePath().getParent().toString() + "\\src\\public\\image\\main_layout\\placeholder_img.jpg";
     public static final String PLACEHOLDER_USER_IMG_PATH = Paths.get(".").toAbsolutePath().getParent().toString() + "\\src\\public\\image\\main_layout\\placeholder_user.jpg";
-    
+
     public static final Image NO_IMAGE_OBJ = new Image("file:" + Const.PLACEHOLDER_NO_IMG_PATH, 100, 100, false, true);
     public static final Image NO_IMAGE_USER = new Image("file:" + Const.PLACEHOLDER_USER_IMG_PATH, 100, 100, false, true);
+
+    public static final String REGEX_EMAIL = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+    public static final String REGEX_PASSWORD = "^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$";
 }

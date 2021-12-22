@@ -6,6 +6,7 @@
 package com.foodyshop.controller;
 
 import com.foodyshop.helper.StaffHelper;
+import com.foodyshop.main.CurrentAccount;
 import com.foodyshop.main.Navigator;
 import com.foodyshop.model.StaffModel;
 import java.net.URL;
@@ -61,18 +62,6 @@ public class StaffController implements Initializable {
     @FXML
     private Button btnEdit;
 
-    @FXML
-    private Button btnLock;
-
-    @FXML
-    private Button btnUnLock;
-
-    @FXML
-    private Button btnChangePassword;
-
-    @FXML
-    private Button btnDelete;
-
     ObservableList<StaffModel> listStaff = FXCollections.observableArrayList();
 
     @Override
@@ -89,13 +78,6 @@ public class StaffController implements Initializable {
         listStaff = StaffHelper.getAllStaff();
         tvStaff.setItems(listStaff);
 
-        StaffModel staff = new StaffModel();
-        btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddStaff(staff, new AddStaffController.IOnAddStaffSuccess() {
-            @Override
-            public void IOnAddStaffSuccess(StaffModel staffModel) {
-                listStaff.add(0, staffModel);
-            }
-        }));
     }
 
     @FXML
@@ -103,58 +85,14 @@ public class StaffController implements Initializable {
 //        String password = "123456";
 //        String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
 //        System.out.println();
-
-    }
-
-    @FXML
-    void onClickChangePassword(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onClickDelete(ActionEvent event) {
-        StaffModel staffModel = tvStaff.getSelectionModel().getSelectedItem();
-        if (staffModel != null) {
-            Alert alerts = new Alert(Alert.AlertType.CONFIRMATION);
-            alerts.setTitle("ERROR");
-            alerts.setHeaderText("Do you want delete " + staffModel.getUsername());
-            alerts.showAndWait().ifPresent(btn -> {
-                if (btn == ButtonType.OK) {
-                    if (StaffHelper.delete(staffModel)) {
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("ERROR");
-                        alert.setHeaderText("Delete success!");
-                        alert.show();
-                        listStaff.remove(staffModel);
-                    } else {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("ERROR");
-                        alert.setHeaderText("Delete error");
-                        alert.show();
-                    }
-
-                }
-
-            });
-
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("ERROR");
-            alert.setHeaderText("Please choose staff");
-            alert.show();
-        }
+        Navigator.getInstance().showAddStaff((StaffModel staffModel) -> listStaff.add(0, staffModel));
     }
 
     @FXML
     void onClickEdit(ActionEvent event) {
         StaffModel staff = tvStaff.getSelectionModel().getSelectedItem();
         if (staff != null) {
-            btnEdit.setOnMouseClicked(e -> Navigator.getInstance().showEditStaff(staff, new EditStaffController.IOnEditStaffSuccess() {
-                @Override
-                public void callback() {
-                    tvStaff.refresh();
-                }
-            }));
+            Navigator.getInstance().showEditStaff(staff);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
@@ -173,7 +111,7 @@ public class StaffController implements Initializable {
             alert.setContentText("Select a staff before do this action!");
             alert.show();
         } else {
-            if (staffModel.getTypeVal().equals(StaffModel.TYPE_ADMIN)) {
+            if (staffModel.getTypeVal().get().equals(StaffModel.TYPE_ADMIN)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setAlertType(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -186,7 +124,8 @@ public class StaffController implements Initializable {
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK) {
                     System.out.println("Click Ok");
-                    staffModel.setStatusVal(staffModel.STATUS_LOCK);
+                    staffModel.setStatusVal(StaffModel.STATUS_LOCK);
+                    alert.setContentText("");
                     if (updStatusStaff(staffModel)) {
                         alert.setAlertType(Alert.AlertType.INFORMATION);
                         alert.setTitle("Success");
@@ -221,7 +160,8 @@ public class StaffController implements Initializable {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 System.out.println("Click Ok");
-                staffModel.setStatusVal(staffModel.STATUS_UNLOCK);
+                staffModel.setStatusVal(StaffModel.STATUS_UNLOCK);
+                alert.setContentText("");
                 if (updStatusStaff(staffModel)) {
                     alert.setAlertType(Alert.AlertType.INFORMATION);
                     alert.setTitle("Success");
@@ -236,6 +176,65 @@ public class StaffController implements Initializable {
             } else {
                 System.out.println("Click Cancel");
             }
+        }
+    }
+
+    @FXML
+    void onClickChangePassword(ActionEvent event) {
+        StaffModel staffModel = tvStaff.getSelectionModel().getSelectedItem();
+        if (staffModel != null) {
+              if (CurrentAccount.getInstance().isCurrentAccount(staffModel.getId())) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("ERROR");
+                alert.setHeaderText("Cant'n change password this account!");
+                alert.show();
+                return;
+            }
+            Navigator.getInstance().showChangePasswordStaff(staffModel);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Please choose staff");
+            alert.show();
+        }
+    }
+
+    @FXML
+    void onClickDelete(ActionEvent event) {
+        StaffModel staffModel = tvStaff.getSelectionModel().getSelectedItem();
+        if (staffModel != null) {
+            if (CurrentAccount.getInstance().isCurrentAccount(staffModel.getId())) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("ERROR");
+                alert.setHeaderText("Cant'n delete your account!");
+                alert.show();
+                return;
+            }
+            Alert alerts = new Alert(Alert.AlertType.CONFIRMATION);
+            alerts.setTitle("ERROR");
+            alerts.setHeaderText("Do you want delete " + staffModel.getUsername());
+            alerts.showAndWait().ifPresent(btn -> {
+                if (btn == ButtonType.OK) {
+                    if (StaffHelper.delete(staffModel)) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("ERROR");
+                        alert.setHeaderText("Delete success!");
+                        alert.show();
+                        listStaff.remove(staffModel);
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("ERROR");
+                        alert.setHeaderText("Delete error");
+                        alert.show();
+                    }
+                }
+            });
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Please choose staff");
+            alert.show();
         }
     }
 
