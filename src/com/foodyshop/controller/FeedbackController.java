@@ -100,6 +100,7 @@ public class FeedbackController implements Initializable {
             if (result.get() == ButtonType.OK) {
                 System.out.println("Click Ok");
                 fbmodel.setStatusVal(FeedbackModel.STATUS_HIDDEN);
+                alert.setContentText("");
                 if(updStatus(fbmodel)){
                     alert.setAlertType(Alert.AlertType.INFORMATION);
                     alert.setTitle("Success");
@@ -135,6 +136,7 @@ public class FeedbackController implements Initializable {
             if (result.get() == ButtonType.OK) {
                 System.out.println("Click Ok");
                 fbmodel.setStatusVal(FeedbackModel.STATUS_SHOW);
+                alert.setContentText("");
                 if(updStatus(fbmodel)){
                     alert.setAlertType(Alert.AlertType.INFORMATION);
                     alert.setTitle("Success");

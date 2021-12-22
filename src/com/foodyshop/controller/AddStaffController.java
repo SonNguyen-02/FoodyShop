@@ -120,6 +120,7 @@ public class AddStaffController implements Initializable {
         StaffModel staff = new StaffModel();
         staff.setUsername(username);
         staff.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
+        System.out.println(password);
         staff.setName(name);
         staff.setTypeVal(cbType.getValue());
         staff = StaffHelper.insertStaff(staff);

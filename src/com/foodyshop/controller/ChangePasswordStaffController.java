@@ -74,6 +74,7 @@ public class ChangePasswordStaffController {
 
         mStaff.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
         if (StaffHelper.editPasswordStaff(mStaff)) {
+            System.out.println(password);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("SUCCESS");
             alert.setHeaderText("Change password success!");

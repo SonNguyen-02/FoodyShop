@@ -156,7 +156,7 @@ public class StaffController implements Initializable {
         } else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("confirm");
-            alert.setContentText("Are you sure to unlock this staff?");
+            alert.setContentText("Are you sure to unlock " +staffModel.getUsername());
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 System.out.println("Click Ok");
@@ -186,7 +186,7 @@ public class StaffController implements Initializable {
               if (CurrentAccount.getInstance().isCurrentAccount(staffModel.getId())) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("ERROR");
-                alert.setHeaderText("Cant'n change password this account!");
+                alert.setHeaderText("Can't change password this account!");
                 alert.show();
                 return;
             }
@@ -206,7 +206,7 @@ public class StaffController implements Initializable {
             if (CurrentAccount.getInstance().isCurrentAccount(staffModel.getId())) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("ERROR");
-                alert.setHeaderText("Cant'n delete your account!");
+                alert.setHeaderText("Can't delete your account!");
                 alert.show();
                 return;
             }
