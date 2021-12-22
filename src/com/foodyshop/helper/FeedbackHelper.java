@@ -27,27 +27,27 @@ public class FeedbackHelper {
     public static ObservableList<FeedbackModel> showAllFeedback() throws SQLException {
         ObservableList<FeedbackModel> listFb = FXCollections.observableArrayList();
         String sql = db.select("fb.id,fb.customer_id,fb.product_id,fb.order_detail_id,fb.content,fb.created,fb.updated,fb.status,customer.name,pd.name")
-                .from("fs_feedback fb").join("fs_customer customer", "fb.customer_id = customer.name")
-                .join("fs_product pd", "fb.product_id = pd.name")
+                .from("fs_feedback fb").join("fs_customer customer", "fb.customer_id = customer.id")
+                .join("fs_product pd", "fb.product_id = pd.id")
                 .orderByDESC("id")
                 .getCompiledSelect(true);
         ResultSet rs = DBConnection.execSelect(sql);
         try {
             while (rs.next()) {
                 FeedbackModel fbmodel = new FeedbackModel();
-               fbmodel.setID(rs.getInt("id"));
-               fbmodel.setCustomerID(rs.getString("customer_id"));
-               fbmodel.setProductID(rs.getString("product_id"));
-               fbmodel.setOrderDetailID(rs.getInt("order_detail_id"));
-               fbmodel.setContent(rs.getString("content"));
-               fbmodel.setCreated(rs.getString("created"));
-               fbmodel.setUpdated(rs.getString("updated"));
-               fbmodel.setStatus(rs.getString("status"));
-               fbmodel.setCustomerName(rs.getString("customer.name"));
-               fbmodel.setProductName(rs.getString("pd.name"));
-               
-               listFb.add(fbmodel);
-               
+                fbmodel.setID(rs.getInt("id"));
+                fbmodel.setCustomerID(rs.getString("customer_id"));
+                fbmodel.setProductID(rs.getString("product_id"));
+                fbmodel.setOrderDetailID(rs.getInt("order_detail_id"));
+                fbmodel.setContent(rs.getString("content"));
+                fbmodel.setCreated(rs.getString("created"));
+                fbmodel.setUpdated(rs.getString("updated"));
+                fbmodel.setStatus(rs.getString("status"));
+                fbmodel.setCustomerName(rs.getString("customer.name"));
+                fbmodel.setProductName(rs.getString("pd.name"));
+
+                listFb.add(fbmodel);
+
             }
         } finally {
             DBConnection.close();

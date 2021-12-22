@@ -18,6 +18,7 @@ public class StaffModel {
   
     public static final String TYPE_ADMIN = "admin";
     public static final String TYPE_STAFF ="staff";
+    
     public static final String STATUS_LOCK = "lock";
     public static final String STATUS_UNLOCK = "unlock";
     
@@ -41,26 +42,6 @@ public class StaffModel {
     
     }
           
-    
-
-
-    public void setTypeVal(String typeVal) {
-        this.typeVal.set(typeVal);
-        if(typeVal.equals(TYPE_ADMIN)){
-            this.type = 0;
-        }else{
-            this.type = 1;
-        }
-    }
-
-    public void setStatusVal(String statusVal) {
-        this.statusVal.setValue(statusVal);
-        if(statusVal.equals(STATUS_UNLOCK)){
-            this.status = 0;
-        }else{
-            this.status = 1;
-        }
-    }
     
     public StringProperty getStatusVal() {
         return statusVal;
@@ -90,19 +71,41 @@ public class StaffModel {
             this.statusVal.setValue(STATUS_LOCK);
         }
     }
+    
+    
+    public void setStatusVal(String statusVal) {
+        this.statusVal.setValue(statusVal);
+        if(statusVal.equals(STATUS_UNLOCK)){
+            this.status = 0;
+        }else{
+            this.status = 1;
+        }
+    }
 
     public int getType() {
         return type;
     }
-
+    
+   
     public void setType(Integer type) {
         this.type = type;
         if (type == 0) {
-            this.statusVal.setValue(TYPE_ADMIN);
+            this.typeVal.setValue(TYPE_ADMIN);
         } else {
-            this.statusVal.setValue(TYPE_STAFF);
+            this.typeVal.setValue(TYPE_STAFF);
         }
     }
+    
+    public void setTypeVal(String typeVal) {
+        this.typeVal.set(typeVal);
+        if(typeVal.equals(TYPE_ADMIN)){
+            this.type = 0;
+        }else{
+            this.type = 1;
+        }
+    }
+
+    
 
     public StringProperty getUsernameProperty() {
         return username;

@@ -10,6 +10,7 @@ import com.foodyshop.controller.AddStaffController;
 import com.foodyshop.controller.AddStaffController.IOnAddStaffSuccess;
 import com.foodyshop.controller.AddTopicController;
 import com.foodyshop.controller.AddTopicController.IOnInsertTopicSuccess;
+import com.foodyshop.controller.ChangePasswordStaffController;
 import com.foodyshop.controller.CustomerDetailController;
 
 import com.foodyshop.controller.EditCategoryController;
@@ -21,7 +22,6 @@ import com.foodyshop.controller.EditOrderController.IOnUpdateOrderSuccess;
 import com.foodyshop.controller.EditProductController;
 import com.foodyshop.controller.EditSaleController;
 import com.foodyshop.controller.EditStaffController;
-import com.foodyshop.controller.EditStaffController.IOnEditStaffSuccess;
 
 import com.foodyshop.controller.EditTopicController;
 //import com.foodyshop.controller.EditTopicController.IOnUpdateSuccess;
@@ -99,6 +99,7 @@ public class Navigator {
     private static final String EDIT_SALE_FORM = ROOT_FOLDER + "EditSaleForm.fxml";
     
     private static final String CHANGE_PASSWORD_ACCOUNT = ROOT_FOLDER + "ChangePasswordAccount.fxml";
+    private static final String CHANGE_PASSWORD_STAFF = ROOT_FOLDER + "ChangePasswordStaff.fxml";
 
     // Khai báo di chuyển giữa các màn hình
     public void goToLoginUI() {
@@ -187,16 +188,22 @@ public class Navigator {
         controller.setData(order, modalStage, mIOnUpdateOrderSuccess);
     }
 
-    public void showAddStaff(StaffModel staff, IOnAddStaffSuccess mIOnAddStaffSuccess) {
+    public void showAddStaff(IOnAddStaffSuccess mIOnAddStaffSuccess) {
         showModal("Add Staff ", ADD_STAFF);
         AddStaffController controller = fxLoader.getController();
-        controller.initCallback(staff,modalStage,mIOnAddStaffSuccess);
+        controller.initCallback(modalStage,mIOnAddStaffSuccess);
     }
 
-    public void showEditStaff(StaffModel staff, IOnEditStaffSuccess mIOnEditStaffSuccess) {
+    public void showEditStaff(StaffModel staff) {
         showModal("Add Staff ", EDIT_STAFF);
         EditStaffController controller = fxLoader.getController();
-        controller.setDataStaff(modalStage, staff, mIOnEditStaffSuccess);
+        controller.setDataStaff(modalStage, staff);
+    }
+    
+    public void showChangePasswordStaff(StaffModel staff) {
+        showModal("Change Password Staff ", CHANGE_PASSWORD_STAFF);
+        ChangePasswordStaffController controller = fxLoader.getController();
+        controller.initAccount(modalStage, staff);
     }
 
     public void showEditCustomerForm(CustomerModel customer, IOnUpdateCustomer mIOnUpdateCustomer) {

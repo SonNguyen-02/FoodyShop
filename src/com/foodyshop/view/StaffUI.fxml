@@ -24,7 +24,7 @@
       </TableView>
       <HBox layoutX="16.0" layoutY="630.0" prefHeight="70.0" prefWidth="888.0" AnchorPane.topAnchor="619.0">
          <children>
-            <Button fx:id="btnAdd" mnemonicParsing="false" prefHeight="39.0" prefWidth="113.0" style="-fx-background-color: #eda665; -fx-background-radius: 50;" text="Add" textFill="#ebe1e1">
+            <Button mnemonicParsing="false" onAction="#onClickAdd" prefHeight="39.0" prefWidth="113.0" style="-fx-background-color: #eda665; -fx-background-radius: 50;" text="Add" textFill="#ebe1e1">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -35,7 +35,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="btnEdit" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickEdit" prefHeight="39.0" prefWidth="113.0" style="-fx-background-color: #eda665; -fx-background-radius: 50;" text="Edit" textFill="#ebe1e1">
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickEdit" prefHeight="39.0" prefWidth="113.0" style="-fx-background-color: #eda665; -fx-background-radius: 50;" text="Edit" textFill="#ebe1e1">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>

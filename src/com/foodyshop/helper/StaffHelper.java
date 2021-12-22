@@ -25,7 +25,7 @@ public class StaffHelper {
 
     private static DBQuery db = DBQueryBuilder.newDBQuery();
 
-     public static ObservableList<StaffModel> getAllStaff() {
+    public static ObservableList<StaffModel> getAllStaff() {
         ObservableList<StaffModel> listStaff = FXCollections.observableArrayList();
         String sql = db.select().from("fs_staff").orderByDESC("id").getCompiledSelect(true);
         ResultSet rs = DBConnection.execSelect(sql);
@@ -48,11 +48,9 @@ public class StaffHelper {
         }
         return listStaff;
     }
-    
-    
-    public static StaffModel getStaffByEmail(String username) throws SQLException {
-        StaffModel staff = null;
 
+    public static StaffModel getStaffByEmail(String username) {
+        StaffModel staff = null;
         try {
             String sql = db.select().from("fs_staff").where("username", username).getCompiledSelect(true);
             System.out.println(sql);
@@ -63,9 +61,11 @@ public class StaffHelper {
                 staff.setUsername(username);
                 staff.setName(rs.getString("name"));
                 staff.setPassword(rs.getString("password"));
-                staff.setType(rs.getInt("type")); 
+                staff.setType(rs.getInt("type"));
                 staff.setStatus(rs.getInt("status"));
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(StaffHelper.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBConnection.close();
         }
@@ -73,7 +73,9 @@ public class StaffHelper {
 
     }
 
-   
+    public static boolean isAccountExists(String username) {
+        return getStaffByEmail(username) != null;
+    }
 
     public static StaffModel insertStaff(StaffModel staff) {
         String sql = db.insert("fs_staff")
@@ -89,11 +91,9 @@ public class StaffHelper {
                 sql = db.select().from("fs_staff").where("id", String.valueOf(lastId)).getCompiledSelect(true);
                 ResultSet rs = DBConnection.execSelect(sql);
                 if (rs.next()) {
-
-                    staff.setCreated(rs.getString("created"));
                     staff.setId(lastId);
-                    staff.setType(1);
                     staff.setStatus(0);
+                    staff.setCreated(rs.getString("created"));
                     return staff;
                 }
             } catch (SQLException ex) {
@@ -119,10 +119,20 @@ public class StaffHelper {
 
     public static boolean editStaff(StaffModel staffModel) {
         String sql = db.update("fs_staff")
-                .set("username", staffModel.getUsername())
-                .set("password", staffModel.getPassword())
                 .set("name", staffModel.getName())
                 .set("type", String.valueOf(staffModel.getType()))
+                .where("id", String.valueOf(staffModel.getId()))
+                .getCompiledUpdate(true);
+        int result = DBConnection.execUpdate(sql);
+        if (result > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean editPasswordStaff(StaffModel staffModel) {
+        String sql = db.update("fs_staff")
+                .set("password", staffModel.getPassword())
                 .where("id", String.valueOf(staffModel.getId()))
                 .getCompiledUpdate(true);
         int result = DBConnection.execUpdate(sql);
