@@ -236,7 +236,7 @@ public class AddProductController implements Initializable {
             Respond desImgRespond = UploadImageToApi.uploadImageToApi(imgDetailProductFile, Const.TYPE_FOOD);
             if (norImgRespond.isSuccess() && desImgRespond.isSuccess()) {
                 ProductModel product = new ProductModel();
-                product.setName(name);
+                product.setName(name);           
                 product.setCategoryId(cbCategory.getValue().getId());
                 product.setCategoryName(cbCategory.getValue().getName());
                 product.setPrice(Integer.parseInt(price));
