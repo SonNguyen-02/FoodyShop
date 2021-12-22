@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="914.0" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -34,9 +36,9 @@
                      </image>
                   </ImageView>
                   <Label fx:id="lbTop1" layoutX="73.0" layoutY="19.0" styleClass="lbTop" stylesheets="@style.css" text="Order Number:" />
-                  <Label fx:id="lbBot1" layoutX="73.0" layoutY="54.0" styleClass="lbBot" stylesheets="@style.css" text="Order Product:" />
-                  <Label fx:id="lbOrderProduct" layoutX="192.0" layoutY="54.0" styleClass="lbBot" stylesheets="@style.css" text="0" />
-                  <Label fx:id="lbOrderNumber" layoutX="192.0" layoutY="19.0" styleClass="lbBot" stylesheets="@style.css" text="0" />
+                  <Label fx:id="lbBot1" layoutX="73.0" layoutY="54.0" styleClass="lbBot" stylesheets="@style.css" text="Successful delivery:" />
+                  <Label fx:id="lbSuccessDe" layoutX="237.0" layoutY="54.0" styleClass="lbBot" stylesheets="@style.css" text="0" />
+                  <Label fx:id="lbOrderNumber" layoutX="237.0" layoutY="19.0" styleClass="lbBot" stylesheets="@style.css" text="0" />
                </children>
             </Pane>
             <Pane fx:id="pane_1" prefHeight="85.0" prefWidth="330.0" styleClass="pane_3" stylesheets="@style.css">
@@ -71,15 +73,15 @@
                   </Pane>
                   <VBox layoutX="15.0" layoutY="64.0" prefHeight="100.0" prefWidth="117.0" spacing="20.0">
                      <children>
-                        <Label fx:id="lbBotInfor" styleClass="lbBotInfor" stylesheets="@style.css" text="Order Success" />
-                        <Label fx:id="lbBotInfor1" styleClass="lbBotInfor" stylesheets="@style.css" text="Order Wait" />
-                        <Label fx:id="lbBotInfor2" styleClass="lbBotInfor" stylesheets="@style.css" text="Order Cancel" />
+                        <Label styleClass="lbBotInfor" stylesheets="@style.css" text="Order Wait" />
+                        <Label styleClass="lbBotInfor" stylesheets="@style.css" text="Order Confirm" />
+                        <Label styleClass="lbBotInfor" stylesheets="@style.css" text="Order Cancel" />
                      </children>
                   </VBox>
                   <VBox layoutX="240.0" layoutY="64.0" prefHeight="93.0" prefWidth="27.0" spacing="20.0">
                      <children>
-                        <Label fx:id="lbOrderSuccess" styleClass="lbBot" stylesheets="@style.css" text="0" />
                         <Label fx:id="lbOrderWait" styleClass="lbBot" stylesheets="@style.css" text="0" />
+                        <Label fx:id="lbOrderConfirm" styleClass="lbBot" stylesheets="@style.css" text="0" />
                         <Label fx:id="lbOrderCancel" styleClass="lbBot" stylesheets="@style.css" text="0" />
                      </children>
                   </VBox>
@@ -110,8 +112,8 @@
                   <VBox layoutX="240.0" layoutY="64.0" prefHeight="93.0" prefWidth="27.0" spacing="20.0">
                      <children>
                         <Label fx:id="lbSaleLeft" styleClass="lbBot" stylesheets="@style.css" text="0" />
-                        <Label fx:id="lbSalealEnd" styleClass="lbBot" stylesheets="@style.css" text="0" />
-                        <Label fx:id="lbBot1112" styleClass="lbBot" stylesheets="@style.css" text="0" />
+                        <Label fx:id="lbAlmostEnd" styleClass="lbBot" stylesheets="@style.css" text="0" />
+                        <Label fx:id="lbSaleEnd" styleClass="lbBot" stylesheets="@style.css" text="0" />
                      </children>
                   </VBox>
                </children>
@@ -132,22 +134,14 @@
                      <children>
                         <Label fx:id="lbBotInfor12" styleClass="lbBotInfor" stylesheets="@style.css" text="Order" />
                         <Label fx:id="lbBotInfor121" styleClass="lbBotInfor" stylesheets="@style.css" text="Member" />
-                        <Label fx:id="lbBotInfor221" prefHeight="20.0" prefWidth="135.0" styleClass="lbBotInfor" stylesheets="@style.css" text="Feedback/Contact" />
+                        <Label fx:id="lbBotInfor221" prefHeight="20.0" prefWidth="135.0" styleClass="lbBotInfor" stylesheets="@style.css" text="Feedback" />
                      </children>
                   </VBox>
-                  <VBox layoutX="240.0" layoutY="64.0" prefHeight="93.0" prefWidth="27.0" spacing="20.0">
+                  <VBox layoutX="240.0" layoutY="64.0" prefHeight="100.0" prefWidth="20.0" spacing="20.0">
                      <children>
-                        <Label fx:id="lbOrder" layoutX="1.0" styleClass="lbBot" stylesheets="@style.css" text="0">
-                           <padding>
-                              <Insets left="16.0" />
-                           </padding>
-                        </Label>
-                        <Label fx:id="lbMember" layoutX="1.0" styleClass="lbBot" stylesheets="@style.css" text="0">
-                           <padding>
-                              <Insets left="16.0" />
-                           </padding>
-                        </Label>
-                        <Label fx:id="lbContact" styleClass="lbBot" stylesheets="@style.css" text="0/0" />
+                        <Label fx:id="lbOrder" layoutX="1.0" styleClass="lbBot" stylesheets="@style.css" text="0" />
+                        <Label fx:id="lbMember" layoutX="1.0" styleClass="lbBot" stylesheets="@style.css" text="0" />
+                        <Label fx:id="lbFeedback" styleClass="lbBot" stylesheets="@style.css" text="0" />
                      </children>
                   </VBox>
                </children>
@@ -157,5 +151,12 @@
             </Pane>
          </children>
       </HBox>
+      <Label layoutX="25.0" layoutY="49.0" text="Search">
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="dpStart" layoutX="145.0" layoutY="40.0" prefHeight="35.0" prefWidth="200.0" />
+      <DatePicker fx:id="dpEnd" layoutX="400.0" layoutY="40.0" prefHeight="35.0" prefWidth="200.0" />
    </children>
 </Pane>

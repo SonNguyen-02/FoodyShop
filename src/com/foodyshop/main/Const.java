@@ -28,4 +28,5 @@ public class Const {
     public static final String PLACEHOLDER_USER_IMG_PATH = Paths.get(".").toAbsolutePath().getParent().toString() + "\\src\\public\\image\\main_layout\\placeholder_user.jpg";
     
     public static final Image NO_IMAGE_OBJ = new Image("file:" + Const.PLACEHOLDER_NO_IMG_PATH, 100, 100, false, true);
+    public static final Image NO_IMAGE_USER = new Image("file:" + Const.PLACEHOLDER_USER_IMG_PATH, 100, 100, false, true);
 }

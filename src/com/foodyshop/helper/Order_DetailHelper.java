@@ -54,7 +54,6 @@ public class Order_DetailHelper {
                 order_detail.setPrice(rs.getInt("price"));
                 order_detail.setDiscount(rs.getInt("discount"));
                 listOrder_Detail.add(order_detail);
-                System.out.println(order_detail.getPrice());
             }
 
         } catch (SQLException ex) {

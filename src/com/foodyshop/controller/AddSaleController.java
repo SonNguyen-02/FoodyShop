@@ -130,7 +130,7 @@ public class AddSaleController implements Initializable {
     private void onClickSave(MouseEvent e) {
         String discount = txtDiscount.getText().trim();
         String content = txtContent.getText().trim();
-        String regaxDiscount = "^[1-9]{1,2}$";
+        String regaxDiscount = "^[^0][0-9]{0,1}$";
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         if (discount.isEmpty()) {
@@ -140,7 +140,7 @@ public class AddSaleController implements Initializable {
             return;
         }
         if (!discount.matches(regaxDiscount)) {
-            alert.setHeaderText("Please enter two or one number and different zero in Discount");
+            alert.setHeaderText("Please enter two or one number and different zero before!");
             alert.show();
             return;
         }

@@ -64,8 +64,8 @@ public class EditOrderController implements Initializable {
         this.mIOnUpdateOrderSuccess = mIOnUpdateOrderSuccess;
         lbOrderCode.setText(order.getOrderCode().toString());
         txtShipPrice.setText(order.getShipPrice().toString());
-        cbStatus.setItems(FXCollections.observableArrayList(OrderModel.WAIT_AOS_CF, OrderModel.AOS_CF, OrderModel.AOS_CL, OrderModel.WAIT_CUS_CF, OrderModel.CUS_CL, OrderModel.CUS_CF, OrderModel.SHIPPING, OrderModel.SUCCESS_DELIVERY));
-        cbStatus.setValue(order.getStatusVal().get());
+//        cbStatus.setItems(FXCollections.observableArrayList(OrderModel.WAIT_AOS_CF, OrderModel.AOS_CF, OrderModel.AOS_CL, OrderModel.WAIT_CUS_CF, OrderModel.CUS_CL, OrderModel.CUS_CF, OrderModel.SHIPPING, OrderModel.SUCCESS_DELIVERY));
+//        cbStatus.setValue(order.getStatusVal().get());
     }
 
     /**
@@ -91,7 +91,7 @@ public class EditOrderController implements Initializable {
 
     private void onclickSave(MouseEvent e) {
         String shipPrice = txtShipPrice.getText().trim();
-        String regaxShipPrice = "[0-9]{1,10}$";
+        String regaxShipPrice = "^[0-9]{0,10}$";
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         if (shipPrice.isEmpty()) {
@@ -101,12 +101,12 @@ public class EditOrderController implements Initializable {
             return;
         }
         if(!shipPrice.matches(regaxShipPrice)){
-            alert.setHeaderText("Please enter number, limit 10 number");
+            alert.setHeaderText("Please enter number");
             alert.show();
             return;
         }
         mOrder.setShipPrice(Integer.parseInt(shipPrice));
-        mOrder.setStatusVal(cbStatus.getValue());
+//        mOrder.setStatusVal(cbStatus.getValue());
         boolean resutl = OrderHelper.updateOrder(mOrder);
         if (resutl) {
             Alert alerts = new Alert(Alert.AlertType.INFORMATION);

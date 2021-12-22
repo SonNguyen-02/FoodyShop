@@ -82,7 +82,6 @@ public class Order_DetailController implements Initializable {
         lbAddress.setText(order.getAddress());
         lbTotalPrice.setText(fomatter1 + " VNĐ");
         lbOrder_Code.setText(order.getOrderCode());
-        System.out.println("id : " + order.getId());
         listOrder_Detail = Order_DetailHelper.getAllOrder_Detail(order);
         tblOrder_detail.setItems(listOrder_Detail);
         lbTotalProduct.setText(String.valueOf(listOrder_Detail.size()) + "prd");

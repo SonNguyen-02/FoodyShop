@@ -74,7 +74,7 @@ public class CustomerDetailController implements Initializable {
     private Label lbTotalOrder;
 
     @FXML
-    private Button btnCancel;
+    private Button btnCancel,btnOrderDetail;
 
     private CustomerModel mCustomer;
 
@@ -107,6 +107,7 @@ public class CustomerDetailController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        btnOrderDetail.setOnMouseClicked(this::onclickShowOrderDetail);
         btnCancel.setOnMouseClicked(this::onClickCancel);
         tcStt.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tblCustomerDetail.getItems().indexOf(cellData.getValue()) + 1) + ""));
         tcOrderCode.setCellValueFactory(cellValue -> cellValue.getValue().getOrderCodeProperty());
@@ -151,6 +152,18 @@ public class CustomerDetailController implements Initializable {
                 Navigator.getInstance().getModalStage().close();
             }
         });
+    }
+    
+    private void onclickShowOrderDetail(MouseEvent e) {
+        OrderModel order = tblCustomerDetail.getSelectionModel().getSelectedItem();
+        if (order != null) {
+            Navigator.getInstance().showOrder_Detail(order);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("You Must choose!!!");
+            alert.show();
+        }
     }
 
 }
