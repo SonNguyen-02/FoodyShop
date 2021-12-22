@@ -16,23 +16,27 @@ import javafx.beans.property.StringProperty;
  */
 public class FeedbackModel {
 
-    int ID;
-    String customerID;
-    String productID;
-    int orderDetailID;
-    String content;
-    String created;
-    String updated;
-    String status;
+    private int ID;
+    private String customerID;
+    private String productID;
+    private int orderDetailID;
+    private String content;
+    private String created;
+    private String updated;
+    private String status;
+    private String customerName;
+    private String productName;
 
-    ObjectProperty<Integer> IDproperty;
-    StringProperty customerIDProperty;
-    StringProperty productIDProperty;
-    ObjectProperty<Integer> orderDetailIDproperty;
-    StringProperty contentProperty;
-    StringProperty createdProperty;
-    StringProperty updatedProperty;
-    StringProperty statusProperty;
+    private ObjectProperty<Integer> IDproperty;
+    private StringProperty customerIDProperty;
+    private StringProperty productIDProperty;
+    private ObjectProperty<Integer> orderDetailIDproperty;
+    private StringProperty contentProperty;
+    private StringProperty createdProperty;
+    private StringProperty updatedProperty;
+    private StringProperty statusProperty;
+    private StringProperty customerNameProperty;
+    private StringProperty productNameProperty;
 
     public static final String STATUS_SHOW = "show";
     public static final String STATUS_HIDDEN = "hidden";
@@ -40,7 +44,7 @@ public class FeedbackModel {
     public FeedbackModel() {
     }
 
-    public FeedbackModel(int ID, String customerID, String productID, int orderDetailID, String content,String created, String updated, String status) {
+    public FeedbackModel(int ID, String customerID, String productID, int orderDetailID, String content,String created, String updated, String status, String customerName, String productName) {
         this.ID = ID;
         this.customerID = customerID;
         this.productID = productID;
@@ -49,6 +53,8 @@ public class FeedbackModel {
         this.created = created;
         this.updated = updated;
         this.status = status;
+        this.customerName = customerName;
+        this.productName = productName;
 
         IDproperty = new SimpleObjectProperty<>(ID);
         customerIDProperty = new SimpleStringProperty(customerID);
@@ -58,6 +64,8 @@ public class FeedbackModel {
         createdProperty = new SimpleStringProperty(created);
         updatedProperty = new SimpleStringProperty(updated);
         statusProperty = new SimpleStringProperty();
+        customerNameProperty = new SimpleStringProperty();
+        productNameProperty = new SimpleStringProperty();
 
         if (this.status.equals("0")) {
             this.statusProperty.set(STATUS_SHOW);
@@ -96,6 +104,14 @@ public class FeedbackModel {
 
     public StringProperty getStatusProperty() {
         return statusProperty;
+    }
+
+    public StringProperty getCustomerNameProperty() {
+        return customerNameProperty;
+    }
+
+    public StringProperty getProductNameProperty() {
+        return productNameProperty;
     }
  
     
@@ -166,6 +182,25 @@ public class FeedbackModel {
         return status;
     }
 
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+        this.customerNameProperty.setValue(customerName);
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+        this.productNameProperty.setValue(productName);
+    }
+
+    
     public void setStatus(String statusVal) {
         this.statusProperty.setValue(statusVal);
         if(statusVal.equals(STATUS_SHOW)){

@@ -85,10 +85,10 @@ public class StaffController implements Initializable {
         tcType.setCellValueFactory(cellData -> cellData.getValue().getTypeVal());
         tcCreated.setCellValueFactory(cellData -> cellData.getValue().getCreatedProperty());
         tcStatus.setCellValueFactory(cellData -> cellData.getValue().getStatusVal());
-        
+
         listStaff = StaffHelper.getAllStaff();
         tvStaff.setItems(listStaff);
-        
+
         StaffModel staff = new StaffModel();
         btnAdd.setOnMouseClicked(e -> Navigator.getInstance().showAddStaff(staff, new AddStaffController.IOnAddStaffSuccess() {
             @Override
@@ -152,7 +152,7 @@ public class StaffController implements Initializable {
             btnEdit.setOnMouseClicked(e -> Navigator.getInstance().showEditStaff(staff, new EditStaffController.IOnEditStaffSuccess() {
                 @Override
                 public void callback() {
-                 tvStaff.refresh();
+                    tvStaff.refresh();
                 }
             }));
         } else {
@@ -173,27 +173,36 @@ public class StaffController implements Initializable {
             alert.setContentText("Select a staff before do this action!");
             alert.show();
         } else {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("confirm");
-            alert.setContentText("Are you sure to lock this staff?");
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK) {
-                System.out.println("Click Ok");
-                staffModel.setStatusVal(staffModel.STATUS_LOCK);
-                if (updStatusStaff(staffModel)) {
-                    alert.setAlertType(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Success");
-                    alert.setHeaderText("Update success!");
-                    alert.show();
-                } else {
-                    alert.setAlertType(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("Update false!");
-                    alert.show();
-                }
+            if (staffModel.getTypeVal().equals(StaffModel.TYPE_ADMIN)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setAlertType(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("this is admin account, can't lock!");
+                alert.show();
             } else {
-                System.out.println("Click Cancel");
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("confirm");
+                alert.setContentText("Are you sure to lock " + staffModel.getUsername());
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK) {
+                    System.out.println("Click Ok");
+                    staffModel.setStatusVal(staffModel.STATUS_LOCK);
+                    if (updStatusStaff(staffModel)) {
+                        alert.setAlertType(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Success");
+                        alert.setHeaderText("Update success!");
+                        alert.show();
+                    } else {
+                        alert.setAlertType(Alert.AlertType.ERROR);
+                        alert.setTitle("Error");
+                        alert.setHeaderText("Update false!");
+                        alert.show();
+                    }
+                } else {
+                    System.out.println("Click Cancel");
+                }
             }
+
         }
     }
 

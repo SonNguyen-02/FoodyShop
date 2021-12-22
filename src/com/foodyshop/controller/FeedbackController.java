@@ -78,7 +78,7 @@ public class FeedbackController implements Initializable {
         tcStatus.setCellValueFactory(cellData -> cellData.getValue().getStatusProperty());
 
         try {
-            listFeedback.addAll(FeedbackHelper.showAllFeedback());
+            listFeedback = FeedbackHelper.showAllFeedback();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
