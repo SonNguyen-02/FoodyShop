@@ -79,6 +79,8 @@ public class AddSaleController implements Initializable {
     private DatePicker dpEndDate;
 
     private IOnInsertSaleSuccess mIOnInsertSaleSuccess;
+    
+    private SaleModel mSale;
 
     private ObservableList<ProductModel> productList;
 
@@ -90,12 +92,19 @@ public class AddSaleController implements Initializable {
     public void initDataSale(Stage stage, IOnInsertSaleSuccess mIOnInsertSaleSuccess) {
         setDefaultImg(btnChooseFile, imgSale);
         this.stage = stage;
+//        mSale = sale;
         this.mIOnInsertSaleSuccess = mIOnInsertSaleSuccess;
         productList = ProductHelper.getAllProduct();
         if (productList != null && !productList.isEmpty()) {
             cbProductName.setItems(productList);
             cbProductName.setValue(productList.get(0));
         }
+//        if(cbProductName.setItems(sale.getStatus() == sale.getStatus("5"))){
+//             Alert alert = new Alert(Alert.AlertType.ERROR);
+//                alert.setTitle("Error");
+//                alert.setHeaderText("File isn't image");
+//                alert.show();
+//        }
     }
 
     @Override
