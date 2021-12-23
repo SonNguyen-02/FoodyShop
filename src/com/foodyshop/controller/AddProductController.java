@@ -12,7 +12,7 @@ import com.foodyshop.main.Const;
 import static com.foodyshop.main.Const.PLACEHOLDER_NO1_IMG_PATH;
 import static com.foodyshop.main.Const.PLACEHOLDER_NO_IMG_PATH;
 import com.foodyshop.main.Navigator;
-import com.foodyshop.main.UploadImageToApi;
+import com.foodyshop.main.APIService;
 import com.foodyshop.model.CategoryModel;
 import com.foodyshop.model.ProductModel;
 import com.foodyshop.model.Respond;
@@ -231,8 +231,8 @@ public class AddProductController implements Initializable {
 
         // call API
         try {
-            Respond norImgRespond = UploadImageToApi.uploadImageToApi(imgProductFile, Const.TYPE_FOOD);
-            Respond desImgRespond = UploadImageToApi.uploadImageToApi(imgDetailProductFile, Const.TYPE_FOOD);
+            Respond norImgRespond = APIService.uploadImageToApi(imgProductFile, Const.TYPE_FOOD);
+            Respond desImgRespond = APIService.uploadImageToApi(imgDetailProductFile, Const.TYPE_FOOD);
             if (norImgRespond.isSuccess() && desImgRespond.isSuccess()) {
                 ProductModel product = new ProductModel();
                 product.setName(name);

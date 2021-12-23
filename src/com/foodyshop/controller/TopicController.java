@@ -10,7 +10,7 @@ import com.foodyshop.helper.TopicHelper;
 import com.foodyshop.main.Const;
 import com.foodyshop.main.CurrentAccount;
 import com.foodyshop.main.Navigator;
-import com.foodyshop.main.UploadImageToApi;
+import com.foodyshop.main.APIService;
 import com.foodyshop.model.TopicModel;
 import java.io.IOException;
 import java.net.URL;
@@ -123,7 +123,7 @@ public class TopicController implements Initializable {
                         alert.show();
                     } else {
                         try {
-                            UploadImageToApi.removeImageFromApi(Const.TYPE_TOPIC, topic.getImg());
+                            APIService.removeImageFromApi(Const.TYPE_TOPIC, topic.getImg());
                             if (TopicHelper.delete(topic)) {
                                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                                 alert.setTitle("ERROR");

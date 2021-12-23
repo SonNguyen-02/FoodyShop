@@ -9,7 +9,7 @@ import com.foodyshop.helper.SaleHelper;
 import com.foodyshop.main.Const;
 import com.foodyshop.main.CurrentAccount;
 import com.foodyshop.main.Navigator;
-import com.foodyshop.main.UploadImageToApi;
+import com.foodyshop.main.APIService;
 import com.foodyshop.model.SaleModel;
 import java.io.IOException;
 import java.net.URL;
@@ -201,7 +201,7 @@ public class SaleController implements Initializable {
                     } else {
                         try {
                             if (SaleHelper.deleteSale(sale)) {
-                                UploadImageToApi.removeImageFromApi(Const.TYPE_SALE, sale.getImg());
+                                APIService.removeImageFromApi(Const.TYPE_SALE, sale.getImg());
                                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                                 alert.setTitle("Success");
                                 alert.setHeaderText("Delete success!");

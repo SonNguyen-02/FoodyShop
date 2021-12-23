@@ -74,11 +74,10 @@ public class AddCategoryController implements Initializable {
             alert.setTitle("ERROR");
             alert.setHeaderText("Name must be entered");
             alert.show();
-            return;
-            
         } else {            
             CategoryModel categoryModel = CategoryHelper.insertCategory(txtName.getText(), cbTopic.getValue().getId());
             if (categoryModel != null) {
+                categoryModel.setTopicName(cbTopic.getValue().getName());
                 mIOnAddSuccess.onAddSuccess(categoryModel);
                 Navigator.getInstance().getModalStage().close();
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);

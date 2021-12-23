@@ -30,12 +30,11 @@ import javafx.stage.Stage;
  * @author X PC
  */
 public class EditCategoryController implements Initializable {
+
     private ObservableList<TopicModel> topicList;
-    
+
     private CategoryModel category;
-    
-    private IOnEditCategorySuccess mIOnEditCategorySuccess;
-    
+
     private Stage stage;
     @FXML
     private TextField txtName;
@@ -52,20 +51,15 @@ public class EditCategoryController implements Initializable {
     @FXML
     private ComboBox<String> cbStatus;
 
-    public interface IOnEditCategorySuccess {
-
-        void callback();
-    }
-    
-    public void setData(Stage stage, CategoryModel category, IOnEditCategorySuccess mIOnEditCategorySuccess ){
+    public void setData(Stage stage, CategoryModel category) {
         this.stage = stage;
         this.category = category;
         txtName.setText(category.getName());
         topicList = TopicHelper.getAllTopic();
         if (topicList != null && !topicList.isEmpty()) {
-            cbTopic.setItems(topicList);           
-            for (TopicModel topic : topicList) {                           
-                if(topic.getId() == category.getTopic_id()){
+            cbTopic.setItems(topicList);
+            for (TopicModel topic : topicList) {
+                if (topic.getId() == category.getTopic_id()) {
                     cbTopic.setValue(topic);
                     break;
                 }
@@ -74,20 +68,20 @@ public class EditCategoryController implements Initializable {
         // set mac dinh val cho checkbox
         cbStatus.setItems(FXCollections.observableArrayList(TopicModel.SHOW, TopicModel.HIDDEN));
         cbStatus.setValue(category.getStatusVal().get());
-        
-        this.mIOnEditCategorySuccess = mIOnEditCategorySuccess;
+
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         btnSave.setOnMouseClicked(this::onClickSave);
         btnCancel.setOnMouseClicked(this::onClickCancel);
-    }  
+    }
+
     private void onClickSave(MouseEvent e) {
-       String name = txtName.getText().trim();
+        String name = txtName.getText().trim();
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
-        if (name.isEmpty()){
+        if (name.isEmpty()) {
             txtName.requestFocus();
             alert.setHeaderText("Please enter name");
             alert.show();
@@ -96,14 +90,13 @@ public class EditCategoryController implements Initializable {
         category.setName(name);
         category.setTopic_id(cbTopic.getValue().getId());
         category.setStatusVal(cbStatus.getValue());
-        boolean resutl = CategoryHelper.updateCategory(category);
-        if (resutl) {
+        if (CategoryHelper.updateCategory(category)) {
+            category.setTopicName(cbTopic.getValue().getName());
+            Navigator.getInstance().getModalStage().close();
             Alert alerts = new Alert(Alert.AlertType.INFORMATION);
             alerts.setTitle("Success");
             alerts.setHeaderText("Edit success!");
             alerts.show();
-            mIOnEditCategorySuccess.callback();
-            Navigator.getInstance().getModalStage().close();
         } else {
             Alert alerts = new Alert(Alert.AlertType.ERROR);
             alerts.setTitle("Error");
@@ -111,10 +104,10 @@ public class EditCategoryController implements Initializable {
             alerts.show();
         }
 
-   }
-    
-    private void onClickCancel(MouseEvent e){
-         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    }
+
+    private void onClickCancel(MouseEvent e) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Close");
         alert.setHeaderText("Do you want close?");
         alert.showAndWait().ifPresent(btnType -> {

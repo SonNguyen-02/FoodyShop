@@ -11,7 +11,7 @@ import com.foodyshop.helper.SaleHelper;
 import com.foodyshop.main.Const;
 import static com.foodyshop.main.Const.PLACEHOLDER_NO_IMG_PATH;
 import com.foodyshop.main.Navigator;
-import com.foodyshop.main.UploadImageToApi;
+import com.foodyshop.main.APIService;
 import com.foodyshop.model.ProductModel;
 import com.foodyshop.model.Respond;
 import com.foodyshop.model.SaleModel;
@@ -198,7 +198,7 @@ public class AddSaleController implements Initializable {
         }
         // call API
         try {
-            Respond respond = UploadImageToApi.uploadImageToApi(imgSaleFile, Const.TYPE_SALE);
+            Respond respond = APIService.uploadImageToApi(imgSaleFile, Const.TYPE_SALE);
             if (respond.isSuccess()) {
                 SaleModel sale = new SaleModel();
                 sale.setDiscount(Integer.parseInt(discount));

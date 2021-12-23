@@ -35,7 +35,7 @@ public class DBConnection {
             return;
         }
         try {
-            String url = "jdbc:mysql://" + HOSTNAME + "/" + DATABASE + "?useUnicode=yes&characterEncoding=utf8&autoReconnect=true";
+            String url = "jdbc:mysql://" + HOSTNAME + "/" + DATABASE + "?useUnicode=yes&characterEncoding=utf8";
             connectionInstance = DriverManager.getConnection(url, USERNAME, PASSWORD);
         } catch (SQLException e) {
             e.printStackTrace();

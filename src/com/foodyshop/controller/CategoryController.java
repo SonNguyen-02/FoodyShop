@@ -122,13 +122,7 @@ public class CategoryController implements Initializable {
     private void onClickEdit(MouseEvent e) {
         CategoryModel category = tblCategory.getSelectionModel().getSelectedItem();
         if (category != null) {
-            Navigator.getInstance().showEditCategory(category, new EditCategoryController.IOnEditCategorySuccess() {
-                @Override
-                public void callback() {
-                    tblCategory.refresh();
-                }
-            });
-
+            Navigator.getInstance().showEditCategory(category);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");

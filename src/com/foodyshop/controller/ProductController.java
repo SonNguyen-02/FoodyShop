@@ -10,7 +10,7 @@ import com.foodyshop.helper.ProductHelper;
 import com.foodyshop.main.Const;
 import com.foodyshop.main.CurrentAccount;
 import com.foodyshop.main.Navigator;
-import com.foodyshop.main.UploadImageToApi;
+import com.foodyshop.main.APIService;
 import com.foodyshop.model.ProductModel;
 import java.io.IOException;
 import java.net.URL;
@@ -144,8 +144,8 @@ public class ProductController implements Initializable {
                     } else {
                         if (ProductHelper.delete(product)) {
                             try {
-                                UploadImageToApi.removeImageFromApi(Const.TYPE_FOOD, product.getImg());
-                                UploadImageToApi.removeImageFromApi(Const.TYPE_FOOD, product.getImgDetail());
+                                APIService.removeImageFromApi(Const.TYPE_FOOD, product.getImg());
+                                APIService.removeImageFromApi(Const.TYPE_FOOD, product.getImgDetail());
                                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                                 alert.setTitle("ERROR");
                                 alert.setHeaderText("Delete success!");
