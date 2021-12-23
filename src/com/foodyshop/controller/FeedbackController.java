@@ -87,12 +87,12 @@ public class FeedbackController implements Initializable {
         if (fbmodel == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("No selected data");
-            alert.setContentText("Select a feedback before do this action!");
+            alert.setHeaderText("Select a feedback before do this action!");
             alert.show();
         } else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("confirm");
-            alert.setContentText("Are you sure to hidden this feedback?");
+            alert.setHeaderText("Are you sure to hidden this feedback?");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 System.out.println("Click Ok");
@@ -111,7 +111,6 @@ public class FeedbackController implements Initializable {
             } else {
                 System.out.println("Click Cancel");
             }
-
         }
     }
 
@@ -121,12 +120,12 @@ public class FeedbackController implements Initializable {
         if (fbmodel == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("No selected data");
-            alert.setContentText("Select a feedback before do this action!");
+            alert.setHeaderText("Select a feedback before do this action!");
             alert.show();
         } else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("confirm");
-            alert.setContentText("Are you sure to show this feedback?");
+            alert.setTitle("Confirm");
+            alert.setHeaderText("Are you sure to show this feedback?");
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
@@ -146,7 +145,6 @@ public class FeedbackController implements Initializable {
             } else {
                 System.out.println("Click Cancel");
             }
-
         }
     }
     
