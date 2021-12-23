@@ -14,10 +14,10 @@
       <TableView fx:id="tblTopic" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="585.0" prefWidth="866.0">
         <columns>
           <TableColumn fx:id="tcId" prefWidth="83.0" text="STT" />
-          <TableColumn fx:id="tcName" minWidth="0.0" prefWidth="345.0" text="name" />
+          <TableColumn fx:id="tcName" minWidth="0.0" prefWidth="328.0" text="name" />
             <TableColumn fx:id="tcImg" prefWidth="100.0" text="img" />
-            <TableColumn fx:id="tcCreated" prefWidth="255.0" text="created" />
-            <TableColumn fx:id="tcStatus" prefWidth="87.0" text="status" />
+            <TableColumn fx:id="tcCreated" prefWidth="224.0" text="created" />
+            <TableColumn fx:id="tcStatus" prefWidth="115.0" text="status" />
         </columns>
       </TableView>
       <HBox alignment="CENTER" prefHeight="75.0" prefWidth="867.0">

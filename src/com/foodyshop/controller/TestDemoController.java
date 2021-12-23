@@ -5,6 +5,7 @@
  */
 package com.foodyshop.controller;
 
+import com.foodyshop.helper.FileHelper;
 import com.foodyshop.helper.FormHelper;
 import com.foodyshop.main.Const;
 import com.foodyshop.main.UploadImageToApi;
@@ -63,7 +64,7 @@ public class TestDemoController implements Initializable {
 
     private void onClickChooseFile(MouseEvent e) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose image to upload");
+        FileHelper.configureFileImageChooser(fileChooser);
         fileChoose = fileChooser.showOpenDialog(stage);
         if (fileChoose != null) {
             btnChooseFile.setText(fileChoose.getName());

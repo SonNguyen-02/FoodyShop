@@ -12,7 +12,6 @@ import com.foodyshop.model.TopicModel;
 import com.foodyshop.model.CategoryModel;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

@@ -1,26 +1,189 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="aPaneAccount" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="331.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.AccountController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.AccountController">
    <children>
-      <Label layoutX="252.0" layoutY="65.0" text="Account" textFill="#09e0d7">
+      <TextField visible="false">
          <font>
-            <Font name="System Bold" size="24.0" />
+            <Font size="16.0" />
          </font>
-      </Label>
-      <Button fx:id="btnLogOut" layoutX="84.0" layoutY="169.0" mnemonicParsing="false" onAction="#onClickLogOut" prefHeight="39.0" prefWidth="190.0" style="-fx-background-color: #2DC79A; -fx-background-radius: 50;" text="LogOut" textFill="#eee8e2">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnChangePassword" layoutX="300.0" layoutY="169.0" mnemonicParsing="false" onAction="#onClickChangePassword" prefHeight="39.0" prefWidth="197.0" style="-fx-background-color: #2DC79A; -fx-background-radius: 50;" text="Change Password" textFill="#eee8e2">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Button>
+      </TextField>
+      <Pane layoutY="100.0" prefHeight="500.0" prefWidth="460.0">
+         <children>
+            <Label alignment="CENTER" layoutY="20.0" prefWidth="460.0" text="Your Account" textFill="#09e0d7">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <GridPane layoutX="43.0" layoutY="100.0" prefHeight="360.0" prefWidth="360.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.0" minWidth="10.0" prefWidth="130.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="289.0" minWidth="10.0" prefWidth="289.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label layoutX="10.0" layoutY="158.0" prefWidth="460.0" text="Name" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets right="16.0" />
+                     </padding>
+                  </Label>
+                  <Label prefWidth="460.0" text="Email" textFill="WHITE" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets right="16.0" />
+                     </padding>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="43.0" prefWidth="460.0" text="Password" textFill="WHITE" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets right="16.0" />
+                     </padding>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="158.0" prefWidth="460.0" text="Created" textFill="WHITE" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets right="16.0" />
+                     </padding>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="227.0" prefWidth="460.0" text="Type" textFill="WHITE" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets right="16.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="lbName" layoutX="10.0" layoutY="19.0" prefWidth="460.0" textFill="WHITE" GridPane.columnIndex="1">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbEmail" layoutX="10.0" layoutY="19.0" prefWidth="460.0" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbPassword" layoutX="10.0" layoutY="19.0" prefWidth="460.0" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbCreated" layoutX="10.0" layoutY="19.0" prefWidth="460.0" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbType" layoutX="110.0" layoutY="19.0" prefWidth="460.0" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </GridPane>
+         </children>
+      </Pane>
+      <Pane layoutX="460.0" layoutY="100.0" prefHeight="500.0" prefWidth="460.0">
+         <children>
+            <Label alignment="CENTER" layoutY="20.0" prefHeight="35.0" prefWidth="460.0" text="Change your password" textFill="#09e0d7">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <GridPane layoutY="100.0" prefHeight="360.0" prefWidth="420.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.0" minWidth="10.0" prefWidth="171.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="289.0" minWidth="10.0" prefWidth="225.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="80.0" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="223.0" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="223.0" minHeight="10.0" prefHeight="120.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="158.0" prefWidth="460.0" text="Current password" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets right="16.0" />
+                     </padding>
+                  </Label>
+                  <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="37.0" prefWidth="460.0" text="New password" textFill="WHITE" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets right="16.0" />
+                     </padding>
+                  </Label>
+                  <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="37.0" prefWidth="460.0" text="Re-new password" textFill="WHITE" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets right="16.0" />
+                     </padding>
+                  </Label>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="32.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#onClickChangePassword" prefHeight="39.0" prefWidth="197.0" style="-fx-background-color: #2DC79A; -fx-background-radius: 50;" text="Change Password" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#onClickLogOut" prefHeight="39.0" prefWidth="190.0" style="-fx-background-color: #2DC79A; -fx-background-radius: 50;" text="LogOut" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </VBox>
+                  <PasswordField fx:id="edtCurrentPassword" prefHeight="38.0" promptText="Enter current password" GridPane.columnIndex="1">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </PasswordField>
+                  <PasswordField fx:id="edtNewPassword" layoutX="10.0" layoutY="31.0" prefHeight="38.0" promptText="Enter new password" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </PasswordField>
+                  <PasswordField fx:id="edtRenewPassword" layoutX="193.0" layoutY="31.0" prefHeight="38.0" promptText="Re-enter new password" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </PasswordField>
+               </children>
+            </GridPane>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

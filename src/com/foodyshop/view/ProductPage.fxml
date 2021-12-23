@@ -11,17 +11,17 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.ProductController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.ProductController">
    <children>
       <TableView fx:id="tblProduct" layoutY="-2.0" prefHeight="524.0" prefWidth="888.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="100.0">
         <columns>
           <TableColumn fx:id="tcStt" prefWidth="46.0" text="STT" />
           <TableColumn fx:id="tcName" prefWidth="193.0" text="name" />
             <TableColumn fx:id="tcCateName" minWidth="0.0" prefWidth="182.0" text="category name" />
-            <TableColumn fx:id="tcPrice" prefWidth="142.0" text="price" />
+            <TableColumn fx:id="tcPrice" prefWidth="134.0" text="price" />
             <TableColumn fx:id="tcImg" prefWidth="100.0" text="img" />
-            <TableColumn fx:id="tcCreated" minWidth="0.0" prefWidth="135.0" text="created" />
-            <TableColumn fx:id="tcStatus" minWidth="0.0" prefWidth="85.0" text="status" />
+            <TableColumn fx:id="tcCreated" minWidth="0.0" prefWidth="116.0" text="created" />
+            <TableColumn fx:id="tcStatus" minWidth="0.0" prefWidth="100.0" text="status" />
         </columns>
       </TableView>
       <HBox alignment="CENTER" layoutY="633.0" prefHeight="67.0" prefWidth="920.0">
@@ -66,11 +66,22 @@
             </Button>
          </children>
       </HBox>
-      <Label layoutX="36.0" layoutY="53.0" text="Search" AnchorPane.leftAnchor="16.0">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Label>
-      <TextField fx:id="txtSearch" layoutX="97.0" layoutY="38.0" prefHeight="45.0" prefWidth="415.0" AnchorPane.topAnchor="48.0" />
+      <HBox alignment="CENTER" layoutX="16.0" layoutY="42.0">
+         <children>
+            <Label text="Search" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="16.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="txtSearch" prefHeight="40.0" prefWidth="380.0" promptText="Search">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </TextField>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

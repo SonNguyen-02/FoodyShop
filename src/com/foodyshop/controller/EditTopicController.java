@@ -5,20 +5,17 @@
  */
 package com.foodyshop.controller;
 
-import com.foodyshop.helper.FormHelper;
+import com.foodyshop.helper.FileHelper;
 import com.foodyshop.helper.TopicHelper;
 import static com.foodyshop.main.Config.IMG_TOPIC_DIR;
 import com.foodyshop.main.Const;
 import com.foodyshop.main.Navigator;
 import com.foodyshop.main.UploadImageToApi;
-import com.foodyshop.model.CategoryModel;
 import com.foodyshop.model.Respond;
 import com.foodyshop.model.TopicModel;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,7 +26,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -91,7 +87,7 @@ public class EditTopicController implements Initializable {
 
     private void onClickChooseFile(MouseEvent e) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose image to upload");
+        FileHelper.configureFileImageChooser(fileChooser);
         File fileChoose = fileChooser.showOpenDialog(stage);
         imgTopicFile = fileChoose;
         if (fileChoose != null) {
@@ -115,6 +111,12 @@ public class EditTopicController implements Initializable {
         if (name.isEmpty()) {
             txtName.requestFocus();
             alert.setHeaderText("Please enter topic name");
+            alert.show();
+            return;
+        }
+        if(TopicHelper.isTopicNameExists(name)){
+            txtName.requestFocus();
+            alert.setHeaderText("This name is exists!");
             alert.show();
             return;
         }

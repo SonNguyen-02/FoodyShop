@@ -5,16 +5,9 @@
  */
 package com.foodyshop.model;
 
-import com.foodyshop.database.DBConnection;
 import static com.foodyshop.main.Config.IMG_FOOD_DIR;
-import static com.foodyshop.main.Config.IMG_SALE_DIR;
 
 import com.foodyshop.main.Const;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -87,10 +80,7 @@ public class ProductModel {
     public String getCategoryName() {
         return categoryName.getValue();
     }
- 
-//    public int getIdProperty() {
-//        return id;
-//    }
+  
     public StringProperty getNameProperty() {
         return name;
     }
@@ -167,7 +157,6 @@ public class ProductModel {
         mImageView.setImage(image);
         image.errorProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue){
-//                System.out.println(image.getException().getMessage());
                 mImageView.setImage(Const.NO_IMAGE_OBJ);
             }
         });
@@ -179,17 +168,6 @@ public class ProductModel {
     }
     public void setImgDetail(String imgDetail){
         this.imgDetail = imgDetail;
-        String url = IMG_FOOD_DIR + img;
-        Image image = null;
-
-//        image = new Image(url, 100, 100, false, true);
-//        tutu
-//        System.out.println(image.getException().toString());
-//        if (!image.getException().getMessage().isEmpty()) {
-//            image = new Image("file:" + Const.PLACEHOLDER_NO_IMG_PATH, 100, 100, false, true, true);
-//        }
-        
-//        this.imgView = new SimpleObjectProperty<>(new ImageView(image));      
     }
     public ObservableValue<ImageView> getImgViewDetail() {
         return imgView;

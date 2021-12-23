@@ -5,10 +5,8 @@
  */
 package com.foodyshop.model;
 
-import static com.foodyshop.main.Config.IMG_FOOD_DIR;
 import static com.foodyshop.main.Config.IMG_SALE_DIR;
 import com.foodyshop.main.Const;
-import java.time.LocalDate;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;

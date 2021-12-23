@@ -5,7 +5,6 @@
  */
 package com.foodyshop.controller;
 
-import com.foodyshop.helper.OrderHelper;
 import com.foodyshop.helper.Order_DetailHelper;
 import com.foodyshop.helper.ProductHelper;
 import com.foodyshop.main.Const;
@@ -54,16 +53,10 @@ public class ProductController implements Initializable {
     private TableColumn<ProductModel, String> tcName;
 
     @FXML
-    private TableColumn<ProductModel, String> tcDes;
-
-    @FXML
     private TableColumn<ProductModel, Integer> tcPrice;
 
     @FXML
     private TableColumn<ProductModel, ImageView> tcImg;
-
-    @FXML
-    private TableColumn<ProductModel, ?> tcImgdetail;
 
     @FXML
     private TableColumn<ProductModel, String> tcCreated;
@@ -110,15 +103,15 @@ public class ProductController implements Initializable {
         txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(ProductModel -> {
 
-                if (newValue.isEmpty() || newValue == null) {
+                if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
 
                 String searchKeyword = newValue.toLowerCase();
 
-                if (ProductModel.getCategoryName().toLowerCase().indexOf(searchKeyword) > -1) {
+                if (ProductModel.getCategoryName().toLowerCase().contains(searchKeyword)) {
                     return true;
-                } else if (ProductModel.getName().toLowerCase().indexOf(searchKeyword) > -1) {
+                } else if (ProductModel.getName().toLowerCase().contains(searchKeyword)) {
                     return true;
                 } else {
                     return false;
@@ -193,7 +186,7 @@ public class ProductController implements Initializable {
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
-            alert.setHeaderText("Please choose category");
+            alert.setHeaderText("Please choose product");
             alert.show();
         }
     }

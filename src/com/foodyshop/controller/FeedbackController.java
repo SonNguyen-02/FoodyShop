@@ -12,13 +12,11 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -41,8 +39,8 @@ public class FeedbackController implements Initializable {
     @FXML
     private TableColumn<FeedbackModel, String> tcProductID;
     
-    @FXML
-    private TableColumn<FeedbackModel, Integer> tcOrderDetailID;
+//    @FXML
+//    private TableColumn<FeedbackModel, Integer> tcOrderDetailID;
 
     @FXML
     private TableColumn<FeedbackModel, String> tcContent;
@@ -66,11 +64,10 @@ public class FeedbackController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         tcID.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tvFeedback.getItems().indexOf(cellData.getValue()) + 1) + ""));
         tcCustomerID.setCellValueFactory(cellData -> cellData.getValue().getCustomerNameProperty());
         tcProductID.setCellValueFactory(cellData -> cellData.getValue().getProductNameProperty());
-        tcOrderDetailID.setCellValueFactory(cellData -> cellData.getValue().getOrderDetailIDproperty());
+//        tcOrderDetailID.setCellValueFactory(cellData -> cellData.getValue().getOrderDetailIDproperty());
         tcContent.setCellValueFactory(cellData -> cellData.getValue().getContentProperty());
         tcCreated.setCellValueFactory(cellData -> cellData.getValue().getCreatedProperty());
         tcUpdated.setCellValueFactory(cellData -> cellData.getValue().getUpdatedProperty());

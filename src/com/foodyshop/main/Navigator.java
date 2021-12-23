@@ -18,7 +18,6 @@ import com.foodyshop.controller.EditCustomerController;
 import com.foodyshop.controller.EditCustomerController.IOnUpdateCustomer;
 import com.foodyshop.controller.EditCategoryController.IOnEditCategorySuccess;
 import com.foodyshop.controller.EditOrderController;
-import com.foodyshop.controller.EditOrderController.IOnUpdateOrderSuccess;
 import com.foodyshop.controller.EditProductController;
 import com.foodyshop.controller.EditSaleController;
 import com.foodyshop.controller.EditStaffController;
@@ -30,9 +29,7 @@ import com.foodyshop.controller.ProductDetailController;
 import com.foodyshop.controller.TestDemoController;
 import com.foodyshop.model.CategoryModel;
 import com.foodyshop.model.CustomerModel;
-import com.foodyshop.model.FeedbackModel;
 import com.foodyshop.model.OrderModel;
-import com.foodyshop.model.Order_DetailModel;
 import com.foodyshop.model.SaleModel;
 import com.foodyshop.model.ProductModel;
 import com.foodyshop.model.StaffModel;
@@ -98,7 +95,6 @@ public class Navigator {
     private static final String EDIT_PRODUCT_FORM = ROOT_FOLDER + "EditProductForm.fxml";
     private static final String EDIT_SALE_FORM = ROOT_FOLDER + "EditSaleForm.fxml";
     
-    private static final String CHANGE_PASSWORD_ACCOUNT = ROOT_FOLDER + "ChangePasswordAccount.fxml";
     private static final String CHANGE_PASSWORD_STAFF = ROOT_FOLDER + "ChangePasswordStaff.fxml";
 
     // Khai báo di chuyển giữa các màn hình
@@ -182,10 +178,10 @@ public class Navigator {
         controller.initData(modalStage, topic);
     }
 
-    public void showEditOrder(OrderModel order, IOnUpdateOrderSuccess mIOnUpdateOrderSuccess) {
+    public void showEditOrder(OrderModel order, EditOrderController.IOnUpdateOrderSuccess mIOnUpdateOrderSuccess) {
         showModal("Edit Order ", EDIT_ORDER_FORM);
         EditOrderController controller = fxLoader.getController();
-        controller.setData(order, modalStage, mIOnUpdateOrderSuccess);
+        controller.setData(order, mIOnUpdateOrderSuccess);
     }
 
     public void showAddStaff(IOnAddStaffSuccess mIOnAddStaffSuccess) {
@@ -215,7 +211,7 @@ public class Navigator {
     public void showCustomerDetail(CustomerModel customer) {
         showModal("Customer Detail ", CUSTOMER_DETAIL);
         CustomerDetailController controller = fxLoader.getController();
-        controller.initCustomerModel(customer);
+        controller.initCustomerModel(customer, modalStage);
     }
 
     public void showProductDetail(ProductModel product) {
@@ -230,10 +226,10 @@ public class Navigator {
         controller.initData(modalStage, mIOnInsertProductSuccess);
     }
 
-    public void showAddSale(IOnInsertSaleSuccess mIOnInsertSaleSuccess) {
+    public void showAddSale(IOnInsertSaleSuccess mIOnInsertSaleSuccess, AddSaleController.IOnSeeSaleListener mIOnSeeSaleListener) {
         showModal("Add Sale ", ADD_SALE_FORM);
         AddSaleController controller = fxLoader.getController();
-        controller.initDataSale(modalStage, mIOnInsertSaleSuccess);
+        controller.initDataSale(modalStage, mIOnInsertSaleSuccess, mIOnSeeSaleListener);
     }
 
     public void showEditSale(SaleModel sale) {
@@ -247,13 +243,7 @@ public class Navigator {
         EditProductController controllerProduct = fxLoader.getController();
         controllerProduct.initData(Product, modalStage);
     }
-    
-    public void showChangePasswordAccount(StaffModel staff) {
-        showModal("ChangePasswordAccount ", CHANGE_PASSWORD_ACCOUNT);
-        //AddStaffController controller = fxLoader.getController();
-        
-    }
-
+  
     // </editor-fold> 
     private Navigator() {
     }
@@ -289,7 +279,8 @@ public class Navigator {
             Scene scene = new Scene(root);
             modalStage.setScene(scene);
             modalStage.setTitle(title);
-            modalStage.initModality(Modality.APPLICATION_MODAL);
+            modalStage.initModality(Modality.WINDOW_MODAL);
+            modalStage.initOwner(primaryStage);
             modalStage.show();
         } catch (IOException ex) {
             Logger.getLogger(Navigator.class.getName()).log(Level.SEVERE, null, ex);

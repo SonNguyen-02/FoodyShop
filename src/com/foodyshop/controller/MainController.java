@@ -5,6 +5,7 @@
  */
 package com.foodyshop.controller;
 
+import com.foodyshop.main.CurrentAccount;
 import com.foodyshop.main.Navigator;
 import java.net.URL;
 import java.util.HashSet;
@@ -46,8 +47,10 @@ public class MainController implements Initializable {
         // init currentPage item
         currentPage = (HBox) navBar.getChildren().get(1);
         currentPage.setCursor(Cursor.DEFAULT);
-//        deleteRow(navBar, 9);
-//        deleteRow(navBar, 9);
+        deleteRow(navBar, 9);
+        if (CurrentAccount.getInstance().isStaff()) {
+            deleteRow(navBar, 9);
+        }
         navBar.getChildren().forEach(node -> {
             if (node != navBar.getChildren().get(0)) {
                 HBox item = ((HBox) node);
@@ -123,7 +126,6 @@ public class MainController implements Initializable {
         });
         feedbackPage.setOnMouseClicked(e -> {
             Navigator.getInstance().loadFeedback(rightLayout);
-
         });
         categoryPage.setOnMouseClicked(e -> {
             Navigator.getInstance().loadCategory(rightLayout);

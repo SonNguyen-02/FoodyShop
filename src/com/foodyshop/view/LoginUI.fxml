@@ -9,41 +9,44 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="495.0" prefWidth="748.0" style="-fx-background-color: #7B4C93B0;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.LoginController">
+<AnchorPane id="AnchorPane" prefHeight="532.0" prefWidth="764.0" style="-fx-background-color: #7B4C93B0;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.LoginController">
 
    <children>
-      <AnchorPane layoutX="353.0" layoutY="33.0" prefHeight="438.0" prefWidth="381.0" style="-fx-background-color: #7B4C93BA;">
+      <AnchorPane layoutX="378.0" layoutY="16.0" prefHeight="500.0" prefWidth="372.0" style="-fx-background-color: #7B4C93BA;">
          <children>
-            <TextField fx:id="txtEmail" layoutX="114.0" layoutY="187.0" prefHeight="39.0" prefWidth="243.0" style="-fx-background-radius: 70; -fx-background-color: #D7C9E0;" />
-            <PasswordField fx:id="passPassword" layoutX="114.0" layoutY="261.0" prefHeight="39.0" prefWidth="243.0" style="-fx-background-radius: 70; -fx-background-color: #D7C9E0;" />
-            <Button fx:id="btnSignin" layoutX="28.0" layoutY="349.0" mnemonicParsing="false" onAction="#onClickSignIn" prefHeight="46.0" prefWidth="326.0" style="-fx-background-color: #6C3F83; -fx-background-radius: 70;" text="Sign In" textFill="#e2e2eb">
+            <TextField fx:id="txtEmail" layoutX="119.0" layoutY="202.0" prefHeight="39.0" prefWidth="240.0" style="-fx-background-radius: 70; -fx-background-color: #D7C9E0;">
+               <font>
+                  <Font size="16.0" />
+               </font></TextField>
+            <PasswordField fx:id="passPassword" layoutX="119.0" layoutY="276.0" prefHeight="39.0" prefWidth="240.0" style="-fx-background-radius: 70; -fx-background-color: #D7C9E0;" />
+            <Button fx:id="btnSignin" layoutX="28.0" layoutY="370.0" mnemonicParsing="false" onAction="#onClickSignIn" prefHeight="46.0" prefWidth="326.0" style="-fx-background-color: #6C3F83; -fx-background-radius: 70;" text="Sign In" textFill="#e2e2eb">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
-            <Label layoutX="14.0" layoutY="193.0" prefHeight="27.0" prefWidth="86.0" text="Email:" textFill="#e4e4eb">
+            <Label layoutX="19.0" layoutY="208.0" prefHeight="27.0" prefWidth="86.0" text="Email:" textFill="#e4e4eb">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="14.0" layoutY="267.0" text="Password:" textFill="#d9d9e4">
+            <Label layoutX="19.0" layoutY="282.0" text="Password:" textFill="#d9d9e4">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="135.0" layoutY="118.0" prefHeight="35.0" prefWidth="86.0" text="Sign In" textFill="#dddde1">
+            <Label alignment="CENTER" layoutX="148.0" layoutY="120.0" prefHeight="35.0" prefWidth="86.0" text="Sign In" textFill="#dddde1" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Label layoutX="53.0" layoutY="51.0" prefHeight="35.0" prefWidth="275.0" text="Welcome to FoodyShop" textFill="#581094">
+            <Label alignment="CENTER" layoutX="71.0" layoutY="51.0" prefHeight="35.0" prefWidth="275.0" text="Welcome to FoodyShop" textAlignment="CENTER" textFill="#581094" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <ImageView fitHeight="485.0" fitWidth="326.0" layoutX="14.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="500.0" layoutX="16.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../public/image/main_layout/logg.jpg" />
          </image>

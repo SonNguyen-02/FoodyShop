@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.StaffController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.StaffController">
    <children>
       <TableView fx:id="tvStaff" layoutX="6.0" prefHeight="582.0" prefWidth="888.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="30.0">
         <columns>
@@ -18,13 +18,13 @@
             <TableColumn fx:id="tcPassword" prefWidth="161.33334350585938" text="password" />
             <TableColumn fx:id="tcName" prefWidth="119.66665649414062" text="name" />
             <TableColumn fx:id="tcType" prefWidth="110.44442749023438" text="type" />
-            <TableColumn fx:id="tcCreated" prefWidth="165.22222900390625" text="created" />
-            <TableColumn fx:id="tcStatus" prefWidth="94.111083984375" text="status" />
+            <TableColumn fx:id="tcCreated" prefWidth="156.0" text="created" />
+            <TableColumn fx:id="tcStatus" prefWidth="98.0" text="status" />
         </columns>
       </TableView>
-      <HBox layoutX="16.0" layoutY="630.0" prefHeight="70.0" prefWidth="888.0" AnchorPane.topAnchor="619.0">
+      <HBox alignment="CENTER" layoutX="16.0" layoutY="630.0" prefHeight="70.0" prefWidth="888.0" AnchorPane.topAnchor="619.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#onClickAdd" prefHeight="39.0" prefWidth="113.0" style="-fx-background-color: #eda665; -fx-background-radius: 50;" text="Add" textFill="#ebe1e1">
+            <Button mnemonicParsing="false" onAction="#onClickAdd" prefHeight="39.0" prefWidth="113.0" style="-fx-background-color: #eda665; -fx-background-radius: 50;" text="Add" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -35,7 +35,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickEdit" prefHeight="39.0" prefWidth="113.0" style="-fx-background-color: #eda665; -fx-background-radius: 50;" text="Edit" textFill="#ebe1e1">
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickEdit" prefHeight="39.0" prefWidth="113.0" style="-fx-background-color: #eda665; -fx-background-radius: 50;" text="Edit" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -43,7 +43,7 @@
                   <Insets right="20.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="btnLock" layoutX="123.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickLock" prefHeight="39.0" prefWidth="113.0" style="-fx-background-color: #eda665; -fx-background-radius: 50;" text="Lock" textFill="#ebe1e1">
+            <Button fx:id="btnLock" layoutX="123.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickLock" prefHeight="39.0" prefWidth="113.0" style="-fx-background-color: #eda665; -fx-background-radius: 50;" text="Lock" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -51,7 +51,7 @@
                   <Insets right="20.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="btnUnLock" layoutX="236.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickUnLock" prefHeight="39.0" prefWidth="113.0" style="-fx-background-color: #eda665; -fx-background-radius: 50;" text="UnLock" textFill="#ebe1e1">
+            <Button fx:id="btnUnLock" layoutX="236.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickUnLock" prefHeight="39.0" prefWidth="113.0" style="-fx-background-color: #eda665; -fx-background-radius: 50;" text="UnLock" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -59,7 +59,7 @@
                   <Insets right="20.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="btnChangePassword" layoutX="349.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickChangePassword" prefHeight="39.0" prefWidth="198.0" style="-fx-background-color: #eda665; -fx-background-radius: 50;" text="ChangePassword" textFill="#ebe1e1">
+            <Button fx:id="btnChangePassword" layoutX="349.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickChangePassword" prefHeight="39.0" prefWidth="198.0" style="-fx-background-color: #eda665; -fx-background-radius: 50;" text="ChangePassword" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -67,7 +67,7 @@
                   <Insets right="20.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="btnDelete" layoutX="349.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickDelete" prefHeight="39.0" prefWidth="113.0" style="-fx-background-color: #eda665; -fx-background-radius: 50;" text="Delete" textFill="#ebe1e1">
+            <Button fx:id="btnDelete" layoutX="349.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickDelete" prefHeight="39.0" prefWidth="113.0" style="-fx-background-color: #eda665; -fx-background-radius: 50;" text="Delete" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>

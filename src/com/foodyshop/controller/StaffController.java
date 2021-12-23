@@ -24,7 +24,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.input.MouseEvent;
 
 /**
  *
@@ -82,10 +81,7 @@ public class StaffController implements Initializable {
 
     @FXML
     void onClickAdd(ActionEvent event) throws SQLException {
-//        String password = "123456";
-//        String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
-//        System.out.println();
-        Navigator.getInstance().showAddStaff((StaffModel staffModel) -> listStaff.add(0, staffModel));
+        Navigator.getInstance().showAddStaff(staff -> listStaff.add(0, staff));
     }
 
     @FXML

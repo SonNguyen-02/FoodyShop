@@ -36,7 +36,7 @@ public class UploadImageToApi {
 
     public static Respond uploadImageToApi(File file, String type, String lastImgName) throws IOException {
 
-        URL url = new URL(Config.BASE_API + "upload_image");
+        URL url = new URL(Config.API_URL + "upload_image");
 
         Map<String, Object> params = new LinkedHashMap<>();
         params.put(Const.KEY_TOKEN, createToken());
@@ -56,7 +56,7 @@ public class UploadImageToApi {
 
     public static Respond removeImageFromApi(String type, String imgName) throws IOException {
 
-        URL url = new URL(Config.BASE_API + "remove_image");
+        URL url = new URL(Config.API_URL + "remove_image");
 
         Map<String, Object> params = new LinkedHashMap<>();
         params.put(Const.KEY_TOKEN, createToken());

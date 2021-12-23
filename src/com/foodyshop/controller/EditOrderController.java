@@ -6,25 +6,18 @@
 package com.foodyshop.controller;
 
 import com.foodyshop.helper.OrderHelper;
-import com.foodyshop.helper.TopicHelper;
 import com.foodyshop.main.Navigator;
 import com.foodyshop.model.OrderModel;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -34,10 +27,6 @@ import javafx.stage.Stage;
 public class EditOrderController implements Initializable {
 
     private OrderModel mOrder;
-    private Stage stage;
-
-    @FXML
-    private ComboBox<String> cbStatus;
 
     @FXML
     private Button btnSave;
@@ -50,27 +39,20 @@ public class EditOrderController implements Initializable {
 
     @FXML
     private TextField txtShipPrice;
-
+    
     private IOnUpdateOrderSuccess mIOnUpdateOrderSuccess;
-
+    
     public interface IOnUpdateOrderSuccess {
-
         void callback();
     }
 
-    public void setData(OrderModel order, Stage stage, IOnUpdateOrderSuccess mIOnUpdateOrderSuccess) {
+    public void setData(OrderModel order, IOnUpdateOrderSuccess mIOnUpdateOrderSuccess) {
         mOrder = order;
-        this.stage = stage;
         this.mIOnUpdateOrderSuccess = mIOnUpdateOrderSuccess;
-        lbOrderCode.setText(order.getOrderCode().toString());
-        txtShipPrice.setText(order.getShipPrice().toString());
-//        cbStatus.setItems(FXCollections.observableArrayList(OrderModel.WAIT_AOS_CF, OrderModel.AOS_CF, OrderModel.AOS_CL, OrderModel.WAIT_CUS_CF, OrderModel.CUS_CL, OrderModel.CUS_CF, OrderModel.SHIPPING, OrderModel.SUCCESS_DELIVERY));
-//        cbStatus.setValue(order.getStatusVal().get());
+        lbOrderCode.setText(order.getOrderCode());
+        txtShipPrice.requestFocus();
     }
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -91,7 +73,7 @@ public class EditOrderController implements Initializable {
 
     private void onclickSave(MouseEvent e) {
         String shipPrice = txtShipPrice.getText().trim();
-        String regaxShipPrice = "^[0-9]{0,10}$";
+        String regexShipPrice = "^[0-9]{0,10}$";
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         if (shipPrice.isEmpty()) {
@@ -100,26 +82,33 @@ public class EditOrderController implements Initializable {
             alert.show();
             return;
         }
-        if(!shipPrice.matches(regaxShipPrice)){
-            alert.setHeaderText("Please enter number");
+        if (!shipPrice.matches(regexShipPrice)) {
+            txtShipPrice.requestFocus();
+            alert.setHeaderText("Ship price is invalid!");
             alert.show();
             return;
         }
-        mOrder.setShipPrice(Integer.parseInt(shipPrice));
-//        mOrder.setStatusVal(cbStatus.getValue());
-        boolean resutl = OrderHelper.updateOrder(mOrder);
-        if (resutl) {
-            Alert alerts = new Alert(Alert.AlertType.INFORMATION);
-            alerts.setTitle("Success");
-            alerts.setHeaderText("Edit success!");
-            alerts.show();
-            mIOnUpdateOrderSuccess.callback();
-            Navigator.getInstance().getModalStage().close();
-        } else {
-            Alert alerts = new Alert(Alert.AlertType.ERROR);
-            alerts.setTitle("Error");
-            alerts.setHeaderText("Edit false");
-            alerts.show();
-        }
+        alert.setAlertType(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm");
+        alert.setHeaderText("Confirm the shipping price is " + Integer.parseInt(shipPrice) + " ?");
+        alert.showAndWait().filter(b -> b == ButtonType.OK).ifPresent(t -> {
+            mOrder.setStatus(2);
+            mOrder.setShipPrice(Integer.parseInt(shipPrice));
+            boolean result = OrderHelper.updateShipAndStatusOrder(mOrder);
+            if (result) {
+                Navigator.getInstance().getModalStage().close();
+                mIOnUpdateOrderSuccess.callback();
+                Alert alerts = new Alert(Alert.AlertType.INFORMATION);
+                alerts.setTitle("Success");
+                alerts.setHeaderText("Edit success!");
+                alerts.show();
+            } else {
+                Alert alerts = new Alert(Alert.AlertType.ERROR);
+                alerts.setTitle("Error");
+                alerts.setHeaderText("Edit false");
+                alerts.show();
+            }
+        });
+
     }
 }

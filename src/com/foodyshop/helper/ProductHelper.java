@@ -120,8 +120,9 @@ public class ProductHelper {
         }
         return null;
     }
-    public static boolean updateProduct(ProductModel productModel){
-        String sql = db.update("fs_product")  
+
+    public static boolean updateProduct(ProductModel productModel) {
+        String sql = db.update("fs_product")
                 .set("category_id", String.valueOf(productModel.getCategoryId()))
                 .set("name", productModel.getName())
                 .set("price", productModel.getPrice().toString())
@@ -130,9 +131,9 @@ public class ProductHelper {
                 .set("img_detail", productModel.getImgDetail())
                 .set("status", String.valueOf(productModel.getStatus()))
                 .where("id", String.valueOf(productModel.getId()))
-                .getCompiledUpdate(true);      
+                .getCompiledUpdate(true);
         int result = DBConnection.execUpdate(sql);
-        if(result > 0){
+        if (result > 0) {
             return true;
         }
         return false;

@@ -6,10 +6,7 @@ import com.foodyshop.main.CurrentAccount;
 import com.foodyshop.main.Navigator;
 import com.foodyshop.model.CategoryModel;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -35,7 +32,7 @@ public class CategoryController implements Initializable {
     private TableColumn<CategoryModel, Integer> tcID;
 
     @FXML
-    private TableColumn<CategoryModel, String> tcTopicID;
+    private TableColumn<CategoryModel, String> tcTopicName;
 
     @FXML
     private TableColumn<CategoryModel, String> tcName;
@@ -60,7 +57,7 @@ public class CategoryController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         tcID.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tblCategory.getItems().indexOf(cellData.getValue()) + 1) + ""));
-        tcTopicID.setCellValueFactory(cellValue -> cellValue.getValue().getTopicNameProperty());
+        tcTopicName.setCellValueFactory(cellValue -> cellValue.getValue().getTopicNameProperty());
         tcName.setCellValueFactory(cellValue -> cellValue.getValue().getNameProperty());
         tcCreated.setCellValueFactory(cellValue -> cellValue.getValue().getCreatedProperty());
         tcStatus.setCellValueFactory(cellValue -> cellValue.getValue().getStatusVal());

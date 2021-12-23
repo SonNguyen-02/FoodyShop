@@ -10,14 +10,8 @@ import com.foodyshop.database.DBQuery;
 import com.foodyshop.database.DBQueryBuilder;
 import com.foodyshop.model.CustomerModel;
 import com.foodyshop.model.OrderModel;
-import com.foodyshop.model.ProductModel;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -56,9 +50,21 @@ public class OrderHelper {
         return listOrder;
     }
 
-    public static boolean updateOrder(OrderModel orderModel) {
+    public static boolean updateShipAndStatusOrder(OrderModel orderModel) {
         String sql = db.update("fs_order")
                 .set("ship_price", String.valueOf(orderModel.getShipPrice()))
+                .set("status", String.valueOf(orderModel.getStatus()))
+                .where("id", String.valueOf(orderModel.getId()))
+                .getCompiledUpdate(true);
+        int result = DBConnection.execUpdate(sql);
+        if (result > 0) {
+            return true;
+        }
+        return false;
+    }
+    
+    public static boolean updateStatusOrder(OrderModel orderModel){
+        String sql = db.update("fs_order")
                 .set("status", String.valueOf(orderModel.getStatus()))
                 .where("id", String.valueOf(orderModel.getId()))
                 .getCompiledUpdate(true);

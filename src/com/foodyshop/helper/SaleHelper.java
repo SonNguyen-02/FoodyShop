@@ -9,6 +9,7 @@ import com.foodyshop.database.DBConnection;
 import com.foodyshop.database.DBQuery;
 import com.foodyshop.database.DBQueryBuilder;
 import com.foodyshop.model.Order_DetailModel;
+import com.foodyshop.model.ProductModel;
 import com.foodyshop.model.SaleModel;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -71,6 +72,24 @@ public class SaleHelper {
         return false;
     }
 
+    public static boolean isProductOnSale(ProductModel product) {
+        String sql = db.select()
+                .from("fs_sale")
+                .where("product_id", String.valueOf(product.getId()))
+                .where("status", "0")
+                .limit(1)
+                .getCompiledSelect(true);
+        ResultSet rs = DBConnection.execSelect(sql);
+        if (rs != null) {
+            try {
+                return rs.next();
+            } catch (SQLException ex) {
+                Logger.getLogger(SaleHelper.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return false;
+    }
+
     public static boolean deleteSale(SaleModel sale) {
         try {
             String sql = "delete from fs_sale where id = ?";
@@ -119,7 +138,7 @@ public class SaleHelper {
 
     public static boolean updateStatusSale(SaleModel saleModel) {
         String sql = db.update("fs_sale")
-                .set("status", String.valueOf(saleModel.getStatus()))    
+                .set("status", String.valueOf(saleModel.getStatus()))
                 .where("id", String.valueOf(saleModel.getId()))
                 .getCompiledUpdate(true);
         int result = DBConnection.execUpdate(sql);
@@ -130,9 +149,8 @@ public class SaleHelper {
         return false;
     }
 
-    
     public static boolean updateSale(SaleModel saleModel) {
-        String sql = db.update("fs_sale")   
+        String sql = db.update("fs_sale")
                 .set("discount", String.valueOf(saleModel.getDiscount()))
                 .set("start_date", saleModel.getStart_date())
                 .set("end_date", saleModel.getEnd_date())
