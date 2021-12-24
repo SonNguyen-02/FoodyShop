@@ -14,6 +14,8 @@ import com.foodyshop.model.SaleModel;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.temporal.TemporalUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -164,5 +166,64 @@ public class SaleHelper {
             return true;
         }
         return false;
+    }
+    
+    
+    public static int getOnSale(LocalDate stDate, LocalDate endDate) {
+        String sql = db.select("COUNT(status) AS total")
+                .from("fs_sale")
+                .where("status", "0")
+                .where("created >=", stDate.toString() + " 00:00:00")
+                .where("created <=", endDate.toString() + " 23:59:59")
+                .getCompiledSelect(true);
+        ResultSet rs = DBConnection.execSelect(sql);
+        int onSale = 0;
+        try {
+            if (rs.next()) {
+                onSale = rs.getInt("total");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return onSale;
+    }
+    
+    public static int getHasEnd(LocalDate stDate, LocalDate endDate) {
+        String sql = db.select("COUNT(status) AS total")
+                .from("fs_sale")
+                .where("status", "1")
+                .where("updated >=", stDate.toString() + " 00:00:00")
+                .where("updated <=", endDate.toString() + " 23:59:59")
+                .getCompiledSelect(true);
+        
+        ResultSet rs = DBConnection.execSelect(sql);
+        int discountEnd = 0;
+        try {
+            if (rs.next()) {
+                discountEnd = rs.getInt("total");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return discountEnd;
+    }
+    
+    public static int getAlmostEnd() {
+        
+        String sql = db.select("COUNT(*) AS total")
+                .from("fs_sale")
+                .where("end_date <=", LocalDate.now().plusDays(3) + " 23:59:59")
+                .where("end_date >", LocalDate.now() + " 00:00:00" )
+                .getCompiledSelect(true);
+        ResultSet rs = DBConnection.execSelect(sql);
+        int almostEnd = 0;
+        try {
+            if (rs.next()) {
+                almostEnd = rs.getInt("total");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return almostEnd;
     }
 }

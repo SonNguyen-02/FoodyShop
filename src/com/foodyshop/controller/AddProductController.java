@@ -95,7 +95,7 @@ public class AddProductController implements Initializable {
         categoryList = CategoryHelper.getAllCategory();
         if (categoryList != null && !categoryList.isEmpty()) {
             cbCategory.setItems(categoryList);
-            cbCategory.setValue(categoryList.get(26));
+            cbCategory.setValue(categoryList.get(0));
         }
     }
 //
@@ -248,18 +248,10 @@ public class AddProductController implements Initializable {
                 if (product == null) {
                     alert.setHeaderText("Add false");
                     alert.show();
-                } else {
-//                    stage.close();
-                    txtName.clear();
-                    txtDescription.clear();
-                    txtPrice.clear();
-                    imgProductFile = null;
-                    imgDetailProductFile = null;
-                    setDefaultImg();
-                    setDefaultImgDetail();
+                } else {                 
                     Alert alerts = new Alert(Alert.AlertType.INFORMATION);
-//                    alerts.setTitle("Success");
-//                    alerts.setHeaderText("Add success!");
+                    alerts.setTitle("Success");
+                    alerts.setHeaderText("Add success!");
                     alerts.show();
                     mIOnInsertProductSuccess.callback(product);
                 }

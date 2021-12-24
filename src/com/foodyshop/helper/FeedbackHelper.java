@@ -11,6 +11,9 @@ import com.foodyshop.database.DBQueryBuilder;
 import com.foodyshop.model.FeedbackModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -61,5 +64,23 @@ public class FeedbackHelper {
         int n = DBConnection.execUpdate(sql);
         DBConnection.close();
         return n > 0;
+    }
+    
+    public static int getFeedback(LocalDate stDate, LocalDate endDate) {
+        String sql = db.select("COUNT(*) AS total")
+                .from("fs_feedback")
+                .where("created >=", stDate.toString() + " 00:00:00")
+                .where("created <=", endDate.toString() + " 23:59:59")
+                .getCompiledSelect(true);
+        ResultSet rs = DBConnection.execSelect(sql);
+        int feedback = 0;
+        try {
+            if (rs.next()) {
+                feedback = rs.getInt("total");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return feedback;
     }
 }

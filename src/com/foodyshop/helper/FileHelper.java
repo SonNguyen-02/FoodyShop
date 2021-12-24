@@ -230,7 +230,6 @@ public abstract class FileHelper {
 
     public static void configureFileImageChooser(FileChooser fileChooser) {
         fileChooser.setTitle("Choose image to upload");
-        fileChooser.setInitialDirectory(new File("C:\\PerfLogs"));
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("All Images", Arrays.asList("*.jpg", "*.png")),
                 new FileChooser.ExtensionFilter("JPG", "*.jpg"),
