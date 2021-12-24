@@ -11,11 +11,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
+import javafx.stage.FileChooser;
 import javax.swing.filechooser.FileSystemView;
 
 /**
@@ -224,5 +226,15 @@ public abstract class FileHelper {
         } else {
             Files.move(source, source.resolveSibling(newName));
         }
+    }
+
+    public static void configureFileImageChooser(FileChooser fileChooser) {
+        fileChooser.setTitle("Choose image to upload");
+        fileChooser.setInitialDirectory(new File("C:\\PerfLogs"));
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("All Images", Arrays.asList("*.jpg", "*.png")),
+                new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+                new FileChooser.ExtensionFilter("PNG", "*.png")
+        );
     }
 }

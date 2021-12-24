@@ -54,20 +54,7 @@ public class ChangePasswordStaffController {
     @FXML
     void onClickSubmit(ActionEvent event) {
         String password = txtPassword.getText().trim();
-        if (password.isEmpty()) {
-            txtPassword.requestFocus();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("ERROR");
-            alert.setHeaderText("Enter password");
-            alert.show();
-            return;
-        }
-
-        if (!password.matches(Const.REGEX_PASSWORD)) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error password");
-            alert.setContentText("Password invalid");
-            alert.show();
+        if(isInvalidPassword(password)){
             txtPassword.requestFocus();
             return;
         }
@@ -86,5 +73,26 @@ public class ChangePasswordStaffController {
             alert.show();
         }
 
+    }
+    
+    private boolean isInvalidPassword(String password) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("ERROR");
+        if (password.isEmpty()) {
+            alert.setHeaderText("Please enter password");
+            alert.show();
+            return true;
+        }
+        if (password.length() < 8) {
+            alert.setHeaderText("Password min length is 8");
+            alert.show();
+            return true;
+        }
+        if (!password.matches(Const.REGEX_PASSWORD)) {
+            alert.setHeaderText("Password must contain at least 1 number and 1 character");
+            alert.show();
+            return true;
+        }
+        return false;
     }
 }

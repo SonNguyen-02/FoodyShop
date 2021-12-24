@@ -36,6 +36,9 @@ public class CurrentAccount {
     }
     
     public boolean isStaff(){
+        if(staff == null){
+            return true;
+        }
         return staff.getType() == 1;
     }
     

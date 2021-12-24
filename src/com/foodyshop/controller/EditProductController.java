@@ -6,6 +6,7 @@
 package com.foodyshop.controller;
 
 import com.foodyshop.helper.CategoryHelper;
+import com.foodyshop.helper.FileHelper;
 import com.foodyshop.helper.ProductHelper;
 import static com.foodyshop.main.Config.IMG_FOOD_DIR;
 import com.foodyshop.main.Const;
@@ -16,7 +17,6 @@ import com.foodyshop.main.UploadImageToApi;
 import com.foodyshop.model.CategoryModel;
 import com.foodyshop.model.ProductModel;
 import com.foodyshop.model.Respond;
-import com.foodyshop.model.TopicModel;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -36,6 +36,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -77,7 +78,12 @@ public class EditProductController implements Initializable {
     private ComboBox<String> cbStatus;
 
     private ProductModel mProductModel;
+
     private ObservableList<CategoryModel> categoryList;
+
+    private Image mImageDefault;
+
+    private Image mImageDetailDefault;
 
     public void initData(ProductModel product, Stage stage) {
         this.stage = stage;
@@ -85,11 +91,24 @@ public class EditProductController implements Initializable {
         txtName.setText(product.getName());
         txtPrice.setText(product.getPrice().toString());
         txtDescription.setText(product.getDescription());
-
-        Image image = new Image(IMG_FOOD_DIR + product.getImg(), 192, 192, false, true, true);
-        Image imageDetail = new Image(IMG_FOOD_DIR + product.getImgDetail(), 256, 192, false, true, true);
-        img.setImage(image);
-        imgDetail.setImage(imageDetail);
+        txtDescription.setWrapText(true);
+      
+        mImageDefault = new Image(IMG_FOOD_DIR + product.getImg(), 192, 192, false, true, true);
+        img.setImage(mImageDefault);
+        mImageDefault.errorProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                mImageDefault = new Image("file:" + PLACEHOLDER_NO_IMG_PATH);
+                img.setImage(mImageDefault);
+            }
+        });
+        mImageDetailDefault = new Image(IMG_FOOD_DIR + product.getImgDetail(), 256, 192, false, true, true);
+        imgDetail.setImage(mImageDetailDefault);
+        mImageDetailDefault.errorProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                mImageDetailDefault = new Image("file:" + PLACEHOLDER_NO1_IMG_PATH);
+                imgDetail.setImage(mImageDetailDefault);
+            }
+        });
         categoryList = CategoryHelper.getAllCategory();
         if (categoryList != null && !categoryList.isEmpty()) {
             cbCategory.setItems(categoryList);
@@ -142,16 +161,16 @@ public class EditProductController implements Initializable {
     }
 
     private void setDefaultImg() {
-        img.setImage(new Image("file:" + PLACEHOLDER_NO_IMG_PATH));
+        img.setImage(mImageDefault);
     }
 
     private void setDefaultImgDetail() {
-        imgDetail.setImage(new Image("file:" + PLACEHOLDER_NO1_IMG_PATH));
+        imgDetail.setImage(mImageDetailDefault);
     }
 
     private void onClickImg(MouseEvent e) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose image to upload");
+        FileHelper.configureFileImageChooser(fileChooser);
         File fileChoose = fileChooser.showOpenDialog(stage);
         imgProductFile = fileChoose;
         if (fileChoose != null) {
@@ -173,7 +192,7 @@ public class EditProductController implements Initializable {
 
     private void onClickImgDetail(MouseEvent e) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose image to upload");
+        FileHelper.configureFileImageChooser(fileChooser);
         File fileChoose = fileChooser.showOpenDialog(stage);
         imgDetailProductFile = fileChoose;
         if (fileChoose != null) {

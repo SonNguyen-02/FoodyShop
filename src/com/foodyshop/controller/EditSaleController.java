@@ -5,9 +5,8 @@
  */
 package com.foodyshop.controller;
 
-import com.foodyshop.helper.ProductHelper;
+import com.foodyshop.helper.FileHelper;
 import com.foodyshop.helper.SaleHelper;
-import static com.foodyshop.main.Config.IMG_AVATAR_DIR;
 import static com.foodyshop.main.Config.IMG_SALE_DIR;
 import com.foodyshop.main.Const;
 import static com.foodyshop.main.Const.PLACEHOLDER_NO_IMG_PATH;
@@ -29,7 +28,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -37,7 +35,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -65,9 +62,6 @@ public class EditSaleController implements Initializable {
     private File imgSaleFile;
 
     @FXML
-    private ComboBox<ProductModel> cbProductName;
-
-    @FXML
     private TextArea txtContent;
 
     @FXML
@@ -86,8 +80,6 @@ public class EditSaleController implements Initializable {
 
     private Stage stage;
 
-    private ObservableList<ProductModel> productList;
-
     public void initData(Stage stage, SaleModel sale) {
         this.stage = stage;
         mSaleModel = sale;
@@ -98,7 +90,6 @@ public class EditSaleController implements Initializable {
         imgSale.setImage(mImageDefault);
         mImageDefault.errorProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
-//                System.out.println(image.getException().getMessage());
                 mImageDefault = new Image("file:" + PLACEHOLDER_NO_IMG_PATH);
                 imgSale.setImage(mImageDefault);
             }
@@ -121,7 +112,7 @@ public class EditSaleController implements Initializable {
 
     private void onClickChooseFile(MouseEvent e) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose image to upload");
+        FileHelper.configureFileImageChooser(fileChooser);
         File fileChoose = fileChooser.showOpenDialog(stage);
         imgSaleFile = fileChoose;
         if (fileChoose != null) {

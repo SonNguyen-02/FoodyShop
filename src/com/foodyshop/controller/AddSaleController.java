@@ -5,6 +5,7 @@
  */
 package com.foodyshop.controller;
 
+import com.foodyshop.helper.FileHelper;
 import com.foodyshop.helper.ProductHelper;
 import com.foodyshop.helper.SaleHelper;
 import com.foodyshop.main.Const;
@@ -14,7 +15,6 @@ import com.foodyshop.main.UploadImageToApi;
 import com.foodyshop.model.ProductModel;
 import com.foodyshop.model.Respond;
 import com.foodyshop.model.SaleModel;
-import static com.sun.javafx.fxml.expression.Expression.add;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -22,12 +22,12 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -38,7 +38,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.converter.LocalDateStringConverter;
 
 /**
  * FXML Controller class
@@ -79,25 +78,32 @@ public class AddSaleController implements Initializable {
     private DatePicker dpEndDate;
 
     private IOnInsertSaleSuccess mIOnInsertSaleSuccess;
-    
-    private SaleModel mSale;
+    private IOnSeeSaleListener mIOnSeeSaleListener;
 
     private ObservableList<ProductModel> productList;
 
     public interface IOnInsertSaleSuccess {
-
         void callback(SaleModel sale);
     }
-
-    public void initDataSale(Stage stage, IOnInsertSaleSuccess mIOnInsertSaleSuccess) {
+    
+    public interface IOnSeeSaleListener{
+        void onSeeSale(ProductModel product);
+    }
+    
+    public void initDataSale(Stage stage, IOnInsertSaleSuccess mIOnInsertSaleSuccess, IOnSeeSaleListener mIOnSeeSaleListener) {
         setDefaultImg(btnChooseFile, imgSale);
         this.stage = stage;
 //        mSale = sale;
         this.mIOnInsertSaleSuccess = mIOnInsertSaleSuccess;
+        this.mIOnSeeSaleListener = mIOnSeeSaleListener;
         productList = ProductHelper.getAllProduct();
         if (productList != null && !productList.isEmpty()) {
             cbProductName.setItems(productList);
             cbProductName.setValue(productList.get(0));
+            cbProductName.setOnAction(e -> {
+                System.out.println(cbProductName.getValue());
+                isProductOnSale();
+            });
         }
 //        if(cbProductName.setItems(sale.getStatus() == sale.getStatus("5"))){
 //             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -117,7 +123,7 @@ public class AddSaleController implements Initializable {
 
     private void onClickChooseFile(MouseEvent e) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose image to upload");
+        FileHelper.configureFileImageChooser(fileChooser);
         File fileChoose = fileChooser.showOpenDialog(stage);
         imgSaleFile = fileChoose;
         if (fileChoose != null) {
@@ -142,6 +148,9 @@ public class AddSaleController implements Initializable {
         String regaxDiscount = "^[^0][0-9]{0,1}$";
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
+        if (isProductOnSale()) {
+            return;
+        }
         if (discount.isEmpty()) {
             txtDiscount.requestFocus();
             alert.setHeaderText("Please enter Discount!!");
@@ -258,9 +267,31 @@ public class AddSaleController implements Initializable {
         return false;
     }
 
+    private boolean isProductOnSale() {
+        if (SaleHelper.isProductOnSale(cbProductName.getValue())) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("The product is on sale!\nYou must end the sale first");
+            ButtonType btnSeeSale = new ButtonType("See that sale");
+            ButtonType btnChooseProduct = new ButtonType("Choose another product", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+            alert.getButtonTypes().setAll(btnSeeSale, btnChooseProduct);
+            alert.getDialogPane().setPrefWidth(400);
+            alert.showAndWait();
+            if (alert.getResult() == btnSeeSale) {
+                stage.close();
+                mIOnSeeSaleListener.onSeeSale(cbProductName.getValue());
+            } else {
+                cbProductName.show();
+            }
+
+            return true;
+        }
+        return false;
+    }
+
     private void setDefaultImg(Button btnChoose, ImageView imgView) {
         btnChoose.setText("Choose files");
         imgView.setImage(new Image("file:" + PLACEHOLDER_NO_IMG_PATH));
-
     }
 }

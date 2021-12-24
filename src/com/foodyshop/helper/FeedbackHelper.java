@@ -11,8 +11,6 @@ import com.foodyshop.database.DBQueryBuilder;
 import com.foodyshop.model.FeedbackModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

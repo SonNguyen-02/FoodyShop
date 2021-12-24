@@ -8,7 +8,6 @@ package com.foodyshop.helper;
 import com.foodyshop.database.DBConnection;
 import com.foodyshop.database.DBQuery;
 import com.foodyshop.database.DBQueryBuilder;
-import com.foodyshop.model.CategoryModel;
 import com.foodyshop.model.TopicModel;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +16,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.image.Image;
 
 /**
  *
@@ -47,6 +45,19 @@ public class TopicHelper {
             DBConnection.close();
         }
         return listTopic;
+    }
+
+    public static boolean isTopicNameExists(String topicName) {
+        String sql = db.select("name").from("fs_topic")
+                .where("LOWER(name)", topicName.toLowerCase())
+                .limit(1).getCompiledSelect(true);
+        ResultSet rs = DBConnection.execSelect(sql);
+        try {
+            return rs.next();
+        } catch (SQLException ex) {
+            Logger.getLogger(TopicHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 
     public static boolean delete(TopicModel topic) {
@@ -88,21 +99,20 @@ public class TopicHelper {
         }
         return null;
     }
-    
-    public static boolean updateTopic(TopicModel topicModel){
+
+    public static boolean updateTopic(TopicModel topicModel) {
         String sql = db.update("fs_topic")
                 .set("name", topicModel.getName())
                 .set("img", topicModel.getImg())
                 .set("status", String.valueOf(topicModel.getStatus()))
                 .where("id", String.valueOf(topicModel.getId()))
                 .getCompiledUpdate(true);
-        
+
         int result = DBConnection.execUpdate(sql);
-        if(result > 0){
+        if (result > 0) {
             return true;
         }
         return false;
     }
-    
 
 }

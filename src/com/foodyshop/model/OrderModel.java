@@ -5,7 +5,6 @@
  */
 package com.foodyshop.model;
 
-import java.time.LocalDateTime;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;

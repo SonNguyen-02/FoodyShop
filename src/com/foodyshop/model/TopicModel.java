@@ -7,7 +7,6 @@ package com.foodyshop.model;
 
 import static com.foodyshop.main.Config.IMG_TOPIC_DIR;
 import com.foodyshop.main.Const;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;

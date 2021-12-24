@@ -5,16 +5,15 @@
  */
 package com.foodyshop.controller;
 
-import com.foodyshop.controller.AddSaleController.IOnInsertSaleSuccess;
 import com.foodyshop.helper.SaleHelper;
 import com.foodyshop.main.Const;
 import com.foodyshop.main.CurrentAccount;
 import com.foodyshop.main.Navigator;
 import com.foodyshop.main.UploadImageToApi;
-import com.foodyshop.model.Order_DetailModel;
 import com.foodyshop.model.SaleModel;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -126,19 +125,19 @@ public class SaleController implements Initializable {
         txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(SaleModel -> {
 
-                if (newValue.isEmpty() || newValue == null) {
+                if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
 
                 String searchKeyword = newValue.toLowerCase();
 
-                if (SaleModel.getProductName().toLowerCase().indexOf(searchKeyword) > -1) {
+                if (SaleModel.getProductName().toLowerCase().contains(searchKeyword)) {
                     return true;
-                } else if (SaleModel.getContent().toLowerCase().indexOf(searchKeyword) > -1) {
+                } else if (SaleModel.getContent().toLowerCase().contains(searchKeyword)) {
                     return true;
-                } else if (SaleModel.getStart_date().toLowerCase().indexOf(searchKeyword) > -1) {
+                } else if (SaleModel.getStart_date().toLowerCase().contains(searchKeyword)) {
                     return true;
-                }else {
+                } else {
                     return false;
                 }
             });
@@ -151,27 +150,30 @@ public class SaleController implements Initializable {
         tblSale.setItems(sortedData);
     }
 
-    private void onClickAdd(MouseEvent e){
-        Navigator.getInstance().showAddSale(new AddSaleController.IOnInsertSaleSuccess() {
-            @Override
-            public void callback(SaleModel sale) {
-                sale.setImg(sale.getImg());
-                listSale.add(0, sale);
-            }
+    private void onClickAdd(MouseEvent e) {
+        Navigator.getInstance().showAddSale(sale -> {
+            sale.setImg(sale.getImg());
+            listSale.add(0, sale);
+        }, product -> {
+            listSale.stream().filter(sale -> Objects.equals(product.getId(), sale.getProductId()) && sale.getStatus() == 0)
+                    .findFirst().ifPresent(sale -> {
+                        tblSale.getSelectionModel().select(sale);
+                        tblSale.scrollTo(sale);
+                    });
         });
     }
-    
+
     private void onClickEdit(MouseEvent e) {
         SaleModel sale = tblSale.getSelectionModel().getSelectedItem();
-        boolean isHasLink = SaleHelper.isSaleHasLinkToOrderDetail(sale);
-        if (isHasLink) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("ERROR");
-            alert.setHeaderText("Can't Edit Sale has link with order!!");
-            alert.show();
-            return;
-        }
         if (sale != null) {
+            boolean isHasLink = SaleHelper.isSaleHasLinkToOrderDetail(sale);
+            if (isHasLink) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("ERROR");
+                alert.setHeaderText("Can't Edit Sale has link with order!!");
+                alert.show();
+                return;
+            }
             Navigator.getInstance().showEditSale(sale);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);

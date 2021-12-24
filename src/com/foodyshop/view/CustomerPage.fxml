@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.CustomerController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.CustomerController">
    <children>
       <TableView fx:id="tblCustomer" layoutX="19.0" layoutY="81.0" prefHeight="519.0" prefWidth="888.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="75.0">
          <columns>
@@ -54,11 +54,22 @@
             </Button>
          </children>
       </HBox>
-      <Label layoutX="76.0" layoutY="54.0" text="Search:" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="30.0">
-         <font>
-            <Font name="System Bold" size="19.0" />
-         </font>
-      </Label>
-      <TextField fx:id="txtSearch" layoutX="159.0" layoutY="49.0" prefHeight="35.0" prefWidth="265.0" AnchorPane.leftAnchor="157.0" AnchorPane.rightAnchor="498.0" AnchorPane.topAnchor="30.0" />
+      <HBox alignment="CENTER" layoutX="16.0" layoutY="17.0">
+         <children>
+            <Label text="Search" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="16.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="txtSearch" prefHeight="40.0" prefWidth="380.0" promptText="Search">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </TextField>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

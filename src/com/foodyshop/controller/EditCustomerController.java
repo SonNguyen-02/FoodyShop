@@ -77,7 +77,7 @@ public class EditCustomerController implements Initializable {
         alert.setHeaderText("Do you want close?");
         alert.showAndWait().ifPresent(btnType -> {
             if (btnType == ButtonType.OK) {
-                Navigator.getInstance().getModalStage().close();
+                stage.close();
             }
         });
     }

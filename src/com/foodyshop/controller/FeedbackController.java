@@ -12,13 +12,11 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -41,8 +39,8 @@ public class FeedbackController implements Initializable {
     @FXML
     private TableColumn<FeedbackModel, String> tcProductID;
     
-    @FXML
-    private TableColumn<FeedbackModel, Integer> tcOrderDetailID;
+//    @FXML
+//    private TableColumn<FeedbackModel, Integer> tcOrderDetailID;
 
     @FXML
     private TableColumn<FeedbackModel, String> tcContent;
@@ -66,11 +64,10 @@ public class FeedbackController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         tcID.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tvFeedback.getItems().indexOf(cellData.getValue()) + 1) + ""));
         tcCustomerID.setCellValueFactory(cellData -> cellData.getValue().getCustomerNameProperty());
         tcProductID.setCellValueFactory(cellData -> cellData.getValue().getProductNameProperty());
-        tcOrderDetailID.setCellValueFactory(cellData -> cellData.getValue().getOrderDetailIDproperty());
+//        tcOrderDetailID.setCellValueFactory(cellData -> cellData.getValue().getOrderDetailIDproperty());
         tcContent.setCellValueFactory(cellData -> cellData.getValue().getContentProperty());
         tcCreated.setCellValueFactory(cellData -> cellData.getValue().getCreatedProperty());
         tcUpdated.setCellValueFactory(cellData -> cellData.getValue().getUpdatedProperty());
@@ -90,12 +87,12 @@ public class FeedbackController implements Initializable {
         if (fbmodel == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("No selected data");
-            alert.setContentText("Select a feedback before do this action!");
+            alert.setHeaderText("Select a feedback before do this action!");
             alert.show();
         } else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("confirm");
-            alert.setContentText("Are you sure to hidden this feedback?");
+            alert.setHeaderText("Are you sure to hidden this feedback?");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 System.out.println("Click Ok");
@@ -114,7 +111,6 @@ public class FeedbackController implements Initializable {
             } else {
                 System.out.println("Click Cancel");
             }
-
         }
     }
 
@@ -124,12 +120,12 @@ public class FeedbackController implements Initializable {
         if (fbmodel == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("No selected data");
-            alert.setContentText("Select a feedback before do this action!");
+            alert.setHeaderText("Select a feedback before do this action!");
             alert.show();
         } else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("confirm");
-            alert.setContentText("Are you sure to show this feedback?");
+            alert.setTitle("Confirm");
+            alert.setHeaderText("Are you sure to show this feedback?");
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
@@ -149,7 +145,6 @@ public class FeedbackController implements Initializable {
             } else {
                 System.out.println("Click Cancel");
             }
-
         }
     }
     

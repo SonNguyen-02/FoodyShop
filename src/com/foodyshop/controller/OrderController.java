@@ -6,11 +6,13 @@
 package com.foodyshop.controller;
 
 import com.foodyshop.helper.OrderHelper;
-import com.foodyshop.main.CurrentAccount;
 import com.foodyshop.main.Navigator;
 import com.foodyshop.model.OrderModel;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,9 +22,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -45,13 +50,7 @@ public class OrderController implements Initializable {
     private TableColumn<OrderModel, String> tcName;
 
     @FXML
-    private TableColumn<OrderModel, String> tcAddress;
-
-    @FXML
     private TableColumn<OrderModel, String> tcPhone;
-
-    @FXML
-    private TableColumn<OrderModel, String> tcNote;
 
     @FXML
     private TableColumn<OrderModel, Integer> tcShip_price;
@@ -66,10 +65,7 @@ public class OrderController implements Initializable {
     private TableColumn<OrderModel, String> tcStatus;
 
     @FXML
-    private Button btnEditStatus;
-
-    @FXML
-    private Button btnOrder_detail,btnSuccess,btnShipping,btnReceive,btnCancel;
+    private Button btnOrder_detail, btnReceive, btnEditShipPrice, btnCancel, btnShipping, btnDelivery;
 
     @FXML
     private TextField txtSearch;
@@ -84,19 +80,13 @@ public class OrderController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        if (CurrentAccount.getInstance().isStaff()) {
-            btnEditStatus.setVisible(false);
-        } else {
-            btnEditStatus.setOnMouseClicked(this::onclickShowEditOrder);
-        }
+
         btnOrder_detail.setOnMouseClicked(this::onclickShowOrderDetail);
-        
+
         tcId.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tblOrder.getItems().indexOf(cellData.getValue()) + 1) + ""));
         tcOrder_code.setCellValueFactory(cellValue -> cellValue.getValue().getOrderCodeProperty());
         tcName.setCellValueFactory(cellValue -> cellValue.getValue().getNameProperty());
-        tcAddress.setCellValueFactory(cellValue -> cellValue.getValue().getAddressProperty());
         tcPhone.setCellValueFactory(cellValue -> cellValue.getValue().getPhoneProperty());
-        tcNote.setCellValueFactory(cellValue -> cellValue.getValue().getNoteProperty());
         tcShip_price.setCellValueFactory(cellValue -> cellValue.getValue().getShipPriceProperty());
         tcTotal_money.setCellValueFactory(cellValue -> cellValue.getValue().getTotalMoneyProperty());
         tcCreated.setCellValueFactory(cellValue -> cellValue.getValue().getCreatedProperty());
@@ -108,21 +98,21 @@ public class OrderController implements Initializable {
         txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(OrderModel -> {
 
-                if (newValue.isEmpty() || newValue == null) {
+                if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
-
                 String searchKeyword = newValue.toLowerCase();
-
-                if (OrderModel.getName().toLowerCase().indexOf(searchKeyword) > -1) {
+                if (OrderModel.getName().toLowerCase().contains(searchKeyword)) {
                     return true;
-                } else if (OrderModel.getOrderCode().toLowerCase().indexOf(searchKeyword) > -1) {
+                } else if (OrderModel.getOrderCode().toLowerCase().contains(searchKeyword)) {
                     return true;
-                } else if (OrderModel.getAddress().toLowerCase().indexOf(searchKeyword) > -1) {
+                } else if (OrderModel.getAddress().toLowerCase().contains(searchKeyword)) {
                     return true;
-                } else if (OrderModel.getPhone().toLowerCase().indexOf(searchKeyword) > -1) {
+                } else if (OrderModel.getPhone().toLowerCase().contains(searchKeyword)) {
                     return true;
-                } else if (OrderModel.getTotalMoney().toString().indexOf(searchKeyword) > -1) {
+                } else if (OrderModel.getTotalMoney().toString().contains(searchKeyword)) {
+                    return true;
+                } else if (OrderModel.getStatusVal().get().toLowerCase().contains(searchKeyword)) {
                     return true;
                 } else {
                     return false;
@@ -136,6 +126,106 @@ public class OrderController implements Initializable {
 
         tblOrder.setItems(sortedData);
 
+        tblOrder.setRowFactory(v -> {
+            final TableRow<OrderModel> row = new TableRow<>();
+            row.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+                final int index = row.getIndex();
+                if (e.getButton().equals(MouseButton.PRIMARY) && index >= 0 && index < tblOrder.getItems().size()) {
+                    initHBoxBar(tblOrder.getSelectionModel().getSelectedItem().getStatus());
+                } else {
+                    showButtons();
+                }
+            });
+            row.addEventFilter(MouseEvent.MOUSE_PRESSED, (MouseEvent event) -> {
+                final int index = row.getIndex();
+                if (index < 0 || index >= tblOrder.getItems().size()) {
+                    tblOrder.getSelectionModel().clearSelection();
+                    event.consume();
+                }
+            });
+            return row;
+        });
+
+        Arrays.asList(btnReceive, btnEditShipPrice, btnCancel, btnShipping, btnDelivery).forEach(btn -> btn.managedProperty().bind(btn.visibleProperty()));
+        showButtons();
+        btnReceive.setOnMouseClicked(event -> {
+            OrderModel order = tblOrder.getSelectionModel().getSelectedItem();
+            showAlert(Alert.AlertType.CONFIRMATION, "Confirmation",
+                    "Accept order " + order.getOrderCode() + " ?", t -> {
+                order.setStatus(1);
+                OrderHelper.updateStatusOrder(order);
+                initHBoxBar(order.getStatus());
+            });
+        });
+        btnEditShipPrice.setOnMouseClicked(e -> {
+            OrderModel order = tblOrder.getSelectionModel().getSelectedItem();
+            Navigator.getInstance().showEditOrder(order, () -> initHBoxBar(order.getStatus()));
+        });
+        btnCancel.setOnMouseClicked(e -> {
+            OrderModel order = tblOrder.getSelectionModel().getSelectedItem();
+            showAlert(Alert.AlertType.CONFIRMATION, "Confirmation",
+                    "Cancel order " + order.getOrderCode() + " ?", t -> {
+                order.setStatus(-1);
+                OrderHelper.updateStatusOrder(order);
+                initHBoxBar(order.getStatus());
+            });
+        });
+        btnShipping.setOnMouseClicked(e -> {
+            OrderModel order = tblOrder.getSelectionModel().getSelectedItem();
+            showAlert(Alert.AlertType.CONFIRMATION, "Confirmation",
+                    "Confirm shipping order " + order.getOrderCode() + " ?", t -> {
+                order.setStatus(4);
+                OrderHelper.updateStatusOrder(order);
+                initHBoxBar(order.getStatus());
+            });
+        });
+        btnDelivery.setOnMouseClicked(e -> {
+            OrderModel order = tblOrder.getSelectionModel().getSelectedItem();
+            showAlert(Alert.AlertType.CONFIRMATION, "Confirmation",
+                    "Confirm successful delivery order " + order.getOrderCode() + " ?", t -> {
+                order.setStatus(5);
+                OrderHelper.updateStatusOrder(order);
+                initHBoxBar(order.getStatus());
+            });
+        });
+
+    }
+
+    private void showAlert(Alert.AlertType type, String title, String header, Consumer<ButtonType> cb) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.showAndWait().filter(b -> b == ButtonType.OK).ifPresent(cb);
+    }
+
+    private void initHBoxBar(int status) {
+        switch (status) {
+            case 0:
+                showButtons(btnReceive, btnCancel);
+                break;
+            case 1:
+                showButtons(btnEditShipPrice, btnCancel);
+                break;
+            case 3:
+                showButtons(btnShipping);
+                break;
+            case 4:
+                showButtons(btnDelivery);
+                break;
+            case -1:
+            case -2:
+            case 2:
+            case 5:
+            default:
+                showButtons();
+                break;
+        }
+    }
+
+    private void showButtons(Button... btns) {
+        List<Button> listBtnShow = Arrays.asList(btns);
+        List<Button> listBtnDefault = Arrays.asList(btnReceive, btnEditShipPrice, btnCancel, btnShipping, btnDelivery);
+        listBtnDefault.forEach(btn -> btn.setVisible(listBtnShow.contains(btn)));
     }
 
     private void onclickShowOrderDetail(MouseEvent e) {
@@ -150,20 +240,4 @@ public class OrderController implements Initializable {
         }
     }
 
-    private void onclickShowEditOrder(MouseEvent e) {
-        OrderModel order = tblOrder.getSelectionModel().getSelectedItem();
-        if (order != null) {
-            Navigator.getInstance().showEditOrder(order, new EditOrderController.IOnUpdateOrderSuccess() {
-                @Override
-                public void callback() {
-                    tblOrder.refresh();
-                }
-            });
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("You Must choose!!!");
-            alert.show();
-        }
-    }
 }

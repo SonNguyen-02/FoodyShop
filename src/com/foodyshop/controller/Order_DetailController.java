@@ -7,18 +7,12 @@ package com.foodyshop.controller;
 
 import com.foodyshop.helper.Order_DetailHelper;
 import com.foodyshop.main.Navigator;
-import com.foodyshop.model.CustomerModel;
-import com.foodyshop.model.FeedbackModel;
 import com.foodyshop.model.OrderModel;
 import com.foodyshop.model.Order_DetailModel;
-import com.foodyshop.model.ProductModel;
 import java.net.URL;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
-import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,7 +25,6 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
 
 /**
@@ -41,7 +34,6 @@ import javafx.scene.text.TextAlignment;
  */
 public class Order_DetailController implements Initializable {
 
-    private OrderModel mOrder;
 
     @FXML
     private Label lbOrder_Code, lbTotalPrice, lbTotalProduct, lbName, lbPhone, lbAddress, lbFeedback, lbNote, lbContentSale, lbStart, lbEnd;
@@ -70,17 +62,15 @@ public class Order_DetailController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    ObservableList<Order_DetailModel> listOrder_Detail = FXCollections.observableArrayList();
-    DecimalFormat formatter = new DecimalFormat("###,###,###");
+    private ObservableList<Order_DetailModel> listOrder_Detail = FXCollections.observableArrayList();
 
     public void initOrderModel(OrderModel order) {
-        mOrder = order;
-        String fomatter1 = formatter.format(order.getTotalMoney());
+        String totalMoney = new DecimalFormat("###,###,###").format(order.getTotalMoney());
         lbName.setText(order.getName());
         lbPhone.setText(order.getPhone());
         lbNote.setText(order.getNote());
         lbAddress.setText(order.getAddress());
-        lbTotalPrice.setText(fomatter1 + " VNĐ");
+        lbTotalPrice.setText(totalMoney + " VNĐ");
         lbOrder_Code.setText(order.getOrderCode());
         listOrder_Detail = Order_DetailHelper.getAllOrder_Detail(order);
         tblOrder_detail.setItems(listOrder_Detail);

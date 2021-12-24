@@ -1,13 +1,10 @@
 
 package com.foodyshop.controller;
 
-import com.foodyshop.helper.CustomerDetailHelper;
 import com.foodyshop.helper.OrderHelper;
 import static com.foodyshop.main.Config.IMG_AVATAR_DIR;
 import com.foodyshop.main.Const;
-import static com.foodyshop.main.Const.PLACEHOLDER_NO_IMG_PATH;
 import com.foodyshop.main.Navigator;
-import com.foodyshop.model.CustomerDetailModel;
 import com.foodyshop.model.CustomerModel;
 import com.foodyshop.model.OrderModel;
 import java.net.URL;
@@ -28,7 +25,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -37,6 +34,8 @@ import javafx.scene.text.TextAlignment;
  */
 public class CustomerDetailController implements Initializable {
 
+    private Stage mStage;
+    
     @FXML
     private TableView<OrderModel> tblCustomerDetail;
 
@@ -80,8 +79,9 @@ public class CustomerDetailController implements Initializable {
 
     ObservableList<OrderModel> listOrder = FXCollections.observableArrayList();
 
-    public void initCustomerModel(CustomerModel customer) {
+    public void initCustomerModel(CustomerModel customer, Stage stage) {
         mCustomer = customer;
+        mStage = stage;
         lbCustomerName.setText(customer.getName());
         lbAddress.setText(customer.getAddress());
         lbPhone.setText(customer.getPhone());
@@ -91,7 +91,6 @@ public class CustomerDetailController implements Initializable {
         imgView.setImage(image);
         image.errorProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
-//                System.out.println(image.getException().getMessage());
                 imgView.setImage(Const.NO_IMAGE_OBJ);
             }
         });
@@ -101,9 +100,6 @@ public class CustomerDetailController implements Initializable {
         lbTotalOrder.setText(String.valueOf(listOrder.size()) + " order");
     }
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -120,12 +116,7 @@ public class CustomerDetailController implements Initializable {
             row.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
                 final int index = row.getIndex();
                 if (e.getButton().equals(MouseButton.PRIMARY) && index >= 0 && index < tblCustomerDetail.getItems().size()) {
-//                    if (e.getClickCount() == 2) {
-//                        initOpenFileOrFolder();
-//                        return;
-//                    }
                     if (e.getClickCount() == 1) {
-//                        lbFeedback.setText(row.getItem().getContent());
                         lbNote.setText(row.getItem().getNote());
                     }
                 }
@@ -134,7 +125,6 @@ public class CustomerDetailController implements Initializable {
                 final int index = row.getIndex();
                 if (index < 0 || index >= tblCustomerDetail.getItems().size()) {
                     tblCustomerDetail.getSelectionModel().clearSelection();
-//                    lbFeedback.setText("Choose one!");
                     lbNote.setText("");
                     event.consume();
                 }
@@ -149,7 +139,7 @@ public class CustomerDetailController implements Initializable {
         alert.setHeaderText("Do you want close?");
         alert.showAndWait().ifPresent(btnType -> {
             if (btnType == ButtonType.OK) {
-                Navigator.getInstance().getModalStage().close();
+                mStage.close();
             }
         });
     }

@@ -6,6 +6,7 @@
 package com.foodyshop.controller;
 
 import com.foodyshop.helper.CategoryHelper;
+import com.foodyshop.helper.FileHelper;
 import com.foodyshop.helper.ProductHelper;
 import com.foodyshop.main.Const;
 import static com.foodyshop.main.Const.PLACEHOLDER_NO1_IMG_PATH;
@@ -15,7 +16,6 @@ import com.foodyshop.main.UploadImageToApi;
 import com.foodyshop.model.CategoryModel;
 import com.foodyshop.model.ProductModel;
 import com.foodyshop.model.Respond;
-import static com.sun.javafx.fxml.expression.Expression.add;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -34,7 +34,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -82,7 +81,7 @@ public class AddProductController implements Initializable {
     public void initData(Stage stage, IOnInsertProductSuccess mIOnInsertProductSuccess) {
         this.stage = stage;
         this.mIOnInsertProductSuccess = mIOnInsertProductSuccess;
-
+        txtDescription.setWrapText(true);
     }
 
     @Override
@@ -96,7 +95,7 @@ public class AddProductController implements Initializable {
         categoryList = CategoryHelper.getAllCategory();
         if (categoryList != null && !categoryList.isEmpty()) {
             cbCategory.setItems(categoryList);
-            cbCategory.setValue(categoryList.get(0));
+            cbCategory.setValue(categoryList.get(26));
         }
     }
 //
@@ -135,7 +134,7 @@ public class AddProductController implements Initializable {
 
     private void onClickImg(MouseEvent e) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose image to upload");
+        FileHelper.configureFileImageChooser(fileChooser);
         File fileChoose = fileChooser.showOpenDialog(stage);
         imgProductFile = fileChoose;
         if (fileChoose != null) {
@@ -157,7 +156,7 @@ public class AddProductController implements Initializable {
 
     private void onClickImgDetail(MouseEvent e) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose image to upload");
+        FileHelper.configureFileImageChooser(fileChooser);
         File fileChoose = fileChooser.showOpenDialog(stage);
         imgDetailProductFile = fileChoose;
         if (fileChoose != null) {
@@ -250,10 +249,17 @@ public class AddProductController implements Initializable {
                     alert.setHeaderText("Add false");
                     alert.show();
                 } else {
-                    stage.close();
+//                    stage.close();
+                    txtName.clear();
+                    txtDescription.clear();
+                    txtPrice.clear();
+                    imgProductFile = null;
+                    imgDetailProductFile = null;
+                    setDefaultImg();
+                    setDefaultImgDetail();
                     Alert alerts = new Alert(Alert.AlertType.INFORMATION);
-                    alerts.setTitle("Success");
-                    alerts.setHeaderText("Add success!");
+//                    alerts.setTitle("Success");
+//                    alerts.setHeaderText("Add success!");
                     alerts.show();
                     mIOnInsertProductSuccess.callback(product);
                 }

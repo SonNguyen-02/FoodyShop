@@ -58,10 +58,11 @@ public class StaffHelper {
             if (rs.next()) {
                 staff = new StaffModel();
                 staff.setId(rs.getInt("id"));
-                staff.setUsername(username);
-                staff.setName(rs.getString("name"));
+                staff.setUsername(rs.getString("username"));
                 staff.setPassword(rs.getString("password"));
+                staff.setName(rs.getString("name"));
                 staff.setType(rs.getInt("type"));
+                staff.setCreated(rs.getString("created"));
                 staff.setStatus(rs.getInt("status"));
             }
         } catch (SQLException ex) {

@@ -10,7 +10,6 @@ import com.foodyshop.main.Navigator;
 import com.foodyshop.model.CustomerModel;
 import java.net.URL;
 import java.util.ResourceBundle;
-import com.foodyshop.controller.EditCustomerController;
 import com.foodyshop.main.CurrentAccount;
 import java.util.Optional;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -35,8 +34,6 @@ import javafx.scene.input.MouseEvent;
  * @author APlaptop
  */
 public class CustomerController implements Initializable {
-
-    private CustomerModel mCustomer;
 
     @FXML
     private TableView<CustomerModel> tblCustomer;
@@ -75,11 +72,7 @@ public class CustomerController implements Initializable {
     private Button btnCustomerDetail;
 
     @FXML
-    private Button btnEditStatus,btnLock,btnUnclock;
-
-    public void setData(CustomerModel customer) {
-        mCustomer = customer;
-    }
+    private Button btnLock, btnUnclock;
 
     ObservableList<CustomerModel> listCustomer = FXCollections.observableArrayList();
 
@@ -97,10 +90,10 @@ public class CustomerController implements Initializable {
             btnLock.setVisible(false);
         } else {
             btnUnclock.setOnMouseClicked(this::onClickUnClock);
-            btnLock.setOnMouseClicked(this::onClickLock);                        
+            btnLock.setOnMouseClicked(this::onClickLock);
         }
         btnCustomerDetail.setOnMouseClicked(this::onclickShowCustomerDetail);
-        
+
         tcStt.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper((tblCustomer.getItems().indexOf(cellData.getValue()) + 1) + ""));
         tcPhone.setCellValueFactory(cellValue -> cellValue.getValue().getPhoneProperty());
         tcName.setCellValueFactory(cellValue -> cellValue.getValue().getNameProperty());
@@ -118,15 +111,15 @@ public class CustomerController implements Initializable {
         txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(CustomerModel -> {
 
-                if (newValue.isEmpty() || newValue == null) {
+                if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
 
                 String searchKeyword = newValue.toLowerCase();
 
-                if (CustomerModel.getName().toLowerCase().indexOf(searchKeyword) > -1) {
+                if (CustomerModel.getName().toLowerCase().contains(searchKeyword)) {
                     return true;
-                } else if (CustomerModel.getPhone().toLowerCase().indexOf(searchKeyword) > -1) {
+                } else if (CustomerModel.getPhone().toLowerCase().contains(searchKeyword)) {
                     return true;
                 } else {
                     return false;
@@ -140,8 +133,8 @@ public class CustomerController implements Initializable {
 
         tblCustomer.setItems(sortedData);
     }
-    
-     void onClickUnClock(MouseEvent e) {
+
+    void onClickUnClock(MouseEvent e) {
         CustomerModel customer = tblCustomer.getSelectionModel().getSelectedItem();
         if (customer == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);

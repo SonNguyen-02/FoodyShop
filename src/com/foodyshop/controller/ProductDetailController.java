@@ -9,7 +9,6 @@ import static com.foodyshop.main.Config.IMG_FOOD_DIR;
 import com.foodyshop.main.Navigator;
 import com.foodyshop.model.ProductModel;
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,7 +16,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -40,22 +39,23 @@ public class ProductDetailController implements Initializable {
     private Label lbPrice;
 
     @FXML
-    private Label lbCreated, lbDescription;
+    private Label lbCreated;
 
+    @FXML
+    private TextArea txtDescription;
+    
     @FXML
     private ImageView imgDetail;
 
     @FXML
     private Button btnCancel;
 
-    private ProductModel mProduct;
 
     public void initProductModel(ProductModel product) {
-        mProduct = product;
         lbName.setText(product.getName());
         lbCategory.setText(product.getCategoryName());
         lbCreated.setText(product.getCreated());
-        lbDescription.setText(product.getDescription());
+        txtDescription.setText(product.getDescription());
         lbPrice.setText(product.getPrice().toString() + "  VNĐ");
 
         Image imageDetail = new Image(IMG_FOOD_DIR + product.getImgDetail(), 256, 192, false, true, true);
@@ -65,9 +65,8 @@ public class ProductDetailController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         btnCancel.setOnMouseClicked(this::onClickCancel);
-        lbDescription.setWrapText(true);
-        lbDescription.setTextAlignment(TextAlignment.JUSTIFY);
-
+        txtDescription.setWrapText(true);
+        txtDescription.setEditable(false);
     }
 
     private void onClickCancel(MouseEvent e) {

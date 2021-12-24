@@ -5,8 +5,6 @@
  */
 package com.foodyshop.main;
 
-import com.foodyshop.database.DBConnection;
-import com.foodyshop.helper.BCrypt;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -23,8 +21,7 @@ public class App extends Application {
         // username admin@gmail.com
         // username staff@gmail.com
         // password azz123456
-        //Navigator.getInstance().goToMainLayout();
-        //System.out.println(BCrypt.hashpw("azz123456", BCrypt.gensalt()));
+//        Navigator.getInstance().goToMainLayout();
         Navigator.getInstance().goToLoginUI();
     }
 

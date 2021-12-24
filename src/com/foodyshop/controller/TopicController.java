@@ -112,7 +112,7 @@ public class TopicController implements Initializable {
         if (topic != null) {
             Alert alerts = new Alert(Alert.AlertType.CONFIRMATION);
             alerts.setTitle("ERROR");
-            alerts.setHeaderText("Do you want delete " + topic.getId());
+            alerts.setHeaderText("Do you want delete " + topic.getName());
             alerts.showAndWait().ifPresent(btn -> {
                 if (btn == ButtonType.OK) {
                     boolean isHasLink = CategoryHelper.isTopicHasLinkToCategorys(topic);
