@@ -5,22 +5,23 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<FlowPane alignment="CENTER" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.TopicController">
+
+<AnchorPane prefHeight="750.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.TopicController">
    <children>
-      <TableView fx:id="tblTopic" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="585.0" prefWidth="866.0">
+      <TableView fx:id="tblTopic" layoutX="17.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="594.0" prefWidth="888.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="50.0">
         <columns>
           <TableColumn fx:id="tcId" prefWidth="83.0" text="STT" />
           <TableColumn fx:id="tcName" minWidth="0.0" prefWidth="328.0" text="name" />
             <TableColumn fx:id="tcImg" prefWidth="100.0" text="img" />
-            <TableColumn fx:id="tcCreated" prefWidth="224.0" text="created" />
-            <TableColumn fx:id="tcStatus" prefWidth="115.0" text="status" />
+            <TableColumn fx:id="tcCreated" prefWidth="237.0" text="created" />
+            <TableColumn fx:id="tcStatus" prefWidth="123.0" text="status" />
         </columns>
       </TableView>
-      <HBox alignment="CENTER" prefHeight="75.0" prefWidth="867.0">
+      <HBox alignment="CENTER" layoutX="22.0" layoutY="663.0" prefHeight="73.0" prefWidth="877.0">
          <children>
             <Button fx:id="btnAdd" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #3499fb; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Add" textFill="WHITE">
                <font>
@@ -30,7 +31,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="btnEdit" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #ed982d; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Edit" textFill="WHITE">
+            <Button fx:id="btnEdit" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #ed982d; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Edit" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
@@ -38,10 +39,10 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                <HBox.margin>
-                  <Insets left="36.0" right="36.0" />
+                  <Insets left="32.0" right="32.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="btnDelete" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #f54020; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Delete" textFill="WHITE">
+            <Button fx:id="btnDelete" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #f54020; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Delete" textFill="WHITE" textOverrun="CLIP">
                <font>
                   <Font size="16.0" />
                </font>
@@ -52,4 +53,4 @@
          </children>
       </HBox>
    </children>
-</FlowPane>
+</AnchorPane>
