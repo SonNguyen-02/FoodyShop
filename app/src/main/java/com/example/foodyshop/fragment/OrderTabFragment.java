@@ -2,46 +2,43 @@ package com.example.foodyshop.fragment;
 
 import static com.example.foodyshop.config.Const.KEY_ACTION;
 import static com.example.foodyshop.config.Const.KEY_ORDER;
-import static com.example.foodyshop.config.Const.KEY_SIGN_IN_OK;
-import static com.example.foodyshop.config.Const.TOAST_DEFAULT;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.foodyshop.R;
 import com.example.foodyshop.activity.CartActivity;
 import com.example.foodyshop.activity.OrderDetailActivity;
 import com.example.foodyshop.adapter.OrderAdapter;
-import com.example.foodyshop.config.Const;
 import com.example.foodyshop.dialog.ConfirmDialog;
 import com.example.foodyshop.dialog.LoadingDialog;
 import com.example.foodyshop.dialog.ToastCustom;
 import com.example.foodyshop.helper.Helper;
-import com.example.foodyshop.model.OrderDetailModel;
 import com.example.foodyshop.model.OrderModel;
 import com.example.foodyshop.model.Respond;
 import com.example.foodyshop.service.APIService;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -54,7 +51,7 @@ public class OrderTabFragment extends Fragment implements OrderAdapter.IInteract
     private final OrderFragment.TAB tab;
 
     private View view;
-    private LinearLayout llNoHaveData, llOrder;
+    private SwipeRefreshLayout swrlNoHaveData, swrlOrder;
     private RelativeLayout rlLoading;
     private RecyclerView rcvOrder;
     private OrderAdapter mOrderAdapter;
@@ -98,11 +95,14 @@ public class OrderTabFragment extends Fragment implements OrderAdapter.IInteract
     }
 
     public interface IOnUpdatedOrder {
+
         void onCancelSuccess(OrderModel orderModel);
 
         void onConfirmSuccess(OrderModel orderModel);
+
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -112,6 +112,36 @@ public class OrderTabFragment extends Fragment implements OrderAdapter.IInteract
         mOrderPosition = -1;
         initUi();
         initDataOrder(false);
+        swrlNoHaveData.setOnRefreshListener(() -> initDataOrder(true));
+        swrlNoHaveData.setColorSchemeColors(ContextCompat.getColor(requireContext(), R.color.colorTextAccent));
+        swrlOrder.setOnRefreshListener(() -> initDataOrder(true));
+        swrlOrder.setColorSchemeColors(ContextCompat.getColor(requireContext(), R.color.colorTextAccent));
+
+        rcvOrder.setOnTouchListener(new View.OnTouchListener() {
+            private float preX = 0f;
+            private float preY = 0f;
+
+            @Override
+            public boolean onTouch(View view, MotionEvent e) {
+                int x_BUFFER = 10;
+                int y_BUFFER = 10;
+                switch (e.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        view.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        Log.e("ddd", "onInterceptTouchEvent Y: " + Math.abs(e.getY() - preY) + " |X: " + Math.abs(e.getX() - preX));
+                        if (Math.abs(e.getY() - preY) > y_BUFFER) {
+                            view.getParent().requestDisallowInterceptTouchEvent(false);
+                        } else if (Math.abs(e.getX() - preX) > Math.abs(e.getY() - preY) && Math.abs(e.getX() - preX) > x_BUFFER) {
+                            view.getParent().requestDisallowInterceptTouchEvent(true);
+                        }
+                }
+                preX = e.getX();
+                preY = e.getY();
+                return false;
+            }
+        });
         return view;
     }
 
@@ -133,7 +163,7 @@ public class OrderTabFragment extends Fragment implements OrderAdapter.IInteract
 
         if (mIPageRefreshStatus.getPageRefreshStatus(tab.getIndex())) {
             mIPageRefreshStatus.setPageRefreshStatus(tab.getIndex(), false);
-            if (System.currentTimeMillis() - lastTimeInPage > TimeUnit.SECONDS.toMillis(15)) {
+            if (System.currentTimeMillis() - lastTimeInPage > TimeUnit.SECONDS.toMillis(30)) {
                 initDataOrder(true);
             }
         }
@@ -146,17 +176,21 @@ public class OrderTabFragment extends Fragment implements OrderAdapter.IInteract
     }
 
     private void initUi() {
-        llNoHaveData = view.findViewById(R.id.ll_no_have_data);
-        llOrder = view.findViewById(R.id.ll_order);
+        swrlOrder = view.findViewById(R.id.swrl_order);
+        swrlNoHaveData = view.findViewById(R.id.swrl_no_have_data);
         rlLoading = view.findViewById(R.id.rl_loading);
         rcvOrder = view.findViewById(R.id.rcv_order);
     }
 
     private void initDataOrder(boolean inBackground) {
+        if (getContext() == null) {
+            return;
+        }
+        long timeStartCall = System.currentTimeMillis();
         if (!inBackground) {
             rlLoading.setVisibility(View.VISIBLE);
-            llOrder.setVisibility(View.GONE);
-            llNoHaveData.setVisibility(View.GONE);
+            swrlOrder.setVisibility(View.GONE);
+            swrlNoHaveData.setVisibility(View.GONE);
         }
         if (tab != null) {
             APIService.getService().getListOrder(Helper.getTokenLogin(requireContext()), tab.getRequestStatus()).enqueue(new Callback<List<OrderModel>>() {
@@ -165,15 +199,47 @@ public class OrderTabFragment extends Fragment implements OrderAdapter.IInteract
                     if (getContext() == null) {
                         return;
                     }
+                    if (swrlNoHaveData.isRefreshing() || swrlOrder.isRefreshing()) {
+                        Handler handler = new Handler();
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (System.currentTimeMillis() - timeStartCall > TimeUnit.SECONDS.toMillis(2)) {
+                                    swrlNoHaveData.setRefreshing(false);
+                                    swrlOrder.setRefreshing(false);
+                                    initRespond(response);
+                                } else {
+                                    handler.postDelayed(this, 300);
+                                }
+                            }
+                        });
+                    } else {
+                        initRespond(response);
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<List<OrderModel>> call, @NonNull Throwable t) {
+                    if (getContext() == null) {
+                        return;
+                    }
+                    ToastCustom.notice(requireContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.INFO).show();
+                }
+
+                private void initRespond(@NonNull Response<List<OrderModel>> response) {
                     if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
                         if (!inBackground) {
                             rlLoading.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.anim_fade_out));
-                            llNoHaveData.setVisibility(View.GONE);
+                            swrlNoHaveData.setVisibility(View.GONE);
                             new Handler().postDelayed(() -> {
                                 rlLoading.setVisibility(View.GONE);
-                                llOrder.setVisibility(View.VISIBLE);
-                                llOrder.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.anim_fade_in));
+                                swrlOrder.setVisibility(View.VISIBLE);
+                                swrlOrder.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.anim_fade_in));
                             }, 200);
+                        } else {
+                            swrlNoHaveData.setVisibility(View.GONE);
+                            swrlOrder.setVisibility(View.VISIBLE);
+                            swrlOrder.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.anim_fade_in));
                         }
                         mOrderAdapter = new OrderAdapter(requireContext(), response.body(), OrderTabFragment.this);
                         rcvOrder.setAdapter(mOrderAdapter);
@@ -183,21 +249,13 @@ public class OrderTabFragment extends Fragment implements OrderAdapter.IInteract
                         showTapEmpty();
                     }
                 }
-
-                @Override
-                public void onFailure(@NonNull Call<List<OrderModel>> call, @NonNull Throwable t) {
-                    if (getContext() == null) {
-                        return;
-                    }
-                    showTapEmpty();
-                }
             });
         }
     }
 
     private void showTapEmpty() {
-        llOrder.setVisibility(View.GONE);
-        llNoHaveData.setVisibility(View.VISIBLE);
+        swrlOrder.setVisibility(View.GONE);
+        swrlNoHaveData.setVisibility(View.VISIBLE);
         rlLoading.setVisibility(View.GONE);
     }
 
@@ -304,9 +362,9 @@ public class OrderTabFragment extends Fragment implements OrderAdapter.IInteract
             mOrderAdapter.notifyItemInserted(0);
         } else if (view != null) {
             initUi();
-            llNoHaveData.setVisibility(View.GONE);
+            swrlNoHaveData.setVisibility(View.GONE);
             rlLoading.setVisibility(View.GONE);
-            llOrder.setVisibility(View.VISIBLE);
+            swrlOrder.setVisibility(View.VISIBLE);
             List<OrderModel> mListOrder = new ArrayList<>();
             mListOrder.add(order);
             mOrderAdapter = new OrderAdapter(requireContext(), mListOrder, OrderTabFragment.this);

@@ -3,6 +3,7 @@ package com.example.foodyshop.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -71,9 +72,28 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         if (collapseMax) {
             dtAdapter.setIOnClickSeeMore(() -> mInteractOrder.onClickTitle(holder.getAdapterPosition(), order));
         }
+
         holder.rcvOrderDetail.setAdapter(dtAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
         holder.rcvOrderDetail.setLayoutManager(layoutManager);
+        holder.rcvOrderDetail.setFocusable(false);
+        holder.rcvOrderDetail.setNestedScrollingEnabled(false);
+//        holder.rcvOrderDetail.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+//            @Override
+//            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+//                rv.getParent().requestDisallowInterceptTouchEvent(false);
+//                return false;
+//            }
+//
+//            @Override
+//            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+//            }
+//
+//            @Override
+//            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+//            }
+//        });
+
         holder.rlTitleOrder.setOnClickListener(view -> mInteractOrder.onClickTitle(holder.getAdapterPosition(), order));
 
         switch (status) {

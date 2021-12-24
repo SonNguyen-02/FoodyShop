@@ -144,12 +144,15 @@
 
     <!-- onboard screen   -->
     <string name="title_onboarding_1">Welcome to Foody Shop !</string>
-    <string name="description_onboarding_1">Here is an open-source project which shows sweet &amp; original onboarding ViewPagers that follows Material Design Guidelines</string>
+    <string name="description_onboarding_1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum placeat minus a odio sed esse nesciunt ipsam recusandae, cupiditate minima. Obcaecati iure ducimus ea esse inventore unde iste voluptates aliquid.</string>
+    <!--    <string name="description_onboarding_1">Here is an open-source project which shows sweet &amp; original onboarding ViewPagers that follows Material Design Guidelines</string>-->
 
     <string name="title_onboarding_2">Easy ordering</string>
-    <string name="description_onboarding_2">Our mission is to make useful &amp; subtle apps. We love help people to save time with open-source stuffs, but we also make life easier by creating new things. Good Coding!</string>
+    <!--    <string name="description_onboarding_2">Our mission is to make useful &amp; subtle apps. We love help people to save time with open-source stuffs, but we also make life easier by creating new things. Good Coding!</string>-->
+    <string name="description_onboarding_2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum placeat minus a odio sed esse nesciunt ipsam recusandae, cupiditate minima. Obcaecati iure ducimus ea esse inventore unde iste voluptates aliquid.</string>
 
     <string name="title_onboarding_3">Guaranteed quick delivery</string>
-    <string name="description_onboarding_3">We use Lottie Animations on our Intro to make it interactive &amp; pleasant. Did you already tried it ? If no, let\'s start now. It\'s just awesome</string>
+    <!--    <string name="description_onboarding_3">We use Lottie Animations on our Intro to make it interactive &amp; pleasant. Did you already tried it ? If no, let\'s start now. It\'s just awesome</string>-->
+    <string name="description_onboarding_3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum placeat minus a odio sed esse nesciunt ipsam recusandae, cupiditate minima. Obcaecati iure ducimus ea esse inventore unde iste voluptates aliquid.</string>
 
 </resources>
