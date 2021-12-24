@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.CategoryController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="750.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.CategoryController">
    <children>
-      <TableView fx:id="tblCategory" layoutX="27.0" layoutY="21.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="628.0" prefWidth="848.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="16.0">
+      <TableView fx:id="tblCategory" layoutX="16.0" layoutY="39.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="628.0" prefWidth="848.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="39.0">
         <columns>
           <TableColumn fx:id="tcID" prefWidth="47.0" text="STT" />
           <TableColumn fx:id="tcName" prefWidth="230.0" text="Name" />
@@ -20,7 +20,7 @@
             <TableColumn fx:id="tcStatus" prefWidth="136.0" text="Status" />
         </columns>
       </TableView>
-      <HBox alignment="CENTER" layoutX="36.0" layoutY="634.0" prefHeight="100.0" prefWidth="877.0">
+      <HBox alignment="CENTER" layoutX="22.0" layoutY="677.0" prefHeight="67.0" prefWidth="877.0">
          <children>
             <Button fx:id="btnAdd" minHeight="36.0" minWidth="100.0" mnemonicParsing="false" style="-fx-background-color: #3499fb; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" text="Add" textFill="WHITE">
                <font>

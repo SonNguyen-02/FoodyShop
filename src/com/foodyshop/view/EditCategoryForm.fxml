@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.EditCategoryController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodyshop.controller.EditCategoryController">
    <children>
       <AnchorPane id="AnchorPane" layoutX="10.0" layoutY="10.0" prefHeight="500.0" prefWidth="700.0">
          <children>
@@ -123,7 +123,7 @@
                   <ComboBox fx:id="cbTopic" prefHeight="42.0" prefWidth="312.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <children>
-                        <ComboBox fx:id="cbStatus" prefHeight="42.0" prefWidth="87.0" />
+                        <ComboBox fx:id="cbStatus" prefHeight="42.0" prefWidth="150.0" />
                      </children>
                   </HBox>
                </children>
