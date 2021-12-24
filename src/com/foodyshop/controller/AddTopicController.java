@@ -9,7 +9,7 @@ import com.foodyshop.helper.FileHelper;
 import com.foodyshop.helper.TopicHelper;
 import com.foodyshop.main.Const;
 import com.foodyshop.main.Navigator;
-import com.foodyshop.main.UploadImageToApi;
+import com.foodyshop.main.APIService;
 import com.foodyshop.model.Respond;
 import com.foodyshop.model.TopicModel;
 import java.io.File;
@@ -126,7 +126,7 @@ public class AddTopicController implements Initializable {
 
         try {
                 // call API
-                Respond respond = UploadImageToApi.uploadImageToApi(imgTopicFile, Const.TYPE_TOPIC);
+                Respond respond = APIService.uploadImageToApi(imgTopicFile, Const.TYPE_TOPIC);
                 if (respond.isSuccess()) {
                     TopicModel topic = new TopicModel();
                     topic.setName(name);

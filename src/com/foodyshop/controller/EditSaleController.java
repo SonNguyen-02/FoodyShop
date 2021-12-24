@@ -11,7 +11,7 @@ import static com.foodyshop.main.Config.IMG_SALE_DIR;
 import com.foodyshop.main.Const;
 import static com.foodyshop.main.Const.PLACEHOLDER_NO_IMG_PATH;
 import com.foodyshop.main.Navigator;
-import com.foodyshop.main.UploadImageToApi;
+import com.foodyshop.main.APIService;
 import com.foodyshop.model.ProductModel;
 import com.foodyshop.model.Respond;
 import com.foodyshop.model.SaleModel;
@@ -199,7 +199,7 @@ public class EditSaleController implements Initializable {
             mSaleModel.setEnd_date(String.valueOf(dpEndDate.getValue()));
             if (imgSaleFile != null) {
                 // call API
-                Respond respond = UploadImageToApi.uploadImageToApi(imgSaleFile, Const.TYPE_SALE, mSaleModel.getImg());
+                Respond respond = APIService.uploadImageToApi(imgSaleFile, Const.TYPE_SALE, mSaleModel.getImg());
                 if (respond.isSuccess()) {
                     mSaleModel.setImg(respond.getMsg());
                 }

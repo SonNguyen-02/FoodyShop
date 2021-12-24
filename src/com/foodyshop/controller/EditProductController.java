@@ -13,7 +13,7 @@ import com.foodyshop.main.Const;
 import static com.foodyshop.main.Const.PLACEHOLDER_NO1_IMG_PATH;
 import static com.foodyshop.main.Const.PLACEHOLDER_NO_IMG_PATH;
 import com.foodyshop.main.Navigator;
-import com.foodyshop.main.UploadImageToApi;
+import com.foodyshop.main.APIService;
 import com.foodyshop.model.CategoryModel;
 import com.foodyshop.model.ProductModel;
 import com.foodyshop.model.Respond;
@@ -269,13 +269,13 @@ public class EditProductController implements Initializable {
             mProductModel.setDescription(description);
             mProductModel.setStatusVal(status);
             if (imgProductFile != null) {
-                Respond norImgRespond = UploadImageToApi.uploadImageToApi(imgProductFile, Const.TYPE_FOOD, mProductModel.getImg());
+                Respond norImgRespond = APIService.uploadImageToApi(imgProductFile, Const.TYPE_FOOD, mProductModel.getImg());
                 if (norImgRespond.isSuccess()) {
                     mProductModel.setImg(norImgRespond.getMsg());
                 }
             }
             if (imgDetailProductFile != null) {
-                Respond desImgRespond = UploadImageToApi.uploadImageToApi(imgDetailProductFile, Const.TYPE_FOOD, mProductModel.getImgDetail());
+                Respond desImgRespond = APIService.uploadImageToApi(imgDetailProductFile, Const.TYPE_FOOD, mProductModel.getImgDetail());
                 if (desImgRespond.isSuccess()) {
                     mProductModel.setImgDetail(desImgRespond.getMsg());
                 }

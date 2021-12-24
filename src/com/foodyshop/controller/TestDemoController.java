@@ -8,7 +8,7 @@ package com.foodyshop.controller;
 import com.foodyshop.helper.FileHelper;
 import com.foodyshop.helper.FormHelper;
 import com.foodyshop.main.Const;
-import com.foodyshop.main.UploadImageToApi;
+import com.foodyshop.main.APIService;
 import com.foodyshop.model.Respond;
 import java.io.File;
 import java.io.IOException;
@@ -85,7 +85,7 @@ public class TestDemoController implements Initializable {
     private void onClickCallApiInsert(MouseEvent e) {
         try {
             if (fileChoose != null && isImage(fileChoose.getName())) {
-                Respond respond = UploadImageToApi.uploadImageToApi(fileChoose, Const.TYPE_TOPIC, "abc.def");
+                Respond respond = APIService.uploadImageToApi(fileChoose, Const.TYPE_TOPIC, "abc.def");
                 System.out.println(respond);
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -102,7 +102,7 @@ public class TestDemoController implements Initializable {
         try {
             String imgName = txtFileName.getText().trim();
             if (!imgName.isEmpty()) {
-                Respond respond = UploadImageToApi.removeImageFromApi(Const.TYPE_TOPIC, imgName);
+                Respond respond = APIService.removeImageFromApi(Const.TYPE_TOPIC, imgName);
                 lbResult.setText(respond.getMsg());
             } else {
                 txtFileName.requestFocus();

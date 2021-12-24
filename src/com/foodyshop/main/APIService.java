@@ -30,7 +30,7 @@ import java.util.logging.Logger;
  *
  * @author N.C.Son
  */
-public class UploadImageToApi {
+public class APIService {
 
     private static final String PRIVATE_KEY = "Rm9PZHlTaG9QX3NlY3JldEtleVl5KiMxMjA0JV4mNDUxODgxIyEhMjI0NWRzZEREIzJFZGVk";
 

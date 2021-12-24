@@ -10,7 +10,7 @@ import com.foodyshop.helper.TopicHelper;
 import static com.foodyshop.main.Config.IMG_TOPIC_DIR;
 import com.foodyshop.main.Const;
 import com.foodyshop.main.Navigator;
-import com.foodyshop.main.UploadImageToApi;
+import com.foodyshop.main.APIService;
 import com.foodyshop.model.Respond;
 import com.foodyshop.model.TopicModel;
 import java.io.File;
@@ -114,7 +114,7 @@ public class EditTopicController implements Initializable {
             alert.show();
             return;
         }
-        if(TopicHelper.isTopicNameExists(name)){
+        if(!name.toLowerCase().equals(mTopicModel.getName().toLowerCase()) && TopicHelper.isTopicNameExists(name)){
             txtName.requestFocus();
             alert.setHeaderText("This name is exists!");
             alert.show();
@@ -134,7 +134,7 @@ public class EditTopicController implements Initializable {
             mTopicModel.setStatus(cbStatus.getValue());
             if (imgTopicFile != null) {
                 // call API
-                Respond respond = UploadImageToApi.uploadImageToApi(imgTopicFile, Const.TYPE_TOPIC, mTopicModel.getImg());
+                Respond respond = APIService.uploadImageToApi(imgTopicFile, Const.TYPE_TOPIC, mTopicModel.getImg());
                 if (respond.isSuccess()) {
                     mTopicModel.setImg(respond.getMsg());
                     // Update to database
