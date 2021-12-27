@@ -1,5 +1,7 @@
 package com.example.foodyshop.activity;
 
+import static com.example.foodyshop.activity.StartupScreenActivity.FIRST_TIME_OPEN_APP;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -11,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.foodyshop.R;
 import com.example.foodyshop.adapter.OnboardingViewPagerAdapter;
+import com.example.foodyshop.helper.Helper;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.jaeger.library.StatusBarUtil;
@@ -75,6 +78,7 @@ public class OnboardingActivity extends AppCompatActivity {
     }
 
     private void goToMainActivity(View view) {
+        Helper.getSharedPreferences(this).edit().putBoolean(FIRST_TIME_OPEN_APP, false).apply();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();

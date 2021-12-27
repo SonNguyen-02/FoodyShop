@@ -15,7 +15,7 @@ import com.jaeger.library.StatusBarUtil;
 
 public class StartupScreenActivity extends AppCompatActivity {
 
-    private static final String FIRST_TIME_OPEN_APP = "first_time_open_app";
+    public static final String FIRST_TIME_OPEN_APP = "first_time_open_app";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +23,6 @@ public class StartupScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_startup_screen);
         SharedPreferences shared = Helper.getSharedPreferences(this);
         if (shared.getBoolean(FIRST_TIME_OPEN_APP, true)) {
-            shared.edit().putBoolean(FIRST_TIME_OPEN_APP, false).apply();
             Intent intent = new Intent(this, OnboardingActivity.class);
             startActivity(intent);
             finish();
