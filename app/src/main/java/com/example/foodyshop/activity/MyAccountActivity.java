@@ -107,33 +107,27 @@ public class MyAccountActivity extends AppCompatActivity {
         }
         tvAddress.setText(address);
 
-        imgBack.setOnClickListener(view -> {
-            onBackPressed();
-        });
+        imgBack.setOnClickListener(view -> onBackPressed());
 
-        imgSave.setOnClickListener(view -> {
-            saveUserInfo();
-        });
+        imgSave.setOnClickListener(view -> saveUserInfo());
 
-        rlAvatar.setOnClickListener(view -> {
-            ShowOrChangeAvatarBottomSheet.newInstant(new ShowOrChangeAvatarBottomSheet.IOnClickItem() {
-                @Override
-                public void onClickShowAvatar(ShowOrChangeAvatarBottomSheet bottomSheet) {
-                    bottomSheet.dismiss();
-                    getSupportFragmentManager().beginTransaction()
-                            .add(R.id.frame_root, ShowAvatarFragment.newInstance(mUri))
-                            .setCustomAnimations(R.anim.anim_fade_in, R.anim.anim_fade_in, R.anim.anim_fade_out, R.anim.anim_fade_out)
-                            .addToBackStack(ShowAvatarFragment.class.getName())
-                            .commit();
-                }
+        rlAvatar.setOnClickListener(view -> ShowOrChangeAvatarBottomSheet.newInstant(new ShowOrChangeAvatarBottomSheet.IOnClickItem() {
+            @Override
+            public void onClickShowAvatar(ShowOrChangeAvatarBottomSheet bottomSheet) {
+                bottomSheet.dismiss();
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.frame_root, ShowAvatarFragment.newInstance(mUri))
+                        .setCustomAnimations(R.anim.anim_fade_in, R.anim.anim_fade_in, R.anim.anim_fade_out, R.anim.anim_fade_out)
+                        .addToBackStack(ShowAvatarFragment.class.getName())
+                        .commit();
+            }
 
-                @Override
-                public void onClickChangeAvatar(ShowOrChangeAvatarBottomSheet bottomSheet) {
-                    bottomSheet.dismiss();
-                    requestPermission();
-                }
-            }).show(getSupportFragmentManager(), ShowOrChangeAvatarBottomSheet.class.getName());
-        });
+            @Override
+            public void onClickChangeAvatar(ShowOrChangeAvatarBottomSheet bottomSheet) {
+                bottomSheet.dismiss();
+                requestPermission();
+            }
+        }).show(getSupportFragmentManager(), ShowOrChangeAvatarBottomSheet.class.getName()));
 
         rlCustomerName.setOnClickListener(view -> {
             if (System.currentTimeMillis() - lastTimeClick < 1000) {
@@ -234,13 +228,13 @@ public class MyAccountActivity extends AppCompatActivity {
 
             @Override
             public void onPermissionDenied(@NonNull List<String> deniedPermissions) {
-                Toast.makeText(MyAccountActivity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyAccountActivity.this, "Permission Denied\n" + deniedPermissions, Toast.LENGTH_SHORT).show();
             }
         };
         TedPermission.create()
                 .setPermissionListener(permissionlistener)
                 .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
-                .setPermissions(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE)
+                .setPermissions(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .check();
     }
 

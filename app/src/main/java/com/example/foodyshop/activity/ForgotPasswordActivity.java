@@ -67,6 +67,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         initUi();
 
         mAuth = FirebaseAuth.getInstance();
+
         // attach CarrierNumber editText to CCP
         ccp.registerCarrierNumberEditText(edtPhone);
 
@@ -105,9 +106,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     private void initToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Forgot password");
-        toolbar.setNavigationOnClickListener(view -> {
-            onBackPressed();
-        });
+        toolbar.setNavigationOnClickListener(view -> onBackPressed());
     }
 
     private void initUi() {
@@ -119,9 +118,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
     private void checkPhoneUser() {
         btnSendOtp.setEnabled(false);
-        new Handler().postDelayed(() -> {
-            btnSendOtp.setEnabled(true);
-        }, TOAST_DEFAULT);
+        new Handler().postDelayed(() -> btnSendOtp.setEnabled(true), TOAST_DEFAULT);
         // validate
         if (edtPhone.getText().toString().trim().isEmpty()) {
             edtPhone.requestFocus();

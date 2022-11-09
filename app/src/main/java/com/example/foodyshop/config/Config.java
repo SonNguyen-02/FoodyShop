@@ -2,7 +2,7 @@ package com.example.foodyshop.config;
 
 public class Config {
 
-    public static final String BASE_URL = "https://foodyshopp.tk/FoodyShop/";
+    public static final String BASE_URL = "http://foodyshop.tk/";
     //    public static final String BASE_URL = "https://foodyshop.000webhostapp.com/FoodyShop/";
     public static final String BASE_API = BASE_URL + "api/";
     private static final String IMG_FOLDER = "public/images/upload/";

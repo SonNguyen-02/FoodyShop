@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "982818785280-4505d55cqaoucda5elo2qph81e7ai2j4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.foodyshop",
+            "certificate_hash": "fd94dc6e189b0830bb943c6b65437c83db08e5db"
+          }
+        },
+        {
           "client_id": "982818785280-rnmh3oh83mruot3o5f7efebv1o63gb2p.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
