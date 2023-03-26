@@ -3,14 +3,6 @@ package com.example.foodyshop.activity;
 import static com.example.foodyshop.config.Const.KEY_ADDRESS;
 import static com.example.foodyshop.config.Const.KEY_NAME;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
-import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -19,7 +11,13 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.foodyshop.R;
@@ -32,21 +30,17 @@ import com.example.foodyshop.dialog.ShowOrChangeAvatarBottomSheet;
 import com.example.foodyshop.dialog.ToastCustom;
 import com.example.foodyshop.fragment.ShowAvatarFragment;
 import com.example.foodyshop.helper.Helper;
+import com.example.foodyshop.helper.RealPathUtil;
 import com.example.foodyshop.model.CustomerModel;
 import com.example.foodyshop.model.Respond;
 import com.example.foodyshop.service.APIService;
 import com.google.gson.Gson;
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.normal.TedPermission;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
-import java.util.List;
 import java.util.Random;
 
-import gun0912.tedbottompicker.TedBottomPicker;
-import gun0912.tedbottompicker.TedBottomSheetDialogFragment;
-import gun0912.tedbottompicker.util.RealPathUtil;
+import gun0912.tedimagepicker.builder.TedImagePicker;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -220,35 +214,37 @@ public class MyAccountActivity extends AppCompatActivity {
     }
 
     private void requestPermission() {
-        PermissionListener permissionlistener = new PermissionListener() {
-            @Override
-            public void onPermissionGranted() {
-                openImagePicker();
-            }
+//        PermissionListener permissionlistener = new PermissionListener() {
+//            @Override
+//            public void onPermissionGranted() {
+//                openImagePicker();
+//            }
+//
+//            @Override
+//            public void onPermissionDenied(@NonNull List<String> deniedPermissions) {
+//                Toast.makeText(MyAccountActivity.this, "Permission Denied\n" + deniedPermissions, Toast.LENGTH_SHORT).show();
+//            }
+//        };
+//        TedPermission.create()
+//                .setPermissionListener(permissionlistener)
+//                .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
+//                .setPermissions(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                .check();
 
-            @Override
-            public void onPermissionDenied(@NonNull List<String> deniedPermissions) {
-                Toast.makeText(MyAccountActivity.this, "Permission Denied\n" + deniedPermissions, Toast.LENGTH_SHORT).show();
-            }
-        };
-        TedPermission.create()
-                .setPermissionListener(permissionlistener)
-                .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
-                .setPermissions(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .check();
+        TedImagePicker.with(this).start(this::startCrop);
     }
 
-    private void openImagePicker() {
-        TedBottomSheetDialogFragment.OnImageSelectedListener listener = imgUri -> {
-            if (imgUri != null) {
-                startCrop(imgUri);
-            }
-        };
-        TedBottomPicker.with(MyAccountActivity.this)
-                .setOnImageSelectedListener(listener)
-                .create()
-                .show(getSupportFragmentManager());
-    }
+//    private void openImagePicker() {
+//        TedBottomSheetDialogFragment.OnImageSelectedListener listener = imgUri -> {
+//            if (imgUri != null) {
+//                startCrop(imgUri);
+//            }
+//        };
+//        TedBottomPicker.with(MyAccountActivity.this)
+//                .setOnImageSelectedListener(listener)
+//                .create()
+//                .show(getSupportFragmentManager());
+//    }
 
     @NonNull
     private UCrop.Options getCropOption() {

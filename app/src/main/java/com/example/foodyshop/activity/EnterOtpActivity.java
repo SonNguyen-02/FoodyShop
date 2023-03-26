@@ -376,6 +376,7 @@ public class EnterOtpActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<Respond> call, @NonNull Throwable t) {
+                Log.e("ddd", "onFailure: ", t);
                 dialog.dismiss();
                 ToastCustom.notice(getApplicationContext(), "Vui lòng kiểm tra lại kết nối mạng!", ToastCustom.ERROR).show();
             }
